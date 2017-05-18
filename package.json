@@ -1,0 +1,43 @@
+{
+  "name": "react-native-heap-analytics",
+  "version": "0.1.0",
+  "description": "React Native wrapper for Heap Analytics.",
+  "main": "./js/Heap.js",
+  "files": [
+    "android",
+    "ios",
+    "js",
+    "react-native-heap-analytics.podspec"
+  ],
+  "keywords": [
+    "ios",
+    "react-native",
+    "analytics",
+    "heap"
+  ],
+  "author": "Mark Miyashita <negativetwelve@gmail.com> (https://github.com/negativetwelve)",
+  "contributors": [
+    {
+      "name": "Mark Miyashita",
+      "email": "negativetwelve@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "url": "git+https://github.com/negativetwelve/react-native-heap-analytics.git",
+    "type": "git"
+  },
+  "bugs": {
+    "url": "https://github.com/negativetwelve/react-native-heap-analytics/issues"
+  },
+  "homepage": "https://github.com/negativetwelve/react-native-heap-analytics",
+  "engines": {},
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "7.0.0",
+    "eslint": "3.8.1"
+  },
+  "scripts": {
+    "lint": "eslint ."
+  }
+}
