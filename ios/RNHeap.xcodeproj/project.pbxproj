@@ -23,7 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		112EE36D1CC0AB8A00BF6BB8 /* libRNUXCam.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNUXCam.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		112EE36D1CC0AB8A00BF6BB8 /* libRNHeap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNHeap.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DE526A81ECD4A340059312E /* RNHeap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNHeap.h; sourceTree = "<group>"; };
 		4DE526A91ECD4A340059312E /* RNHeap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNHeap.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,7 +51,7 @@
 		112EE36E1CC0AB8A00BF6BB8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				112EE36D1CC0AB8A00BF6BB8 /* libRNUXCam.a */,
+				112EE36D1CC0AB8A00BF6BB8 /* libRNHeap.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -59,9 +59,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		112EE36C1CC0AB8A00BF6BB8 /* RNUXCam */ = {
+		112EE36C1CC0AB8A00BF6BB8 /* RNHeap */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 112EE3761CC0AB8A00BF6BB8 /* Build configuration list for PBXNativeTarget "RNUXCam" */;
+			buildConfigurationList = 112EE3761CC0AB8A00BF6BB8 /* Build configuration list for PBXNativeTarget "RNHeap" */;
 			buildPhases = (
 				112EE3691CC0AB8A00BF6BB8 /* Sources */,
 				112EE36A1CC0AB8A00BF6BB8 /* Frameworks */,
@@ -71,9 +71,9 @@
 			);
 			dependencies = (
 			);
-			name = RNUXCam;
+			name = RNHeap;
 			productName = RNUXCam;
-			productReference = 112EE36D1CC0AB8A00BF6BB8 /* libRNUXCam.a */;
+			productReference = 112EE36D1CC0AB8A00BF6BB8 /* libRNHeap.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
@@ -102,7 +102,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				112EE36C1CC0AB8A00BF6BB8 /* RNUXCam */,
+				112EE36C1CC0AB8A00BF6BB8 /* RNHeap */,
 			);
 		};
 /* End PBXProject section */
@@ -259,7 +259,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		112EE3761CC0AB8A00BF6BB8 /* Build configuration list for PBXNativeTarget "RNUXCam" */ = {
+		112EE3761CC0AB8A00BF6BB8 /* Build configuration list for PBXNativeTarget "RNHeap" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				112EE3771CC0AB8A00BF6BB8 /* Debug */,
