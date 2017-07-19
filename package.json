@@ -1,6 +1,6 @@
 {
   "name": "react-native-heap-analytics",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "React Native wrapper for Heap Analytics.",
   "main": "./js/Heap.js",
   "files": [
