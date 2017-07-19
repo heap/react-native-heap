@@ -1,11 +1,25 @@
 // Libraries
-import {NativeModules} from 'react-native';
+import {NativeModules, Platform} from 'react-native';
 
 // Native Modules
 const {RNHeap} = NativeModules;
 
 
-export default {
+// Wraps native functions so they are no-ops on android.
+const noop = () => {};
+const safe = (callback) => Platform.OS === 'android' ? noop : callback;
+const guard = (object) => {
+  const safeObject = {};
+
+  // Copies all key/values and wraps each value inside a safe callback.
+  Object.keys(object).forEach(key => safeObject[key] = safe(object[key]));
+
+  // Returns the new cloned object.
+  return safeObject;
+};
+
+
+const Heap = {
   // App Properties
   setAppId: (appId) => RNHeap.setAppId(appId),
 
@@ -25,3 +39,6 @@ export default {
   enableVisualizer: () => RNHeap.enableVisualizer(),
   changeInterval: (interval) => RNHeap.changeInterval(interval),
 };
+
+
+export default guard(Heap);
