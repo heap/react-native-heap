@@ -1,5 +1,10 @@
 # react-native-heap-analytics
 
+[![npm](https://img.shields.io/npm/v/react-native-heap-analytics.svg)](https://www.npmjs.com/package/react-native-heap-analytics)
+[![npm](https://img.shields.io/npm/dt/react-native-heap-analytics.svg)](https://www.npmjs.com/package/react-native-heap-analytics)
+[![npm](https://img.shields.io/npm/l/react-native-heap-analytics.svg)](https://github.com/negativetwelve/react-native-heap-analytics/blob/master/LICENSE)
+[![CircleCI branch](https://img.shields.io/circleci/project/github/negativetwelve/react-native-heap-analytics/master.svg)](https://circleci.com/gh/negativetwelve/react-native-heap-analytics)
+
 React Native wrapper for [Heap Analytics](https://heapanalytics.com).
 
 ## Setup
