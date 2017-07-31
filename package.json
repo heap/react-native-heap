@@ -5,15 +5,16 @@
   "main": "./build/Heap.js",
   "files": [
     "android",
+    "build",
     "ios",
-    "js",
     "react-native-heap-analytics.podspec"
   ],
   "keywords": [
-    "ios",
-    "react-native",
     "analytics",
-    "heap"
+    "heap",
+    "ios",
+    "jolt",
+    "react-native"
   ],
   "author": "Mark Miyashita <negativetwelve@gmail.com> (https://github.com/negativetwelve)",
   "contributors": [
@@ -37,6 +38,14 @@
     "babel-cli": "^6.24.1",
     "babel-preset-jolt": "^1.0.0",
     "eslint-config-jolt": "^1.0.2"
+  },
+  "babel": {
+    "presets": [
+      "jolt"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "jolt"
   },
   "scripts": {
     "build": "babel js --out-dir build --ignore '**/*.spec.js'",
