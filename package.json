@@ -2,7 +2,7 @@
   "name": "react-native-heap-analytics",
   "version": "1.0.0",
   "description": "React Native wrapper for Heap Analytics.",
-  "main": "./js/Heap.js",
+  "main": "./build/Heap.js",
   "files": [
     "android",
     "ios",
@@ -34,10 +34,13 @@
   "engines": {},
   "dependencies": {},
   "devDependencies": {
-    "babel-eslint": "7.0.0",
-    "eslint": "3.8.1"
+    "babel-cli": "^6.24.1",
+    "babel-preset-jolt": "^1.0.0",
+    "eslint-config-jolt": "^1.0.2"
   },
   "scripts": {
-    "lint": "eslint ."
+    "build": "babel js --out-dir build --ignore '**/*.spec.js'",
+    "lint": "eslint js",
+    "prepublishOnly": "yarn build"
   }
 }
