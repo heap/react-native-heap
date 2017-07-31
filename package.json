@@ -50,6 +50,7 @@
   "scripts": {
     "build": "babel js --out-dir build --ignore '**/*.spec.js'",
     "lint": "eslint js",
-    "prepublishOnly": "yarn build"
+    "prepublishOnly": "yarn build",
+    "test": "echo 'No Tests'"
   }
 }
