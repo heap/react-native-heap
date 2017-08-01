@@ -36,7 +36,7 @@
   "dependencies": {},
   "devDependencies": {
     "babel-cli": "^6.24.1",
-    "babel-preset-jolt": "^1.0.0",
+    "babel-preset-jolt": "^1.1.0",
     "eslint-config-jolt": "^1.0.2"
   },
   "eslintConfig": {
