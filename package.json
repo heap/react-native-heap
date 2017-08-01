@@ -35,13 +35,17 @@
   "engines": {},
   "dependencies": {},
   "devDependencies": {
-    "eslint-config-jolt": "^1.0.2"
+    "eslint-config-jolt": "^1.0.2",
+    "jest-preset-jolt": "^1.0.0"
   },
   "eslintConfig": {
     "extends": "jolt"
   },
+  "jest": {
+    "preset": "jest-preset-jolt"
+  },
   "scripts": {
     "lint": "eslint js",
-    "test": "echo 'No Tests'"
+    "test": "jest"
   }
 }
