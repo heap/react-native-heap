@@ -65,7 +65,7 @@ Heap.removeEventProperty('isLoggedIn');
 Heap.clearEventProperties();
 
 // To track an event, use:
-Heap.event('signed-up', {isPaid: true, amount: 20});
+Heap.track('signed-up', {isPaid: true, amount: 20});
 
 // Other methods exposed:
 Heap.enableVisualizer();
