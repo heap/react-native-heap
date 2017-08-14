@@ -1,44 +1,43 @@
 // Libraries
 import {NativeModules, Platform} from 'react-native';
-
-// Native Modules
-const {RNHeap} = NativeModules;
+import Package from 'react-native-package';
 
 
-// Wraps native functions so they are no-ops on android.
-const noop = () => {};
-const safe = (callback) => Platform.OS === 'android' ? noop : callback;
-const guard = (object) => {
-  const safeObject = {};
+/**
+ * Package.create handles two things:
+ *
+ *   1. Checks that for each platform that's `enabled`, the module is installed
+ *      properly. If it's not, it logs a warning.
+ *   2. Guards the module on every platform that is not `enabled`. This allows
+ *      the module to exist in cross-platform code without hacks to disable it.
+ *
+ * You can read more about `react-native-package` here:
+ * https://github.com/negativetwelve/react-native-package
+ */
+export default Package.create({
+  json: require('../package.json'),
+  nativeModule: NativeModules.RNHeap,
+  enabled: Platform.select({
+    ios: true,
+  }),
+  export: (Heap) => ({
+    // App Properties
+    setAppId: (appId) => Heap.setAppId(appId),
 
-  // Copies all key/values and wraps each value inside a safe callback.
-  Object.keys(object).forEach(key => safeObject[key] = safe(object[key]));
+    // User Properties
+    identify: (identity) => Heap.identify(identity),
+    addUserProperties: (properties) => Heap.addUserProperties(properties),
 
-  // Returns the new cloned object.
-  return safeObject;
-};
+    // Event Properties
+    addEventProperties: (properties) => Heap.addEventProperties(properties),
+    removeEventProperty: (property) => Heap.removeEventProperty(property),
+    clearEventProperties: () => Heap.clearEventProperties(),
 
+    // Events
+    track: (event, payload) => Heap.track(event, payload),
 
-const Heap = {
-  // App Properties
-  setAppId: (appId) => RNHeap.setAppId(appId),
-
-  // User Properties
-  identify: (identity) => RNHeap.identify(identity),
-  addUserProperties: (properties) => RNHeap.addUserProperties(properties),
-
-  // Event Properties
-  addEventProperties: (properties) => RNHeap.addEventProperties(properties),
-  removeEventProperty: (property) => RNHeap.removeEventProperty(property),
-  clearEventProperties: () => RNHeap.clearEventProperties(),
-
-  // Events
-  track: (event, payload) => RNHeap.track(event, payload),
-
-  // Config
-  enableVisualizer: () => RNHeap.enableVisualizer(),
-  changeInterval: (interval) => RNHeap.changeInterval(interval),
-};
-
-
-export default guard(Heap);
+    // Config
+    enableVisualizer: () => Heap.enableVisualizer(),
+    changeInterval: (interval) => Heap.changeInterval(interval),
+  }),
+});
