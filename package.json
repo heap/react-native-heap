@@ -33,10 +33,17 @@
   },
   "homepage": "https://github.com/negativetwelve/react-native-heap-analytics",
   "engines": {},
-  "dependencies": {},
+  "dependencies": {
+    "react-native-package": "^1.1.0"
+  },
+  "peerDependencies": {
+    "react-native": "*"
+  },
   "devDependencies": {
     "eslint-config-jolt": "^1.0.2",
-    "jest-preset-jolt": "^1.0.0"
+    "jest-preset-jolt": "^1.0.0",
+    "react": "16.0.0-alpha.12",
+    "react-native": "^0.47.1"
   },
   "eslintConfig": {
     "extends": "jolt"
