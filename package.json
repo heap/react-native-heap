@@ -34,7 +34,7 @@
   "homepage": "https://github.com/negativetwelve/react-native-heap-analytics",
   "engines": {},
   "dependencies": {
-    "react-native-package": "^1.1.0"
+    "react-native-package": "^1.2.0"
   },
   "peerDependencies": {
     "react-native": "*"

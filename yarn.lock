@@ -3582,9 +3582,12 @@ react-devtools-core@2.3.1:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-module-check@^1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/react-native-module-check/-/react-native-module-check-1.6.0.tgz#595f9b09377db4ef1d7858e1f4ab3fe4a8787fea"
+react-native-module-check@^1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-module-check/-/react-native-module-check-1.7.0.tgz#8c687957383772696dd4501f9d2de98f27264f9b"
+  dependencies:
+    invariant "^2.2.2"
+    warning "^3.0.0"
 
 react-native-module-guard@^1.2.0:
   version "1.2.0"
@@ -3592,11 +3595,11 @@ react-native-module-guard@^1.2.0:
   dependencies:
     warning "^3.0.0"
 
-react-native-package@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-package/-/react-native-package-1.1.0.tgz#69a1958283ba20737b0bfc686aaf8c92826ec9f5"
+react-native-package@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-package/-/react-native-package-1.2.0.tgz#1950979e60c8e37ef3f8456b5bf53092fb38684a"
   dependencies:
-    react-native-module-check "^1.6.0"
+    react-native-module-check "^1.7.0"
     react-native-module-guard "^1.2.0"
 
 react-native@^0.47.1:
