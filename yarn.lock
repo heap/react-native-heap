@@ -376,7 +376,7 @@ babel-helpers@^6.24.1:
     babel-runtime "^6.22.0"
     babel-template "^6.24.1"
 
-babel-jest@^20.0.0, babel-jest@^20.0.3:
+babel-jest@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-20.0.3.tgz#e4a03b13dc10389e140fc645d09ffc4ced301671"
   dependencies:
@@ -2434,14 +2434,6 @@ istanbul-reports@^1.1.1:
   dependencies:
     handlebars "^4.0.3"
 
-jest-addons@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/jest-addons/-/jest-addons-2.2.0.tgz#d1b4722461e63aa1ba5fa49722a880396d8ba185"
-  dependencies:
-    jest-context "^2.1.0"
-    jest-its "^1.0.0"
-    jest-set "^2.0.0"
-
 jest-changed-files@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-20.0.3.tgz#9394d5cc65c438406149bef1bf4d52b68e03e3f8"
@@ -2495,10 +2487,6 @@ jest-config@^20.0.4:
     jest-resolve "^20.0.4"
     jest-validate "^20.0.3"
     pretty-format "^20.0.3"
-
-jest-context@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/jest-context/-/jest-context-2.1.0.tgz#8d92b636323ce0698f801b6282029feb987c9545"
 
 jest-diff@^20.0.3:
   version "20.0.3"
@@ -2554,13 +2542,6 @@ jest-haste-map@^20.0.4:
     sane "~1.6.0"
     worker-farm "^1.3.1"
 
-jest-its@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/jest-its/-/jest-its-1.0.0.tgz#965dfbd7173fdc096ce503faf64fe4d9736d332d"
-  dependencies:
-    invariant "^2.2.2"
-    jest-set "^2.0.0"
-
 jest-jasmine2@^20.0.4:
   version "20.0.4"
   resolved "https://registry.yarnpkg.com/jest-jasmine2/-/jest-jasmine2-20.0.4.tgz#fcc5b1411780d911d042902ef1859e852e60d5e1"
@@ -2603,13 +2584,57 @@ jest-mock@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/jest-mock/-/jest-mock-20.0.3.tgz#8bc070e90414aa155c11a8d64c869a0d5c71da59"
 
-jest-preset-jolt@^1.0.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/jest-preset-jolt/-/jest-preset-jolt-1.1.0.tgz#9b960b6928952099061c177f747278b2225615a8"
+jest-plugin-action@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-plugin-action/-/jest-plugin-action-1.2.0.tgz#8325b9a95a338f5cebc0b571712be576bc9cf740"
   dependencies:
-    babel-jest "^20.0.0"
-    jest "^20.0.0"
-    jest-addons "^2.2.0"
+    jest-plugin-set "^1.2.0"
+
+jest-plugin-console-matchers@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-plugin-console-matchers/-/jest-plugin-console-matchers-1.2.0.tgz#d01c90a307a62184e070a979c3019624cfdcb634"
+
+jest-plugin-context@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-plugin-context/-/jest-plugin-context-1.2.0.tgz#89f825127fd2ca527ee8f46bed53d16645df53f8"
+
+jest-plugin-its@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-plugin-its/-/jest-plugin-its-1.2.0.tgz#2fe04ac28ed7e1d72bc2b97893aa2a896cca1e89"
+  dependencies:
+    invariant "^2.2.2"
+    jest-plugin-set "^1.2.0"
+
+jest-plugin-set@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-plugin-set/-/jest-plugin-set-1.2.0.tgz#84b56fc99bb0a1ebe7cb9355166baf140976c50f"
+
+jest-plugin-unhandled-promise@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-plugin-unhandled-promise/-/jest-plugin-unhandled-promise-1.2.0.tgz#d61c1b025dce2f9bd40728a3698cfbe239ebc0de"
+
+jest-plugins-recommended@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-plugins-recommended/-/jest-plugins-recommended-1.2.0.tgz#e88b178d8092aceedd71a75367f10f534a9ca912"
+  dependencies:
+    jest-plugin-action "^1.2.0"
+    jest-plugin-console-matchers "^1.2.0"
+    jest-plugin-context "^1.2.0"
+    jest-plugin-its "^1.2.0"
+    jest-plugin-set "^1.2.0"
+    jest-plugin-unhandled-promise "^1.2.0"
+    jest-plugins "^1.2.0"
+
+jest-plugins@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/jest-plugins/-/jest-plugins-1.2.0.tgz#60269fa9d6eb8b338b30cd9e65d8488b6d9cbd5b"
+
+jest-preset-jolt@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/jest-preset-jolt/-/jest-preset-jolt-1.3.0.tgz#fb1e8ef5d38b2973495c2e83dd9f613d5a57561b"
+  dependencies:
+    jest-plugins "^1.2.0"
+    jest-plugins-recommended "^1.2.0"
 
 jest-regex-util@^20.0.3:
   version "20.0.3"
@@ -2649,10 +2674,6 @@ jest-runtime@^20.0.4:
     strip-bom "3.0.0"
     yargs "^7.0.2"
 
-jest-set@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/jest-set/-/jest-set-2.0.0.tgz#977c2120120e83086e86519c1a84c2a1c800f419"
-
 jest-snapshot@^20.0.3:
   version "20.0.3"
   resolved "https://registry.yarnpkg.com/jest-snapshot/-/jest-snapshot-20.0.3.tgz#5b847e1adb1a4d90852a7f9f125086e187c76566"
@@ -2685,7 +2706,7 @@ jest-validate@^20.0.3:
     leven "^2.1.0"
     pretty-format "^20.0.3"
 
-jest@^20.0.0:
+jest@^20.0.4:
   version "20.0.4"
   resolved "https://registry.yarnpkg.com/jest/-/jest-20.0.4.tgz#3dd260c2989d6dad678b1e9cc4d91944f6d602ac"
   dependencies:
@@ -3582,25 +3603,25 @@ react-devtools-core@2.3.1:
     shell-quote "^1.6.1"
     ws "^2.0.3"
 
-react-native-module-check@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-module-check/-/react-native-module-check-2.0.0.tgz#ebf92f572efc527104291af4a6550e2ccf0e10ac"
+react-native-module-check@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-module-check/-/react-native-module-check-2.2.0.tgz#42fa65adb9c60446d59406dfad576e101fe5570d"
   dependencies:
     invariant "^2.2.2"
     warning "^3.0.0"
 
-react-native-module-guard@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-module-guard/-/react-native-module-guard-1.2.0.tgz#2869a61aa29ec6a72424b29a0db08fbd186ffa6a"
+react-native-module-guard@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-module-guard/-/react-native-module-guard-2.2.0.tgz#60cd0d22693697c1985a619ab9cceebf75a61189"
   dependencies:
     warning "^3.0.0"
 
-react-native-package@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-package/-/react-native-package-1.3.0.tgz#d080734f9e570223eb02d6419ff239da219b975e"
+react-native-package@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/react-native-package/-/react-native-package-2.2.0.tgz#688560dda79cd60f238d6546b50685144068f58b"
   dependencies:
-    react-native-module-check "^2.0.0"
-    react-native-module-guard "^1.2.0"
+    react-native-module-check "^2.2.0"
+    react-native-module-guard "^2.2.0"
 
 react-native@^0.47.1:
   version "0.47.1"
