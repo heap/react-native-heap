@@ -6,11 +6,11 @@ package = JSON.parse(json).deep_symbolize_keys
 Pod::Spec.new do |s|
   s.name = package[:name]
   s.version = package[:version]
-  s.license = { type: "MIT" }
-  s.homepage = package[:homepage]
-  s.authors = package[:contributors].flat_map { |author| { author[:name] => author[:email] } }
   s.summary = package[:description]
-  s.source = { git: package[:repository][:url] }
+  s.license = { type: "MIT" }
+  s.author = package[:author]
+  s.homepage = package[:homepage]
+  s.source = { git: package[:repository] }
   s.source_files = "ios/*"
   s.platform = :ios, "8.0"
 
