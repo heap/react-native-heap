@@ -3610,18 +3610,18 @@ react-native-module-check@^2.3.0:
     invariant "^2.2.2"
     warning "^3.0.0"
 
-react-native-module-guard@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-module-guard/-/react-native-module-guard-2.2.0.tgz#60cd0d22693697c1985a619ab9cceebf75a61189"
+react-native-module-guard@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-module-guard/-/react-native-module-guard-2.4.1.tgz#91c3cb40e4294c3c87dd98168d086f1152c6f3ec"
   dependencies:
     warning "^3.0.0"
 
-react-native-package@^2.4.0:
-  version "2.4.0"
-  resolved "https://registry.yarnpkg.com/react-native-package/-/react-native-package-2.4.0.tgz#2061a2c61f7469ed42790d01e0a141fefeeaf1d4"
+react-native-package@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/react-native-package/-/react-native-package-2.4.1.tgz#80519836569b30b428bb9b20e97c71dc34702680"
   dependencies:
     react-native-module-check "^2.3.0"
-    react-native-module-guard "^2.2.0"
+    react-native-module-guard "^2.4.1"
 
 react-native@^0.47.1:
   version "0.47.1"

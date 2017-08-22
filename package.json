@@ -21,7 +21,7 @@
     "react-native-heap-analytics.podspec"
   ],
   "dependencies": {
-    "react-native-package": "^2.4.0"
+    "react-native-package": "^2.4.1"
   },
   "peerDependencies": {
     "react-native": "*"
