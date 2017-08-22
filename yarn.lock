@@ -3616,9 +3616,9 @@ react-native-module-guard@^2.2.0:
   dependencies:
     warning "^3.0.0"
 
-react-native-package@^2.3.0:
-  version "2.3.0"
-  resolved "https://registry.yarnpkg.com/react-native-package/-/react-native-package-2.3.0.tgz#ead997838761eafaa5263cd5f5ba8c211838d006"
+react-native-package@^2.4.0:
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/react-native-package/-/react-native-package-2.4.0.tgz#2061a2c61f7469ed42790d01e0a141fefeeaf1d4"
   dependencies:
     react-native-module-check "^2.3.0"
     react-native-module-guard "^2.2.0"
