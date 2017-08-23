@@ -7,14 +7,10 @@
 
 React Native wrapper for [Heap Analytics](https://heapanalytics.com).
 
-## Setup
+## Getting Started
 
 ```bash
-# Yarn
 yarn add react-native-heap-analytics
-
-# NPM
-npm install --save react-native-heap-analytics
 ```
 
 ### iOS with Cocoapods
@@ -35,14 +31,7 @@ You're done! :tada:
 
 ### Android
 
-Run the following:
-
-```bash
-react-native link react-native-heap-analytics
-```
-
-TODO(mark): Add maven repository information.
-
+Heap does not currently have an Android SDK so unfortunately there isn't anything to do here :(
 
 ## Usage
 
