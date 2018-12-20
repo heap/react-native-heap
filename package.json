@@ -1,16 +1,16 @@
 {
-  "name": "react-native-heap-analytics",
-  "version": "3.0.0",
-  "description": "React Native wrapper for Heap Analytics.",
+  "name": "@heap/react-native-heap",
+  "version": "0.1.0-beta.1",
+  "description": "React Native event tracking with Heap.",
   "license": "MIT",
-  "author": "Andy Isaacson <andyi@heapanalytics.com>",
-  "homepage": "https://github.com/heap/react-native-heap-analytics",
-  "repository": "heap/react-native-heap-analytics",
+  "author": "Heap <http://www.heapanalytics.com>",
+  "homepage": "https://github.com/heap/react-native-heap",
+  "repository": "heap/react-native-heap",
   "keywords": [
     "analytics",
     "heap",
     "ios",
-    "jolt",
+    "android",
     "react-native"
   ],
   "main": "js/Heap",
@@ -18,27 +18,22 @@
     "android",
     "ios",
     "js",
-    "react-native-heap-analytics.podspec"
+    "react-native-heap.podspec"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "flat": "^4.1.0",
     "react-native-package": "^2.5.0"
   },
   "peerDependencies": {
-    "react-native": "*"
+    "react-native": "x.x"
   },
   "devDependencies": {
-    "eslint-config-jolt": "^1.0.2",
     "jest": "^20.0.4",
-    "jest-preset-jolt": "^2.0.0",
-    "react": "16.0.0-alpha.12",
-    "react-native": "^0.47.1"
-  },
-  "eslintConfig": {
-    "extends": "jolt"
-  },
-  "jest": {
-    "preset": "jest-preset-jolt"
+    "react": "^16.6.3",
+    "react-native": "^0.57.8"
   },
   "scripts": {
     "lint": "eslint js",

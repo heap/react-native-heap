@@ -1,24 +1,25 @@
-# react-native-heap-analytics
+# react-native-heap
 
-[![npm](https://img.shields.io/npm/v/react-native-heap-analytics.svg)](https://www.npmjs.com/package/react-native-heap-analytics)
-[![npm](https://img.shields.io/npm/dt/react-native-heap-analytics.svg)](https://www.npmjs.com/package/react-native-heap-analytics)
-[![npm](https://img.shields.io/npm/l/react-native-heap-analytics.svg)](https://github.com/negativetwelve/react-native-heap-analytics/blob/master/LICENSE)
-[![CircleCI branch](https://img.shields.io/circleci/project/github/negativetwelve/react-native-heap-analytics/master.svg)](https://circleci.com/gh/negativetwelve/react-native-heap-analytics)
+[![npm](https://img.shields.io/npm/v/@heap/react-native-heap.svg)](https://www.npmjs.com/package/@heap/react-native-heap)
+[![npm](https://img.shields.io/npm/dt/@heap/react-native-heap.svg)](https://www.npmjs.com/package/@heap/react-native-heap)
+[![npm](https://img.shields.io/npm/l/@heap/react-native-heap.svg)](https://github.com/heap/react-native-heap/blob/master/LICENSE)
 
-React Native wrapper for [Heap Analytics](https://heapanalytics.com).
+React Native tracker for [Heap](https://heapanalytics.com).
 
 ## Getting Started
 
 ```bash
-yarn add react-native-heap-analytics
+npm install @heap/react-native-heap
 ```
 
-### iOS with Cocoapods
+We will be supporting `npm link` in a future release. Please follow the manual setup instructions below for the time being.
+
+### Manual setup - iOS with Cocoapods
 
 Add the following to your Podfile:
 
 ```ruby
-pod "react-native-heap-analytics", path: "../node_modules/react-native-heap-analytics"
+pod "react-native-heap", path: "../node_modules/@heap/react-native-heap"
 ```
 
 Then run:
@@ -29,38 +30,57 @@ pod install
 
 You're done! :tada:
 
-### Android
+### Manual setup - Android
 
-Heap does not currently have an Android SDK so unfortunately there isn't anything to do here :(
+Add the following to your `settings.gradle`:
+
+```groovy
+include ':react-native-heap'
+project(':react-native-heap').projectDir =
+    new File(rootProject.projectDir, '../node_modules/@heap/react-native-heap/android')
+```
+
+Then add the following to `app/build.gradle`:
+
+```groovy
+implementation project(':react-native-heap')
+```
+
+Finally, import the package and add it to your app's MainApplication:
+
+```java
+
+@Override
+import com.heapanalytics.reactnative.RNHeapLibraryPackage;
+...
+protected List<ReactPackage> getPackages() {
+  return Arrays.<ReactPackage>asList(
+    new MainReactPackage(),
+    new RNHeapLibraryPackage()
+  );
+}
+```
 
 ## Usage
 
 ```js
 // Import Heap.
-import Heap from 'react-native-heap-analytics';
+import Heap from '@heap/react-native-heap';
 
 // Start Heap.
 Heap.setAppId('my-app-id');
 
 // Identify your user.
 Heap.identify('123456');
-Heap.addUserProperties({name: "John", age: 54});
+Heap.addUserProperties({ name: 'John', age: 54 });
 
 // Add event properties (these persist across sessions).
-Heap.addEventProperties({isLoggedIn: true});
+Heap.addEventProperties({ isLoggedIn: true });
 
 // You can remove a specific property or clear everything.
 Heap.removeEventProperty('isLoggedIn');
 Heap.clearEventProperties();
 
 // To track an event, use:
-Heap.track('signed-up', {isPaid: true, amount: 20});
-
-// Other methods exposed:
-Heap.enableVisualizer();
-
-// Amount of second Heap waits before flushing the events.
-Heap.changeInterval(10);
+Heap.track('signed-up', { isPaid: true, amount: 20 });
 ```
-
-If a method is missing from the official SDK, please send a PR!

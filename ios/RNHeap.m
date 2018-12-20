@@ -1,11 +1,6 @@
 //
 //  RNHeap.m
-//  RNHeap
 //
-//  Created by Mark Miyashita on 05/17/17.
-//  Copyright © 2017 Mark Miyashita. All rights reserved.
-//
-
 
 #import "RNHeap.h"
 #import "Heap.h"
