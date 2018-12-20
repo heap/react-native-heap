@@ -16,6 +16,8 @@ We will be supporting `npm link` in a future release. Please follow the manual s
 
 ### Manual setup - iOS with Cocoapods
 
+If you don't have a Podfile in the `ios` folder of your React Native project, follow this guide to create one: https://facebook.github.io/react-native/docs/integration-with-existing-apps#configuring-cocoapods-dependencies
+
 Add the following to your Podfile:
 
 ```ruby
