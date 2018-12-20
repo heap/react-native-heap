@@ -87,4 +87,4 @@ Heap.track('signed-up', { isPaid: true, amount: 20 });
 
 ## Acknowledgements
 
-Thank you to [Mark Miyashita](https://github.com/negativetwelve) for creating negativetwelve/react-native-heap-analytics, which was the initial basis for this library!
+Thank you to [Mark Miyashita](https://github.com/negativetwelve) for creating [negativetwelve/react-native-heap-analytics](https://github.com/negativetwelve/react-native-heap-analytics), which was the initial basis for this library!
