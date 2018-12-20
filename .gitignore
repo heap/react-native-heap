@@ -8,6 +8,9 @@ local.properties
 *.iml
 *.iws
 *.ipr
+.project
+.settings
+.classpath
 
 # Xcode
 build/

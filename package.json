@@ -1,11 +1,11 @@
 {
   "name": "react-native-heap-analytics",
-  "version": "2.4.0",
+  "version": "3.0.0",
   "description": "React Native wrapper for Heap Analytics.",
   "license": "MIT",
-  "author": "Mark Miyashita <negativetwelve@gmail.com>",
-  "homepage": "https://github.com/negativetwelve/react-native-heap-analytics",
-  "repository": "negativetwelve/react-native-heap-analytics",
+  "author": "Andy Isaacson <andyi@heapanalytics.com>",
+  "homepage": "https://github.com/heap/react-native-heap-analytics",
+  "repository": "heap/react-native-heap-analytics",
   "keywords": [
     "analytics",
     "heap",
@@ -21,6 +21,7 @@
     "react-native-heap-analytics.podspec"
   ],
   "dependencies": {
+    "flat": "^4.1.0",
     "react-native-package": "^2.5.0"
   },
   "peerDependencies": {
