@@ -32,6 +32,10 @@ You're done! :tada:
 
 ### Manual setup - Android
 
+In some cases, simply doing `react-native link` will correctly set up the tracker on Android.
+However, if you encounter any issues (either with the command itself or at compile-time/run-time),
+you should revert any changes made by `react-native link` and try the following steps, instead.
+
 Add the following to your `settings.gradle`:
 
 ```groovy
