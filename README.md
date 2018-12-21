@@ -68,13 +68,13 @@ protected List<ReactPackage> getPackages() {
 ```
 
 If you are seeing runtime warnings at startup mentioning `Heap: Could not find BuildConfig`, add the
-following line to the resources section of res/values/strings.xml:
+following line to the resources section of `res/values/strings.xml`:
 
 ```xml
 <string name="com.heapanalytics.android.buildConfigPkgName">com.your_package_name</string>
 ```
 
-and replace com.your_package_name with the package name from the manifest tag in AndroidManifest.xml.
+and replace `com.your_package_name` with the package name from the manifest tag in `AndroidManifest.xml`.
 
 ## Usage
 
