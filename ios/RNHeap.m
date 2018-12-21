@@ -11,13 +11,24 @@
 RCT_EXPORT_MODULE();
 
 static BOOL pageViewSent = NO;
+static BOOL appIdSet = NO;
 
 - (dispatch_queue_t)methodQueue {
   return dispatch_get_main_queue();
 }
 
 RCT_EXPORT_METHOD(setAppId:(NSString *)appId) {
-  [Heap setAppId:appId];
+    // The Heap library stops sending events if setAppId is called twice, which
+    // is often the case if you reload javascript during development.  We should
+    // fix that behavior in the library, but this will prevent the issue until
+    // that's updated.
+    // TODO: Remove this check when the iOS tracker allows setAppId to be called multiple times.
+    if (!appIdSet) {
+        [Heap setAppId:appId];
+        appIdSet = YES;
+    } else {
+        NSLog(@"The appId was already set - ignoring repeated call.");
+    }
 }
 
 RCT_EXPORT_METHOD(track:(NSString *)event withProperties:(NSDictionary *)properties) {
