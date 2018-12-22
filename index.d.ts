@@ -49,7 +49,7 @@ export function identify(identity: string): void;
  * To better understand the client-side `identify` and `addUserProperties` APIs,
  * [take a look at our comprehensive guide.](https://docs.heapanalytics.com/docs/using-identify)
  *
- * @param properties a JSON object, NSDictionary, or Map containing key-value pairs to be associated with a user.
+ * @param properties a JSON object containing key-value pairs to be associated with a user.
  * Keys and values must be a number or string, with the value being 255 characters or fewer.
  *
  * Also, the string user_id cannot be used as a key in the user properties object.
@@ -76,7 +76,7 @@ export function addUserProperties(properties: object): void;
  * You can use `addEventProperties` to measure how a user's behavior changes when they're logged in
  * vs. when they're logged out.
  *
- * @param properties a JSON object, NSDictionary, or Map containing key-value pairs to be associated with
+ * @param properties a JSON object containing key-value pairs to be associated with
  * every subsequent event. Keys and values must be a number or string fewer than 1024 characters.
  *
  * For Android, the property map keys and values must be converted to strings,
