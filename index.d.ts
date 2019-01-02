@@ -1,9 +1,9 @@
 /**
- * Sets the app ID where you'll be sending data. It can be used to switch between projects or
- * between your production and development environments.
- *
- * `setAppId` initializes Heap tracking on iOS. It should be called only once per app open.
- * If it is called multiple times, it will initiate a new session for the user.
+ * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch 
+ * between projects or between your production and development environments.
+ * 
+ * __NOTE:__ On iOS, subsequent calls are ignored. On Android, a new session is initialized each time 
+ * `setAppId` is called.
  *
  * @param appId the appId corresponding to one of your projects
  */
@@ -12,7 +12,7 @@ export function setAppId(appId: string): void;
 /**
  * Send additional events to Heap.
  *
- * For Android, the properties map may be null to track an event with no properties.
+ * The properties map may be null to track an event with no properties.
  * The property map keys and values must be converted to strings, but they can be queried as numbers in Heap.
  *
  * Custom event properties can be queried in the same fashion as any other event property.
@@ -97,12 +97,6 @@ export function removeEventProperty(property: string): void;
 export function clearEventProperties(): void;
 
 /**
- * Changes the frequency with which events are sent back to the Heap server from an iOS mobile device.
- * @param interval number of seconds in length
- */
-export function changeInterval(interval: number): void;
-
-/**
  * The following functions are not available via the iOS and Android API.
  * 
  * export function enableVisualizer(): void;
@@ -111,4 +105,5 @@ export function changeInterval(interval: number): void;
  * export function resetIdentify(): void;
  * export function userId(): Promise<string>;
  * export function libVersion(): Promise<string>;
+ * export function changeInterval(interval: number): void;
  */
