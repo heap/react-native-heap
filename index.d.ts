@@ -72,7 +72,7 @@ export function addUserProperties(properties: object): void;
  * auto-captured and custom events.
  *
  * This is useful if you have some persistent state, but you don't want to apply it across all of a user's
- * events with `identify`. A good example is "Logged In", which changes over the user's lifecycle.
+ * events with `addUserProperties`. A good example is "Logged In", which changes over the user's lifecycle.
  * You can use `addEventProperties` to measure how a user's behavior changes when they're logged in
  * vs. when they're logged out.
  *
