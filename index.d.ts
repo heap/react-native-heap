@@ -1,8 +1,8 @@
 /**
- * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch 
+ * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch
  * between projects or between your production and development environments.
- * 
- * __NOTE:__ On iOS, subsequent calls are ignored. On Android, a new session is initialized each time 
+ *
+ * __NOTE:__ On iOS, subsequent calls are ignored. On Android, a new session is initialized each time
  * `setAppId` is called.
  *
  * @param appId the appId corresponding to one of your projects
@@ -18,7 +18,7 @@ export function setAppId(appId: string): void;
  * Custom event properties can be queried in the same fashion as any other event property.
  *
  * @param event name of the custom interaction. Limited to 255 characters.
- * @param withProperties a JSON object containing key-value paiurs to be associated with an event. Keys and values
+ * @param withProperties a JSON object containing key-value pairs to be associated with an event. Keys and values
  * must be a number or string.
  */
 export function track(event: string, withProperties: object): void;
@@ -98,7 +98,7 @@ export function clearEventProperties(): void;
 
 /**
  * The following functions are not available via the iOS and Android API.
- * 
+ *
  * export function enableVisualizer(): void;
  * export function startDebug(): void;
  * export function stopDebug(): void;
