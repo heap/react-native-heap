@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Typescript bindings for manual tracking API.
 
-## 0.0.1 - 2018-12-23
+## [0.1.0] - 2018-12-23
 ### Added
 - Ability to manually track events from React Native code.
 - Ability to use Heap's identity APIs from React Native code.
