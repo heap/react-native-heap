@@ -1,8 +1,8 @@
 /**
- * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch 
+ * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch
  * between projects or between your production and development environments.
- * 
- * __NOTE:__ On iOS, subsequent calls are ignored. On Android, a new session is initialized each time 
+ *
+ * __NOTE:__ On iOS, subsequent calls are ignored. On Android, a new session is initialized each time
  * `setAppId` is called.
  *
  * @param appId the appId corresponding to one of your projects
@@ -13,13 +13,14 @@ export function setAppId(appId: string): void;
  * Send additional events to Heap.
  *
  * The properties map may be null to track an event with no properties.
- * The property map keys and values must be converted to strings, but they can be queried as numbers in Heap.
+ * The `withProperties` object will first be flattened before sending the event, so that any nested structure
+ * will be represented by a dot notation (e.g. a key "bar" nested under "foo" will appear as "foo.bar").
  *
  * Custom event properties can be queried in the same fashion as any other event property.
  *
  * @param event name of the custom interaction. Limited to 255 characters.
- * @param withProperties a JSON object containing key-value paiurs to be associated with an event. Keys and values
- * must be a number or string.
+ * @param withProperties a JSON object containing key-value pairs to be associated with an event.  Nested objects
+ * will be flattened.
  */
 export function track(event: string, withProperties: object): void;
 
@@ -45,6 +46,9 @@ export function identify(identity: string): void;
  *
  * The `addUserProperties` API lets you attach custom properties to user profiles,
  * such as account-level info from your database, or demographic info.
+ *
+ * The `properties` object will first be flattened before sending the event, so that any nested structure
+ * will be represented by a dot notation (e.g. a key "bar" nested under "foo" will appear as "foo.bar").
  *
  * To better understand the client-side `identify` and `addUserProperties` APIs,
  * [take a look at our comprehensive guide.](https://docs.heapanalytics.com/docs/using-identify)
@@ -76,6 +80,9 @@ export function addUserProperties(properties: object): void;
  * You can use `addEventProperties` to measure how a user's behavior changes when they're logged in
  * vs. when they're logged out.
  *
+ * The `properties` object will first be flattened before sending the event, so that any nested structure
+ * will be represented by a dot notation (e.g. a key "bar" nested under "foo" will appear as "foo.bar").
+ *
  * @param properties a JSON object containing key-value pairs to be associated with
  * every subsequent event. Keys and values must be a number or string fewer than 1024 characters.
  *
@@ -98,7 +105,7 @@ export function clearEventProperties(): void;
 
 /**
  * The following functions are not available via the iOS and Android API.
- * 
+ *
  * export function enableVisualizer(): void;
  * export function startDebug(): void;
  * export function stopDebug(): void;
