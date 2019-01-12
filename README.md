@@ -105,6 +105,7 @@ Heap.track('signed-up', { isPaid: true, amount: 20 });
 
 ### iOS Build Issues
 **Build failures due to file not found errors**
+
 Build failures may occur if your Podfile does not specify the path to your local React pod, which should be added (and any other necessary subspecs) to your Podfile. You can find more information (and an example) in the [official React Native docs](https://facebook.github.io/react-native/docs/integration-with-existing-apps#configuring-cocoapods-dependencies). Failing to do so will result in the `pod install` step installing an additional React dependency (version 0.11 by default). You can confirm if correct React version is being used in Podfile.lock.
 
 
