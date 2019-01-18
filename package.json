@@ -21,6 +21,7 @@
     "react-native-heap.podspec",
     "index.d.ts"
   ],
+  "types": "index.d.ts",
   "publishConfig": {
     "access": "public"
   },
