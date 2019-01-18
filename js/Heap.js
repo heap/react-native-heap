@@ -22,28 +22,75 @@ export default Package.create({
     ios: true,
     android: true,
   }),
-  export: Heap => ({
-    // App Properties
-    setAppId: appId => Heap.setAppId(appId),
+  export: Heap => {
+    const track = (event, payload) => {
+      Heap.track(event, flatten(payload));
+    };
 
-    // User Properties
-    identify: identity => Heap.identify(identity),
-    addUserProperties: properties =>
-      Heap.addUserProperties(flatten(properties)),
+    return {
+      // App Properties
+      setAppId: appId => Heap.setAppId(appId),
 
-    // Event Properties
-    addEventProperties: properties =>
-      Heap.addEventProperties(flatten(properties)),
-    removeEventProperty: property => Heap.removeEventProperty(property),
-    clearEventProperties: () => Heap.clearEventProperties(),
+      // User Properties
+      identify: identity => Heap.identify(identity),
+      addUserProperties: properties =>
+        Heap.addUserProperties(flatten(properties)),
 
-    // Events
-    track: (event, payload) => Heap.track(event, flatten(payload)),
+      // Event Properties
+      addEventProperties: properties =>
+        Heap.addEventProperties(flatten(properties)),
+      removeEventProperty: property => Heap.removeEventProperty(property),
+      clearEventProperties: () => Heap.clearEventProperties(),
 
-    // Redux middleware
-    reduxMiddleware: store => next => action => {
-      Heap.track('Redux Action', flatten(action));
-      next(action);
-    },
-  }),
+      // Events
+      track: track,
+
+      // Redux middleware
+      reduxMiddleware: store => next => action => {
+        Heap.track('Redux Action', flatten(action));
+        next(action);
+      },
+
+      autotrackPress: (eventType, componentThis, event) => {
+        const touchableHierarchy = getComponentHierarchy(componentThis._reactInternalFiber);
+        const touchState = componentThis.state.touchable.touchState;
+
+        const eventObj = {
+          touchableHierarchy,
+          touchState,
+        }
+
+        track(eventType, eventObj);
+      },
+    };
+  },
 });
+
+const getComponentHierarchy = (currNode) => {
+  if (currNode === null) {
+    return '';
+  }
+
+  // Skip components we don't care about.
+  // :TODO: (jmtaber129): Skip components with names/display names like 'View' and '_class'.
+  if (!(currNode.elementType !== 'RCTView' && currNode.elementType !== null && (currNode.elementType.displayName || currNode.elementType.name))) {
+    return `${getComponentHierarchy(currNode.return)}`;
+  }
+
+  const elementName = currNode.elementType.displayName || currNode.elementType.name || null;
+
+  // If the element is a button, capture its props.
+  // :TODO: (jmtaber129): Change this once we allow configurably captured props.
+  let propsString = '';
+  if (elementName === 'Button') {
+    const props = currNode.stateNode.props;
+    const keys = Object.keys(props);
+    keys.forEach((key) => {
+      if (Object(props[key]) !== props[key]) {
+        propsString += `[${key}=${props[key]}];`;
+      }
+    });
+  }
+
+  return `${getComponentHierarchy(currNode.return)}${elementName};${propsString}|`;
+};

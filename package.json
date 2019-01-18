@@ -18,19 +18,27 @@
     "android",
     "ios",
     "js",
+    "babel_plugin",
     "react-native-heap.podspec"
   ],
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
+    "@babel/core": "^7.2.2",
+    "babel-template": "^6.26.0",
+    "babel-types": "^6.26.0",
     "flat": "^4.1.0",
-    "react-native-package": "^2.5.0"
+    "mocha": "^5.2.0",
+    "react-native-package": "^2.5.0",
+    "should": "^13.2.3"
   },
   "peerDependencies": {
     "react-native": "x.x"
   },
   "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/preset-env": "^7.2.3",
     "jest": "^20.0.4",
     "react": "^16.6.3",
     "react-native": "^0.57.8"
