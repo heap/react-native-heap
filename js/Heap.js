@@ -52,32 +52,45 @@ export default Package.create({
       },
 
       autotrackPress: (eventType, componentThis, event) => {
-        const touchableHierarchy = getComponentHierarchy(componentThis._reactInternalFiber);
-        const touchState = componentThis.state.touchable.touchState;
+        const touchableHierarchy = getComponentHierarchy(componentThis);
+        const touchState =
+          componentThis &&
+          componentThis.state &&
+          componentThis.state.touchable &&
+          componentThis.state.touchable.touchState;
 
-        const eventObj = {
+        track(eventType, {
           touchableHierarchy,
           touchState,
-        }
-
-        track(eventType, eventObj);
+        });
       },
     };
   },
 });
 
-const getComponentHierarchy = (currNode) => {
+const getComponentHierarchy = (componentThis) => {
+  // :TODO: (jmtaber129): Remove this if/when we support pre-fiber React.
+  if (!componentThis._reactInternalFiber) {
+    throw new Error('Pre-fiber React versions (React 16) are currently not supported by Heap autotrack.');
+  }
+
+  return getFiberNodeComponentHierarchy(componentThis._reactInternalFiber);
+};
+
+const getFiberNodeComponentHierarchy = (currNode) => {
   if (currNode === null) {
     return '';
   }
 
   // Skip components we don't care about.
   // :TODO: (jmtaber129): Skip components with names/display names like 'View' and '_class'.
-  if (!(currNode.elementType !== 'RCTView' && currNode.elementType !== null && (currNode.elementType.displayName || currNode.elementType.name))) {
-    return `${getComponentHierarchy(currNode.return)}`;
+  if (currNode.elementType === 'RCTView'
+    || currNode.elementType === null
+    || !(currNode.elementType.displayName || currNode.elementType.name)) {
+    return getFiberNodeComponentHierarchy(currNode.return);
   }
 
-  const elementName = currNode.elementType.displayName || currNode.elementType.name || null;
+  const elementName = currNode.elementType.displayName || currNode.elementType.name;
 
   // If the element is a button, capture its props.
   // :TODO: (jmtaber129): Change this once we allow configurably captured props.
@@ -85,12 +98,17 @@ const getComponentHierarchy = (currNode) => {
   if (elementName === 'Button') {
     const props = currNode.stateNode.props;
     const keys = Object.keys(props);
+
+    // Only include props that are primitives.
     keys.forEach((key) => {
-      if (Object(props[key]) !== props[key]) {
+      if (props[key] !== null
+        && props[key] !== undefined
+        && typeof props[key] !== 'function'
+        && typeof props[key] !== 'object') {
         propsString += `[${key}=${props[key]}];`;
       }
     });
   }
 
-  return `${getComponentHierarchy(currNode.return)}${elementName};${propsString}|`;
+  return `${getFiberNodeComponentHierarchy(currNode.return)}${elementName};${propsString}|`;
 };
