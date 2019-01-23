@@ -31,14 +31,22 @@ describe('autotrack instrumentor plugin', () => {
   });
 });
 
-const getActualTransformedFile = (fixtureName) => {
-  return transformFileSync(path.join(__dirname, 'fixtures', fixtureName, 'code.js'), {
-    presets: ["module:metro-react-native-babel-preset"],
-    plugins: [instrumentorPlugin],
-    compact: false,
-  }).code;
+const getActualTransformedFile = fixtureName => {
+  return transformFileSync(
+    path.join(__dirname, 'fixtures', fixtureName, 'code.js'),
+    {
+      presets: ['module:metro-react-native-babel-preset'],
+      plugins: [instrumentorPlugin],
+      compact: false,
+    }
+  ).code;
 };
 
-const getExpectedTransformedFile = (fixtureName) => {
-  return fs.readFileSync(path.join(__dirname, 'fixtures', fixtureName, 'output.js'), 'utf8').trim();
+const getExpectedTransformedFile = fixtureName => {
+  return fs
+    .readFileSync(
+      path.join(__dirname, 'fixtures', fixtureName, 'output.js'),
+      'utf8'
+    )
+    .trim();
 };
