@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.platform = :ios, "8.0"
 
   s.dependency "React"
-  s.dependency "Heap", "5.0.8"
+  s.dependency "Heap", "5.1.0"
 end

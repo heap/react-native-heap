@@ -1,6 +1,6 @@
 {
   "name": "@heap/react-native-heap",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "React Native event tracking with Heap.",
   "license": "MIT",
   "author": "Heap <http://www.heapanalytics.com>",
@@ -19,8 +19,10 @@
     "instrumentor",
     "ios",
     "js",
-    "react-native-heap.podspec"
+    "react-native-heap.podspec",
+    "index.d.ts"
   ],
+  "types": "index.d.ts",
   "publishConfig": {
     "access": "public"
   },
