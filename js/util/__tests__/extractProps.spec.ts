@@ -70,4 +70,16 @@ describe('Extracting Props with a configuration', () => {
       '[a.innerKey=kwikset];[c=true];'
     );
   });
+
+  test('removes any brackets in a prop', () => {
+    const obj2 = _.merge({}, obj1, {
+      props: {
+        a: 'bracket][bracket][bracket]',
+      },
+    });
+
+    expect(extractProps('Element', obj2, config)).toEqual(
+      '[a=bracketbracketbracket];[c=true];'
+    );
+  });
 });
