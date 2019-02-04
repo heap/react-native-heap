@@ -1,3 +1,5 @@
+import { getCombinedCriteria } from './combineCriteria';
+
 const pick = require('lodash.pick');
 const flatten = require('flat');
 
@@ -5,11 +7,16 @@ export interface Component {
   props: {
     [propertyKey: string]: any;
   };
+  heapOptions?: ClassHeapOptions;
+}
+
+export interface ClassHeapOptions {
+  eventProps?: PropExtractorCriteria;
 }
 
 export interface PropExtractorCriteria {
   include: string[];
-  exclude: string[];
+  exclude?: string[];
 }
 
 export interface PropExtractorConfig {
@@ -21,11 +28,18 @@ export const extractProps = (
   component: Component,
   config: PropExtractorConfig
 ): string => {
-  if (!component || !config[elementName]) {
+  if (!component) {
     return '';
   }
 
-  const filteredProps = pick(component.props, config[elementName].include);
+  let classCriteria: PropExtractorCriteria = { include: [] };
+  if (component.heapOptions) {
+    classCriteria = component.heapOptions.eventProps as PropExtractorCriteria;
+  }
+  let classConfig = { [elementName]: classCriteria };
+  const criteria = getCombinedCriteria(elementName, [config, classConfig]);
+
+  const filteredProps = pick(component.props, criteria.include);
   const flattenedProps = flatten(filteredProps);
   let propsString = '';
 
