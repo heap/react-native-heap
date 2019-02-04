@@ -1,6 +1,7 @@
 // Libraries
 import { NativeModules, Platform } from 'react-native';
 import Package from 'react-native-package';
+
 import { extractProps } from './util/extractProps';
 import { builtinPropExtractorConfig } from './propExtractorConfig';
 

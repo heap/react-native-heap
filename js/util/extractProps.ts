@@ -2,7 +2,6 @@ const pick = require('lodash.pick');
 const flatten = require('flat');
 
 export interface Component {
-  //TODO: use the real RN ones
   props: {
     [propertyKey: string]: any;
   };
@@ -35,7 +34,8 @@ export const extractProps = (
     if (
       flattenedProps[key] !== null &&
       flattenedProps[key] !== undefined &&
-      typeof flattenedProps[key] !== 'function'
+      typeof flattenedProps[key] !== 'function' &&
+      !Array.isArray(flattenedProps[key])
     ) {
       // Remove all brackets from string
       let prop = flattenedProps[key].toString().replace(/[\[\]]/g, '');

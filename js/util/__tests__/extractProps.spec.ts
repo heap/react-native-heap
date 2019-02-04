@@ -1,5 +1,6 @@
-import { Component, extractProps, PropExtractorConfig } from '../extractProps';
 import * as _ from 'lodash';
+
+import { Component, extractProps, PropExtractorConfig } from '../extractProps';
 
 describe('Extracting Props with a configuration', () => {
   const obj1: Component = {
@@ -68,6 +69,18 @@ describe('Extracting Props with a configuration', () => {
 
     expect(extractProps('Element', obj2, config)).toEqual(
       '[a.innerKey=kwikset];[c=true];'
+    );
+  });
+
+  test('arrays flatten properly', () => {
+    const obj2 = _.merge({}, obj1, {
+      props: {
+        a: [3, 4, 5],
+      },
+    });
+
+    expect(extractProps('Element', obj2, config)).toEqual(
+      '[a.0=3];[a.1=4];[a.2=5];[c=true];'
     );
   });
 
