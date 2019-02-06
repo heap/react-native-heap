@@ -37,8 +37,8 @@ export const extractProps = (
       typeof flattenedProps[key] !== 'function' &&
       !Array.isArray(flattenedProps[key])
     ) {
-      // Remove all brackets from string
-      let prop = flattenedProps[key].toString().replace(/[\[\]]/g, '');
+      // Remove all brackets from string.
+      const prop = flattenedProps[key].toString().replace(/[\[\]]/g, '');
       propsString += `[${key}=${prop}];`;
     }
   });
