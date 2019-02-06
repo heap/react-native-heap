@@ -2,6 +2,9 @@
 import { NativeModules, Platform } from 'react-native';
 import Package from 'react-native-package';
 
+import { extractProps } from './util/extractProps';
+import { builtinPropExtractorConfig } from './propExtractorConfig';
+
 let flatten = require('flat');
 
 /**
@@ -68,47 +71,41 @@ export default Package.create({
   },
 });
 
-const getComponentHierarchy = (componentThis) => {
+const getComponentHierarchy = componentThis => {
   // :TODO: (jmtaber129): Remove this if/when we support pre-fiber React.
   if (!componentThis._reactInternalFiber) {
-    throw new Error('Pre-fiber React versions (React 16) are currently not supported by Heap autotrack.');
+    throw new Error(
+      'Pre-fiber React versions (React 16) are currently not supported by Heap autotrack.'
+    );
   }
 
   return getFiberNodeComponentHierarchy(componentThis._reactInternalFiber);
 };
 
-const getFiberNodeComponentHierarchy = (currNode) => {
+const getFiberNodeComponentHierarchy = currNode => {
   if (currNode === null) {
     return '';
   }
 
   // Skip components we don't care about.
   // :TODO: (jmtaber129): Skip components with names/display names like 'View' and '_class'.
-  if (currNode.elementType === 'RCTView'
-    || currNode.elementType === null
-    || !(currNode.elementType.displayName || currNode.elementType.name)) {
+  if (
+    currNode.elementType === 'RCTView' ||
+    currNode.elementType === null ||
+    !(currNode.elementType.displayName || currNode.elementType.name)
+  ) {
     return getFiberNodeComponentHierarchy(currNode.return);
   }
 
-  const elementName = currNode.elementType.displayName || currNode.elementType.name;
+  const elementName =
+    currNode.elementType.displayName || currNode.elementType.name;
+  const propsString = extractProps(
+    elementName,
+    currNode.stateNode,
+    builtinPropExtractorConfig
+  );
 
-  // If the element is a button, capture its props.
-  // :TODO: (jmtaber129): Change this once we allow configurably captured props.
-  let propsString = '';
-  if (elementName === 'Button') {
-    const props = currNode.stateNode.props;
-    const keys = Object.keys(props);
-
-    // Only include props that are primitives.
-    keys.forEach((key) => {
-      if (props[key] !== null
-        && props[key] !== undefined
-        && typeof props[key] !== 'function'
-        && typeof props[key] !== 'object') {
-        propsString += `[${key}=${props[key]}];`;
-      }
-    });
-  }
-
-  return `${getFiberNodeComponentHierarchy(currNode.return)}${elementName};${propsString}|`;
+  return `${getFiberNodeComponentHierarchy(
+    currNode.return
+  )}${elementName};${propsString}|`;
 };
