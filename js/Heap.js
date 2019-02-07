@@ -62,14 +62,41 @@ export default Package.create({
           componentThis.state.touchable &&
           componentThis.state.touchable.touchState;
 
+        const targetText = getTargetText(componentThis._reactInternalFiber);
+
         track(eventType, {
           touchableHierarchy,
           touchState,
+          targetText,
         });
       },
     };
   },
 });
+
+// :TODO: (jmtaber129): Consider implementing sibling target text.
+const getTargetText = fiberNode => {
+  if (fiberNode.elementType === 'RCTText') {
+    return fiberNode.memoizedProps.children;
+  }
+
+  if (fiberNode.child === null) {
+    return '';
+  }
+
+  const children = [];
+  let currChild = fiberNode.child;
+  while (currChild) {
+    children.push(currChild);
+    currChild = currChild.sibling;
+  }
+
+  let targetText = '';
+  children.forEach(child => {
+    targetText = (targetText + ' ' + getTargetText(child)).trim();
+  });
+  return targetText;
+}
 
 const getComponentHierarchy = componentThis => {
   // :TODO: (jmtaber129): Remove this if/when we support pre-fiber React.
