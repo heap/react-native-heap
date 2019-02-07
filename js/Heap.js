@@ -99,6 +99,11 @@ const getFiberNodeComponentHierarchy = currNode => {
 
   const elementName =
     currNode.elementType.displayName || currNode.elementType.name;
+
+  if (elementName === 'View') {
+    return getFiberNodeComponentHierarchy(currNode.return);
+  }
+
   const propsString = extractProps(
     elementName,
     currNode.stateNode,
