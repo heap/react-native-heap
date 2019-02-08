@@ -64,11 +64,16 @@ export default Package.create({
 
         const targetText = getTargetText(componentThis._reactInternalFiber);
 
-        track(eventType, {
+        const autotrackProps = {
           touchableHierarchy,
           touchState,
-          targetText,
-        });
+        };
+
+        if (targetText !== '') {
+          autotrackProps.targetText = targetText;
+        }
+
+        track(eventType, autotrackProps);
       },
     };
   },
