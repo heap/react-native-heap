@@ -100,6 +100,8 @@ const getFiberNodeComponentHierarchy = currNode => {
   const elementName =
     currNode.elementType.displayName || currNode.elementType.name;
 
+  // In dev builds, 'View' components remain in the fiber tree, but don't provide any useful
+  // information, so exclude these from the hierarchy.
   if (elementName === 'View') {
     return getFiberNodeComponentHierarchy(currNode.return);
   }
