@@ -1,83 +1,63 @@
 // Libraries
 import { NativeModules, Platform } from 'react-native';
-import Package from 'react-native-package';
 
 import { extractProps } from './util/extractProps';
 import { builtinPropExtractorConfig } from './propExtractorConfig';
 
 let flatten = require('flat');
 
-/**
- * Package.create handles two things:
- *
- *   1. Checks that for each platform that's `enabled`, the module is installed
- *      properly. If it's not, it logs a warning.
- *   2. Guards the module on every platform that is not `enabled`. This allows
- *      the module to exist in cross-platform code without hacks to disable it.
- *
- * You can read more about `react-native-package` here:
- * https://github.com/negativetwelve/react-native-package
- */
-export default Package.create({
-  json: require('../package.json'),
-  nativeModule: NativeModules.RNHeap,
-  enabled: Platform.select({
-    ios: true,
-    android: true,
-  }),
-  export: Heap => {
-    const track = (event, payload) => {
-      Heap.track(event, flatten(payload));
-    };
+const RNHeap = NativeModules.RNHeap;
 
-    return {
-      // App Properties
-      setAppId: appId => Heap.setAppId(appId),
+const track = (event, payload) => {
+  RNHeap.track(event, flatten(payload));
+};
 
-      // User Properties
-      identify: identity => Heap.identify(identity),
-      addUserProperties: properties =>
-        Heap.addUserProperties(flatten(properties)),
+export default {
+  // App Properties
+  setAppId: appId => RNHeap.setAppId(appId),
 
-      // Event Properties
-      addEventProperties: properties =>
-        Heap.addEventProperties(flatten(properties)),
-      removeEventProperty: property => Heap.removeEventProperty(property),
-      clearEventProperties: () => Heap.clearEventProperties(),
+  // User Properties
+  identify: identity => RNHeap.identify(identity),
+  addUserProperties: properties =>
+    RNHeap.addUserProperties(flatten(properties)),
 
-      // Events
-      track: track,
+  // Event Properties
+  addEventProperties: properties =>
+    RNHeap.addEventProperties(flatten(properties)),
+  removeEventProperty: property => RNHeap.removeEventProperty(property),
+  clearEventProperties: () => RNHeap.clearEventProperties(),
 
-      // Redux middleware
-      reduxMiddleware: store => next => action => {
-        Heap.track('Redux Action', flatten(action));
-        next(action);
-      },
+  // Events
+  track: track,
 
-      autotrackPress: (eventType, componentThis, event) => {
-        const touchableHierarchy = getComponentHierarchy(componentThis);
-        const touchState =
-          componentThis &&
-          componentThis.state &&
-          componentThis.state.touchable &&
-          componentThis.state.touchable.touchState;
-
-        const targetText = getTargetText(componentThis._reactInternalFiber);
-
-        const autotrackProps = {
-          touchableHierarchy,
-          touchState,
-        };
-
-        if (targetText !== '') {
-          autotrackProps.targetText = targetText;
-        }
-
-        track(eventType, autotrackProps);
-      },
-    };
+  // Redux middleware
+  reduxMiddleware: store => next => action => {
+    RNHeap.track('Redux Action', flatten(action));
+    next(action);
   },
-});
+
+  autotrackPress: (eventType, componentThis, event) => {
+    const touchableHierarchy = getComponentHierarchy(componentThis);
+    const touchState =
+      componentThis &&
+      componentThis.state &&
+      componentThis.state.touchable &&
+      componentThis.state.touchable.touchState;
+
+    const targetText = getTargetText(componentThis._reactInternalFiber);
+
+    const autotrackProps = {
+      touchableHierarchy,
+      touchState,
+    };
+
+    if (targetText !== '') {
+      autotrackProps.targetText = targetText;
+    }
+
+    track(eventType, autotrackProps);
+  },
+};
 
 // :TODO: (jmtaber129): Consider implementing sibling target text.
 const getTargetText = fiberNode => {
