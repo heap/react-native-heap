@@ -36,7 +36,7 @@ export const extractProps = (
   if (component.heapOptions && component.heapOptions.eventProps) {
     classCriteria = component.heapOptions.eventProps as PropExtractorCriteria;
   }
-  let classConfig = { [elementName]: classCriteria };
+  const classConfig = { [elementName]: classCriteria };
   const criteria = getCombinedCriteria(elementName, [config, classConfig]);
 
   const filteredProps = pick(component.props, criteria.include);

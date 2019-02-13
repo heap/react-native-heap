@@ -5,11 +5,9 @@ export const getCombinedCriteria = (
   componentName: string,
   configs: PropExtractorConfig[]
 ): PropExtractorCriteria => {
-  let remainingConfigs: PropExtractorConfig[] = [...configs];
-  let inclusionSet = new Collections.Set<string>();
+  const inclusionSet = new Collections.Set<string>();
 
-  while (remainingConfigs.length > 0) {
-    let config = remainingConfigs.shift();
+  for (const config of configs) {
     let criteria = config[componentName];
 
     if (!criteria) {
@@ -18,9 +16,9 @@ export const getCombinedCriteria = (
 
     let configInclusionSet = new Collections.Set<string>();
     let configExclusionSet = new Collections.Set<string>();
-    criteria.include.map(s => configInclusionSet.add(s));
+    criteria.include.forEach(s => configInclusionSet.add(s));
     if (criteria.exclude) {
-      criteria.exclude.map(s => configExclusionSet.add(s));
+      criteria.exclude.forEach(s => configExclusionSet.add(s));
     }
 
     inclusionSet.difference(configExclusionSet);
