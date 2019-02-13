@@ -9,7 +9,6 @@
   },
   "dependencies": {
     "@heap/react-native-heap": "heap-react-native-heap-0.1.2.tgz",
-    "babel-plugin-add-react-displayname": "0.0.5",
     "react": "16.6.1",
     "react-native": "0.57.5",
     "react-redux": "^5.1.1",
