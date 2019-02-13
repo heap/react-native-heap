@@ -1,4 +1,4 @@
-import { getCombinedCriteria } from './combineCriteria';
+import { getCombinedInclusionList } from './combineConfigs';
 
 const pick = require('lodash.pick');
 const flatten = require('flat');
@@ -37,9 +37,12 @@ export const extractProps = (
     classCriteria = component.heapOptions.eventProps as PropExtractorCriteria;
   }
   const classConfig = { [elementName]: classCriteria };
-  const criteria = getCombinedCriteria(elementName, [config, classConfig]);
+  const inclusionList = getCombinedInclusionList(elementName, [
+    config,
+    classConfig,
+  ]);
 
-  const filteredProps = pick(component.props, criteria.include);
+  const filteredProps = pick(component.props, inclusionList);
   const flattenedProps = flatten(filteredProps);
   let propsString = '';
 

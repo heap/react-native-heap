@@ -1,4 +1,4 @@
-import { getCombinedCriteria } from '../combineCriteria';
+import { getCombinedInclusionList } from '../combineConfigs';
 import { PropExtractorConfig } from '../extractProps';
 const deepFreeze = require('deep-freeze');
 
@@ -11,33 +11,38 @@ const makeTestConfig = (include, exclude) => {
   });
 };
 
-describe('The criteria combiner', () => {
+describe('The config combiner', () => {
   const config1: PropExtractorConfig = makeTestConfig(['a', 'b', 'c'], []);
   const config2: PropExtractorConfig = makeTestConfig(['d', 'e'], ['a']);
   const config3: PropExtractorConfig = makeTestConfig(['f', 'g'], ['d', 'b']);
 
   test('combines configs normally', () => {
     expect(
-      getCombinedCriteria('FooClass', [config1, config2, config3])
-    ).toEqual({
-      include: ['c', 'e', 'f', 'g'],
-    });
+      getCombinedInclusionList('FooClass', [config1, config2, config3])
+    ).toEqual(['c', 'e', 'f', 'g']);
   });
 
   test('sorts the keys', () => {
-    expect(getCombinedCriteria('FooClass', [config2, config1])).toEqual({
-      include: ['a', 'b', 'c', 'd', 'e'],
-    });
+    expect(getCombinedInclusionList('FooClass', [config2, config1])).toEqual([
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+    ]);
   });
 
   test('handles undefined exclusion lists', () => {
     const config4: PropExtractorConfig = makeTestConfig(['h', 'i'], undefined);
-    expect(getCombinedCriteria('FooClass', [config2, config4])).toEqual({
-      include: ['d', 'e', 'h', 'i'],
-    });
+    expect(getCombinedInclusionList('FooClass', [config2, config4])).toEqual([
+      'd',
+      'e',
+      'h',
+      'i',
+    ]);
   });
 
   test('handles no inputs', () => {
-    expect(getCombinedCriteria('FooClass', [])).toEqual({ include: [] });
+    expect(getCombinedInclusionList('FooClass', [])).toEqual([]);
   });
 });

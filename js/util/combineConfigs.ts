@@ -1,10 +1,10 @@
 import * as Collections from 'typescript-collections';
-import { PropExtractorCriteria, PropExtractorConfig } from './extractProps';
+import { PropExtractorConfig } from './extractProps';
 
-export const getCombinedCriteria = (
+export const getCombinedInclusionList = (
   componentName: string,
   configs: PropExtractorConfig[]
-): PropExtractorCriteria => {
+): string[] => {
   const inclusionSet = new Collections.Set<string>();
 
   for (const config of configs) {
@@ -25,5 +25,5 @@ export const getCombinedCriteria = (
     inclusionSet.union(configInclusionSet);
   }
 
-  return { include: inclusionSet.toArray().sort() };
+  return inclusionSet.toArray().sort();
 };
