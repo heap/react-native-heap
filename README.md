@@ -12,6 +12,16 @@ React Native tracker for [Heap](https://heapanalytics.com).
 npm install @heap/react-native-heap
 ```
 
+For autotrack, add the following plugins to your `.babelrc` file (not required for manual tracking):
+```json
+{
+  "plugins": [
+    "add-react-displayname",
+    "./node_modules/@heap/react-native-heap/instrumentor/src/index.js"
+  ]
+}
+```
+
 We will be supporting `npm link` in a future release. Please follow the manual setup instructions below for the time being.
 
 ### Manual setup - iOS with Cocoapods
