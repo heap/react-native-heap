@@ -31,7 +31,8 @@
     "babel-template": "^6.26.0",
     "babel-types": "^6.26.0",
     "flat": "^4.1.0",
-    "lodash.pick": "^4.4.0"
+    "lodash.pick": "^4.4.0",
+    "babel-plugin-add-react-displayname": "0.0.5"
   },
   "peerDependencies": {
     "react-native": "x.x"
