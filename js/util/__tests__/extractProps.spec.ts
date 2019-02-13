@@ -11,6 +11,15 @@ describe('Extracting Props with a configuration', () => {
     },
   };
 
+  const objWithEventProps: Component = {
+    props: obj1.props,
+    heapOptions: {
+      eventProps: {
+        include: ['b'],
+      },
+    },
+  };
+
   const config: PropExtractorConfig = {
     Element: {
       include: ['a', 'c'],
@@ -93,6 +102,23 @@ describe('Extracting Props with a configuration', () => {
 
     expect(extractProps('Element', obj2, config)).toEqual(
       '[a=bracketbracketbracket];[c=true];'
+    );
+  });
+
+  test('extracts class configurations', () => {
+    expect(extractProps('Element', objWithEventProps, config)).toEqual(
+      '[a=foo];[b=7];[c=true];'
+    );
+  });
+
+  test('Can handle a heapOptions without an eventProps', () => {
+    const objWithEventProps2 = {
+      ...objWithEventProps,
+      heapOptions: {},
+    };
+
+    expect(extractProps('Element', objWithEventProps2, config)).toEqual(
+      '[a=foo];[c=true];'
     );
   });
 });

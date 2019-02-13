@@ -33,7 +33,7 @@ export const extractProps = (
   }
 
   let classCriteria: PropExtractorCriteria = { include: [] };
-  if (component.heapOptions) {
+  if (component.heapOptions && component.heapOptions.eventProps) {
     classCriteria = component.heapOptions.eventProps as PropExtractorCriteria;
   }
   let classConfig = { [elementName]: classCriteria };

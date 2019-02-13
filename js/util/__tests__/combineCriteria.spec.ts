@@ -11,7 +11,7 @@ const makeTestConfig = (include, exclude) => {
   });
 };
 
-describe('The criteriaCache', () => {
+describe('The criteria combiner', () => {
   const config1: PropExtractorConfig = makeTestConfig(['a', 'b', 'c'], []);
   const config2: PropExtractorConfig = makeTestConfig(['d', 'e'], ['a']);
   const config3: PropExtractorConfig = makeTestConfig(['f', 'g'], ['d', 'b']);
