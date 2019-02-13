@@ -35,6 +35,7 @@ class MainScreen extends Component {
         <Button testID="clearProps" title="Clear Event Properties" onPress={() => Heap.clearEventProperties()}></Button>
         <TouchableOpacity testID="touchableOpacityText">
           <Text>Touchable Opacity</Text>
+          <Text>Foo</Text>
         </TouchableOpacity>
         <TouchableHighlight testID="touchableHighlightText">
           <Text>Touchable Highlight</Text>
