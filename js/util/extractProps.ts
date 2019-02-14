@@ -23,6 +23,8 @@ export interface PropExtractorConfig {
   [componentName: string]: PropExtractorCriteria;
 }
 
+const EMPTY_CRITERIA = { include: [] };
+
 export const extractProps = (
   elementName: string,
   component: Component,
@@ -32,14 +34,16 @@ export const extractProps = (
     return '';
   }
 
-  let classCriteria: PropExtractorCriteria = { include: [] };
+  let classCriteria: PropExtractorCriteria = EMPTY_CRITERIA;
   if (component.heapOptions && component.heapOptions.eventProps) {
     classCriteria = component.heapOptions.eventProps as PropExtractorCriteria;
   }
-  const classConfig = { [elementName]: classCriteria };
-  const inclusionList = getCombinedInclusionList(elementName, [
-    config,
-    classConfig,
+
+  const builtInCriteria = config[elementName] || EMPTY_CRITERIA;
+
+  const inclusionList = getCombinedInclusionList([
+    builtInCriteria,
+    classCriteria,
   ]);
 
   const filteredProps = pick(component.props, inclusionList);
