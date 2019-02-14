@@ -4,8 +4,8 @@ const deepFreeze = require('deep-freeze');
 
 const makeTestCriteria = (include, exclude) => {
   return deepFreeze({
-    include: include,
-    exclude: exclude,
+    include,
+    exclude,
   });
 };
 
@@ -26,7 +26,7 @@ describe('The config combiner', () => {
     );
   });
 
-  test("Can't include something previously excluded", () => {
+  test("doesn't include something previously excluded", () => {
     const criteria4: PropExtractorCriteria = makeTestCriteria(['a'], []);
     expect(getCombinedInclusionList([criteria2, criteria4])).toEqual([
       'd',
