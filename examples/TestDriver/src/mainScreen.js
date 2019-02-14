@@ -33,6 +33,7 @@ class MainScreen extends Component {
         <Button testID="aep" title="Add Event Properties" onPress={() => Heap.addEventProperties({eventProp1: 'bar', eventProp2: 'foo'})}></Button>
         <Button testID="removeProp" title="Remove eventProp1" onPress={() => Heap.removeEventProperty('eventProp1')}></Button>
         <Button testID="clearProps" title="Clear Event Properties" onPress={() => Heap.clearEventProperties()}></Button>
+        <Button title="Navigate" onPress={() => this.props.navigation.navigate('Other')}/>
         <TouchableOpacity testID="touchableOpacityText">
           <Text>Touchable Opacity</Text>
           <Text>Foo</Text>

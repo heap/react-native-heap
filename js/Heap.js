@@ -1,4 +1,5 @@
 // Libraries
+import React from 'react';
 import { NativeModules, Platform } from 'react-native';
 
 import { extractProps } from './util/extractProps';
@@ -10,6 +11,60 @@ const RNHeap = NativeModules.RNHeap;
 
 const track = (event, payload) => {
   RNHeap.track(event, flatten(payload));
+};
+
+getActiveRouteName = (navigationState) => {
+  if (!navigationState) {
+    return null;
+  }
+  const route = navigationState.routes[navigationState.index];
+  // dive into nested navigators
+  if (route.routes) {
+    return `${route.routeName}::${getActiveRouteName(route)}`;
+  }
+
+  return route.routeName;
+}
+
+let navRef = null;
+const NavigationService = {
+  setTopLevelNavigator: (ref) => {
+    navRef = ref;
+  }
+}
+
+const withHeapNavigationAutotrack = (AppContainer) => {
+  return class extends React.Component {
+    componentDidMount() {
+      console.log(navRef);
+      const initialPageviewPath = getActiveRouteName(navRef.state.nav);
+      track('screenview', {
+        path: initialPageviewPath,
+      });
+      console.log(initialPageviewPath);
+    }
+
+    render() {
+      return (
+        <AppContainer
+          ref={navigatorRef => {
+            NavigationService.setTopLevelNavigator(navigatorRef);
+          }}
+          onNavigationStateChange={(prev, next, action) => {
+            if (action.type === 'Navigation/NAVIGATE' || action.type === 'Navigation/BACK') {
+              const currentScreen = getActiveRouteName(next);
+              console.log('New Pageview', currentScreen);
+              track('screenview', {
+                path: currentScreen,
+              });
+            }
+          }}
+        >
+          {this.props.children}
+        </AppContainer>
+      );
+    }
+  };
 };
 
 export default {
@@ -57,6 +112,8 @@ export default {
 
     track(eventType, autotrackProps);
   },
+
+  withHeapNavigationAutotrack,
 };
 
 // :TODO: (jmtaber129): Consider implementing sibling target text.

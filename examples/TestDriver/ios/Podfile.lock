@@ -57,6 +57,8 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
+  - RNGestureHandler (1.0.15):
+    - React
   - yoga (0.57.5.React)
 
 DEPENDENCIES:
@@ -77,6 +79,7 @@ DEPENDENCIES:
   - React/RCTText (from `../node_modules/react-native`)
   - React/RCTVibration (from `../node_modules/react-native`)
   - React/RCTWebSocket (from `../node_modules/react-native`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - yoga (from `../node_modules/react-native/ReactCommon/yoga/yoga.podspec`)
 
 SPEC REPOS:
@@ -95,6 +98,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native"
   react-native-heap:
     :path: "../node_modules/@heap/react-native-heap"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
   yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga/yoga.podspec"
 
@@ -106,8 +111,9 @@ SPEC CHECKSUMS:
   Heap: 542282698e895bf511429e87e213ad863faabd5d
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
   react-native-heap: 720108c6585d0dedcc9fdca9ee336cd4758c3655
+  RNGestureHandler: afde2addc517e85cc97a25bfe119acbee779a7ce
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
-PODFILE CHECKSUM: fcda9e350f1de67f063fca623567dce94a74fd3e
+PODFILE CHECKSUM: 552d41c2899016435b38ff4b7aa16fe120e57790
 
 COCOAPODS: 1.5.3
