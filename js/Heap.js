@@ -1,6 +1,5 @@
 // Libraries
 import { NativeModules, Platform } from 'react-native';
-
 import { extractProps } from './util/extractProps';
 import { builtinPropExtractorConfig } from './propExtractorConfig';
 
@@ -81,7 +80,7 @@ const getTargetText = fiberNode => {
     targetText = (targetText + ' ' + getTargetText(child)).trim();
   });
   return targetText;
-}
+};
 
 const getComponentHierarchy = componentThis => {
   // :TODO: (jmtaber129): Remove this if/when we support pre-fiber React.
@@ -109,8 +108,7 @@ const getFiberNodeComponentHierarchy = currNode => {
     return getFiberNodeComponentHierarchy(currNode.return);
   }
 
-  const elementName =
-    currNode.type.displayName || currNode.type.name;
+  const elementName = currNode.type.displayName || currNode.type.name;
 
   // In dev builds, 'View' components remain in the fiber tree, but don't provide any useful
   // information, so exclude these from the hierarchy.
