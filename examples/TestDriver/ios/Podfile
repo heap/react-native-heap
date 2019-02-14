@@ -32,6 +32,8 @@ target "TestDriver" do
 
   pod "react-native-heap", path: "../node_modules/@heap/react-native-heap"
 
+  pod 'RNGestureHandler', :path => '../node_modules/react-native-gesture-handler'
+
   target "TestDriverTests" do
     inherit! :search_paths
   end
