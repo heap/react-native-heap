@@ -3,13 +3,18 @@ import { getCombinedInclusionList } from './combineConfigs';
 const pick = require('lodash.pick');
 const flatten = require('flat');
 
-export interface FiberNode {
-  memoizedProps: {
+export interface StateNode {
+  props?: {
     [propertyKey: string]: any;
   };
-  stateNode?: {
-    heapOptions?: ClassHeapOptions;
+  heapOptions?: ClassHeapOptions;
+}
+
+export interface FiberNode {
+  memoizedProps?: {
+    [propertyKey: string]: any;
   };
+  stateNode?: StateNode;
 }
 
 export interface ClassHeapOptions {
