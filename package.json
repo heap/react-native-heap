@@ -55,6 +55,7 @@
     "typescript": "^3.2.4"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "test-instrumentor": "./node_modules/mocha/bin/mocha --compilers js:@babel/register instrumentor/test/"
   }
 }
