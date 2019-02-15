@@ -3,11 +3,18 @@ import { getCombinedInclusionList } from './combineConfigs';
 const pick = require('lodash.pick');
 const flatten = require('flat');
 
-export interface Component {
-  props: {
+export interface StateNode {
+  props?: {
     [propertyKey: string]: any;
   };
   heapOptions?: ClassHeapOptions;
+}
+
+export interface FiberNode {
+  memoizedProps?: {
+    [propertyKey: string]: any;
+  };
+  stateNode?: StateNode;
 }
 
 export interface ClassHeapOptions {
@@ -27,16 +34,16 @@ const EMPTY_CRITERIA = { include: [] };
 
 export const extractProps = (
   elementName: string,
-  component: Component,
+  fiberNode: FiberNode,
   config: PropExtractorConfig
 ): string => {
-  if (!component) {
+  if (!fiberNode) {
     return '';
   }
 
   let classCriteria: PropExtractorCriteria = EMPTY_CRITERIA;
-  if (component.heapOptions && component.heapOptions.eventProps) {
-    classCriteria = component.heapOptions.eventProps as PropExtractorCriteria;
+  if (fiberNode.stateNode && fiberNode.stateNode.heapOptions && fiberNode.stateNode.heapOptions.eventProps) {
+    classCriteria = fiberNode.stateNode.heapOptions.eventProps as PropExtractorCriteria;
   }
 
   const builtInCriteria = config[elementName] || EMPTY_CRITERIA;
@@ -46,7 +53,15 @@ export const extractProps = (
     classCriteria,
   ]);
 
-  const filteredProps = pick(component.props, inclusionList);
+  // :TODO: (jmtaber129): Determine if we should just always get props from 'memoizedProps'.
+  let props;
+  if (fiberNode.stateNode) {
+    props = fiberNode.stateNode.props;
+  } else {
+    props = fiberNode.memoizedProps;
+  }
+
+  const filteredProps = pick(props, inclusionList);
   const flattenedProps = flatten(filteredProps);
   let propsString = '';
 

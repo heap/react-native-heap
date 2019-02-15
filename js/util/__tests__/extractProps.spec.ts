@@ -1,21 +1,25 @@
 import * as _ from 'lodash';
 
-import { Component, extractProps, PropExtractorConfig } from '../extractProps';
+import { FiberNode, extractProps, PropExtractorConfig } from '../extractProps';
 
 describe('Extracting Props with a configuration', () => {
-  const obj1: Component = {
-    props: {
-      a: 'foo',
-      b: 7,
-      c: true,
+  const obj1: FiberNode = {
+    stateNode: {
+      props: {
+        a: 'foo',
+        b: 7,
+        c: true,
+      },
     },
   };
 
-  const objWithEventProps: Component = {
-    props: obj1.props,
-    heapOptions: {
-      eventProps: {
-        include: ['b'],
+  const objWithEventProps: FiberNode = {
+    stateNode: {
+      props: obj1.stateNode.props,
+      heapOptions: {
+        eventProps: {
+          include: ['b'],
+        },
       },
     },
   };
@@ -44,12 +48,12 @@ describe('Extracting Props with a configuration', () => {
     expect(extractProps('OtherElement', obj1, config)).toEqual('');
   });
 
-  test('can handle a null component', () => {
+  test('can handle a null fiberNode', () => {
     expect(extractProps('Element', null, config)).toEqual('');
   });
 
   test('can handle if a prop is null or undefined', () => {
-    const obj2 = _.merge({}, obj1, { props: { c: null } });
+    const obj2 = _.merge({}, obj1, { stateNode: {props: { c: null } }});
     expect(extractProps('Element', obj2, config)).toEqual('[a=foo];');
 
     const config2 = _.merge({}, config, { Obj1: { include: ['a', 'c', 'd'] } });
@@ -58,9 +62,11 @@ describe('Extracting Props with a configuration', () => {
 
   test("functions don't come through", () => {
     const obj2 = _.merge({}, obj1, {
-      props: {
-        a: () => {
-          console.log('hi!');
+      stateNode: {
+        props: {
+          a: () => {
+            console.log('hi!');
+          },
         },
       },
     });
@@ -69,9 +75,11 @@ describe('Extracting Props with a configuration', () => {
 
   test('nested objects flatten properly', () => {
     const obj2 = _.merge({}, obj1, {
-      props: {
-        a: {
-          innerKey: 'kwikset',
+      stateNode: {
+        props: {
+          a: {
+            innerKey: 'kwikset',
+          },
         },
       },
     });
@@ -83,8 +91,10 @@ describe('Extracting Props with a configuration', () => {
 
   test('arrays flatten properly', () => {
     const obj2 = _.merge({}, obj1, {
-      props: {
-        a: [3, 4, 5],
+      stateNode: {
+        props: {
+          a: [3, 4, 5],
+        },
       },
     });
 
@@ -95,8 +105,10 @@ describe('Extracting Props with a configuration', () => {
 
   test('removes any brackets in a prop', () => {
     const obj2 = _.merge({}, obj1, {
-      props: {
-        a: 'bracket][bracket][bracket]',
+      stateNode: {
+        props: {
+          a: 'bracket][bracket][bracket]',
+        },
       },
     });
 
@@ -113,12 +125,22 @@ describe('Extracting Props with a configuration', () => {
 
   test('Can handle a heapOptions without an eventProps', () => {
     const objWithEventProps2 = {
-      ...objWithEventProps,
-      heapOptions: {},
+      stateNode: {
+        props: obj1.stateNode.props,
+        heapOptions: {},
+      },
     };
 
     expect(extractProps('Element', objWithEventProps2, config)).toEqual(
       '[a=foo];[c=true];'
     );
+  });
+
+  test('uses memoizedProps when stateNode is null', () => {
+    const objNoStateNode = {
+      memoizedProps: obj1.stateNode.props,
+    };
+
+    expect(extractProps('Element', objNoStateNode, config)).toEqual('[a=foo];[c=true];');
   });
 });
