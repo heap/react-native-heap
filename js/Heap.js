@@ -118,7 +118,7 @@ const getFiberNodeComponentHierarchy = currNode => {
 
   const propsString = extractProps(
     elementName,
-    currNode.stateNode,
+    currNode,
     builtinPropExtractorConfig
   );
 
