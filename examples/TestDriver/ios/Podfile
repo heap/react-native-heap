@@ -35,3 +35,11 @@ target "TestDriver" do
     inherit! :search_paths
   end
 end
+
+# Force react-native-heap to be built as a static framework
+pre_install do |installer|
+    pod = installer.pod_targets.find { |p| p.name == 'react-native-heap'}
+    def pod.static_framework?
+        true
+    end
+end
