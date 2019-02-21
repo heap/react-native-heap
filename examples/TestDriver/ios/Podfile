@@ -2,6 +2,7 @@
 source "https://github.com/CocoaPods/Specs.git"
 
 platform :ios, "9.0"
+use_frameworks!
 
 target "TestDriver" do
   rn_path = "../node_modules/react-native"
@@ -36,8 +37,8 @@ target "TestDriver" do
   end
 end
 
-# Force react-native-heap to be built as a static framework
-# Based on comments at https://github.com/CocoaPods/CocoaPods/issues/7428
+# Force react-native-heap to be built as a static framework.
+# Based on comments at https://github.com/CocoaPods/CocoaPods/issues/7428 .
 pre_install do |installer|
     pod = installer.pod_targets.find { |p| p.name == 'react-native-heap'}
     def pod.static_framework?

@@ -134,8 +134,8 @@ clang: error: linker command failed with exit code 1 (use -v to see invocation)
 This may appear if the `Podfile` contains a `use_frameworks!` directive. One solution is to add the following at the very end of your `Podfile`:
 
 ```ruby
-# Force react-native-heap to be built as a static framework
-# Based on comments at https://github.com/CocoaPods/CocoaPods/issues/7428
+# Force react-native-heap to be built as a static framework.
+# Based on comments at https://github.com/CocoaPods/CocoaPods/issues/7428 .
 pre_install do |installer|
     pod = installer.pod_targets.find { |p| p.name == 'react-native-heap'}
     def pod.static_framework?
