@@ -143,4 +143,29 @@ describe('Extracting Props with a configuration', () => {
 
     expect(extractProps('Element', objNoStateNode, config)).toEqual('[a=foo];[c=true];');
   });
+
+  test('uses type.heapOptions when there is no stateNode', () => {
+    const objNoStateNodePropConfig = {
+      memoizedProps: obj1.stateNode.props,
+      type: {
+        heapOptions: objWithEventProps.stateNode.heapOptions,
+      },
+    };
+
+    expect(extractProps('Element', objNoStateNodePropConfig, config)).toEqual('[a=foo];[b=7];[c=true];');
+  });
+
+  test('uses stateNode.heapOptions and not type.heapOptions if stateNode exists', () => {
+    const objMultipleHeapOptions = {
+      stateNode: {
+        props: obj1.stateNode.props,
+      },
+      type: {
+        // This should be ignored, since the 'stateNode' exists.
+        heapOptions: objWithEventProps.stateNode.heapOptions,
+      },
+    };
+
+    expect(extractProps('Element', objMultipleHeapOptions, config)).toEqual('[a=foo];[c=true];');
+  });
 });
