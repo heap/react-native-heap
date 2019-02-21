@@ -17,7 +17,7 @@ export interface FiberNode {
   stateNode?: StateNode;
   type?: {
     heapOptions?: ClassHeapOptions;
-  }
+  };
 }
 
 export interface ClassHeapOptions {
@@ -45,10 +45,21 @@ export const extractProps = (
   }
 
   let classCriteria: PropExtractorCriteria = EMPTY_CRITERIA;
-  if (fiberNode.stateNode && fiberNode.stateNode.heapOptions && fiberNode.stateNode.heapOptions.eventProps) {
-    classCriteria = fiberNode.stateNode.heapOptions.eventProps as PropExtractorCriteria;
-  } else if (!fiberNode.stateNode && fiberNode.type && fiberNode.type.heapOptions && fiberNode.type.heapOptions.eventProps) {
-    classCriteria = fiberNode.type.heapOptions.eventProps as PropExtractorCriteria;
+  if (
+    fiberNode.stateNode &&
+    fiberNode.stateNode.heapOptions &&
+    fiberNode.stateNode.heapOptions.eventProps
+  ) {
+    classCriteria = fiberNode.stateNode.heapOptions
+      .eventProps as PropExtractorCriteria;
+  } else if (
+    !fiberNode.stateNode &&
+    fiberNode.type &&
+    fiberNode.type.heapOptions &&
+    fiberNode.type.heapOptions.eventProps
+  ) {
+    classCriteria = fiberNode.type.heapOptions
+      .eventProps as PropExtractorCriteria;
   }
 
   const builtInCriteria = config[elementName] || EMPTY_CRITERIA;

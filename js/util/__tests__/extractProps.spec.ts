@@ -53,7 +53,7 @@ describe('Extracting Props with a configuration', () => {
   });
 
   test('can handle if a prop is null or undefined', () => {
-    const obj2 = _.merge({}, obj1, { stateNode: {props: { c: null } }});
+    const obj2 = _.merge({}, obj1, { stateNode: { props: { c: null } } });
     expect(extractProps('Element', obj2, config)).toEqual('[a=foo];');
 
     const config2 = _.merge({}, config, { Obj1: { include: ['a', 'c', 'd'] } });
@@ -141,7 +141,9 @@ describe('Extracting Props with a configuration', () => {
       memoizedProps: obj1.stateNode.props,
     };
 
-    expect(extractProps('Element', objNoStateNode, config)).toEqual('[a=foo];[c=true];');
+    expect(extractProps('Element', objNoStateNode, config)).toEqual(
+      '[a=foo];[c=true];'
+    );
   });
 
   test('uses type.heapOptions when there is no stateNode', () => {
@@ -152,7 +154,9 @@ describe('Extracting Props with a configuration', () => {
       },
     };
 
-    expect(extractProps('Element', objNoStateNodePropConfig, config)).toEqual('[a=foo];[b=7];[c=true];');
+    expect(extractProps('Element', objNoStateNodePropConfig, config)).toEqual(
+      '[a=foo];[b=7];[c=true];'
+    );
   });
 
   test('uses stateNode.heapOptions and not type.heapOptions if stateNode exists', () => {
@@ -166,6 +170,8 @@ describe('Extracting Props with a configuration', () => {
       },
     };
 
-    expect(extractProps('Element', objMultipleHeapOptions, config)).toEqual('[a=foo];[c=true];');
+    expect(extractProps('Element', objMultipleHeapOptions, config)).toEqual(
+      '[a=foo];[c=true];'
+    );
   });
 });
