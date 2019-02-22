@@ -45,6 +45,13 @@ export const extractProps = (
   }
 
   let classCriteria: PropExtractorCriteria = EMPTY_CRITERIA;
+
+  // For React class components, 'fiberNode' has a 'stateNode' prop that corresponds to the 'this'
+  // context of the class instance, so if 'heapOptions' exists, they will be on 'stateNode'. For
+  // functional components, there is no 'stateNode', and 'heapOptions' are assigned as a prop to
+  // 'type', so if 'heapOptions' exists, they will be on 'type', instead. We should look for
+  // 'heapOptions' on 'type' iff 'fiberNode' represents a functional component, i.e. there is no
+  // 'stateNode'.
   if (
     fiberNode.stateNode &&
     fiberNode.stateNode.heapOptions &&
