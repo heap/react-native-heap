@@ -36,12 +36,10 @@ const NavigationService = {
 const withHeapNavigationAutotrack = (AppContainer) => {
   return class extends React.Component {
     componentDidMount() {
-      console.log(navRef);
       const initialPageviewPath = getActiveRouteName(navRef.state.nav);
       track('screenview', {
         path: initialPageviewPath,
       });
-      console.log(initialPageviewPath);
     }
 
     render() {
@@ -51,11 +49,13 @@ const withHeapNavigationAutotrack = (AppContainer) => {
             NavigationService.setTopLevelNavigator(navigatorRef);
           }}
           onNavigationStateChange={(prev, next, action) => {
-            if (action.type === 'Navigation/NAVIGATE' || action.type === 'Navigation/BACK') {
+            const prevScreenRoute = getActiveRouteName(prev);
+            const nextScreenRoute = getActiveRouteName(next);
+            if (prevScreenRoute !== nextScreenRoute) {
               const currentScreen = getActiveRouteName(next);
-              console.log('New Pageview', currentScreen);
               track('screenview', {
                 path: currentScreen,
+                type: action.type,
               });
             }
           }}
