@@ -24,6 +24,31 @@ describe('Extracting Props with a configuration', () => {
     },
   };
 
+  const objWithNestedObject = _.merge({}, obj1, {
+    stateNode: {
+      props: {
+        a: {
+          innerKey: 'kwikset',
+          innerNumber: 42,
+        },
+        b: {
+          c: {
+            bar: 'asdf',
+            foo: 'fdsa',
+          },
+        },
+      },
+    },
+  });
+
+  const objectWithNestedArray = _.merge({}, obj1, {
+    stateNode: {
+      props: {
+        a: [3, 4, 5],
+      },
+    },
+  });
+
   const config: PropExtractorConfig = {
     Element: {
       include: ['a', 'c'],
@@ -74,32 +99,34 @@ describe('Extracting Props with a configuration', () => {
   });
 
   test('nested objects flatten properly', () => {
-    const obj2 = _.merge({}, obj1, {
-      stateNode: {
-        props: {
-          a: {
-            innerKey: 'kwikset',
-          },
-        },
-      },
+    expect(extractProps('Element', objWithNestedObject, config)).toEqual(
+      '[a.innerKey=kwikset];[a.innerNumber=42];[c=true];'
+    );
+  });
+
+  test('can extract an attribute of a nested object', () => {
+    const config2 = _.merge({}, config, {
+      Element: { include: ['a.innerKey', 'b.c', 'c'] },
     });
 
-    expect(extractProps('Element', obj2, config)).toEqual(
-      '[a.innerKey=kwikset];[c=true];'
+    expect(extractProps('Element', objWithNestedObject, config2)).toEqual(
+      '[a.innerKey=kwikset];[b.c.bar=asdf];[b.c.foo=fdsa];[c=true];'
     );
   });
 
   test('arrays flatten properly', () => {
-    const obj2 = _.merge({}, obj1, {
-      stateNode: {
-        props: {
-          a: [3, 4, 5],
-        },
-      },
+    expect(extractProps('Element', objectWithNestedArray, config)).toEqual(
+      '[a.0=3];[a.1=4];[a.2=5];[c=true];'
+    );
+  });
+
+  test('can extract a single element of an array', () => {
+    const config2 = _.merge({}, config, {
+      Element: { include: ['a.1'] },
     });
 
-    expect(extractProps('Element', obj2, config)).toEqual(
-      '[a.0=3];[a.1=4];[a.2=5];[c=true];'
+    expect(extractProps('Element', objectWithNestedArray, config2)).toEqual(
+      '[a.1=4];[c=true];'
     );
   });
 
