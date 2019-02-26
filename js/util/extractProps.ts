@@ -1,6 +1,6 @@
 import { getCombinedInclusionList } from './combineConfigs';
 
-const pick = require('lodash.pick');
+const _ = require('lodash');
 const flatten = require('flat');
 
 export interface StateNode {
@@ -84,7 +84,7 @@ export const extractProps = (
     props = fiberNode.memoizedProps;
   }
 
-  const filteredProps = pick(props, inclusionList);
+  const filteredProps = _.pick(props, inclusionList);
   const flattenedProps = flatten(filteredProps);
   let propsString = '';
 
