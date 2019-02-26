@@ -26,17 +26,12 @@ getActiveRouteName = (navigationState) => {
   return route.routeName;
 }
 
-let navRef = null;
-const NavigationService = {
-  setTopLevelNavigator: (ref) => {
-    navRef = ref;
-  }
-}
-
-const withHeapNavigationAutotrack = (AppContainer) => {
+const withReactNavigationAutotrack = (AppContainer) => {
   return class extends React.Component {
+    topLevelNavigator = null;
+
     componentDidMount() {
-      const initialPageviewPath = getActiveRouteName(navRef.state.nav);
+      const initialPageviewPath = getActiveRouteName(topLevelNavigator.state.nav);
       track('screenview', {
         path: initialPageviewPath,
       });
@@ -46,7 +41,7 @@ const withHeapNavigationAutotrack = (AppContainer) => {
       return (
         <AppContainer
           ref={navigatorRef => {
-            NavigationService.setTopLevelNavigator(navigatorRef);
+            topLevelNavigator = navigatorRef;
           }}
           onNavigationStateChange={(prev, next, action) => {
             const prevScreenRoute = getActiveRouteName(prev);
@@ -113,7 +108,7 @@ export default {
     track(eventType, autotrackProps);
   },
 
-  withHeapNavigationAutotrack,
+  withReactNavigationAutotrack,
 };
 
 // :TODO: (jmtaber129): Consider implementing sibling target text.
