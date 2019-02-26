@@ -107,7 +107,6 @@ export const extractProps = (
   const secondPassProps = flatten(pick(flattenedProps, inclusionList));
 
   const combinedProps = { ...firstPassFilteredProps, ...secondPassProps };
-
   const sortedKeys = Object.keys(combinedProps).sort();
 
   // Only include props that are primitives.
