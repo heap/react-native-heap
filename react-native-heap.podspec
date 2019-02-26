@@ -4,7 +4,7 @@ json = File.read(File.join(__dir__, "package.json"))
 package = JSON.parse(json).deep_symbolize_keys
 
 Pod::Spec.new do |s|
-  s.name = package[:name]
+  s.name = "react-native-heap"
   s.version = package[:version]
   s.summary = package[:description]
   s.license = { type: "MIT" }
@@ -15,5 +15,5 @@ Pod::Spec.new do |s|
   s.platform = :ios, "8.0"
 
   s.dependency "React"
-  s.dependency "Heap", "5.0.8"
+  s.dependency "Heap", "5.1.0"
 end
