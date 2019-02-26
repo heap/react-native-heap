@@ -60,7 +60,7 @@ export default {
 
 // :TODO: (jmtaber129): Consider implementing sibling target text.
 const getTargetText = fiberNode => {
-  if (fiberNode.elementType === 'RCTText') {
+  if (fiberNode.type === 'RCTText') {
     return fiberNode.memoizedProps.children;
   }
 
