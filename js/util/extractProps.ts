@@ -84,20 +84,39 @@ export const extractProps = (
     props = fiberNode.memoizedProps;
   }
 
-  const filteredProps = pick(props, inclusionList);
-  const flattenedProps = flatten(filteredProps);
   let propsString = '';
 
+  // We would like to be able to both include nested objects called out as a whole, as well as
+  // entertain props specified by their flattened keys.
+  //
+  // For example, if input is:
+  //   {
+  //     nestedObj: {
+  //       foo: true,
+  //     },
+  //   }
+  //
+  // ... we would like the user to both be able to specify "nestedObj" to include, and all flattened
+  // properties will come with it, as well as "nestedObj.foo" and only get the single property.  To
+  // do this, we filter the properties in two passes - once to get the whole objects and then a second
+  // time to get the flattened keys.
+
+  const firstPassFilteredProps = flatten(pick(props, inclusionList));
+
+  const flattenedProps = { ...flatten(props) };
+  const secondPassProps = flatten(pick(flattenedProps, inclusionList));
+
+  const combinedProps = { ...firstPassFilteredProps, ...secondPassProps };
+
+  const sortedKeys = Object.keys(combinedProps).sort();
+
   // Only include props that are primitives.
-  Object.keys(flattenedProps).forEach(key => {
-    if (
-      flattenedProps[key] !== null &&
-      flattenedProps[key] !== undefined &&
-      typeof flattenedProps[key] !== 'function'
-    ) {
+  sortedKeys.forEach(key => {
+    const prop = combinedProps[key];
+    if (prop !== null && prop !== undefined && typeof prop !== 'function') {
       // Remove all brackets from string.
-      let prop = flattenedProps[key].toString().replace(/[\[\]]/g, '');
-      propsString += `[${key}=${prop}];`;
+      const propString = prop.toString().replace(/[\[\]]/g, '');
+      propsString += `[${key}=${propString}];`;
     }
   });
 
