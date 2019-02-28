@@ -13,14 +13,9 @@ import {
 import { connect } from 'react-redux';
 
 import Heap from '@heap/react-native-heap';
-import { incrementAction, decrementAction } from './reduxElements';
+import { incrementAction, decrementAction } from '../reduxElements';
 
-class MainScreen extends Component {
-  componentDidMount() {
-    Heap.setAppId('2084764307');
-    console.log('Heap App ID set');
-  }
-
+class TouchablesPage extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -101,7 +96,7 @@ export default connect(
       onDecrement: amount => dispatch(decrementAction(amount)),
     };
   }
-)(MainScreen);
+)(TouchablesPage);
 
 const styles = StyleSheet.create({
   container: {
