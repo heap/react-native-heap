@@ -1,10 +1,10 @@
-import Heap from "@heap/react-native-heap";
-import { applyMiddleware, createStore } from "redux";
+import Heap from '@heap/react-native-heap';
+import { applyMiddleware, createStore } from 'redux';
 
 // Action Types
 
-const INCREMENT = "INCREMENT";
-const DECREMENT = "DECREMENT";
+const INCREMENT = 'INCREMENT';
+const DECREMENT = 'DECREMENT';
 
 // Actions
 
@@ -15,22 +15,22 @@ export const incrementAction = amount => {
     sampleNestedObject: {
       nested: true,
       secondLevel: {
-        alsoNested: "absolutely"
-      }
-    }
+        alsoNested: 'absolutely',
+      },
+    },
   };
 };
 
 export const decrementAction = amount => {
   return {
     type: DECREMENT,
-    amount: amount
+    amount: amount,
   };
 };
 
 // Reducer
 const initialState = {
-  value: 0
+  value: 0,
 };
 
 export const reducer = (state = initialState, action) => {
@@ -38,12 +38,12 @@ export const reducer = (state = initialState, action) => {
     case INCREMENT:
       return {
         ...state,
-        value: state.value + action.amount
+        value: state.value + action.amount,
       };
     case DECREMENT:
       return {
         ...state,
-        value: state.value - action.amount
+        value: state.value - action.amount,
       };
   }
   return state;
