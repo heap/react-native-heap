@@ -1,6 +1,6 @@
 require('coffeescript').register();
 _ = require('lodash');
-assert = require('should/as-function')
+assert = require('should/as-function');
 
 db = require('../../heap/back/db');
 testUtil = require('../../heap/test/util');
@@ -11,7 +11,7 @@ const assertEvent = (err, res, check) => {
 
   if (_.isFunction(check)) {
     assert(res.filter(check).length).not.equal(0);
-  };
+  }
 };
 
 const assertIosPixel = async (event, check) => {
@@ -27,16 +27,20 @@ const assertIosPixel = async (event, check) => {
 const assertAndroidEvent = async (event, check) => {
   const { err, res } = await new Promise((resolve, reject) => {
     testUtil.findAndroidEventInRedisRequests(event, (err, res) => {
-      resolve({ err ,res });
+      resolve({ err, res });
     });
   });
 
   assertEvent(err, res, check);
 };
 
-const assertAndroidAutotrackHierarchy = async (expectedName, expectedHierarchy, expectedTargetText) => {
+const assertAndroidAutotrackHierarchy = async (
+  expectedName,
+  expectedHierarchy,
+  expectedTargetText
+) => {
   return assertAndroidEvent({
-    envId: "2084764307",
+    envId: '2084764307',
     event: {
       custom: {
         name: expectedName,
@@ -53,15 +57,31 @@ const assertAndroidAutotrackHierarchy = async (expectedName, expectedHierarchy, 
   });
 };
 
-assertAutotrackHierarchy = async (expectedName, expectedHierarchy, expectedTargetText) => {
+assertAutotrackHierarchy = async (
+  expectedName,
+  expectedHierarchy,
+  expectedTargetText
+) => {
   if (device.getPlatform() === 'android') {
-    return assertAndroidAutotrackHierarchy(expectedName, expectedHierarchy, expectedTargetText);
+    return assertAndroidAutotrackHierarchy(
+      expectedName,
+      expectedHierarchy,
+      expectedTargetText
+    );
   } else if (device.getPlatform() === 'ios') {
-    return assertIosPixel({ t: expectedName, k: [ 'touchableHierarchy', expectedHierarchy, 'targetText', expectedTargetText ]});
+    return assertIosPixel({
+      t: expectedName,
+      k: [
+        'touchableHierarchy',
+        expectedHierarchy,
+        'targetText',
+        expectedTargetText,
+      ],
+    });
   } else {
-    throw new Error(`Unknown device type: ${device.getPlatform()}`)
+    throw new Error(`Unknown device type: ${device.getPlatform()}`);
   }
-}
+};
 
 const doTestActions = async () => {
   await expect(element(by.id('track1'))).toBeVisible();
@@ -88,13 +108,13 @@ describe('ReactNative Support', () => {
     await device.launchApp();
   });
 
-  before((done) => {
-    db.orm.connection.sharedRedis().flushall(done)
+  before(done => {
+    db.orm.connection.sharedRedis().flushall(done);
   });
 
   describe(':ios: Bridge API', () => {
     before(async () => {
-      await doTestActions()
+      await doTestActions();
       // Heap iOS flushes events every 15 seconds. Wait 16 seconds to ensure that
       // all events are flushed to redis before asserting.
       // :TODO:(jmtaber129): Make this wait shorter if/when we expose setting the
@@ -103,27 +123,51 @@ describe('ReactNative Support', () => {
     });
 
     it('should call first track', async () => {
-      await assertIosPixel({ a: "2084764307", t: 'pressInTestEvent1' }, (event) => {
-        return !(_.includes(event.k, 'eventProp1') || _.includes(event.k, 'eventProp2'));
-      });
+      await assertIosPixel(
+        { a: '2084764307', t: 'pressInTestEvent1' },
+        event => {
+          return !(
+            _.includes(event.k, 'eventProp1') ||
+            _.includes(event.k, 'eventProp2')
+          );
+        }
+      );
     });
 
     it('should add event properties', async () => {
-      await assertIosPixel({ a: "2084764307", t: 'pressInTestEvent2' }, (event) => {
-        return (_.includes(event.k, 'eventProp1') && _.includes(event.k, 'eventProp2'));
-      });
+      await assertIosPixel(
+        { a: '2084764307', t: 'pressInTestEvent2' },
+        event => {
+          return (
+            _.includes(event.k, 'eventProp1') &&
+            _.includes(event.k, 'eventProp2')
+          );
+        }
+      );
     });
 
     it('should remove event properties', async () => {
-      await assertIosPixel({ a: "2084764307", t: 'pressInTestEvent3' }, (event) => {
-        return (!_.includes(event.k, 'eventProp1') && _.includes(event.k, 'eventProp2'));
-      });
+      await assertIosPixel(
+        { a: '2084764307', t: 'pressInTestEvent3' },
+        event => {
+          return (
+            !_.includes(event.k, 'eventProp1') &&
+            _.includes(event.k, 'eventProp2')
+          );
+        }
+      );
     });
 
     it('should clear event properties', async () => {
-      await assertIosPixel({ a: "2084764307", t: 'pressInTestEvent4' }, (event) => {
-        return !(_.includes(event.k, 'eventProp1') || _.includes(event.k, 'eventProp2'));
-      });
+      await assertIosPixel(
+        { a: '2084764307', t: 'pressInTestEvent4' },
+        event => {
+          return !(
+            _.includes(event.k, 'eventProp1') ||
+            _.includes(event.k, 'eventProp2')
+          );
+        }
+      );
     });
 
     it('should add user properties', async () => {
@@ -163,27 +207,63 @@ describe('ReactNative Support', () => {
     });
 
     it('should call first track', async () => {
-      await assertAndroidEvent({ envId: "2084764307", event: { custom: { name: 'pressInTestEvent1' }}}, (event) => {
-        return (!_.has(event.properties, 'eventProp1') && !_.has(event.properties, 'eventProp2'));
-      });
+      await assertAndroidEvent(
+        {
+          envId: '2084764307',
+          event: { custom: { name: 'pressInTestEvent1' } },
+        },
+        event => {
+          return (
+            !_.has(event.properties, 'eventProp1') &&
+            !_.has(event.properties, 'eventProp2')
+          );
+        }
+      );
     });
 
     it('should add event properties', async () => {
-      await assertAndroidEvent({ envId: "2084764307", event: { custom: { name: 'pressInTestEvent2' }}}, (event) => {
-        return (_.has(event.properties, 'eventProp1') && _.has(event.properties, 'eventProp2'));
-      });
+      await assertAndroidEvent(
+        {
+          envId: '2084764307',
+          event: { custom: { name: 'pressInTestEvent2' } },
+        },
+        event => {
+          return (
+            _.has(event.properties, 'eventProp1') &&
+            _.has(event.properties, 'eventProp2')
+          );
+        }
+      );
     });
 
     it('should remove event properties', async () => {
-      await assertAndroidEvent({ envId: "2084764307", event: { custom: { name: 'pressInTestEvent3' }}}, (event) => {
-        return (!_.has(event.properties, 'eventProp1') && _.has(event.properties, 'eventProp2'));
-      });
+      await assertAndroidEvent(
+        {
+          envId: '2084764307',
+          event: { custom: { name: 'pressInTestEvent3' } },
+        },
+        event => {
+          return (
+            !_.has(event.properties, 'eventProp1') &&
+            _.has(event.properties, 'eventProp2')
+          );
+        }
+      );
     });
 
     it('should clear event properties', async () => {
-      await assertAndroidEvent({ envId: "2084764307", event: { custom: { name: 'pressInTestEvent4' }}}, (event) => {
-        return (!_.has(event.properties, 'eventProp1') && !_.has(event.properties, 'eventProp2'));
-      });
+      await assertAndroidEvent(
+        {
+          envId: '2084764307',
+          event: { custom: { name: 'pressInTestEvent4' } },
+        },
+        event => {
+          return (
+            !_.has(event.properties, 'eventProp1') &&
+            !_.has(event.properties, 'eventProp2')
+          );
+        }
+      );
     });
 
     it('should add user properties', async () => {
@@ -196,7 +276,10 @@ describe('ReactNative Support', () => {
       assert.not.exist(err);
       // Android might send an AUP with initial props when the app first opens.
       assert(res.length).not.equal(0);
-      assert(res[0]['properties']).deepEqual({"prop2":{"string":"bar"},"prop1":{"string":"foo"}});
+      assert(res[0]['properties']).deepEqual({
+        prop2: { string: 'bar' },
+        prop1: { string: 'foo' },
+      });
     });
 
     it('should send identify', async () => {
@@ -214,27 +297,47 @@ describe('ReactNative Support', () => {
 
   describe('Autotrack', () => {
     it("should autotrack 'TouchableOpacity's", async () => {
-      const expectedHierarchy = 'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableOpacity;|';
+      const expectedHierarchy =
+        'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableOpacity;|';
       const expectedTargetText = 'Touchable Opacity Foo';
-      await assertAutotrackHierarchy('touchableHandlePress', expectedHierarchy, expectedTargetText);
+      await assertAutotrackHierarchy(
+        'touchableHandlePress',
+        expectedHierarchy,
+        expectedTargetText
+      );
     });
 
     it("should autotrack 'TouchableHighlight's", async () => {
-      const expectedHierarchy = 'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableHighlight;|';
+      const expectedHierarchy =
+        'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableHighlight;|';
       const expectedTargetText = 'Touchable Highlight';
-      await assertAutotrackHierarchy('touchableHandlePress', expectedHierarchy, expectedTargetText);
+      await assertAutotrackHierarchy(
+        'touchableHandlePress',
+        expectedHierarchy,
+        expectedTargetText
+      );
     });
 
     it("should autotrack 'TouchableWithoutFeedback's", async () => {
-      const expectedHierarchy = 'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableWithoutFeedback;|';
+      const expectedHierarchy =
+        'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableWithoutFeedback;|';
       const expectedTargetText = 'Touchable Without Feedback';
-      await assertAutotrackHierarchy('touchableHandlePress', expectedHierarchy, expectedTargetText);
+      await assertAutotrackHierarchy(
+        'touchableHandlePress',
+        expectedHierarchy,
+        expectedTargetText
+      );
     });
 
     it(":android: should autotrack 'TouchableNativeFeedback's", async () => {
-      const expectedHierarchy = 'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableNativeFeedback;|';
+      const expectedHierarchy =
+        'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableNativeFeedback;|';
       const expectedTargetText = 'Touchable Native Feedback';
-      await assertAutotrackHierarchy('touchableHandlePress', expectedHierarchy, expectedTargetText);
+      await assertAutotrackHierarchy(
+        'touchableHandlePress',
+        expectedHierarchy,
+        expectedTargetText
+      );
     });
   });
 });
