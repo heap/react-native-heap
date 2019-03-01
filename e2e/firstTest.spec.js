@@ -298,7 +298,7 @@ describe('ReactNative Support', () => {
   describe('Autotrack', () => {
     it("should autotrack 'TouchableOpacity's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableOpacity;|';
+        'AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(TouchablesPage);|TouchablesPage;|TouchableOpacity;|';
       const expectedTargetText = 'Touchable Opacity Foo';
       await assertAutotrackHierarchy(
         'touchableHandlePress',
@@ -309,7 +309,7 @@ describe('ReactNative Support', () => {
 
     it("should autotrack 'TouchableHighlight's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableHighlight;|';
+        'AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(TouchablesPage);|TouchablesPage;|TouchableHighlight;|';
       const expectedTargetText = 'Touchable Highlight';
       await assertAutotrackHierarchy(
         'touchableHandlePress',
@@ -320,7 +320,7 @@ describe('ReactNative Support', () => {
 
     it("should autotrack 'TouchableWithoutFeedback's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableWithoutFeedback;|';
+        'AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(TouchablesPage);|TouchablesPage;|TouchableWithoutFeedback;|';
       const expectedTargetText = 'Touchable Without Feedback';
       await assertAutotrackHierarchy(
         'touchableHandlePress',
@@ -331,7 +331,7 @@ describe('ReactNative Support', () => {
 
     it(":android: should autotrack 'TouchableNativeFeedback's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|Connect(MainScreen);|MainScreen;|TouchableNativeFeedback;|';
+        'AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(TouchablesPage);|TouchablesPage;|TouchableNativeFeedback;|';
       const expectedTargetText = 'Touchable Native Feedback';
       await assertAutotrackHierarchy(
         'touchableHandlePress',
