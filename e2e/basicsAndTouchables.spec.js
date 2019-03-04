@@ -2,86 +2,8 @@ require('coffeescript').register();
 _ = require('lodash');
 assert = require('should/as-function');
 
-db = require('../../heap/back/db');
 testUtil = require('../../heap/test/util');
-
-const assertEvent = (err, res, check) => {
-  assert.not.exist(err);
-  assert(res.length).not.equal(0);
-
-  if (_.isFunction(check)) {
-    assert(res.filter(check).length).not.equal(0);
-  }
-};
-
-const assertIosPixel = async (event, check) => {
-  const { err, res } = await new Promise((resolve, reject) => {
-    testUtil.findEventInRedisRequests(event, (err, res) => {
-      resolve({ err, res });
-    });
-  });
-
-  assertEvent(err, res, check);
-};
-
-const assertAndroidEvent = async (event, check) => {
-  const { err, res } = await new Promise((resolve, reject) => {
-    testUtil.findAndroidEventInRedisRequests(event, (err, res) => {
-      resolve({ err, res });
-    });
-  });
-
-  assertEvent(err, res, check);
-};
-
-const assertAndroidAutotrackHierarchy = async (
-  expectedName,
-  expectedHierarchy,
-  expectedTargetText
-) => {
-  return assertAndroidEvent({
-    envId: '2084764307',
-    event: {
-      custom: {
-        name: expectedName,
-        properties: {
-          touchableHierarchy: {
-            string: expectedHierarchy,
-          },
-          targetText: {
-            string: expectedTargetText,
-          },
-        },
-      },
-    },
-  });
-};
-
-assertAutotrackHierarchy = async (
-  expectedName,
-  expectedHierarchy,
-  expectedTargetText
-) => {
-  if (device.getPlatform() === 'android') {
-    return assertAndroidAutotrackHierarchy(
-      expectedName,
-      expectedHierarchy,
-      expectedTargetText
-    );
-  } else if (device.getPlatform() === 'ios') {
-    return assertIosPixel({
-      t: expectedName,
-      k: [
-        'touchableHierarchy',
-        expectedHierarchy,
-        'targetText',
-        expectedTargetText,
-      ],
-    });
-  } else {
-    throw new Error(`Unknown device type: ${device.getPlatform()}`);
-  }
-};
+rnTestUtil = require('./rnTestUtilities');
 
 const doTestActions = async () => {
   await expect(element(by.id('track1'))).toBeVisible();
@@ -103,7 +25,7 @@ const doTestActions = async () => {
   }
 };
 
-describe('ReactNative Support', () => {
+describe('Basic React Native and Touchable Support', () => {
   before(async () => {
     await device.launchApp();
   });
@@ -123,7 +45,7 @@ describe('ReactNative Support', () => {
     });
 
     it('should call first track', async () => {
-      await assertIosPixel(
+      await rnTestUtil.assertIosPixel(
         { a: '2084764307', t: 'pressInTestEvent1' },
         event => {
           return !(
@@ -135,7 +57,7 @@ describe('ReactNative Support', () => {
     });
 
     it('should add event properties', async () => {
-      await assertIosPixel(
+      await rnTestUtil.assertIosPixel(
         { a: '2084764307', t: 'pressInTestEvent2' },
         event => {
           return (
@@ -147,7 +69,7 @@ describe('ReactNative Support', () => {
     });
 
     it('should remove event properties', async () => {
-      await assertIosPixel(
+      await rnTestUtil.assertIosPixel(
         { a: '2084764307', t: 'pressInTestEvent3' },
         event => {
           return (
@@ -159,7 +81,7 @@ describe('ReactNative Support', () => {
     });
 
     it('should clear event properties', async () => {
-      await assertIosPixel(
+      await rnTestUtil.assertIosPixel(
         { a: '2084764307', t: 'pressInTestEvent4' },
         event => {
           return !(
