@@ -1,18 +1,28 @@
 import React, { Component } from 'react';
-import { Button, StyleSheet, View } from 'react-native';
+import { Button as BuiltInButton, StyleSheet, View } from 'react-native';
 
 class Container1 extends Component {
   heapOptions = { eventProps: { include: ['custom1'] } };
 
   render() {
-    return <Button title="testButtonTitle1" testID="button1" />;
+    return <BuiltInButton title="testButtonTitle1" testID="button1" />;
   }
 }
 
 const Container2 = () => {
-  return <Button title="testButtonTitle2" testID="button2" />;
+  return <BuiltInButton title="testButtonTitle2" testID="button2" />;
 };
 Container2.heapOptions = { eventProps: { include: ['custom2'] } };
+
+// We need something with the same name as the built-in button, so we can
+// check for excluding props.
+class Button extends Component {
+  heapOptions = { eventProps: { include: [], exclude: ['title'] } };
+
+  render() {
+    return <BuiltInButton title="testButtonTitle3" testID="button3" />;
+  }
+}
 
 export default class PropExtraction extends Component {
   static navigationOptions = () => {
@@ -29,6 +39,7 @@ export default class PropExtraction extends Component {
       <View style={styles.container}>
         <Container1 custom1="customProp1" />
         <Container2 custom2="customProp2" />
+        <Button title="excludedProp" />
       </View>
     );
   }

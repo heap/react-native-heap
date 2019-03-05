@@ -15,6 +15,7 @@ const doTestActions = async () => {
   await expect(element(by.id('button1'))).toBeVisible();
   await element(by.id('button1')).tap();
   await element(by.id('button2')).tap();
+  await element(by.id('button3')).tap();
 };
 
 describe('Property Extraction in Hierarchies', () => {
@@ -57,6 +58,21 @@ describe('Property Extraction in Hierarchies', () => {
         device.getPlatform() === 'ios'
           ? 'testButtonTitle2'
           : 'TESTBUTTONTITLE2';
+      await rnTestUtil.assertAutotrackHierarchy(
+        'touchableHandlePress',
+        expectedHierarchy,
+        expectedTargetText
+      );
+    });
+
+    it('properly excludes properties', async () => {
+      // The important thing for this test is that the first mention of 'Button' does NOT include the title property.
+      // This is because the first one is a custom class that specifically excludes (while the second one is the built-in Button.)
+      const expectedHierarchy = `AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|PropExtraction;|Button;|Button;[title=testButtonTitle3];|${buttonSuffix}`;
+      const expectedTargetText =
+        device.getPlatform() === 'ios'
+          ? 'testButtonTitle3'
+          : 'TESTBUTTONTITLE3';
       await rnTestUtil.assertAutotrackHierarchy(
         'touchableHandlePress',
         expectedHierarchy,
