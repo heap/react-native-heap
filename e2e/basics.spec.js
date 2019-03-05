@@ -6,6 +6,8 @@ testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
 const doTestActions = async () => {
+  await element(by.id('Basics')).tap();
+
   await expect(element(by.id('track1'))).toBeVisible();
   await element(by.id('track1')).tap();
   await element(by.id('aep')).tap();
@@ -37,11 +39,7 @@ describe('Basic React Native and Touchable Support', () => {
   describe(':ios: Bridge API', () => {
     before(async () => {
       await doTestActions();
-      // Heap iOS flushes events every 15 seconds. Wait 16 seconds to ensure that
-      // all events are flushed to redis before asserting.
-      // :TODO:(jmtaber129): Make this wait shorter if/when we expose setting the
-      // flush frequency to the RN bridge.
-      await new Promise(resolve => setTimeout(resolve, 16000));
+      await rnTestUtil.waitForEventsToFlush();
     });
 
     it('should call first track', async () => {
@@ -121,15 +119,11 @@ describe('Basic React Native and Touchable Support', () => {
   describe(':android: Bridge API', () => {
     before(async () => {
       await doTestActions();
-      // Heap Android flushes events every 15 seconds. Wait 16 seconds to ensure that
-      // all events are flushed to redis before asserting.
-      // :TODO:(jmtaber129): Make this wait shorter if/when we expose setting the
-      // flush frequency to the RN bridge.
-      await new Promise(resolve => setTimeout(resolve, 16000));
+      await rnTestUtil.waitForEventsToFlush();
     });
 
     it('should call first track', async () => {
-      await assertAndroidEvent(
+      await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
           event: { custom: { name: 'pressInTestEvent1' } },
@@ -144,7 +138,7 @@ describe('Basic React Native and Touchable Support', () => {
     });
 
     it('should add event properties', async () => {
-      await assertAndroidEvent(
+      await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
           event: { custom: { name: 'pressInTestEvent2' } },
@@ -159,7 +153,7 @@ describe('Basic React Native and Touchable Support', () => {
     });
 
     it('should remove event properties', async () => {
-      await assertAndroidEvent(
+      await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
           event: { custom: { name: 'pressInTestEvent3' } },
@@ -174,7 +168,7 @@ describe('Basic React Native and Touchable Support', () => {
     });
 
     it('should clear event properties', async () => {
-      await assertAndroidEvent(
+      await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
           event: { custom: { name: 'pressInTestEvent4' } },
@@ -222,7 +216,7 @@ describe('Basic React Native and Touchable Support', () => {
       const expectedHierarchy =
         'AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(TouchablesPage);|TouchablesPage;|TouchableOpacity;|';
       const expectedTargetText = 'Touchable Opacity Foo';
-      await assertAutotrackHierarchy(
+      await rnTestUtil.assertAutotrackHierarchy(
         'touchableHandlePress',
         expectedHierarchy,
         expectedTargetText
@@ -233,7 +227,7 @@ describe('Basic React Native and Touchable Support', () => {
       const expectedHierarchy =
         'AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(TouchablesPage);|TouchablesPage;|TouchableHighlight;|';
       const expectedTargetText = 'Touchable Highlight';
-      await assertAutotrackHierarchy(
+      await rnTestUtil.assertAutotrackHierarchy(
         'touchableHandlePress',
         expectedHierarchy,
         expectedTargetText
@@ -244,7 +238,7 @@ describe('Basic React Native and Touchable Support', () => {
       const expectedHierarchy =
         'AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(TouchablesPage);|TouchablesPage;|TouchableWithoutFeedback;|';
       const expectedTargetText = 'Touchable Without Feedback';
-      await assertAutotrackHierarchy(
+      await rnTestUtil.assertAutotrackHierarchy(
         'touchableHandlePress',
         expectedHierarchy,
         expectedTargetText
@@ -255,7 +249,7 @@ describe('Basic React Native and Touchable Support', () => {
       const expectedHierarchy =
         'AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(TouchablesPage);|TouchablesPage;|TouchableNativeFeedback;|';
       const expectedTargetText = 'Touchable Native Feedback';
-      await assertAutotrackHierarchy(
+      await rnTestUtil.assertAutotrackHierarchy(
         'touchableHandlePress',
         expectedHierarchy,
         expectedTargetText

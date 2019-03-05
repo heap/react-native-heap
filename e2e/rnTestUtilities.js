@@ -54,7 +54,7 @@ const assertAndroidAutotrackHierarchy = async (
   });
 };
 
-assertAutotrackHierarchy = async (
+const assertAutotrackHierarchy = async (
   expectedName,
   expectedHierarchy,
   expectedTargetText
@@ -80,9 +80,19 @@ assertAutotrackHierarchy = async (
   }
 };
 
+waitForEventsToFlush = async () => {
+  // Heap for iOS and Android flushes events every 15 seconds. Wait 16 seconds to ensure that
+  // all events are flushed to redis before asserting.
+  // :TODO:(jmtaber129): Make this wait shorter if/when we expose setting the
+  // flush frequency to the RN bridge.
+  await new Promise(resolve => setTimeout(resolve, 16000));
+};
+
 module.exports = {
   assertEvent,
   assertIosPixel,
   assertAndroidEvent,
   assertAndroidAutotrackHierarchy,
+  assertAutotrackHierarchy,
+  waitForEventsToFlush,
 };

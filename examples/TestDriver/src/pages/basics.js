@@ -16,6 +16,15 @@ import Heap from '@heap/react-native-heap';
 import { incrementAction, decrementAction } from '../reduxElements';
 
 class TouchablesPage extends Component {
+  static navigationOptions = () => {
+    return {
+      title: 'Basics',
+      tabBarLabel: 'Basics',
+      tabBarAccessibilityLabel: 'Basics',
+      tabBarTestID: 'Basics',
+    };
+  };
+
   render() {
     return (
       <View style={styles.container}>
