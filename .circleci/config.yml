@@ -36,3 +36,5 @@ jobs:
       # run tests!
       - run: npm test
       - run: npm run-script test-instrumentor
+      - run: npm run-script lint
+      - run: npm run-script lint-example
