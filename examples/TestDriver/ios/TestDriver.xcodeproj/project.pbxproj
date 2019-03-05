@@ -16,8 +16,8 @@
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* TestDriverTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TestDriverTests.m */; };
-		35F1CD44CBEDA0CB72ABB942 /* libPods-TestDriverTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6BADB751605F3639758B513B /* libPods-TestDriverTests.a */; };
-		7878DACDAB55724CFF621038 /* libPods-TestDriver.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4F6DA0B048FEA6082B4B9856 /* libPods-TestDriver.a */; };
+		8FAA11318ECBF813AA94B6E2 /* Pods_TestDriverTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DF6368199753500C6345BBB /* Pods_TestDriverTests.framework */; };
+		B18E30959D993039351C3EE0 /* Pods_TestDriver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3781DAA3C534AFEEA737EE8F /* Pods_TestDriver.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,11 +51,11 @@
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TestDriver/main.m; sourceTree = "<group>"; };
 		2D02E47B1E0B4A5D006451C7 /* TestDriver-tvOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "TestDriver-tvOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D02E4901E0B4A5D006451C7 /* TestDriver-tvOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "TestDriver-tvOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		4F6DA0B048FEA6082B4B9856 /* libPods-TestDriver.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestDriver.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3781DAA3C534AFEEA737EE8F /* Pods_TestDriver.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDriver.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5EDC9C7026FC7E8020E9A868 /* Pods-TestDriver.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDriver.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestDriver/Pods-TestDriver.debug.xcconfig"; sourceTree = "<group>"; };
 		664C7B092FE73AFF5FCEE8F4 /* Pods-TestDriver.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDriver.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestDriver/Pods-TestDriver.release.xcconfig"; sourceTree = "<group>"; };
-		6BADB751605F3639758B513B /* libPods-TestDriverTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestDriverTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BC0C490493EF58ED3D7FEDF /* Pods-TestDriverTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDriverTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TestDriverTests/Pods-TestDriverTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8DF6368199753500C6345BBB /* Pods_TestDriverTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDriverTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9DB416B8198BF43F05011D3F /* Pods-TestDriverTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TestDriverTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-TestDriverTests/Pods-TestDriverTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,7 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				35F1CD44CBEDA0CB72ABB942 /* libPods-TestDriverTests.a in Frameworks */,
+				8FAA11318ECBF813AA94B6E2 /* Pods_TestDriverTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,7 +72,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7878DACDAB55724CFF621038 /* libPods-TestDriver.a in Frameworks */,
+				B18E30959D993039351C3EE0 /* Pods_TestDriver.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,8 +127,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				4F6DA0B048FEA6082B4B9856 /* libPods-TestDriver.a */,
-				6BADB751605F3639758B513B /* libPods-TestDriverTests.a */,
+				3781DAA3C534AFEEA737EE8F /* Pods_TestDriver.framework */,
+				8DF6368199753500C6345BBB /* Pods_TestDriverTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -208,6 +208,7 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
+				347B4380528F227E831E33B1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -383,6 +384,36 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+		};
+		347B4380528F227E831E33B1 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TestDriver/Pods-TestDriver-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework",
+				"${BUILT_PRODUCTS_DIR}/Folly/folly.framework",
+				"${BUILT_PRODUCTS_DIR}/React/React.framework",
+				"${BUILT_PRODUCTS_DIR}/glog/glog.framework",
+				"${BUILT_PRODUCTS_DIR}/yoga/yoga.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/DoubleConversion.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/folly.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/React.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/glog.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/yoga.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestDriver/Pods-TestDriver-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
 		};
 		E5F03DDBB7275D0F8105EA52 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
