@@ -9,6 +9,7 @@ const IOS_BUTTON_SUFFIX = 'TouchableOpacity;|';
 const ANDROID_BUTTON_SUFFIX = 'TouchableNativeFeedback;|';
 
 const doTestActions = async () => {
+  // Open the PropExtraction tab in the tab navigator.
   await element(by.id('PropExtraction')).tap();
 
   await expect(element(by.id('button1'))).toBeVisible();

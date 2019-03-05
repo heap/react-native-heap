@@ -6,6 +6,7 @@ testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
 const doTestActions = async () => {
+  // Open the Basics tab in the tab navigator.
   await element(by.id('Basics')).tap();
 
   await expect(element(by.id('track1'))).toBeVisible();
