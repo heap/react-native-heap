@@ -8,7 +8,3 @@ include ':app'
 
 include ':detox'
 project(':detox').projectDir = new File(rootProject.projectDir, '../node_modules/detox/android/detox')
-
-include ':react-native-heap'
-project(':react-native-heap').projectDir =
-        new File(rootProject.projectDir, '../node_modules/@heap/react-native-heap/android')
