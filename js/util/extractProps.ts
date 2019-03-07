@@ -69,9 +69,11 @@ export const extractProps = (
       .eventProps as PropExtractorCriteria;
   }
 
+  const wildcardCriteria = config['*'] || EMPTY_CRITERIA;
   const builtInCriteria = config[elementName] || EMPTY_CRITERIA;
 
   const inclusionList = getCombinedInclusionList([
+    wildcardCriteria,
     builtInCriteria,
     classCriteria,
   ]);
