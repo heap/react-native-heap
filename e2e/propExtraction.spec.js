@@ -40,7 +40,7 @@ describe('Property Extraction in Hierarchies', () => {
     });
 
     it('works with class components', async () => {
-      const expectedHierarchy = `AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|PropExtraction;|Container1;[custom1=customProp1];|Button;[title=testButtonTitle1];|${buttonSuffix}`;
+      const expectedHierarchy = `AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|PropExtraction;|Container1;[custom1=customProp1];|Button;[title=testButtonTitle1];|${buttonSuffix}`;
       const expectedTargetText =
         device.getPlatform() === 'ios'
           ? 'testButtonTitle1'
@@ -53,7 +53,7 @@ describe('Property Extraction in Hierarchies', () => {
     });
 
     it('works with stateless components', async () => {
-      const expectedHierarchy = `AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|PropExtraction;|Container2;[custom2=customProp2];|Button;[title=testButtonTitle2];|${buttonSuffix}`;
+      const expectedHierarchy = `AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|PropExtraction;|Container2;[custom2=customProp2];|Button;[title=testButtonTitle2];|${buttonSuffix}`;
       const expectedTargetText =
         device.getPlatform() === 'ios'
           ? 'testButtonTitle2'
@@ -68,7 +68,7 @@ describe('Property Extraction in Hierarchies', () => {
     it('properly excludes properties', async () => {
       // The important thing for this test is that the first mention of 'Button' does NOT include the title property.
       // This is because the first one is a custom class that specifically excludes (while the second one is the built-in Button.)
-      const expectedHierarchy = `AppContainer;|App;|Provider;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|PropExtraction;|Button;|Button;[title=testButtonTitle3];|${buttonSuffix}`;
+      const expectedHierarchy = `AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|PropExtraction;|Button;|Button;[title=testButtonTitle3];|${buttonSuffix}`;
       const expectedTargetText =
         device.getPlatform() === 'ios'
           ? 'testButtonTitle3'
