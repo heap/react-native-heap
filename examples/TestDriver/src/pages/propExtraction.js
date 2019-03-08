@@ -5,12 +5,24 @@ class Container1 extends Component {
   heapOptions = { eventProps: { include: ['custom1'] } };
 
   render() {
-    return <BuiltInButton title="testButtonTitle1" testID="button1" />;
+    return (
+      <BuiltInButton
+        title="testButtonTitle1"
+        testID="button1"
+        onPress={() => {}}
+      />
+    );
   }
 }
 
 const Container2 = () => {
-  return <BuiltInButton title="testButtonTitle2" testID="button2" />;
+  return (
+    <BuiltInButton
+      title="testButtonTitle2"
+      testID="button2"
+      onPress={() => {}}
+    />
+  );
 };
 Container2.heapOptions = { eventProps: { include: ['custom2'] } };
 
@@ -20,7 +32,13 @@ class Button extends Component {
   heapOptions = { eventProps: { include: [], exclude: ['title'] } };
 
   render() {
-    return <BuiltInButton title="testButtonTitle3" testID="button3" />;
+    return (
+      <BuiltInButton
+        title="testButtonTitle3"
+        testID="button3"
+        onPress={() => {}}
+      />
+    );
   }
 }
 

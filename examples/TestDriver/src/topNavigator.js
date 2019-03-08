@@ -14,4 +14,6 @@ const TabNavigator = createBottomTabNavigator({
   PropExtraction: PropExtraction,
 });
 
-export default createAppContainer(TabNavigator);
+export default Heap.withReactNavigationAutotrack(
+  createAppContainer(TabNavigator)
+);
