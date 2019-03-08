@@ -33,10 +33,10 @@
   [self.window makeKeyAndVisible];
 
   // Send events to local collector.
-//  SEL setRootUrlSelector = @selector(setRootUrl:);
-//  if ([[Heap class] respondsToSelector:setRootUrlSelector]) {
-//    [[Heap class] performSelector:setRootUrlSelector withObject:@"http://localhost:3000"];
-//  }
+  SEL setRootUrlSelector = @selector(setRootUrl:);
+  if ([[Heap class] respondsToSelector:setRootUrlSelector]) {
+    [[Heap class] performSelector:setRootUrlSelector withObject:@"http://localhost:3000"];
+  }
 
   return YES;
 }
