@@ -15,16 +15,7 @@ import { connect } from 'react-redux';
 import Heap from '@heap/react-native-heap';
 import { incrementAction, decrementAction } from '../reduxElements';
 
-class TouchablesPage extends Component {
-  static navigationOptions = () => {
-    return {
-      title: 'Basics',
-      tabBarLabel: 'Basics',
-      tabBarAccessibilityLabel: 'Basics',
-      tabBarTestID: 'Basics',
-    };
-  };
-
+class BasicsPage extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -105,7 +96,7 @@ export default connect(
       onDecrement: amount => dispatch(decrementAction(amount)),
     };
   }
-)(TouchablesPage);
+)(BasicsPage);
 
 const styles = StyleSheet.create({
   container: {

@@ -43,15 +43,6 @@ class Button extends Component {
 }
 
 export default class PropExtraction extends Component {
-  static navigationOptions = () => {
-    return {
-      title: 'PropExtraction',
-      tabBarLabel: 'PropExtraction',
-      tabBarAccessibilityLabel: 'PropExtraction',
-      tabBarTestID: 'PropExtraction',
-    };
-  };
-
   render() {
     return (
       <View style={styles.container}>
