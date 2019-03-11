@@ -81,6 +81,11 @@ class BasicsPage extends Component {
             <Text>Touchable Native Feedback</Text>
           </TouchableNativeFeedback>
         )}
+        <Button
+          testID="basicsSentinel"
+          title="Send Basics Sentinel"
+          onPress={() => Heap.track('Basics_Sentinel')}
+        />
       </View>
     );
   }

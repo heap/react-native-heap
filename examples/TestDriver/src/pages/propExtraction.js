@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button as BuiltInButton, StyleSheet, View } from 'react-native';
 
+import Heap from '@heap/react-native-heap';
+
 class Container1 extends Component {
   heapOptions = { eventProps: { include: ['custom1'] } };
 
@@ -49,6 +51,11 @@ export default class PropExtraction extends Component {
         <Container1 custom1="customProp1" />
         <Container2 custom2="customProp2" />
         <Button title="excludedProp" />
+        <BuiltInButton
+          testID="propExtractionSentinel"
+          title="Send PropExtraction Sentinel"
+          onPress={() => Heap.track('PropExtraction_Sentinel')}
+        />
       </View>
     );
   }

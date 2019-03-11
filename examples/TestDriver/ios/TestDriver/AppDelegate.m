@@ -38,6 +38,12 @@
     [[Heap class] performSelector:setRootUrlSelector withObject:@"http://localhost:3000"];
   }
 
+  // Set timer interval shorter so tests complete in a reasonable amount of time!
+  SEL changeIntervalSelector = @selector(changeInterval:);
+  if ([[Heap class] respondsToSelector:changeIntervalSelector]) {
+    [[Heap class] performSelector:changeIntervalSelector withObject:@1.0];
+  }
+
   return YES;
 }
 

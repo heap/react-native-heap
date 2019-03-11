@@ -81,11 +81,41 @@ const assertAutotrackHierarchy = async (
 };
 
 waitForEventsToFlush = async () => {
-  // Heap for iOS and Android flushes events every 15 seconds. Wait 16 seconds to ensure that
-  // all events are flushed to redis before asserting.
-  // :TODO:(jmtaber129): Make this wait shorter if/when we expose setting the
-  // flush frequency to the RN bridge.
+  // Add a delay to wait for all events to flush to the server
   await new Promise(resolve => setTimeout(resolve, 16000));
+};
+
+pollForSentinel = async (sentinelValue, timeout = 60000) => {
+  const startTick = Date.now();
+  const event = { a: '2084764307', t: sentinelValue };
+
+  while (Date.now() - startTick <= timeout) {
+    // Try to find the event in the iOS style.
+    const { iosErr, iosRes } = await new Promise((resolve, reject) => {
+      testUtil.findEventInRedisRequests(event, (iosErr, iosRes) => {
+        resolve({ iosErr, iosRes });
+      });
+    });
+
+    if (iosRes.length != 0) {
+      return;
+    }
+
+    // Try to find the event in the Android style.
+    const { androidErr, androidRes } = await new Promise((resolve, reject) => {
+      testUtil.findEventInRedisRequests(event, (androidErr, androidRes) => {
+        resolve({ androidErr, androidRes });
+      });
+    });
+
+    if (androidRes.length != 0) {
+      return;
+    }
+
+    await new Promise(resolve => setTimeout(resolve, 100));
+  }
+
+  assert(false, `Timed out waiting for sentinel event ${sentinelValue}`);
 };
 
 module.exports = {
@@ -95,4 +125,5 @@ module.exports = {
   assertAndroidAutotrackHierarchy,
   assertAutotrackHierarchy,
   waitForEventsToFlush,
+  pollForSentinel,
 };

@@ -16,6 +16,8 @@ const doTestActions = async () => {
   await element(by.id('button1')).tap();
   await element(by.id('button2')).tap();
   await element(by.id('button3')).tap();
+
+  await element(by.id('propExtractionSentinel')).tap();
 };
 
 describe('Property Extraction in Hierarchies', () => {
@@ -36,7 +38,7 @@ describe('Property Extraction in Hierarchies', () => {
   describe('The property extractor', () => {
     before(async () => {
       await doTestActions();
-      await rnTestUtil.waitForEventsToFlush();
+      await rnTestUtil.pollForSentinel('PropExtraction_Sentinel');
     });
 
     it('works with class components', async () => {

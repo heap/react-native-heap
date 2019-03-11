@@ -26,6 +26,8 @@ const doTestActions = async () => {
   if (device.getPlatform() === 'android') {
     await element(by.id('touchableNativeFeedbackText')).tap();
   }
+
+  await element(by.id('basicsSentinel')).tap();
 };
 
 describe('Basic React Native and Touchable Support', () => {
@@ -40,7 +42,7 @@ describe('Basic React Native and Touchable Support', () => {
   describe(':ios: Bridge API', () => {
     before(async () => {
       await doTestActions();
-      await rnTestUtil.waitForEventsToFlush();
+      await rnTestUtil.pollForSentinel('Basics_Sentinel');
     });
 
     it('should call first track', async () => {

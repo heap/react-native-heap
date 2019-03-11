@@ -26,6 +26,8 @@ const doTestActions = async () => {
   await expect(element(by.id('pop2'))).toBeVisible();
   await element(by.id('pop2')).tap();
   await delay();
+
+  await element(by.id('navSentinel')).tap();
 };
 
 describe('Navigation', () => {
@@ -40,7 +42,7 @@ describe('Navigation', () => {
   describe('React Navigation autotrack', () => {
     before(async () => {
       await doTestActions();
-      await rnTestUtil.waitForEventsToFlush();
+      await rnTestUtil.pollForSentinel('Nav_Sentinel');
     });
 
     it('tracks the initial route', async () => {});

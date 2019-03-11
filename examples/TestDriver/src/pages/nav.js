@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
+import Heap from '@heap/react-native-heap';
+
 const BaseView = props => {
   return (
     <View style={styles.container}>
@@ -14,6 +16,11 @@ const BaseView = props => {
         title="Navigate Modal"
         testID="navigate_modal"
         onPress={() => props.navigation.navigate('ModalStack')}
+      />
+      <Button
+        testID="navSentinel"
+        title="Send Nav Sentinel"
+        onPress={() => Heap.track('Nav_Sentinel')}
       />
     </View>
   );
