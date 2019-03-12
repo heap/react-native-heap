@@ -1,6 +1,11 @@
 {
   "compilerOptions": {
     "types": ["node", "lodash", "jest"],
-    "noEmit": true
-  }
+    "allowJs": true,
+    "outDir": "dist",
+    "target": "es6",
+    "module": "es6",
+    "jsx": "react"
+  },
+  "include": ["js/*"]
 }
