@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { Button as BuiltInButton, StyleSheet, View } from 'react-native';
 
+import Heap from '@heap/react-native-heap';
+
+import { makeSentinelButton } from '../sentinelUtilities';
+
 class Container1 extends Component {
   heapOptions = { eventProps: { include: ['custom1'] } };
 
@@ -43,21 +47,13 @@ class Button extends Component {
 }
 
 export default class PropExtraction extends Component {
-  static navigationOptions = () => {
-    return {
-      title: 'PropExtraction',
-      tabBarLabel: 'PropExtraction',
-      tabBarAccessibilityLabel: 'PropExtraction',
-      tabBarTestID: 'PropExtraction',
-    };
-  };
-
   render() {
     return (
       <View style={styles.container}>
         <Container1 custom1="customProp1" />
         <Container2 custom2="customProp2" />
         <Button title="excludedProp" />
+        {makeSentinelButton('PropExtraction')}
       </View>
     );
   }

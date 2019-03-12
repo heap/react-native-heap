@@ -16,13 +16,14 @@ const doTestActions = async () => {
   await element(by.id('button1')).tap();
   await element(by.id('button2')).tap();
   await element(by.id('button3')).tap();
+
+  await element(by.id('propextractionSentinel')).tap();
 };
 
 describe('Property Extraction in Hierarchies', () => {
   let buttonSuffix = '';
 
   before(async () => {
-    await device.launchApp();
     buttonSuffix =
       device.getPlatform() === 'ios'
         ? IOS_BUTTON_SUFFIX
@@ -36,7 +37,7 @@ describe('Property Extraction in Hierarchies', () => {
   describe('The property extractor', () => {
     before(async () => {
       await doTestActions();
-      await rnTestUtil.waitForEventsToFlush();
+      await rnTestUtil.pollForSentinel('PropExtraction');
     });
 
     it('works with class components', async () => {
