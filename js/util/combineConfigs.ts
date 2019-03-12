@@ -1,26 +1,29 @@
-import * as Collections from 'typescript-collections';
 import { PropExtractorCriteria } from './extractProps';
+
+// Borrowed from http://2ality.com/2015/01/es6-set-operations.html .
+const union = (s1, s2) => new Set([...s1, ...s2]);
+const difference = (s1, s2) => new Set([...s1].filter(x => !s2.has(x)));
 
 export const getCombinedInclusionList = (
   criteriaList: PropExtractorCriteria[]
 ): string[] => {
-  const inclusionSet = new Collections.Set<string>();
-  const exclusionSet = new Collections.Set<string>();
+  let inclusionSet = new Set<string>();
+  let exclusionSet = new Set<string>();
 
   for (const criteria of criteriaList) {
-    const configInclusionSet = new Collections.Set<string>();
-    const configExclusionSet = new Collections.Set<string>();
+    const configInclusionSet = new Set<string>();
+    const configExclusionSet = new Set<string>();
     criteria.include.forEach(s => configInclusionSet.add(s));
     if (criteria.exclude) {
       criteria.exclude.forEach(s => configExclusionSet.add(s));
     }
 
-    inclusionSet.union(configInclusionSet);
-    exclusionSet.union(configExclusionSet);
+    inclusionSet = union(inclusionSet, configInclusionSet);
+    exclusionSet = union(exclusionSet, configExclusionSet);
   }
 
-  inclusionSet.difference(exclusionSet);
+  inclusionSet = difference(inclusionSet, exclusionSet);
 
   // Sorting here so that the order is consistent across calls.
-  return inclusionSet.toArray().sort();
+  return [...inclusionSet].sort();
 };
