@@ -9,7 +9,7 @@ let flatten = require('flat');
 
 const RNHeap = NativeModules.RNHeap;
 
-const track = (event, payload) => {
+const track = (event, payload = {}) => {
   RNHeap.track(event, flatten(payload));
 };
 
