@@ -59,7 +59,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test-instrumentor": "./node_modules/mocha/bin/mocha --compilers js:@babel/register instrumentor/test/",
+    "test-instrumentor": "cd instrumentor && ../node_modules/mocha/bin/mocha --compilers js:@babel/register test/ && cd ..",
     "lint": "./node_modules/prettylint/bin/cli.js \"js/**/*.{js,ts}\"",
     "lint-example": "./node_modules/prettylint/bin/cli.js \"examples/**/*.{js,ts}\""
   }
