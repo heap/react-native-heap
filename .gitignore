@@ -40,3 +40,4 @@ Pods/
 # JS
 node_modules
 build
+dist
