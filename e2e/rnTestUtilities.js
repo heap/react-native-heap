@@ -127,11 +127,6 @@ const assertNavigationEvent = async (expectedPath, expectedType) => {
   }
 };
 
-waitForEventsToFlush = async () => {
-  // Add a delay to wait for all events to flush to the server
-  await new Promise(resolve => setTimeout(resolve, 16000));
-};
-
 pollForSentinel = async (sentinelValue, timeout = 60000) => {
   console.log(
     `--- Waiting for ${sentinelValue} sentinel event.  This will timeout in 60s ---`
@@ -199,6 +194,5 @@ module.exports = {
   assertAndroidAutotrackHierarchy,
   assertAutotrackHierarchy,
   assertNavigationEvent,
-  waitForEventsToFlush,
   pollForSentinel,
 };
