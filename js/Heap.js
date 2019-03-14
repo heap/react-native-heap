@@ -5,11 +5,12 @@ import { NativeModules } from 'react-native';
 import { autotrackPress } from './autotrack/touchables';
 import { withReactNavigationAutotrack } from './autotrack/reactNavigation';
 
+const flatten = require('flat');
 const RNHeap = NativeModules.RNHeap;
 
 const track = (event, payload) => {
   try {
-    let flatten = require('flat');
+    const flatten = require('flat');
     payload = payload || {};
     RNHeap.track(event, flatten(payload));
   } catch (e) {
