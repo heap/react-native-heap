@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.heapanalytics.android.internal.HeapImpl;
 import com.heapanalytics.reactnative.RNHeapLibraryPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -45,5 +46,8 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
+
+    // Make the native Heap library flush its queue more often.
+    HeapImpl.setInterval(1);
   }
 }
