@@ -17,11 +17,26 @@ describe('The Heap object', () => {
       mockTrack = NativeModules.RNHeap.track;
     });
 
-    const checkCommonExpectations = () => {
+    const checkCommonExpectations = (expectedProps = {}) => {
       expect(mockTrack.mock.calls.length).toBe(1);
       expect(mockTrack.mock.calls[0][0]).toBe('foo');
-      expect(mockTrack.mock.calls[0][1]).toEqual({});
+      expect(mockTrack.mock.calls[0][1]).toEqual(expectedProps);
     };
+
+    it('works in the common case', () => {
+      Heap.track('foo', { bar: 'baz' });
+      checkCommonExpectations({ bar: 'baz' });
+    });
+
+    it('properly flattens objects', () => {
+      Heap.track('foo', { bar: { baz: 'quux' } });
+      checkCommonExpectations({ 'bar.baz': 'quux' });
+    });
+
+    it('properly flattens arrays', () => {
+      Heap.track('foo', { bar: ['baz'] });
+      checkCommonExpectations({ 'bar.0': 'baz' });
+    });
 
     it('accepts an empty property object', () => {
       Heap.track('foo', {});
