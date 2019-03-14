@@ -5,6 +5,7 @@
     "outDir": "dist",
     "target": "es6",
     "module": "es6",
+    "lib": ["es2016"],
     "jsx": "react"
   },
   "include": ["js/*"]
