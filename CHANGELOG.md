@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Using a TypeScript build now, so everything we ship is vanilla JS.
+- Using a TypeScript build now, so everything we ship is vanilla JS. This enables compatibility with some older versions of React Native (tested back to 0.54).
 - Handles the case of missing or a null properties object passed to `Heap.track`.
 
 ## [0.2.0-alpha3] - (unreleased)
