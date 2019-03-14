@@ -14,17 +14,9 @@ import { connect } from 'react-redux';
 
 import Heap from '@heap/react-native-heap';
 import { incrementAction, decrementAction } from '../reduxElements';
+import { makeSentinelButton } from '../sentinelUtilities';
 
-class TouchablesPage extends Component {
-  static navigationOptions = () => {
-    return {
-      title: 'Basics',
-      tabBarLabel: 'Basics',
-      tabBarAccessibilityLabel: 'Basics',
-      tabBarTestID: 'Basics',
-    };
-  };
-
+class BasicsPage extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -90,6 +82,7 @@ class TouchablesPage extends Component {
             <Text>Touchable Native Feedback</Text>
           </TouchableNativeFeedback>
         )}
+        {makeSentinelButton('Basics')}
       </View>
     );
   }
@@ -105,7 +98,7 @@ export default connect(
       onDecrement: amount => dispatch(decrementAction(amount)),
     };
   }
-)(TouchablesPage);
+)(BasicsPage);
 
 const styles = StyleSheet.create({
   container: {
