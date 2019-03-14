@@ -46,6 +46,7 @@ describe('Navigation', () => {
         'Navigation/NAVIGATE'
       );
     });
+
     it('tracks a stack navigator action', async () => {
       await rnTestUtil.assertNavigationEvent(
         'Nav::MainStack::StackCard',

@@ -1,6 +1,4 @@
 require('coffeescript').register();
-_ = require('lodash');
-assert = require('should/as-function');
 
 testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');

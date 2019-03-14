@@ -2,6 +2,8 @@ require('coffeescript').register();
 db = require('../../heap/back/db');
 testUtil = require('../../heap/test/util');
 
+const HEAP_ENV_ID = '2084764307';
+
 const assertEvent = (err, res, check) => {
   assert.not.exist(err);
   assert(res.length).not.equal(0);
@@ -37,7 +39,7 @@ const assertAndroidAutotrackHierarchy = async (
   expectedTargetText
 ) => {
   return assertAndroidEvent({
-    envId: '2084764307',
+    envId: HEAP_ENV_ID,
     event: {
       custom: {
         name: expectedName,
@@ -81,22 +83,22 @@ const assertAutotrackHierarchy = async (
 };
 
 const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
-  let props = {
+  const commonProps = {
     path: {
       string: expectedPath,
     },
   };
-  if (expectedType) {
-    props = {
-      ...props,
-      type: {
-        string: expectedType,
-      },
-    };
-  }
+  const props = expectedType
+    ? {
+        ...commonProps,
+        type: {
+          string: expectedType,
+        },
+      }
+    : commonProps;
 
   return assertAndroidEvent({
-    envId: '2084764307',
+    envId: HEAP_ENV_ID,
     event: {
       custom: {
         name: 'reactNavigationScreenview',
@@ -107,10 +109,10 @@ const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
 };
 
 const assertIosNavigationEvent = async (expectedPath, expectedType) => {
-  let props = ['path', expectedPath];
-  if (expectedType) {
-    props = [...props, 'type', expectedType];
-  }
+  const commonProps = ['path', expectedPath];
+  const props = expectedType
+    ? [...commonProps, 'type', expectedType]
+    : commonProps;
   return assertIosPixel({
     t: 'reactNavigationScreenview',
     k: props,
@@ -140,7 +142,7 @@ pollForSentinel = async (sentinelValue, timeout = 60000) => {
     const eventName = `${sentinelValue.toUpperCase()}_SENTINEL`;
     if (device.getPlatform() === 'ios') {
       const event = {
-        a: '2084764307',
+        a: HEAP_ENV_ID,
         t: eventName,
       };
 
@@ -155,7 +157,7 @@ pollForSentinel = async (sentinelValue, timeout = 60000) => {
       }
     } else if (device.getPlatform() === 'android') {
       const event = {
-        envId: '2084764307',
+        envId: HEAP_ENV_ID,
         event: {
           custom: {
             name: eventName,
