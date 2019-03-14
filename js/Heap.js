@@ -10,7 +10,10 @@ const RNHeap = NativeModules.RNHeap;
 
 const track = (event, payload) => {
   try {
+    // This looks a little strange, but helps for testing, to be able to mock the flatten function and
+    // simulate a failure.
     const flatten = require('flat');
+
     payload = payload || {};
     RNHeap.track(event, flatten(payload));
   } catch (e) {
