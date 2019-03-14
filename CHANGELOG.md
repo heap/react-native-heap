@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0-alpha4] - (unreleased)
+
+### Fixed
+
+- Using a TypeScript build now, so everything we ship is vanilla JS. This enables compatibility with some older versions of React Native (tested back to 0.54).
+- Handles the case of missing or a null properties object passed to `Heap.track`.
+
 ## [0.2.0-alpha3] - (unreleased)
 
 ### Added
