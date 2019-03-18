@@ -21,6 +21,9 @@ export const withReactNavigationAutotrack = track => AppContainer => {
         <AppContainer
           ref={navigatorRef => {
             if (this.topLevelNavigator !== navigatorRef) {
+              console.log(
+                'Heap: React Navigation is instrumented for autocapture.'
+              );
               this.topLevelNavigator = navigatorRef;
               this.trackInitialRoute();
             }
