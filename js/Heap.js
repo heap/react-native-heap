@@ -3,6 +3,7 @@ import React from 'react';
 import { NativeModules } from 'react-native';
 
 import { autotrackPress } from './autotrack/touchables';
+import { checkDisplayNamePlugin } from './util/checkDisplayNames';
 import { withReactNavigationAutotrack } from './autotrack/reactNavigation';
 
 const flatten = require('flat');
@@ -16,6 +17,8 @@ const track = (event, payload) => {
 
     payload = payload || {};
     RNHeap.track(event, flatten(payload));
+
+    checkDisplayNamePlugin();
   } catch (e) {
     console.log('Error calling Heap.track\n', e);
   }
