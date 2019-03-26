@@ -43,6 +43,20 @@ pod install
 
 You're done! :tada:
 
+### Manual setup - iOS without Cocoapods
+
+1. Download the [Heap iOS library](https://cdn.heapanalytics.com/ios/heap-ios-latest.zip).
+2. Unzip the downloaded file and drag `libHeap.a` and `Heap.h` into your XCode project. Make sure to select Copy items if needed.
+3. Click on the project (blue project icon), and select "Build Settings".
+4. Within Build Settings, change "Other Linker Flags" to include `-all_load -ObjC` as a flag.
+5. Link your app to these libraries:
+  * CFNetwork.framework
+  * Foundation.framework
+  * libicucore.tbd
+  * Security.framework
+  * SystemConfiguration
+  * UIKit
+
 ### Manual setup - Android
 
 In some cases, simply doing `react-native link` will correctly set up the tracker on Android.
