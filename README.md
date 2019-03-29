@@ -12,7 +12,7 @@ React Native tracker for [Heap](https://heapanalytics.com).
 npm install @heap/react-native-heap
 ```
 
-For autotrack, add the following plugins to your `.babelrc` file (not required for manual tracking):
+For autotrack, add the following plugins to your `.babelrc` or `babel.config.js` file (not required for manual tracking):
 
 ```json
 {
@@ -22,8 +22,6 @@ For autotrack, add the following plugins to your `.babelrc` file (not required f
   ]
 }
 ```
-
-We will be supporting `npm link` in a future release. Please follow the manual setup instructions below for the time being.
 
 ### Manual setup - iOS with Cocoapods
 
@@ -42,6 +40,19 @@ pod install
 ```
 
 You're done! :tada:
+
+### Manual setup - iOS without Cocoapods
+
+All terminal commands assume you are in the top-level directory of your React Native project.
+
+1. Locate the Xcode project for RNHeap: `open node_modules/@heap/react-native-heap/ios` . You should see a Finder window containing the `RNHeap.xcodeproj` file.
+1. Open the Xcode project for your native app, in the `ios` directory of your project.
+1. Drag the `RNHeap.xcodeproj` file from the Finder window into the "Libraries" group of your Xcode project.
+1. Select your project name in the Xcode project navigator. Select the "Build Phases" tab for your app's target.
+1. Expand the build phase called "Link Binary With Libraries". In the project navigator on the left, expand the `RNHeap.xcodeproj` entry, and find `libRNHeap.a` in the "Products" group. The icon for `libRNHeap.a` should look like a little building with columns.
+1. Drag the `libRNHeap.a` file into the list of other libraries to be linked.
+
+**NOTE**: Using `react-native link` is not currently supported
 
 ### Manual setup - Android
 
