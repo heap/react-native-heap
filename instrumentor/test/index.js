@@ -29,6 +29,12 @@ describe('autotrack instrumentor plugin', () => {
     var expected = getExpectedTransformedFile('touchable-no-press-handlers');
     assert.equal(actual, expected);
   });
+
+  it('instruments the runApplication method of AppRegistry', () => {
+    var actual = getActualTransformedFile('run-application');
+    var expected = getExpectedTransformedFile('run-application');
+    assert.equal(actual, expected);
+  });
 });
 
 const getActualTransformedFile = fixtureName => {

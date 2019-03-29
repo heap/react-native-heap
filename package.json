@@ -1,6 +1,6 @@
 {
   "name": "@heap/react-native-heap",
-  "version": "0.2.0-alpha5",
+  "version": "0.2.0",
   "description": "React Native event tracking with Heap.",
   "license": "MIT",
   "author": "Heap <http://www.heapanalytics.com>",
@@ -58,7 +58,7 @@
   },
   "scripts": {
     "test": "jest",
-    "test-instrumentor": "cd instrumentor && ../node_modules/mocha/bin/mocha --compilers js:@babel/register test/ && cd ..",
+    "test-instrumentor": "cd instrumentor && ../node_modules/mocha/bin/mocha -r @babel/register test/ && cd ..",
     "lint": "./node_modules/prettylint/bin/cli.js \"js/**/*.{js,ts}\"",
     "lint-example": "./node_modules/prettylint/bin/cli.js \"examples/**/*.{js,ts}\"",
     "compile": "./node_modules/typescript/bin/tsc",

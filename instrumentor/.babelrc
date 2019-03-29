@@ -1,3 +1,5 @@
 {
- "presets": [ "@babel/preset-env" ]
+  "presets": ["@babel/preset-env"],
+  // "retainLines": true, // This is useful when debugging in VSCode, but alters the output and breaks tests.
+  "sourceMaps": true
 }
