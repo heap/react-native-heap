@@ -6,11 +6,9 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - Heap (5.1.0)
   - React (0.57.5):
     - React/Core (= 0.57.5)
-  - react-native-heap (0.2.0-alpha2):
-    - Heap (= 5.1.0)
+  - react-native-heap (0.2.0):
     - React
   - React/Core (0.57.5):
     - yoga (= 0.57.5.React)
@@ -85,7 +83,6 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - boost-for-react-native
-    - Heap
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -108,9 +105,8 @@ SPEC CHECKSUMS:
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
   glog: e8acf0ebbf99759d3ff18c86c292a5898282dcde
-  Heap: 542282698e895bf511429e87e213ad863faabd5d
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
-  react-native-heap: 720108c6585d0dedcc9fdca9ee336cd4758c3655
+  react-native-heap: 381fd78115a2a1314dae2906b893221c9501d12d
   RNGestureHandler: afde2addc517e85cc97a25bfe119acbee779a7ce
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 

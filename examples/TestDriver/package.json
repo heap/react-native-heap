@@ -8,7 +8,7 @@
     "preinstall": "./preinstall_pack_lib.sh"
   },
   "dependencies": {
-    "@heap/react-native-heap": "heap-react-native-heap-0.2.0-alpha5.tgz",
+    "@heap/react-native-heap": "heap-react-native-heap-0.2.0.tgz",
     "react": "16.6.1",
     "react-native": "0.57.5",
     "react-navigation": "^3.3.2",
