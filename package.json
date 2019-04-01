@@ -44,7 +44,7 @@
     "@types/node": "^10.12.19",
     "coffeescript": "^1.12.7",
     "deep-freeze": "0.0.1",
-    "detox": "^10.0.7",
+    "detox": "^12.1.1",
     "jest": "^24.0.0",
     "lodash": "^4.17.11",
     "mocha": "^5.2.0",
