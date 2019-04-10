@@ -2,6 +2,11 @@ import React from 'react';
 
 const EVENT_TYPE = 'reactNavigationScreenview';
 
+// `react-native-navigation` uses `Navigation/{NAVIGATE,POP,BACK}` to represent
+// different types of navigation actions. We build the initial navigation action
+// ourselves, so we invent a fourth navigation type to represent this action.
+const INITIAL_ROUTE_TYPE = 'Heap_Navigation/INITIAL';
+
 export const withReactNavigationAutotrack = track => AppContainer => {
   return class HeapNavigationWrapper extends React.Component {
     topLevelNavigator = null;
@@ -13,6 +18,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
 
       track(EVENT_TYPE, {
         path: initialPageviewPath,
+        type: INITIAL_ROUTE_TYPE,
       });
     }
 
