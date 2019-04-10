@@ -393,7 +393,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
-				"${SRCROOT}/Pods/Target Support Files/Pods-TestDriver/Pods-TestDriver-frameworks.sh",
+				"${PODS_ROOT}/Target Support Files/Pods-TestDriver/Pods-TestDriver-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/DoubleConversion/DoubleConversion.framework",
 				"${BUILT_PRODUCTS_DIR}/Folly/folly.framework",
 				"${BUILT_PRODUCTS_DIR}/RNGestureHandler/RNGestureHandler.framework",
@@ -414,7 +414,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TestDriver/Pods-TestDriver-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDriver/Pods-TestDriver-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E5F03DDBB7275D0F8105EA52 /* [CP] Check Pods Manifest.lock */ = {
