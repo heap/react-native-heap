@@ -225,7 +225,7 @@ describe('Basic React Native and Touchable Support', () => {
   describe('Autotrack', () => {
     it("should autotrack 'TouchableOpacity's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(BasicsPage);|BasicsPage;|TouchableOpacity;[testID=touchableOpacityText];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|TouchableOpacity;[testID=touchableOpacityText];|';
       const expectedTargetText = 'Touchable Opacity Foo';
       await rnTestUtil.assertAutotrackHierarchy(
         'touchableHandlePress',
@@ -236,7 +236,7 @@ describe('Basic React Native and Touchable Support', () => {
 
     it("should autotrack 'TouchableHighlight's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(BasicsPage);|BasicsPage;|TouchableHighlight;[testID=touchableHighlightText];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|TouchableHighlight;[testID=touchableHighlightText];|';
       const expectedTargetText = 'Touchable Highlight';
       await rnTestUtil.assertAutotrackHierarchy(
         'touchableHandlePress',
@@ -247,7 +247,7 @@ describe('Basic React Native and Touchable Support', () => {
 
     it("should autotrack 'TouchableWithoutFeedback's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(BasicsPage);|BasicsPage;|TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|';
       const expectedTargetText = 'Touchable Without Feedback';
       await rnTestUtil.assertAutotrackHierarchy(
         'touchableHandlePress',
@@ -258,7 +258,7 @@ describe('Basic React Native and Touchable Support', () => {
 
     it(":android: should autotrack 'TouchableNativeFeedback's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;|SceneView;|Connect(BasicsPage);|BasicsPage;|TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|';
       const expectedTargetText = 'Touchable Native Feedback';
       await rnTestUtil.assertAutotrackHierarchy(
         'touchableHandlePress',
