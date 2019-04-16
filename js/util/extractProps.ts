@@ -15,6 +15,7 @@ export interface FiberNode {
     [propertyKey: string]: any;
   };
   stateNode?: StateNode;
+  key?: any;
   type?: {
     heapOptions?: ClassHeapOptions;
   };
@@ -87,7 +88,14 @@ export const extractProps = (
   }
 
   const filteredProps = _.pick(props, inclusionList);
-  const flattenedProps = flatten(filteredProps);
+
+  // KLUDGE: We want to capture the `key` property for list components that have it set,
+  // but we can't simply add to the list of props captured for all components in
+  // `propExtractorConfig` because `props.key` is always undefined and guarded with
+  // a yellowbox warning; this is to prevent client code from appropriating the `key`
+  // prop for its own use; it is intended to be reserved for internal use. (HEAP-8473)
+  const flattenedProps = Object.assign({ key: fiberNode.key }, flatten(filteredProps));
+
   let propsString = '';
 
   // Only include props that are primitives.
