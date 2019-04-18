@@ -10,6 +10,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { Switch } from 'native-base';
 import { connect } from 'react-redux';
 
 import Heap from '@heap/react-native-heap';
@@ -20,6 +21,7 @@ class BasicsPage extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <Switch testID="switch" onValueChange={() => console.log('stuff')}/>
         <Button
           testID="track1"
           title="Call Track1"

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@heap/react-native-heap": "heap-react-native-heap-0.2.0.tgz",
+    "native-base": "^2.12.1",
     "react": "16.6.1",
     "react-native": "0.57.5",
     "react-native-gesture-handler": "^1.1.0",
