@@ -35,6 +35,12 @@ describe('autotrack instrumentor plugin', () => {
     var expected = getExpectedTransformedFile('run-application');
     assert.equal(actual, expected);
   });
+
+  it('switch should be instrumented', () => {
+    var actual = getActualTransformedFile('is-switch');
+    var expected = getExpectedTransformedFile('is-switch');
+    assert.equal(actual, expected);
+  })
 });
 
 const getActualTransformedFile = fixtureName => {
