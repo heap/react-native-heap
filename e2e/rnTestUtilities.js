@@ -1,4 +1,7 @@
 require('coffeescript').register();
+
+const _ = require('lodash');
+
 db = require('../../heap/back/db');
 testUtil = require('../../heap/test/util');
 
@@ -33,49 +36,30 @@ const assertAndroidEvent = async (event, check) => {
   assertEvent(err, res, check);
 };
 
-const assertAndroidAutotrackHierarchy = async (
-  expectedName,
-  expectedHierarchy,
-  expectedTargetText
-) => {
+const assertAndroidAutotrackHierarchy = async (expectedName, expectedProps) => {
   return assertAndroidEvent({
     envId: HEAP_ENV_ID,
     event: {
       custom: {
         name: expectedName,
-        properties: {
-          touchableHierarchy: {
-            string: expectedHierarchy,
-          },
-          targetText: {
-            string: expectedTargetText,
-          },
-        },
+        properties: _.mapValues(expectedProps, value => {
+          string: value;
+        }),
       },
     },
   });
 };
 
-const assertAutotrackHierarchy = async (
-  expectedName,
-  expectedHierarchy,
-  expectedTargetText
-) => {
+const assertAutotrackHierarchy = async (expectedName, expectedProps) => {
   if (device.getPlatform() === 'android') {
-    return assertAndroidAutotrackHierarchy(
-      expectedName,
-      expectedHierarchy,
-      expectedTargetText
-    );
+    return assertAndroidAutotrackHierarchy(expectedName, expectedProps);
   } else if (device.getPlatform() === 'ios') {
     return assertIosPixel({
       t: expectedName,
-      k: [
-        'touchableHierarchy',
-        expectedHierarchy,
-        'targetText',
-        expectedTargetText,
-      ],
+      k: _(expectedProps)
+        .map((value, key) => [key, value])
+        .flatten()
+        .value(),
     });
   } else {
     throw new Error(`Unknown device type: ${device.getPlatform()}`);
