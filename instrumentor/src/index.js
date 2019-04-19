@@ -3,10 +3,12 @@
 const t = require('babel-types');
 const template = require('babel-template');
 
+const SWITCH_COMPONENT_NAME = 'switch';
+
 // Used to record whether certain methods/components have been instrumented.
 // :TODO: (jmtaber129): Determine whether we actually need this once we figure out the unexpected
 // behavior with the instrumented Switch node being visited multiple times.
-const instrumentationMap = new Set();
+const instrumentedComponentNodes = new Set();
 
 const buildFunctionWrapper = template(`{
   const Heap = require('@heap/react-native-heap').default;
@@ -64,10 +66,10 @@ const instrumentTouchables = path => {
     const originalFunctionExpression = path.node.value;
 
     const replacementFunc = getOriginalFunctionReplacement(
-      /*originalFunctionExpression=*/ path.node.value,
-      /*thisContext=*/ 'this',
-      /*heapMethodName=*/ 'autotrackPress',
-      /*trackedMethodName=*/ path.node.key.name
+      path.node.value, // originalFunctionExpression
+      'this', // thisIdentifier
+      'autotrackPress', // autotrackMethodName
+      path.node.key.name // eventType
     );
     path.get('value').replaceWith(replacementFunc);
   }
@@ -140,50 +142,56 @@ const extendsReactComponent = path => {
   );
 };
 
-const instrumentSwitch = path => {
-  if (instrumentationMap.has('switch')) {
+const isSwitchNode = (path) => {
+  // The method we want to instrument:
+  // * Is named '_handleChange'
+  // * Has a variable declarator parent named 'Switch'
+  // * The parent extends 'React.Component'.
+  if (
+    !(path.node.left.property &&
+    path.node.left.property.name === '_handleChange')
+  ) {
+    return false;
+  }
+
+  const parent = path.findParent(path => {
+    return (
+      path.isVariableDeclarator() &&
+      path.node.id.name === 'Switch' &&
+      extendsReactComponent(path)
+    );
+  });
+
+  return !!parent;
+}
+
+const instrumentSwitchComponent = path => {
+  if (instrumentedComponentNodes.has(SWITCH_COMPONENT_NAME)) {
     // We already instrumented the switch, so do nothing.
     return;
   }
 
-  // The method we want to instrument:
-  // * Is named '_handleChange'
-  // * Has a variable declarator parent named 'Switch'
-  // * Extends 'React.Component'.
-  if (
-    path.node.left.property &&
-    path.node.left.property.name === '_handleChange'
-  ) {
-    const parent = path.findParent(path => {
-      return (
-        path.isVariableDeclarator() &&
-        path.node.id.name === 'Switch' &&
-        extendsReactComponent(path)
-      );
-    });
-
-    if (!parent) {
-      return;
-    }
-
-    // Create the expression for calling the original function for this listener.
-    // '(<original function>).call(this, e)'.
-    const originalFunctionExpression = path.node.right;
-    const replacementFunc = getOriginalFunctionReplacement(
-      originalFunctionExpression,
-      '_this',
-      'autotrackSwitchChange',
-      path.node.left.property.name
-    );
-
-    path.get('right').replaceWith(replacementFunc);
-
-    // :KLUDGE: There's some unexpected behavior in the babel traverser that seems to cause the AST
-    // node we're instrumenting to be visited multiple times. To avoid unintentionally wrapping the
-    // same method multiple times, record that we've instrumented the switch.
-    // :TODO: (jmtabe129): Remove this once we figure out what's going on here.
-    instrumentationMap.add('switch');
+  if (!isSwitchNode(path)) {
+    return;
   }
+
+  // Create the expression for calling the original function for this listener.
+  // '(<original function>).call(this, e)'.
+  const originalFunctionExpression = path.node.right;
+  const replacementFunc = getOriginalFunctionReplacement(
+    originalFunctionExpression, // originalFunctionExpression
+    '_this', // thisIdentifier
+    'autotrackSwitchChange', // autotrackMethodName
+    path.node.left.property.name // eventType
+  );
+
+  path.get('right').replaceWith(replacementFunc);
+
+  // :KLUDGE: There's some unexpected behavior in the babel traverser that seems to cause the AST
+  // node we're instrumenting to be visited multiple times. To avoid unintentionally wrapping the
+  // same method multiple times, record that we've instrumented the switch.
+  // :TODO: (jmtabe129): Remove this once we figure out what's going on here.
+  instrumentedComponentNodes.add(SWITCH_COMPONENT_NAME);
 };
 
 const instrumentStartup = path => {
@@ -227,7 +235,7 @@ function transform(babel) {
         instrumentTouchables(path);
       },
       AssignmentExpression(path) {
-        instrumentSwitch(path, babel);
+        instrumentSwitchComponent(path);
       },
     },
   };
