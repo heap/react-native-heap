@@ -15,7 +15,7 @@ export const getBaseComponentProps = componentThis => {
   }
 
   return autotrackProps;
-}
+};
 
 const getComponentHierarchy = componentThis => {
   // :TODO: (jmtaber129): Remove this if/when we support pre-fiber React.
