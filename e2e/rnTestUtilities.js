@@ -58,10 +58,7 @@ const assertAutotrackHierarchy = async (expectedName, expectedProps) => {
       t: expectedName,
       // Convert { key1: 'value1', key2: 'value2'} to ['key1', 'value1', 'key2', 'value2'] for
       // custom props.
-      k: _(expectedProps)
-        .map((value, key) => [key, value])
-        .flatten()
-        .value(),
+      k: _.flatMap(expectedProps, (value, key) => [key, value]),
     });
   } else {
     throw new Error(`Unknown device type: ${device.getPlatform()}`);
