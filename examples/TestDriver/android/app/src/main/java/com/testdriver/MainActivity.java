@@ -8,7 +8,7 @@ public class MainActivity extends ReactActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RNHeap.init(getApplicationContext(), "11");
+        RNHeap.init(getApplicationContext(), "2084764307");
     }
 
     /**
