@@ -22,7 +22,7 @@ class BasicsPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <NbSwitch testID="switch" onValueChange={() => console.log('stuff')} />
+        <NbSwitch testID="nbSwitch" onValueChange={() => console.log('stuff')} />
         <Switch testID="switch" onValueChange={() => console.log('stuff')} />
         <Button
           testID="track1"
