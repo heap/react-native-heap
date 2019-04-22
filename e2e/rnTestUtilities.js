@@ -56,6 +56,8 @@ const assertAutotrackHierarchy = async (expectedName, expectedProps) => {
   } else if (device.getPlatform() === 'ios') {
     return assertIosPixel({
       t: expectedName,
+      // Convert { key1: 'value1', key2: 'value2'} to ['key1', 'value1', 'key2', 'value2'] for
+      // custom props.
       k: _(expectedProps)
         .map((value, key) => [key, value])
         .flatten()
