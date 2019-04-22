@@ -3,6 +3,7 @@ import React from 'react';
 import { NativeModules } from 'react-native';
 
 import { autotrackPress } from './autotrack/touchables';
+import { autotrackSwitchChange } from './autotrack/switches';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';
 import { withReactNavigationAutotrack } from './autotrack/reactNavigation';
 
@@ -49,5 +50,6 @@ export default {
   },
 
   autotrackPress: autotrackPress(track),
+  autotrackSwitchChange: autotrackSwitchChange(track),
   withReactNavigationAutotrack: withReactNavigationAutotrack(track),
 };
