@@ -94,7 +94,10 @@ export const extractProps = (
   // `propExtractorConfig` because `props.key` is always undefined and guarded with
   // a yellowbox warning; this is to prevent client code from appropriating the `key`
   // prop for its own use; it is intended to be reserved for internal use. (HEAP-8473)
-  const flattenedProps = Object.assign({ key: fiberNode.key }, flatten(filteredProps));
+  const flattenedProps = Object.assign(
+    { key: fiberNode.key },
+    flatten(filteredProps)
+  );
 
   let propsString = '';
 
