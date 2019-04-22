@@ -43,7 +43,7 @@ const assertAndroidAutotrackHierarchy = async (expectedName, expectedProps) => {
       custom: {
         name: expectedName,
         properties: _.mapValues(expectedProps, value => {
-          string: value;
+          return { string: value };
         }),
       },
     },
