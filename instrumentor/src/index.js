@@ -3,8 +3,6 @@
 const t = require('babel-types');
 const template = require('babel-template');
 
-const SWITCH_COMPONENT_NAME = 'switch';
-
 // Used to record whether certain methods/components have been instrumented.
 // :TODO: (jmtaber129): Determine whether we actually need this once we figure out the unexpected
 // behavior with the instrumented Switch node being visited multiple times.
@@ -166,7 +164,7 @@ const isSwitchNode = (path) => {
 }
 
 const instrumentSwitchComponent = path => {
-  if (instrumentedComponentNodes.has(SWITCH_COMPONENT_NAME)) {
+  if (instrumentedComponentNodes.has(path)) {
     // We already instrumented the switch, so do nothing.
     return;
   }
@@ -191,7 +189,7 @@ const instrumentSwitchComponent = path => {
   // node we're instrumenting to be visited multiple times. To avoid unintentionally wrapping the
   // same method multiple times, record that we've instrumented the switch.
   // :TODO: (jmtabe129): Remove this once we figure out what's going on here.
-  instrumentedComponentNodes.add(SWITCH_COMPONENT_NAME);
+  instrumentedComponentNodes.add(path);
 };
 
 const instrumentStartup = path => {

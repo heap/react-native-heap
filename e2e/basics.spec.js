@@ -39,10 +39,13 @@ const doTestActions = async () => {
     await element(by.id('touchableNativeFeedbackText')).tap();
   }
 
+  await element(by.id('switch')).tap();
+  await element(by.id('nbSwitch')).tap();
+
   await element(by.id('basicsSentinel')).tap();
 };
 
-describe('Basic React Native and Touchable Support', () => {
+describe('Basic React Native and Interaction Support', () => {
   before(done => {
     db.orm.connection.sharedRedis().flushall(done);
   });
@@ -227,12 +230,10 @@ describe('Basic React Native and Touchable Support', () => {
       const expectedHierarchy =
         'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|TouchableOpacity;[testID=touchableOpacityText];|';
       const expectedTargetText = 'Touchable Opacity Foo';
-      await rnTestUtil.assertAutotrackHierarchy(
-      'touchableHandlePress',
-        {
-          touchableHierarchy: expectedHierarchy,
-          targetText: expectedTargetText,
-        });
+      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
+        touchableHierarchy: expectedHierarchy,
+        targetText: expectedTargetText,
+      });
     });
 
     it("should autotrack 'TouchableHighlight's", async () => {
@@ -262,6 +263,22 @@ describe('Basic React Native and Touchable Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
         targetText: expectedTargetText,
+      });
+    });
+
+    it("should autotrack 'Switch's", async () => {
+      const expectedHierarchy =
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|Switch;[testID=switch];|';
+      await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
+        touchableHierarchy: expectedHierarchy,
+      });
+    });
+
+    it("should autotrack NativeBase 'Switch's", async () => {
+      const expectedHierarchy =
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|StyledComponent;[testID=nbSwitch];|Switch;[testID=nbSwitch];|Switch;[testID=nbSwitch];|';
+      await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
+        touchableHierarchy: expectedHierarchy,
       });
     });
   });
