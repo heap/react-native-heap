@@ -19,6 +19,7 @@ android {
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
+        buildConfigField("String", "HEAP_APP_ID", "\"" + rootProject.file('../HEAP_APP_ID').text.trim() + "\"")
     }
     lintOptions {
         abortOnError false
