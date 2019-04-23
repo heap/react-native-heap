@@ -1,3 +1,31 @@
+import groovy.json.JsonSlurper
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
+
+def warnNoAutoInit() {
+    logger.warn("Couldn't auto-initialize the Heap library; manually initialize it by following the instructions at https://docs.heap.io/docs/react-native.")
+}
+
+def warnDisabled() {
+    logger.warn("Not auto-initializing the Heap library because it was manually disabled; set `enabled` to `true` in `heap.json` to enable auto-initialization.")
+}
+
+def heapAppId() {
+    def heapConfigFilename = 'heap.json'
+    def file = rootProject.file("../${heapConfigFilename}")
+    if (!file.exists()) { return warnNoAutoInit() }
+
+    def jsonSlurper = new JsonSlurper()
+    def data = jsonSlurper.parseText(file.text.trim())
+
+    if (!data instanceof Map || !data.appId instanceof String) { return warnNoAutoInit() }
+    if (!data.enabled) { return warnDisabled() }
+
+    return data.appId
+}
+
 buildscript {
     repositories {
         jcenter()
@@ -7,10 +35,6 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.2.1'
     }
-}
-
-def safeExtGet(prop, fallback) {
-    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
 apply plugin: 'com.android.library'
@@ -23,6 +47,15 @@ android {
         targetSdkVersion safeExtGet('targetSdkVersion', 26)
         versionCode 1
         versionName "1.0"
+
+        def appId = heapAppId()
+        if (appId) {
+            buildConfigField("String", "HEAP_APP_ID", "\"${appId}\"")
+        } else {
+            // KLUDGE: Need to do this explicitly so the `HEAP_APP_ID` field is generated.
+            // This is mainly to avoid having to use reflection to figure out if an appId was set.
+            buildConfigField("String", "HEAP_APP_ID", "\"\"")
+        }
     }
     lintOptions {
         abortOnError false
