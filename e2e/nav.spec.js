@@ -19,6 +19,12 @@ const doTestActions = async () => {
   await expect(element(by.id('pop1'))).toBeVisible();
   await element(by.id('pop1')).tap();
   await delay();
+
+  // :HACK: Break up long URL.
+  // :TODO: Remove once pixel endpoint is handling larger events again.
+  console.log('Waiting 15s to flush iOS events.');
+  await new Promise(resolve => setTimeout(resolve, 15000));
+
   await expect(element(by.id('navigate_modal'))).toBeVisible();
   await element(by.id('navigate_modal')).tap();
   await delay();

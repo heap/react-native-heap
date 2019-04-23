@@ -17,6 +17,6 @@ describe('Initial Navigation', () => {
   });
 
   it('tracks the initial route', async () => {
-    await rnTestUtil.assertNavigationEvent('Initial');
+    await rnTestUtil.assertNavigationEvent('Initial', 'Heap_Navigation/INITIAL');
   });
 });

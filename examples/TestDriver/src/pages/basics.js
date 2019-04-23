@@ -3,6 +3,7 @@ import {
   Button,
   Platform,
   StyleSheet,
+  Switch,
   Text,
   TouchableHighlight,
   TouchableNativeFeedback,
@@ -10,6 +11,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { Switch as NbSwitch } from 'native-base';
 import { connect } from 'react-redux';
 
 import Heap from '@heap/react-native-heap';
@@ -20,6 +22,8 @@ class BasicsPage extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <NbSwitch testID="nbSwitch" />
+        <Switch testID="switch" />
         <Button
           testID="track1"
           title="Call Track1"
