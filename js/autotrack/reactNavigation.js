@@ -1,4 +1,5 @@
 import React from 'react';
+import { bail, bailOnError } from '../util/bailer';
 
 const EVENT_TYPE = 'reactNavigationScreenview';
 
@@ -23,9 +24,20 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     }
 
     render() {
+      try {
+        return this._render();
+      } catch(e) {
+        bail(e);
+        return (
+          <AppContainer/>
+        );
+      }
+    }
+
+    _render() {
       return (
         <AppContainer
-          ref={navigatorRef => {
+          ref={bailOnError(navigatorRef => {
             if (this.topLevelNavigator !== navigatorRef) {
               console.log(
                 'Heap: React Navigation is instrumented for autocapture.'
@@ -33,8 +45,8 @@ export const withReactNavigationAutotrack = track => AppContainer => {
               this.topLevelNavigator = navigatorRef;
               this.trackInitialRoute();
             }
-          }}
-          onNavigationStateChange={(prev, next, action) => {
+          })}
+          onNavigationStateChange={bailOnError((prev, next, action) => {
             const prevScreenRoute = getActiveRouteName(prev);
             const nextScreenRoute = getActiveRouteName(next);
             if (prevScreenRoute !== nextScreenRoute) {
@@ -44,7 +56,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
                 type: action.type,
               });
             }
-          }}
+          })}
         >
           {this.props.children}
         </AppContainer>
