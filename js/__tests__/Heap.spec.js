@@ -10,10 +10,14 @@ describe('The Heap object', () => {
     mockAddUserProperties,
     mockAddEventProperties,
     mockRemoveEventProperty,
-    mockClearEventProperties;
+    mockClearEventProperties,
+    throwFn;
 
   beforeAll(() => {
     jest.mock('react-native');
+    throwFn = (...args) => {
+      throw "Error!";
+    };
   });
 
   beforeEach(() => {
@@ -87,6 +91,11 @@ describe('The Heap object', () => {
       Heap.track('foo');
       expect(mockTrack.mock.calls.length).toBe(0);
     });
+
+    it("doesn't crash if an error is thrown", () => {
+      mockTrack.mockImplementation(throwFn);
+      expect(() => Heap.track('foo')).not.toThrow();
+    });
   });
 
   describe('Other functions', () => {
@@ -125,5 +134,37 @@ describe('The Heap object', () => {
       expect(mockClearEventProperties.mock.calls.length).toBe(1);
       expect(mockRemoveEventProperty.mock.calls[0]).toBeUndefined();
     });
+  });
+
+  describe('Preventing crashes', () => {
+    it('setAppId - prevents errors from bubbling up', () => {
+      mockSetAppId.mockImplementation(throwFn);
+      expect(() => Heap.setAppId('foo')).not.toThrow();
+    });
+
+    it('identify - prevents errors from bubbling up', () => {
+      mockIdentify.mockImplementation(throwFn);
+      expect(() => Heap.identify('foo')).not.toThrow();
+    });
+
+    it('addUserProperties - prevents errors from bubbling up', () => {
+      mockAddUserProperties.mockImplementation(throwFn);
+      expect(() => Heap.addUserProperties({ foo: 'bar' })).not.toThrow();
+    });
+
+    it('addEventProperties - prevents errors from bubbling up', () => {
+      mockAddEventProperties.mockImplementation(throwFn);
+      expect(() => Heap.addEventProperties({ foo: 'bar' })).not.toThrow();
+    });
+
+    it('removeEventProperty - prevents errors from bubbling up', () => {
+      mockRemoveEventProperty.mockImplementation(throwFn);
+      expect(() => Heap.removeEventProperty('foo')).not.toThrow();
+    });
+
+    it('clearEventProperties - prevents errors from bubbling up', () => {
+      mockClearEventProperties.mockImplementation(throwFn);
+      expect(() => Heap.clearEventProperties()).not.toThrow();
+    })
   });
 });
