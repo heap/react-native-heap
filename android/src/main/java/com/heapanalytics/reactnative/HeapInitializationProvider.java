@@ -8,10 +8,18 @@ import android.net.Uri;
 public class HeapInitializationProvider extends ContentProvider {
     @Override
     public boolean onCreate() {
-        String appId = BuildConfig.HEAP_APP_ID;
+        String appId;
+
+        if (BuildConfig.DEBUG) {
+            appId = BuildConfig.HEAP_APP_ID_DEV;
+        } else {
+            appId = BuildConfig.HEAP_APP_ID_PROD;
+        }
+
         if (!appId.isEmpty()) {
             RNHeap.init(getContext(), appId);
         }
+
         return true;
     }
 

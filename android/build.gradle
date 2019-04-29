@@ -12,18 +12,25 @@ def warnDisabled() {
     logger.warn("Not auto-initializing the Heap library because it was manually disabled; set `enabled` to `true` in `heap.json` to enable auto-initialization.")
 }
 
-def heapAppId() {
-    def heapConfigFilename = 'heap.json'
-    def file = rootProject.file("../${heapConfigFilename}")
+ext.HEAP_CONFIG_FILENAME = 'heap.config.json'
+ext.HEAP_APP_ID_FIELD_NAME_DEV = 'HEAP_APP_ID_DEV'
+ext.HEAP_APP_ID_FIELD_NAME_PROD = 'HEAP_APP_ID_PROD'
+
+def heapAppId(buildType) {
+    def file = rootProject.file("../${HEAP_CONFIG_FILENAME}")
     if (!file.exists()) { return warnNoAutoInit() }
 
     def jsonSlurper = new JsonSlurper()
-    def data = jsonSlurper.parseText(file.text.trim())
+    def data = jsonSlurper.parseText(file.text.trim())[buildType]
+    def defaultData = jsonSlurper.parseText(file.text.trim())["default"]
 
-    if (!data instanceof Map || !data.appId instanceof String) { return warnNoAutoInit() }
-    if (!data.enabled) { return warnDisabled() }
+    // KLUDGE: Can't use the elvis operator because we want to treat `null` and `false` differently.
+    def autoInit = data?.heapAutoInit
+    if (autoInit == null) { autoInit = defaultData?.heapAutoInit }
+    if (autoInit == null) { autoInit = true }
 
-    return data.appId
+    if (!autoInit) { return warnDisabled() }
+    return data?.heapAppId ?: defaultData?.heapAppId ?: warnNoAutoInit();
 }
 
 buildscript {
@@ -48,14 +55,13 @@ android {
         versionCode 1
         versionName "1.0"
 
-        def appId = heapAppId()
-        if (appId) {
-            buildConfigField("String", "HEAP_APP_ID", "\"${appId}\"")
-        } else {
-            // KLUDGE: Need to do this explicitly so the `HEAP_APP_ID` field is generated.
-            // This is mainly to avoid having to use reflection to figure out if an appId was set.
-            buildConfigField("String", "HEAP_APP_ID", "\"\"")
-        }
+        // KLUDGE: Need to assign an empty string explicitly so the fields are generated. This is mainly
+        // to avoid having to use reflection to figure out if an appId was set, and `null` values are disallowed.
+        def devAppId = heapAppId("dev") ?: ""
+        buildConfigField "String", HEAP_APP_ID_FIELD_NAME_DEV, "\"${devAppId}\""
+
+        def prodAppId = heapAppId("prod") ?: ""
+        buildConfigField "String", HEAP_APP_ID_FIELD_NAME_PROD, "\"${prodAppId}\""
     }
     lintOptions {
         abortOnError false
