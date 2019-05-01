@@ -5,7 +5,7 @@ def safeExtGet(prop, fallback) {
 }
 
 def warnNoAutoInit() {
-    logger.warn("Couldn't auto-initialize the Heap library; manually initialize it by following the instructions at https://docs.heap.io/docs/react-native.")
+    logger.warn("Couldn't auto-initialize the Heap library; please initialize it manually by following the instructions at https://docs.heap.io/docs/react-native.")
 }
 
 def warnDisabled() {
@@ -24,10 +24,12 @@ def heapAppId(buildType) {
     def data = jsonSlurper.parseText(file.text.trim())[buildType]
     def defaultData = jsonSlurper.parseText(file.text.trim())["default"]
 
+    // Enable auto-initialization if a value isn't set
+    def autoInit = true
+
     // KLUDGE: Can't use the elvis operator because we want to treat `null` and `false` differently.
-    def autoInit = data?.heapAutoInit
-    if (autoInit == null) { autoInit = defaultData?.heapAutoInit }
-    if (autoInit == null) { autoInit = true }
+    if (defaultData?.heapAutoInit != null) { autoInit = defaultData?.heapAutoInit }
+    if (data?.heapAutoInit != null) { autoInit = data?.heapAutoInit }
 
     if (!autoInit) { return warnDisabled() }
     return data?.heapAppId ?: defaultData?.heapAppId ?: warnNoAutoInit();
