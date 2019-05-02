@@ -20,9 +20,9 @@ Pod::Spec.new do |s|
 
   s.script_phase = {
     name: 'Generate `HeapSettings.plist`',
-    script: '/usr/bin/ruby ../../node_modules/@heap/react-native-heap/ios/HeapSettings/generate_settings',
+    script: '/usr/bin/ruby ../../node_modules/@heap/react-native-heap/ios/HeapSettings.bundle/generate_settings',
     execution_position: :after_compile,
     shell_path: '/bin/bash'
   }
-  s.resource_bundles = {HeapSettings: ['ios/HeapSettings/HeapSettings.plist.template', 'ios/HeapSettings/HeapSettings.plist']}
+  s.resource_bundles = {HeapSettings: ['ios/HeapSettings.bundle/HeapSettings.plist.template', 'ios/HeapSettings.bundle/HeapSettings.plist']}
 end
