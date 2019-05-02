@@ -7,6 +7,7 @@ import PropExtraction from './pages/propExtraction';
 import NavPage from './pages/nav';
 
 import Heap from '@heap/react-native-heap';
+Heap.setAppId('2084764307');
 
 const TabNavigator = createBottomTabNavigator({
   Initial: {
