@@ -51,6 +51,7 @@ All terminal commands assume you are in the top-level directory of your React Na
 1. Select your project name in the Xcode project navigator. Select the "Build Phases" tab for your app's target.
 1. Expand the build phase called "Link Binary With Libraries". In the project navigator on the left, expand the `RNHeap.xcodeproj` entry, and find `libRNHeap.a` in the "Products" group. The icon for `libRNHeap.a` should look like a little building with columns.
 1. Drag the `libRNHeap.a` file into the list of other libraries to be linked.
+1. Expand the build phase called "Copy Bundle Resources". In the project navigator on the left, expand the `RNHeap.xcodeproj` entry, and find `HeapSettings.bundle`. Drag this into the list of bundle resources to be copied.
 
 **NOTE**: Using `react-native link` is not currently supported
 
