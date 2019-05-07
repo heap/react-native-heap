@@ -11,7 +11,6 @@ import { bailOnError } from './util/bailer';
 const flatten = require('flat');
 const RNHeap = NativeModules.RNHeap;
 
-
 const track = bailOnError((event, payload) => {
   try {
     // This looks a little strange, but helps for testing, to be able to mock the flatten function and
@@ -34,24 +33,27 @@ export default {
   // User Properties
   identify: bailOnError(identity => RNHeap.identify(identity)),
   addUserProperties: bailOnError(properties => {
-    RNHeap.addUserProperties(flatten(properties))
+    RNHeap.addUserProperties(flatten(properties));
   }),
 
   // Event Properties
   addEventProperties: bailOnError(properties => {
-    RNHeap.addEventProperties(flatten(properties))
+    RNHeap.addEventProperties(flatten(properties));
   }),
-  removeEventProperty: bailOnError(property => RNHeap.removeEventProperty(property)),
+  removeEventProperty: bailOnError(property =>
+    RNHeap.removeEventProperty(property)
+  ),
   clearEventProperties: bailOnError(() => RNHeap.clearEventProperties()),
 
   // Events
   track: track,
 
   // Redux middleware
-  reduxMiddleware: store => next => bailOnError(action => {
-    RNHeap.track('Redux Action', flatten(action));
-    next(action);
-  }),
+  reduxMiddleware: store => next =>
+    bailOnError(action => {
+      RNHeap.track('Redux Action', flatten(action));
+      next(action);
+    }),
 
   autotrackPress: bailOnError(autotrackPress(track)),
   autotrackSwitchChange: bailOnError(autotrackSwitchChange(track)),

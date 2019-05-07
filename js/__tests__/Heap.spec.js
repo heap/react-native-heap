@@ -16,7 +16,7 @@ describe('The Heap object', () => {
   beforeAll(() => {
     jest.mock('react-native');
     throwFn = (...args) => {
-      throw "Error!";
+      throw 'Error!';
     };
   });
 
@@ -165,6 +165,6 @@ describe('The Heap object', () => {
     it('clearEventProperties - prevents errors from bubbling up', () => {
       mockClearEventProperties.mockImplementation(throwFn);
       expect(() => Heap.clearEventProperties()).not.toThrow();
-    })
+    });
   });
 });

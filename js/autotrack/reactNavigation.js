@@ -26,11 +26,9 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     render() {
       try {
         return this._render();
-      } catch(e) {
+      } catch (e) {
         bail(e);
-        return (
-          <AppContainer/>
-        );
+        return <AppContainer />;
       }
     }
 
