@@ -33,12 +33,14 @@ export default {
   // User Properties
   identify: bailOnError(identity => RNHeap.identify(identity)),
   addUserProperties: bailOnError(properties => {
-    RNHeap.addUserProperties(flatten(properties));
+    const payload = properties || {};
+    RNHeap.addUserProperties(flatten(payload));
   }),
 
   // Event Properties
   addEventProperties: bailOnError(properties => {
-    RNHeap.addEventProperties(flatten(properties));
+    const payload = properties || {};
+    RNHeap.addEventProperties(flatten(payload));
   }),
   removeEventProperty: bailOnError(property =>
     RNHeap.removeEventProperty(property)
