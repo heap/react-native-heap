@@ -7,5 +7,10 @@ export const autotrackSwitchChange = track => (
 ) => {
   const autotrackProps = getBaseComponentProps(componentThis);
 
+  if (!autotrackProps) {
+    // We're not capturing this interaction.
+    return;
+  }
+
   track(eventType, autotrackProps);
 };
