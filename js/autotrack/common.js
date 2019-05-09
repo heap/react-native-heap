@@ -9,8 +9,12 @@ import { builtinPropExtractorConfig } from '../propExtractorConfig';
 export const getBaseComponentProps = componentThis => {
   // Get the hierarchy traversal from root to target component, then get the actual hierarchy from
   // the traversal representation.
-  const touchableHierarchyTraversal = getComponentHierarchyTraversal(componentThis);
-  const { hierarchy, heapIgnoreProps } = getHierarchyStringFromTraversal(touchableHierarchyTraversal);
+  const touchableHierarchyTraversal = getComponentHierarchyTraversal(
+    componentThis
+  );
+  const { hierarchy, heapIgnoreProps } = getHierarchyStringFromTraversal(
+    touchableHierarchyTraversal
+  );
 
   if (heapIgnoreProps.ignoreInteraction) {
     return null;
@@ -43,7 +47,9 @@ const getComponentHierarchyTraversal = componentThis => {
     );
   }
 
-  return getFiberNodeComponentHierarchyTraversal(componentThis._reactInternalFiber);
+  return getFiberNodeComponentHierarchyTraversal(
+    componentThis._reactInternalFiber
+  );
 };
 
 // Traverse up the hierarchy from the current component up to the root, and return an array of
@@ -87,7 +93,7 @@ const getFiberNodeComponentHierarchyTraversal = currNode => {
 
   parentHierarchyRepresentation.push({
     elementName,
-    fiberNode: currNode,  // Needed to get all props on HeapIgnore components.
+    fiberNode: currNode, // Needed to get all props on HeapIgnore components.
     propsString, // :TODO: Make this an object so we can use it with 'ignoreSpecificProps'
   });
 
@@ -110,22 +116,30 @@ const getHierarchyStringFromTraversal = hierarchyArray => {
   };
 
   // Map each hierarchy element to its string representation, considering HeapIgnore specs.
-  const hierarchyStrings = hierarchyArray.map(element => {
-    // If we're not using any part of the hierarchy (for 'ignoreInteraction') or not capturing the
-    // current subhierarchy, return an empty string for the current component.
-    if (currentHeapIgnoreProps.ignoreInteraction || currentHeapIgnoreProps.ignoreInnerHierarchy) {
-      return '';
-    }
+  const hierarchyStrings = hierarchyArray
+    .map(element => {
+      // If we're not using any part of the hierarchy (for 'ignoreInteraction') or not capturing the
+      // current subhierarchy, return an empty string for the current component.
+      if (
+        currentHeapIgnoreProps.ignoreInteraction ||
+        currentHeapIgnoreProps.ignoreInnerHierarchy
+      ) {
+        return '';
+      }
 
-    if (currentHeapIgnoreProps.ignoreAllProps) {
-      return `${element.elementName};|`;
-    }
+      if (currentHeapIgnoreProps.ignoreAllProps) {
+        return `${element.elementName};|`;
+      }
 
-    // Doing this at the end allows us to capture HeapIgnore components.
-    currentHeapIgnoreProps = getNewHeapIgnoreProps(currentHeapIgnoreProps, element);
+      // Doing this at the end allows us to capture HeapIgnore components.
+      currentHeapIgnoreProps = getNewHeapIgnoreProps(
+        currentHeapIgnoreProps,
+        element
+      );
 
-    return `${element.elementName};${element.propsString}|`;
-  }).join('');
+      return `${element.elementName};${element.propsString}|`;
+    })
+    .join('');
 
   return {
     heapIgnoreProps: currentHeapIgnoreProps,
@@ -147,10 +161,13 @@ const BASE_HEAP_CAPTURE_RESTRICTOR_PROPS = {
   ignoreAllProps: false,
   // :TODO: (jmtaber129): Implement 'ignoreSpecificProps'.
   ignoreTargetText: false,
-}
+};
 
 const getNewHeapIgnoreProps = (currProps, element) => {
-  if (element.elementName !== 'HeapIgnore' && element.elementName !== 'HeapCaptureRestrictor') {
+  if (
+    element.elementName !== 'HeapIgnore' &&
+    element.elementName !== 'HeapCaptureRestrictor'
+  ) {
     return currProps;
   }
 
@@ -168,16 +185,24 @@ const getNewHeapIgnoreProps = (currProps, element) => {
   let actualHeapIgnoreProps = {};
 
   if (element.elementName === 'HeapIgnore') {
-    actualHeapIgnoreProps = _.merge({}, BASE_HEAP_IGNORE_PROPS, specifiedHeapIgnoreProps);
+    actualHeapIgnoreProps = _.merge(
+      {},
+      BASE_HEAP_IGNORE_PROPS,
+      specifiedHeapIgnoreProps
+    );
   } else {
-    actualHeapIgnoreProps = _.merge({}, BASE_HEAP_CAPTURE_RESTRICTOR_PROPS, specifiedHeapIgnoreProps);
+    actualHeapIgnoreProps = _.merge(
+      {},
+      BASE_HEAP_CAPTURE_RESTRICTOR_PROPS,
+      specifiedHeapIgnoreProps
+    );
   }
 
   // New HeapIgnore props for the subtree should be at least as restrictive as it already was.
   return _.mapValues(currProps, (value, key) => {
     return value || actualHeapIgnoreProps[key];
   });
-}
+};
 
 // :TODO: (jmtaber129): Consider implementing sibling target text.
 const getTargetText = fiberNode => {
