@@ -118,17 +118,18 @@ const getHierarchyStringFromTraversal = hierarchyArray => {
   // Map each hierarchy element to its string representation, considering HeapIgnore specs.
   const hierarchyStrings = hierarchyArray
     .map(element => {
-      // If we're not using any part of the hierarchy (for 'ignoreInteraction') or not capturing the
-      // current subhierarchy, return an empty string for the current component.
+      let currElementString = '';
       if (
         currentHeapIgnoreProps.ignoreInteraction ||
         currentHeapIgnoreProps.ignoreInnerHierarchy
       ) {
-        return '';
-      }
-
-      if (currentHeapIgnoreProps.ignoreAllProps) {
-        return `${element.elementName};|`;
+        // If we're not using any part of the hierarchy (for 'ignoreInteraction') or not capturing the
+        // current subhierarchy, return an empty string for the current component.
+        currElementString = '';
+      } else if (currentHeapIgnoreProps.ignoreAllProps) {
+        currElementString = `${element.elementName};|`;
+      } else {
+        currElementString = `${element.elementName};${element.propsString}|`;
       }
 
       // Doing this at the end allows us to capture HeapIgnore components.
@@ -137,7 +138,7 @@ const getHierarchyStringFromTraversal = hierarchyArray => {
         element
       );
 
-      return `${element.elementName};${element.propsString}|`;
+      return currElementString;
     })
     .join('');
 
@@ -207,6 +208,15 @@ const getNewHeapIgnoreProps = (currProps, element) => {
 // :TODO: (jmtaber129): Consider implementing sibling target text.
 const getTargetText = fiberNode => {
   if (fiberNode.type === 'RCTText') {
+    return fiberNode.memoizedProps.children;
+  }
+
+  // In some cases, target text may not be within an 'RCTText' component. This has only been
+  // observed in unit tests with Enzyme, but may still be a possibility in real RN apps.
+  if (
+    fiberNode.memoizedProps &&
+    typeof fiberNode.memoizedProps.children === 'string'
+  ) {
     return fiberNode.memoizedProps.children;
   }
 
