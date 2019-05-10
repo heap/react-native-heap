@@ -2,11 +2,7 @@
 import React from 'react';
 import { NativeModules } from 'react-native';
 
-import {
-  HeapIgnore,
-  HeapCaptureRestrictor,
-  withHeapIgnore,
-} from './autotrack/heapIgnore';
+import { HeapIgnore, withHeapIgnore } from './autotrack/heapIgnore';
 import { autotrackPress } from './autotrack/touchables';
 import { autotrackSwitchChange } from './autotrack/switches';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';
@@ -26,14 +22,12 @@ const track = bailOnError((event, payload) => {
     RNHeap.track(event, flatten(payload));
 
     checkDisplayNamePlugin();
-
-    console.log('Heap.track call:', event, payload);
   } catch (e) {
     console.log('Error calling Heap.track\n', e);
   }
 });
 
-export { HeapIgnore, HeapCaptureRestrictor };
+export { HeapIgnore };
 
 export default {
   // App Properties
@@ -68,6 +62,5 @@ export default {
   autotrackSwitchChange: bailOnError(autotrackSwitchChange(track)),
   withReactNavigationAutotrack: withReactNavigationAutotrack(track),
   Ignore: HeapIgnore,
-  CaptureRestrictor: HeapCaptureRestrictor,
   withHeapIgnore,
 };

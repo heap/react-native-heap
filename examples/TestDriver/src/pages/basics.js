@@ -14,7 +14,7 @@ import {
 import { Switch as NbSwitch } from 'native-base';
 import { connect } from 'react-redux';
 
-import Heap, { HeapIgnore, HeapCaptureRestrictor } from '@heap/react-native-heap';
+import Heap, { HeapIgnore } from '@heap/react-native-heap';
 import { incrementAction, decrementAction } from '../reduxElements';
 import { makeSentinelButton } from '../sentinelUtilities';
 
@@ -29,59 +29,58 @@ class BasicsPage extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <HeapIgnoredNbSwitch testID="nbSwitch" />
+        <HeapIgnoredNbSwitch testID="ignoredNbSwitch" />
+        <NbSwitch testID="nbSwitch" />
         <Switch testID="switch" />
-        <HeapCaptureRestrictor ignoreTargetText={true}>
+        <Button
+          testID="track1"
+          title="Call Track1"
+          onPress={() => Heap.track('pressInTestEvent1', {})}
+        />
+        <HeapIgnore ignoreInteraction={false} ignoreTargetText={false}>
           <Button
-            testID="track1"
-            title="Call Track1"
-            onPress={() => Heap.track('pressInTestEvent1', {})}
+            testID="track2"
+            title="Call Track2"
+            onPress={() => Heap.track('pressInTestEvent2', {})}
           />
-          <HeapIgnore ignoreInteraction={false} ignoreTargetText={false}>
-            <Button
-              testID="track2"
-              title="Call Track2"
-              onPress={() => Heap.track('pressInTestEvent2', {})}
-            />
-          </HeapIgnore>
-          <Button
-            testID="track3"
-            title="Call Track3"
-            onPress={() => Heap.track('pressInTestEvent3', {})}
-          />
-          <Button
-            testID="track4"
-            title="Call Track4"
-            onPress={() => Heap.track('pressInTestEvent4', {})}
-          />
-          <Button
-            testID="aup"
-            title="Call AUP"
-            onPress={() => Heap.addUserProperties({ prop1: 'foo', prop2: 'bar' })}
-          />
-          <Button
-            testID="identify"
-            title="Call Identify"
-            onPress={() => Heap.identify('foobar')}
-          />
-          <Button
-            testID="aep"
-            title="Add Event Properties"
-            onPress={() =>
-              Heap.addEventProperties({ eventProp1: 'bar', eventProp2: 'foo' })
-            }
-          />
-          <Button
-            testID="removeProp"
-            title="Remove eventProp1"
-            onPress={() => Heap.removeEventProperty('eventProp1')}
-          />
-          <Button
-            testID="clearProps"
-            title="Clear Event Properties"
-            onPress={() => Heap.clearEventProperties()}
-          />
-        </HeapCaptureRestrictor>
+        </HeapIgnore>
+        <Button
+          testID="track3"
+          title="Call Track3"
+          onPress={() => Heap.track('pressInTestEvent3', {})}
+        />
+        <Button
+          testID="track4"
+          title="Call Track4"
+          onPress={() => Heap.track('pressInTestEvent4', {})}
+        />
+        <Button
+          testID="aup"
+          title="Call AUP"
+          onPress={() => Heap.addUserProperties({ prop1: 'foo', prop2: 'bar' })}
+        />
+        <Button
+          testID="identify"
+          title="Call Identify"
+          onPress={() => Heap.identify('foobar')}
+        />
+        <Button
+          testID="aep"
+          title="Add Event Properties"
+          onPress={() =>
+            Heap.addEventProperties({ eventProp1: 'bar', eventProp2: 'foo' })
+          }
+        />
+        <Button
+          testID="removeProp"
+          title="Remove eventProp1"
+          onPress={() => Heap.removeEventProperty('eventProp1')}
+        />
+        <Button
+          testID="clearProps"
+          title="Clear Event Properties"
+          onPress={() => Heap.clearEventProperties()}
+        />
         <TouchableOpacity testID="touchableOpacityText">
           <Text>Touchable Opacity</Text>
           <Text>Foo</Text>

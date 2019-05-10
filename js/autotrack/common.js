@@ -1,6 +1,7 @@
 import * as _ from 'lodash';
 
 import { extractProps } from '../util/extractProps';
+import { BASE_HEAP_IGNORE_PROPS, getNextHeapIgnoreProps } from './heapIgnore';
 import { builtinPropExtractorConfig } from '../propExtractorConfig';
 
 // Returns an object containing a base set of component properties if we're not ignoring the
@@ -108,12 +109,7 @@ const getFiberNodeComponentHierarchyTraversal = currNode => {
 // * heapIgnoreProps - the final set of HeapIgnore props that applies to the target component. Used
 //     to determine whether to include target text and/or ignore the entire interaction.
 const getHierarchyStringFromTraversal = hierarchyArray => {
-  let currentHeapIgnoreProps = {
-    ignoreInteraction: false,
-    ignoreInnerHierarchy: false,
-    ignoreAllProps: false,
-    ignoreTargetText: false,
-  };
+  let currentHeapIgnoreProps = _.mapValues(BASE_HEAP_IGNORE_PROPS, () => false);
 
   // Map each hierarchy element to its string representation, considering HeapIgnore specs.
   const hierarchyStrings = hierarchyArray
@@ -133,7 +129,7 @@ const getHierarchyStringFromTraversal = hierarchyArray => {
       }
 
       // Doing this at the end allows us to capture HeapIgnore components.
-      currentHeapIgnoreProps = getNewHeapIgnoreProps(
+      currentHeapIgnoreProps = getNextHeapIgnoreProps(
         currentHeapIgnoreProps,
         element
       );
@@ -146,63 +142,6 @@ const getHierarchyStringFromTraversal = hierarchyArray => {
     heapIgnoreProps: currentHeapIgnoreProps,
     hierarchy: hierarchyStrings,
   };
-};
-
-const BASE_HEAP_IGNORE_PROPS = {
-  ignoreInteraction: true,
-  ignoreInnerHierarchy: true,
-  ignoreAllProps: true,
-  // :TODO: (jmtaber129): Implement 'ignoreSpecificProps'.
-  ignoreTargetText: true,
-};
-
-const BASE_HEAP_CAPTURE_RESTRICTOR_PROPS = {
-  ignoreInteraction: false,
-  ignoreInnerHierarchy: false,
-  ignoreAllProps: false,
-  // :TODO: (jmtaber129): Implement 'ignoreSpecificProps'.
-  ignoreTargetText: false,
-};
-
-const getNewHeapIgnoreProps = (currProps, element) => {
-  if (
-    element.elementName !== 'HeapIgnore' &&
-    element.elementName !== 'HeapCaptureRestrictor'
-  ) {
-    return currProps;
-  }
-
-  // Normally, we'd want to check for props on a 'stateNode' that may or may not be present.
-  // However, because we know that the HeapIgnore components are functional components, we already
-  // know there is not 'stateNode'.
-  const specifiedHeapIgnoreProps = _.pick(element.fiberNode.memoizedProps, [
-    'ignoreInteraction',
-    'ignoreInnerHierarchy',
-    'ignoreAllProps',
-    // :TODO: (jmtaber129): Implement 'ignoreSpecificProps'.
-    'ignoreTargetText',
-  ]);
-
-  let actualHeapIgnoreProps = {};
-
-  if (element.elementName === 'HeapIgnore') {
-    actualHeapIgnoreProps = _.merge(
-      {},
-      BASE_HEAP_IGNORE_PROPS,
-      specifiedHeapIgnoreProps
-    );
-  } else {
-    actualHeapIgnoreProps = _.merge(
-      {},
-      BASE_HEAP_CAPTURE_RESTRICTOR_PROPS,
-      specifiedHeapIgnoreProps
-    );
-  }
-
-  // New HeapIgnore props for the subtree should be at least as restrictive as it already was.
-  return _.mapValues(currProps, (value, key) => {
-    return value || actualHeapIgnoreProps[key];
-  });
 };
 
 // :TODO: (jmtaber129): Consider implementing sibling target text.

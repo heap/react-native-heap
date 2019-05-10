@@ -2,18 +2,7 @@
  * @jest-environment jsdom
  */
 import React from 'React';
-import {
-  Button,
-  Platform,
-  StyleSheet,
-  Switch,
-  Text,
-  TouchableHighlight,
-  TouchableNativeFeedback,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import { Text, View } from 'react-native';
 const foo = require('react-native');
 import { shallow, mount, render } from 'enzyme';
 
