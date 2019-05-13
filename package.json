@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@babel/core": "^7.2.2",
+    "@types/react-reconciler": "^0.18.0",
     "babel-plugin-add-react-displayname": "0.0.5",
     "babel-template": "^6.26.0",
     "babel-types": "^6.26.0",
