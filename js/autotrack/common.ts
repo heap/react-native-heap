@@ -154,7 +154,7 @@ const getHierarchyStringFromTraversal: (
   );
 
   // Map each hierarchy element to its string representation, considering HeapIgnore specs.
-  const hierarchyStrings: string = hierarchyArray
+  const hierarchyString: string = hierarchyArray
     .map(element => {
       let currElementString = '';
       if (
@@ -182,7 +182,7 @@ const getHierarchyStringFromTraversal: (
 
   return {
     heapIgnoreProps: currentHeapIgnoreProps,
-    hierarchy: hierarchyStrings,
+    hierarchy: hierarchyString,
   };
 };
 
