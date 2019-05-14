@@ -131,7 +131,7 @@ describe('Common autotrack utils', () => {
       });
     });
 
-    it('No-op', () => {
+    it('Ignores nothing', () => {
       const wrapper = mount(
         <Foo>
           <HeapIgnore
@@ -139,6 +139,8 @@ describe('Common autotrack utils', () => {
             ignoreInnerHierarchy={false}
             ignoreAllProps={false}
             ignoreTargetText={false}
+            // :TODO: (jmtaber129): Add additional capture restriction props to this when we add
+            // them to HeapIgnore.
           >
             <Text testID="targetElement">{'foobar'}</Text>
           </HeapIgnore>
