@@ -51,10 +51,7 @@ export const getBaseComponentProps: (
   const touchableHierarchyTraversal = getComponentHierarchyTraversal(
     componentThis
   );
-  const {
-    hierarchy,
-    heapIgnoreProps,
-  } = getHierarchyStringFromTraversal(
+  const { hierarchy, heapIgnoreProps } = getHierarchyStringFromTraversal(
     touchableHierarchyTraversal
   );
 
