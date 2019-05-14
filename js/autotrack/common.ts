@@ -6,16 +6,17 @@ import { extractProps } from '../util/extractProps';
 import { BASE_HEAP_IGNORE_PROPS, getNextHeapIgnoreProps } from './heapIgnore';
 import { builtinPropExtractorConfig } from '../propExtractorConfig';
 
+// The type definition of 'Component' from '@types/react' doesn't include the internal
+// '_reactInternalFiber' property, so create our own 'Component' type that includes this prop.
+// :TODO: (jmtaber129): Consider pulling this out if other TS files need this extended typing.
+interface Component extends ReactComponent {
+  _reactInternalFiber: FiberNode;
+}
+
 // Base properties for autotracked events.
 interface AutotrackProps {
   touchableHierarchy: string;
   targetText?: string;
-}
-
-// The type definition of 'Component' from '@types/react' doesn't include the internal
-// '_reactInternalFiber' property, so create our own 'Component' type that includes this prop.
-interface Component extends ReactComponent {
-  _reactInternalFiber: FiberNode;
 }
 
 interface HeapIgnoreProps {
@@ -39,8 +40,8 @@ interface ComponentHierarchyTraversalElement {
   propsString: string;
 }
 
-// Returns an object containing a base set of component properties if we're not ignoring the
-// full interaction due to HeapIgnore.
+// Returns an 'AutotrackProps' containing a base set of component properties if we're not ignoring
+// the full interaction due to HeapIgnore.
 // Returns null if we're ignoring the full interaction due to HeapIgnore.
 export const getBaseComponentProps: (
   component: Component
@@ -144,10 +145,6 @@ const getFiberNodeComponentHierarchyTraversal: (
 // Given an object array representing the component hierarchy from root to target component,
 // traverse through the element list to create the string representation of the hierarchy, taking
 // into account HeapIgnore specifications.
-// Returns an object containing:
-// * hierarchy - the string hierarchy representation of 'hierarchyArray'.
-// * heapIgnoreProps - the final set of HeapIgnore props that applies to the target component. Used
-//     to determine whether to include target text and/or ignore the entire interaction.
 const getHierarchyStringFromTraversal: (
   hierarchyArray: ComponentHierarchyTraversalElement[]
 ) => HierarchyResult = hierarchyArray => {
