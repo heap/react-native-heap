@@ -48,13 +48,13 @@ export const getBaseComponentProps: (
 ) => AutotrackProps | null = componentThis => {
   // Get the hierarchy traversal from root to target component, then get the actual hierarchy from
   // the traversal representation.
-  const touchableHierarchyTraversal: ComponentHierarchyTraversalElement[] = getComponentHierarchyTraversal(
+  const touchableHierarchyTraversal = getComponentHierarchyTraversal(
     componentThis
   );
   const {
     hierarchy,
     heapIgnoreProps,
-  }: HierarchyResult = getHierarchyStringFromTraversal(
+  } = getHierarchyStringFromTraversal(
     touchableHierarchyTraversal
   );
 
