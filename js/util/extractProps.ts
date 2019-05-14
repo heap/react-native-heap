@@ -38,7 +38,7 @@ const EMPTY_CRITERIA = { include: [] };
 
 export const extractProps = (
   elementName: string,
-  fiberNode: FiberNode,
+  fiberNode: FiberNode | null,
   config: PropExtractorConfig
 ): string => {
   if (!fiberNode) {

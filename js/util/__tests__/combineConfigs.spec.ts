@@ -2,7 +2,7 @@ import { getCombinedInclusionList } from '../combineConfigs';
 import { PropExtractorCriteria } from '../extractProps';
 const deepFreeze = require('deep-freeze');
 
-const makeTestCriteria = (include, exclude) => {
+const makeTestCriteria = (include: string[], exclude: string[] | undefined) => {
   return deepFreeze({
     include,
     exclude,

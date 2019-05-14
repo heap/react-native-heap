@@ -15,7 +15,7 @@ describe('Extracting Props with a configuration', () => {
 
   const objWithEventProps: FiberNode = {
     stateNode: {
-      props: obj1.stateNode.props,
+      props: obj1.stateNode!.props,
       heapOptions: {
         eventProps: {
           include: ['b'],
@@ -153,7 +153,7 @@ describe('Extracting Props with a configuration', () => {
   test('Can handle a heapOptions without an eventProps', () => {
     const objWithEventProps2 = {
       stateNode: {
-        props: obj1.stateNode.props,
+        props: obj1.stateNode!.props,
         heapOptions: {},
       },
     };
@@ -165,7 +165,7 @@ describe('Extracting Props with a configuration', () => {
 
   test('uses memoizedProps when stateNode is null', () => {
     const objNoStateNode = {
-      memoizedProps: obj1.stateNode.props,
+      memoizedProps: obj1.stateNode!.props,
     };
 
     expect(extractProps('Element', objNoStateNode, config)).toEqual(
@@ -175,9 +175,9 @@ describe('Extracting Props with a configuration', () => {
 
   test('uses type.heapOptions when there is no stateNode', () => {
     const objNoStateNodePropConfig = {
-      memoizedProps: obj1.stateNode.props,
+      memoizedProps: obj1.stateNode!.props,
       type: {
-        heapOptions: objWithEventProps.stateNode.heapOptions,
+        heapOptions: objWithEventProps.stateNode!.heapOptions,
       },
     };
 
@@ -189,11 +189,11 @@ describe('Extracting Props with a configuration', () => {
   test('uses stateNode.heapOptions and not type.heapOptions if stateNode exists', () => {
     const objMultipleHeapOptions = {
       stateNode: {
-        props: obj1.stateNode.props,
+        props: obj1.stateNode!.props,
       },
       type: {
         // This should be ignored, since the 'stateNode' exists.
-        heapOptions: objWithEventProps.stateNode.heapOptions,
+        heapOptions: objWithEventProps.stateNode!.heapOptions,
       },
     };
 
