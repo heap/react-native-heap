@@ -9,7 +9,8 @@
     "jsx": "react",
     "strict": true,
     "noUnusedLocals": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "moduleResolution": "node"
   },
   "include": ["js/*"]
 }

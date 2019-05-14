@@ -1,6 +1,6 @@
 import * as _ from 'lodash';
 
-import { Component as ReactComponent } from 'React';
+import { Component as ReactComponent } from 'react';
 import { Fiber as FiberNode } from 'react-reconciler';
 import { extractProps } from '../util/extractProps';
 import { BASE_HEAP_IGNORE_PROPS, getNextHeapIgnoreProps } from './heapIgnore';
