@@ -12,7 +12,7 @@ const bail = (error: Error) => {
   console.warn('The Heap library has crashed with an exception.', errorData);
 };
 
-const bailOnError = f => (...args) => {
+const bailOnError = (f: Function) => (...args: any[]) => {
   try {
     return f(...args);
   } catch (e) {

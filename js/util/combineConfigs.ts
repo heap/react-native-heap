@@ -1,8 +1,9 @@
 import { PropExtractorCriteria } from './extractProps';
 
 // Borrowed from http://2ality.com/2015/01/es6-set-operations.html .
-const union = (s1, s2) => new Set([...s1, ...s2]);
-const difference = (s1, s2) => new Set([...s1].filter(x => !s2.has(x)));
+const union = <T>(s1: Set<T>, s2: Set<T>) => new Set([...s1, ...s2]);
+const difference = <T>(s1: Set<T>, s2: Set<T>) =>
+  new Set([...s1].filter(x => !s2.has(x)));
 
 export const getCombinedInclusionList = (
   criteriaList: PropExtractorCriteria[]
