@@ -17,13 +17,13 @@ export const getBaseComponentProps = componentThis => {
     touchableHierarchyTraversal
   );
 
-  if (heapIgnoreProps.ignoreInteraction) {
+  if (!heapIgnoreProps.allowInteraction) {
     return null;
   }
 
   // Only look for target text if we're not HeapIgnore-ing target text.
   let targetText;
-  if (!heapIgnoreProps.ignoreTargetText) {
+  if (heapIgnoreProps.allowTargetText) {
     targetText = getTargetText(componentThis._reactInternalFiber);
   } else {
     targetText = '';
@@ -109,20 +109,20 @@ const getFiberNodeComponentHierarchyTraversal = currNode => {
 // * heapIgnoreProps - the final set of HeapIgnore props that applies to the target component. Used
 //     to determine whether to include target text and/or ignore the entire interaction.
 const getHierarchyStringFromTraversal = hierarchyArray => {
-  let currentHeapIgnoreProps = _.mapValues(BASE_HEAP_IGNORE_PROPS, () => false);
+  let currentHeapIgnoreProps = _.mapValues(BASE_HEAP_IGNORE_PROPS, () => true);
 
   // Map each hierarchy element to its string representation, considering HeapIgnore specs.
   const hierarchyStrings = hierarchyArray
     .map(element => {
       let currElementString = '';
       if (
-        currentHeapIgnoreProps.ignoreInteraction ||
-        currentHeapIgnoreProps.ignoreInnerHierarchy
+        !currentHeapIgnoreProps.allowInteraction ||
+        !currentHeapIgnoreProps.allowInnerHierarchy
       ) {
-        // If we're not using any part of the hierarchy (for 'ignoreInteraction') or not capturing the
+        // If we're not using any part of the hierarchy (for 'allowInteraction') or not capturing the
         // current subhierarchy, return an empty string for the current component.
         currElementString = '';
-      } else if (currentHeapIgnoreProps.ignoreAllProps) {
+      } else if (!currentHeapIgnoreProps.allowAllProps) {
         currElementString = `${element.elementName};|`;
       } else {
         currElementString = `${element.elementName};${element.propsString}|`;

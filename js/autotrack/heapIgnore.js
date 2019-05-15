@@ -22,11 +22,11 @@ export const withHeapIgnore = (IgnoredComponent, heapIgnoreConfig) => {
 };
 
 export const BASE_HEAP_IGNORE_PROPS = {
-  ignoreInteraction: true,
-  ignoreInnerHierarchy: true,
-  ignoreAllProps: true,
+  allowInteraction: false,
+  allowInnerHierarchy: false,
+  allowAllProps: false,
   // :TODO: (jmtaber129): Implement 'ignoreSpecificProps'.
-  ignoreTargetText: true,
+  allowTargetText: false,
 };
 
 export const getNextHeapIgnoreProps = (currProps, element) => {
@@ -52,6 +52,6 @@ export const getNextHeapIgnoreProps = (currProps, element) => {
 
   // New HeapIgnore props for the subtree should be at least as restrictive as it already was.
   return _.mapValues(currProps, (value, key) => {
-    return value || actualHeapIgnoreProps[key];
+    return value && actualHeapIgnoreProps[key];
   });
 };

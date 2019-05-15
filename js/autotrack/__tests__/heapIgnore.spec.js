@@ -70,7 +70,7 @@ describe('Common autotrack utils', () => {
     it('Ignores inner hierarchy', () => {
       const wrapper = mount(
         <Foo>
-          <HeapIgnore ignoreInteraction={false} ignoreTargetText={false}>
+          <HeapIgnore allowInteraction={true} allowTargetText={true}>
             <Text testID="targetElement">{'foobar'}</Text>
           </HeapIgnore>
         </Foo>
@@ -90,9 +90,9 @@ describe('Common autotrack utils', () => {
       const wrapper = mount(
         <Foo>
           <HeapIgnore
-            ignoreInteraction={false}
-            ignoreInnerHierarchy={false}
-            ignoreTargetText={false}
+            allowInteraction={true}
+            allowInnerHierarchy={true}
+            allowTargetText={true}
           >
             <Text testID="targetElement">{'foobar'}</Text>
           </HeapIgnore>
@@ -113,9 +113,9 @@ describe('Common autotrack utils', () => {
       const wrapper = mount(
         <Foo>
           <HeapIgnore
-            ignoreInteraction={false}
-            ignoreInnerHierarchy={false}
-            ignoreAllProps={false}
+            allowInteraction={true}
+            allowInnerHierarchy={true}
+            allowAllProps={true}
           >
             <Text testID="targetElement">{'foobar'}</Text>
           </HeapIgnore>
@@ -135,10 +135,10 @@ describe('Common autotrack utils', () => {
       const wrapper = mount(
         <Foo>
           <HeapIgnore
-            ignoreInteraction={false}
-            ignoreInnerHierarchy={false}
-            ignoreAllProps={false}
-            ignoreTargetText={false}
+            allowInteraction={true}
+            allowInnerHierarchy={true}
+            allowAllProps={true}
+            allowTargetText={true}
             // :TODO: (jmtaber129): Add additional capture restriction props to this when we add
             // them to HeapIgnore.
           >
@@ -160,15 +160,15 @@ describe('Common autotrack utils', () => {
     it('Props stack correctly', () => {
       const wrapper = mount(
         <Foo>
-          <HeapIgnore ignoreInteraction={false} ignoreInnerHierarchy={false}>
+          <HeapIgnore allowInteraction={true} allowInnerHierarchy={true}>
             <BarFunction>
-              <HeapIgnore ignoreInteraction={false}>
+              <HeapIgnore allowInteraction={true}>
                 <BarFunction>
                   <HeapIgnore
-                    ignoreInteraction={false}
-                    ignoreInnerHierarchy={false}
-                    ignoreAllProps={false}
-                    ignoreTargetText={false}
+                    allowInteraction={true}
+                    allowInnerHierarchy={true}
+                    allowAllProps={true}
+                    allowTargetText={true}
                   >
                     <Text testID="targetElement">{'foobar'}</Text>
                   </HeapIgnore>
@@ -189,7 +189,7 @@ describe('Common autotrack utils', () => {
     });
 
     it('Works as an HOC', () => {
-      const IgnoredText = withHeapIgnore(Text, { ignoreInteraction: false });
+      const IgnoredText = withHeapIgnore(Text, { allowInteraction: true });
       const wrapper = mount(
         <Foo>
           <IgnoredText testID="targetElement">{'foobar'}</IgnoredText>
