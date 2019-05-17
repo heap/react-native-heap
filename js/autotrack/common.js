@@ -1,13 +1,36 @@
+import * as _ from 'lodash';
+
 import { extractProps } from '../util/extractProps';
+import { BASE_HEAP_IGNORE_PROPS, getNextHeapIgnoreProps } from './heapIgnore';
 import { builtinPropExtractorConfig } from '../propExtractorConfig';
 
+// Returns an object containing a base set of component properties if we're not ignoring the
+// full interaction due to HeapIgnore.
+// Returns null if we're ignoring the full interaction due to HeapIgnore.
 export const getBaseComponentProps = componentThis => {
-  const touchableHierarchy = getComponentHierarchy(componentThis);
+  // Get the hierarchy traversal from root to target component, then get the actual hierarchy from
+  // the traversal representation.
+  const touchableHierarchyTraversal = getComponentHierarchyTraversal(
+    componentThis
+  );
+  const { hierarchy, heapIgnoreProps } = getHierarchyStringFromTraversal(
+    touchableHierarchyTraversal
+  );
 
-  const targetText = getTargetText(componentThis._reactInternalFiber);
+  if (!heapIgnoreProps.allowInteraction) {
+    return null;
+  }
+
+  // Only look for target text if we're not HeapIgnore-ing target text.
+  let targetText;
+  if (heapIgnoreProps.allowTargetText) {
+    targetText = getTargetText(componentThis._reactInternalFiber);
+  } else {
+    targetText = '';
+  }
 
   const autotrackProps = {
-    touchableHierarchy,
+    touchableHierarchy: hierarchy,
   };
 
   if (targetText !== '') {
@@ -17,7 +40,7 @@ export const getBaseComponentProps = componentThis => {
   return autotrackProps;
 };
 
-const getComponentHierarchy = componentThis => {
+const getComponentHierarchyTraversal = componentThis => {
   // :TODO: (jmtaber129): Remove this if/when we support pre-fiber React.
   if (!componentThis._reactInternalFiber) {
     throw new Error(
@@ -25,12 +48,20 @@ const getComponentHierarchy = componentThis => {
     );
   }
 
-  return getFiberNodeComponentHierarchy(componentThis._reactInternalFiber);
+  return getFiberNodeComponentHierarchyTraversal(
+    componentThis._reactInternalFiber
+  );
 };
 
-const getFiberNodeComponentHierarchy = currNode => {
+// Traverse up the hierarchy from the current component up to the root, and return an array of
+// objects representing the component hierarchy from root to the current node. Each object element
+// contains:
+// * elementName - The name of the component
+// * fiberNode - The FiberNode reference for the component
+// * propsString - The string of props obtained from extractProps().
+const getFiberNodeComponentHierarchyTraversal = currNode => {
   if (currNode === null) {
-    return '';
+    return [];
   }
 
   // Skip components we don't care about.
@@ -40,7 +71,7 @@ const getFiberNodeComponentHierarchy = currNode => {
     currNode.type === null ||
     !(currNode.type.displayName || currNode.type.name)
   ) {
-    return getFiberNodeComponentHierarchy(currNode.return);
+    return getFiberNodeComponentHierarchyTraversal(currNode.return);
   }
 
   const elementName = currNode.type.displayName || currNode.type.name;
@@ -48,7 +79,7 @@ const getFiberNodeComponentHierarchy = currNode => {
   // In dev builds, 'View' components remain in the fiber tree, but don't provide any useful
   // information, so exclude these from the hierarchy.
   if (elementName === 'View') {
-    return getFiberNodeComponentHierarchy(currNode.return);
+    return getFiberNodeComponentHierarchyTraversal(currNode.return);
   }
 
   const propsString = extractProps(
@@ -57,14 +88,74 @@ const getFiberNodeComponentHierarchy = currNode => {
     builtinPropExtractorConfig
   );
 
-  return `${getFiberNodeComponentHierarchy(
+  const parentHierarchyRepresentation = getFiberNodeComponentHierarchyTraversal(
     currNode.return
-  )}${elementName};${propsString}|`;
+  );
+
+  parentHierarchyRepresentation.push({
+    elementName,
+    fiberNode: currNode, // Needed to get all props on HeapIgnore components.
+    propsString, // :TODO: Make this an object so we can use it with 'ignoreSpecificProps'
+  });
+
+  return parentHierarchyRepresentation;
+};
+
+// Given an object array representing the component hierarchy from root to target component,
+// traverse through the element list to create the string representation of the hierarchy, taking
+// into account HeapIgnore specifications.
+// Returns an object containing:
+// * hierarchy - the string hierarchy representation of 'hierarchyArray'.
+// * heapIgnoreProps - the final set of HeapIgnore props that applies to the target component. Used
+//     to determine whether to include target text and/or ignore the entire interaction.
+const getHierarchyStringFromTraversal = hierarchyArray => {
+  let currentHeapIgnoreProps = _.mapValues(BASE_HEAP_IGNORE_PROPS, () => true);
+
+  // Map each hierarchy element to its string representation, considering HeapIgnore specs.
+  const hierarchyStrings = hierarchyArray
+    .map(element => {
+      let currElementString = '';
+      if (
+        !currentHeapIgnoreProps.allowInteraction ||
+        !currentHeapIgnoreProps.allowInnerHierarchy
+      ) {
+        // If we're not using any part of the hierarchy (for 'allowInteraction') or not capturing the
+        // current subhierarchy, return an empty string for the current component.
+        currElementString = '';
+      } else if (!currentHeapIgnoreProps.allowAllProps) {
+        currElementString = `${element.elementName};|`;
+      } else {
+        currElementString = `${element.elementName};${element.propsString}|`;
+      }
+
+      // Doing this at the end allows us to capture HeapIgnore components.
+      currentHeapIgnoreProps = getNextHeapIgnoreProps(
+        currentHeapIgnoreProps,
+        element
+      );
+
+      return currElementString;
+    })
+    .join('');
+
+  return {
+    heapIgnoreProps: currentHeapIgnoreProps,
+    hierarchy: hierarchyStrings,
+  };
 };
 
 // :TODO: (jmtaber129): Consider implementing sibling target text.
 const getTargetText = fiberNode => {
   if (fiberNode.type === 'RCTText') {
+    return fiberNode.memoizedProps.children;
+  }
+
+  // In some cases, target text may not be within an 'RCTText' component. This has only been
+  // observed in unit tests with Enzyme, but may still be a possibility in real RN apps.
+  if (
+    fiberNode.memoizedProps &&
+    typeof fiberNode.memoizedProps.children === 'string'
+  ) {
     return fiberNode.memoizedProps.children;
   }
 

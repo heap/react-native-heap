@@ -14,14 +14,22 @@ import {
 import { Switch as NbSwitch } from 'native-base';
 import { connect } from 'react-redux';
 
-import Heap from '@heap/react-native-heap';
+import Heap, { HeapIgnore } from '@heap/react-native-heap';
 import { incrementAction, decrementAction } from '../reduxElements';
 import { makeSentinelButton } from '../sentinelUtilities';
+
+const HeapIgnoredNbSwitch = Heap.withHeapIgnore(NbSwitch, {
+  ignoreInteraction: false,
+  ignoreAllProps: true,
+  ignoreTargetText: false,
+  ignoreInnerHierarchy: false,
+});
 
 class BasicsPage extends Component {
   render() {
     return (
       <View style={styles.container}>
+        <HeapIgnoredNbSwitch testID="ignoredNbSwitch" />
         <NbSwitch testID="nbSwitch" />
         <Switch testID="switch" />
         <Button
@@ -29,11 +37,13 @@ class BasicsPage extends Component {
           title="Call Track1"
           onPress={() => Heap.track('pressInTestEvent1', {})}
         />
-        <Button
-          testID="track2"
-          title="Call Track2"
-          onPress={() => Heap.track('pressInTestEvent2', {})}
-        />
+        <HeapIgnore ignoreInteraction={false} ignoreTargetText={false}>
+          <Button
+            testID="track2"
+            title="Call Track2"
+            onPress={() => Heap.track('pressInTestEvent2', {})}
+          />
+        </HeapIgnore>
         <Button
           testID="track3"
           title="Call Track3"
