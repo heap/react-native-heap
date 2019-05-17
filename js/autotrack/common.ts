@@ -1,13 +1,51 @@
 import * as _ from 'lodash';
 
+import { Component as ReactComponent } from 'react';
+import { Fiber as FiberNode } from 'react-reconciler';
 import { extractProps } from '../util/extractProps';
 import { BASE_HEAP_IGNORE_PROPS, getNextHeapIgnoreProps } from './heapIgnore';
 import { builtinPropExtractorConfig } from '../propExtractorConfig';
 
-// Returns an object containing a base set of component properties if we're not ignoring the
-// full interaction due to HeapIgnore.
+// The type definition of 'Component' from '@types/react' doesn't include the internal
+// '_reactInternalFiber' property, so create our own 'Component' type that includes this prop.
+// :TODO: (jmtaber129): Consider pulling this out if other TS files need this extended typing.
+interface Component extends ReactComponent {
+  _reactInternalFiber: FiberNode;
+}
+
+// Base properties for autotracked events.
+interface AutotrackProps {
+  touchableHierarchy: string;
+  targetText?: string;
+}
+
+interface HeapIgnoreProps {
+  allowInteraction?: boolean;
+  allowInnerHierarchy?: boolean;
+  allowAllProps?: boolean;
+  // :TODO: (jmtaber129): Add 'ignoreSpecificProps'.
+  allowTargetText?: boolean;
+}
+
+// The result of traversing up and back down a component's hierarchy.
+interface HierarchyResult {
+  hierarchy: string;
+  heapIgnoreProps: HeapIgnoreProps;
+}
+
+// The representation of a component in a Fiber hierarchy.
+interface ComponentHierarchyTraversalElement {
+  elementName: string;
+  fiberNode: FiberNode;
+  propsString: string;
+}
+
+// Returns an 'AutotrackProps' containing a base set of component properties if we're not ignoring
+// the full interaction due to HeapIgnore.
 // Returns null if we're ignoring the full interaction due to HeapIgnore.
-export const getBaseComponentProps = componentThis => {
+export const getBaseComponentProps: (
+  component: Component
+) => AutotrackProps | null = componentThis => {
   // Get the hierarchy traversal from root to target component, then get the actual hierarchy from
   // the traversal representation.
   const touchableHierarchyTraversal = getComponentHierarchyTraversal(
@@ -29,7 +67,7 @@ export const getBaseComponentProps = componentThis => {
     targetText = '';
   }
 
-  const autotrackProps = {
+  const autotrackProps: AutotrackProps = {
     touchableHierarchy: hierarchy,
   };
 
@@ -40,7 +78,9 @@ export const getBaseComponentProps = componentThis => {
   return autotrackProps;
 };
 
-const getComponentHierarchyTraversal = componentThis => {
+const getComponentHierarchyTraversal: (
+  comp: Component
+) => ComponentHierarchyTraversalElement[] = componentThis => {
   // :TODO: (jmtaber129): Remove this if/when we support pre-fiber React.
   if (!componentThis._reactInternalFiber) {
     throw new Error(
@@ -54,12 +94,10 @@ const getComponentHierarchyTraversal = componentThis => {
 };
 
 // Traverse up the hierarchy from the current component up to the root, and return an array of
-// objects representing the component hierarchy from root to the current node. Each object element
-// contains:
-// * elementName - The name of the component
-// * fiberNode - The FiberNode reference for the component
-// * propsString - The string of props obtained from extractProps().
-const getFiberNodeComponentHierarchyTraversal = currNode => {
+// objects representing the component hierarchy from root to the current node.
+const getFiberNodeComponentHierarchyTraversal: (
+  currNode: FiberNode | null
+) => ComponentHierarchyTraversalElement[] = currNode => {
   if (currNode === null) {
     return [];
   }
@@ -82,13 +120,13 @@ const getFiberNodeComponentHierarchyTraversal = currNode => {
     return getFiberNodeComponentHierarchyTraversal(currNode.return);
   }
 
-  const propsString = extractProps(
+  const propsString: string = extractProps(
     elementName,
     currNode,
     builtinPropExtractorConfig
   );
 
-  const parentHierarchyRepresentation = getFiberNodeComponentHierarchyTraversal(
+  const parentHierarchyRepresentation: ComponentHierarchyTraversalElement[] = getFiberNodeComponentHierarchyTraversal(
     currNode.return
   );
 
@@ -104,15 +142,16 @@ const getFiberNodeComponentHierarchyTraversal = currNode => {
 // Given an object array representing the component hierarchy from root to target component,
 // traverse through the element list to create the string representation of the hierarchy, taking
 // into account HeapIgnore specifications.
-// Returns an object containing:
-// * hierarchy - the string hierarchy representation of 'hierarchyArray'.
-// * heapIgnoreProps - the final set of HeapIgnore props that applies to the target component. Used
-//     to determine whether to include target text and/or ignore the entire interaction.
-const getHierarchyStringFromTraversal = hierarchyArray => {
-  let currentHeapIgnoreProps = _.mapValues(BASE_HEAP_IGNORE_PROPS, () => true);
+const getHierarchyStringFromTraversal: (
+  hierarchyArray: ComponentHierarchyTraversalElement[]
+) => HierarchyResult = hierarchyArray => {
+  let currentHeapIgnoreProps: HeapIgnoreProps = _.mapValues(
+    BASE_HEAP_IGNORE_PROPS,
+    () => true
+  );
 
   // Map each hierarchy element to its string representation, considering HeapIgnore specs.
-  const hierarchyStrings = hierarchyArray
+  const hierarchyString: string = hierarchyArray
     .map(element => {
       let currElementString = '';
       if (
@@ -140,12 +179,12 @@ const getHierarchyStringFromTraversal = hierarchyArray => {
 
   return {
     heapIgnoreProps: currentHeapIgnoreProps,
-    hierarchy: hierarchyStrings,
+    hierarchy: hierarchyString,
   };
 };
 
 // :TODO: (jmtaber129): Consider implementing sibling target text.
-const getTargetText = fiberNode => {
+const getTargetText: (fiberNode: FiberNode) => string = fiberNode => {
   if (fiberNode.type === 'RCTText') {
     return fiberNode.memoizedProps.children;
   }
@@ -163,8 +202,8 @@ const getTargetText = fiberNode => {
     return '';
   }
 
-  const children = [];
-  let currChild = fiberNode.child;
+  const children: FiberNode[] = [];
+  let currChild: FiberNode | null = fiberNode.child;
   while (currChild) {
     children.push(currChild);
     currChild = currChild.sibling;
