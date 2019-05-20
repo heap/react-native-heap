@@ -2,7 +2,11 @@
 import React from 'react';
 import { NativeModules } from 'react-native';
 
-import { HeapIgnore, HeapIgnoreTargetText, withHeapIgnore } from './autotrack/heapIgnore';
+import {
+  HeapIgnore,
+  HeapIgnoreTargetText,
+  withHeapIgnore,
+} from './autotrack/heapIgnore';
 import { autotrackPress } from './autotrack/touchables';
 import { autotrackSwitchChange } from './autotrack/switches';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';

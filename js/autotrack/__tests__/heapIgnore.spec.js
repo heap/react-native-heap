@@ -7,7 +7,11 @@ const foo = require('react-native');
 import { shallow, mount, render } from 'enzyme';
 
 import { getBaseComponentProps } from '../common';
-import { HeapIgnore, HeapIgnoreTargetText, withHeapIgnore } from '../heapIgnore';
+import {
+  HeapIgnore,
+  HeapIgnoreTargetText,
+  withHeapIgnore,
+} from '../heapIgnore';
 
 jest.unmock('react-native');
 
