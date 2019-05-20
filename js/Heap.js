@@ -2,7 +2,11 @@
 import React from 'react';
 import { NativeModules } from 'react-native';
 
-import { HeapIgnore, withHeapIgnore } from './autotrack/heapIgnore';
+import {
+  HeapIgnore,
+  HeapIgnoreTargetText,
+  withHeapIgnore,
+} from './autotrack/heapIgnore';
 import { autotrackPress } from './autotrack/touchables';
 import { autotrackSwitchChange } from './autotrack/switches';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';
@@ -27,7 +31,7 @@ const track = bailOnError((event, payload) => {
   }
 });
 
-export { HeapIgnore };
+export { HeapIgnore, HeapIgnoreTargetText };
 
 export default {
   // App Properties
@@ -62,5 +66,6 @@ export default {
   autotrackSwitchChange: bailOnError(autotrackSwitchChange(track)),
   withReactNavigationAutotrack: withReactNavigationAutotrack(track),
   Ignore: HeapIgnore,
+  IgnoreTargetText: HeapIgnoreTargetText,
   withHeapIgnore,
 };

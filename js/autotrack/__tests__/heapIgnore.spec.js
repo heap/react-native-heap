@@ -7,7 +7,11 @@ const foo = require('react-native');
 import { shallow, mount, render } from 'enzyme';
 
 import { getBaseComponentProps } from '../common';
-import { HeapIgnore, withHeapIgnore } from '../heapIgnore';
+import {
+  HeapIgnore,
+  HeapIgnoreTargetText,
+  withHeapIgnore,
+} from '../heapIgnore';
 
 jest.unmock('react-native');
 
@@ -202,6 +206,24 @@ describe('Common autotrack utils', () => {
       expect(normalProps).toEqual({
         touchableHierarchy:
           'WrapperComponent;|Foo;|BarClass;|BarFunction;|_class;[testID=targetElement];|HeapIgnore;|',
+      });
+    });
+
+    it('Ignores target text via convenience component', () => {
+      const wrapper = mount(
+        <Foo>
+          <HeapIgnoreTargetText>
+            <Text testID="targetElement">{'foobar'}</Text>
+          </HeapIgnoreTargetText>
+        </Foo>
+      );
+      const normalComponent = wrapper
+        .find({ testID: 'targetElement' })
+        .filter(Text);
+      const normalProps = getBaseComponentProps(normalComponent.instance());
+      expect(normalProps).toEqual({
+        touchableHierarchy:
+          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnoreTargetText;|HeapIgnore;|Text;[testID=targetElement];|',
       });
     });
   });
