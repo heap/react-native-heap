@@ -7,6 +7,19 @@ export const HeapIgnore = props => {
   return props.children;
 };
 
+// Convenience component for only ignoring target text.
+export const HeapIgnoreTargetText = props => {
+  return (
+    <HeapIgnore
+      allowInteraction={true}
+      allowInnerHierarchy={true}
+      allowAllProps={true}
+    >
+      {props.children}
+    </HeapIgnore>
+  );
+};
+
 export const withHeapIgnore = (IgnoredComponent, heapIgnoreConfig) => {
   return class extends React.Component {
     render() {
