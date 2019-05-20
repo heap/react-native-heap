@@ -34,9 +34,6 @@ For autotrack, add the following plugins to your `.babelrc` or `babel.config.js`
 // Import Heap.
 import Heap from '@heap/react-native-heap';
 
-// Start Heap if not using auto-initialization.
-Heap.setAppId('my-app-id');
-
 // Identify your user.
 Heap.identify('123456');
 Heap.addUserProperties({ name: 'John', age: 54 });
