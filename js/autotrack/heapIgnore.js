@@ -14,6 +14,7 @@ export const HeapIgnoreTargetText = props => {
       allowInteraction={true}
       allowInnerHierarchy={true}
       allowAllProps={true}
+      allowTargetText={false}
     >
       {props.children}
     </HeapIgnore>
