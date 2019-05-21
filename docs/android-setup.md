@@ -41,7 +41,7 @@ following line to the resources section of `res/values/strings.xml`:
 
 and replace `com.your_package_name` with the package name from the manifest tag in `AndroidManifest.xml`.
 
-# Confguration
+# Configuration
 
 - This library needs to be initialized so events are sent to the right application/environment ID. 
 Place a `heap.config.json` file at the root of your application's repository with this structure, substituting your own application/environment IDs.
