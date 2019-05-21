@@ -55,6 +55,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
               });
             }
           })}
+          {...this.props}
         >
           {this.props.children}
         </AppContainer>
