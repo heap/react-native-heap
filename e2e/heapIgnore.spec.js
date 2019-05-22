@@ -37,7 +37,7 @@ describe('HeapIgnore', () => {
     await rnTestUtil.pollForSentinel('HeapIgnore');
   });
 
-  it('should ignore the interaction', async () => {
+  it(':ios: should ignore the interaction', async () => {
     // Get all the events from redis, and assert that none of the requests match the ignored
     // interaction.
     const { err, res } = await new Promise((resolve, reject) => {
@@ -51,7 +51,24 @@ describe('HeapIgnore', () => {
 
     // The ignored interaction is within an instantiation of the "Foo" component, so assert that no
     // part of the event requests includes this as part of its hierarchy.
-    assert(JSON.stringify(res)).not.match(/Foo;\|/)
+    assert(JSON.stringify(res)).not.match(/Foo;\|/);
+  });
+
+  it(':android: should ignore the interaction', async () => {
+    // Get all the events from redis, and assert that none of the requests match the ignored
+    // interaction.
+    const { err, res } = await new Promise((resolve, reject) => {
+      testUtil.findAndroidEventInRedisRequests({}, (err, res) => {
+        resolve({ err, res });
+      });
+    });
+
+    assert.not.exist(err);
+    assert(res.length).not.equal(0);
+
+    // The ignored interaction is within an instantiation of the "Foo" component, so assert that no
+    // part of the event requests includes this as part of its hierarchy.
+    assert(JSON.stringify(res)).not.match(/Foo;\|/);
   });
 
   it('should ignore the inner hierarchy', async () => {
