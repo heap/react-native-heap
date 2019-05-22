@@ -38,6 +38,8 @@ describe('HeapIgnore', () => {
   });
 
   it('should ignore the interaction', async () => {
+    // Get all the events from redis, and assert that none of the requests match the ignored
+    // interaction.
     const { err, res } = await new Promise((resolve, reject) => {
       testUtil.findEventInRedisRequests({}, (err, res) => {
         resolve({ err, res });
