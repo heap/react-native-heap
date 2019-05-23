@@ -2,15 +2,21 @@
 import React from 'react';
 import { NativeModules } from 'react-native';
 
+import {
+  HeapIgnore,
+  HeapIgnoreTargetText,
+  withHeapIgnore,
+} from './autotrack/heapIgnore';
 import { autotrackPress } from './autotrack/touchables';
 import { autotrackSwitchChange } from './autotrack/switches';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';
 import { withReactNavigationAutotrack } from './autotrack/reactNavigation';
+import { bailOnError } from './util/bailer';
 
 const flatten = require('flat');
 const RNHeap = NativeModules.RNHeap;
 
-const track = (event, payload) => {
+const track = bailOnError((event, payload) => {
   try {
     // This looks a little strange, but helps for testing, to be able to mock the flatten function and
     // simulate a failure.
@@ -23,33 +29,45 @@ const track = (event, payload) => {
   } catch (e) {
     console.log('Error calling Heap.track\n', e);
   }
-};
+});
+
+export { HeapIgnore, HeapIgnoreTargetText };
 
 export default {
   // App Properties
-  setAppId: appId => RNHeap.setAppId(appId),
+  setAppId: bailOnError(appId => RNHeap.setAppId(appId)),
 
   // User Properties
-  identify: identity => RNHeap.identify(identity),
-  addUserProperties: properties =>
-    RNHeap.addUserProperties(flatten(properties)),
+  identify: bailOnError(identity => RNHeap.identify(identity)),
+  addUserProperties: bailOnError(properties => {
+    const payload = properties || {};
+    RNHeap.addUserProperties(flatten(payload));
+  }),
 
   // Event Properties
-  addEventProperties: properties =>
-    RNHeap.addEventProperties(flatten(properties)),
-  removeEventProperty: property => RNHeap.removeEventProperty(property),
-  clearEventProperties: () => RNHeap.clearEventProperties(),
+  addEventProperties: bailOnError(properties => {
+    const payload = properties || {};
+    RNHeap.addEventProperties(flatten(payload));
+  }),
+  removeEventProperty: bailOnError(property =>
+    RNHeap.removeEventProperty(property)
+  ),
+  clearEventProperties: bailOnError(() => RNHeap.clearEventProperties()),
 
   // Events
   track: track,
 
   // Redux middleware
-  reduxMiddleware: store => next => action => {
-    RNHeap.track('Redux Action', flatten(action));
-    next(action);
-  },
+  reduxMiddleware: store => next =>
+    bailOnError(action => {
+      RNHeap.track('Redux Action', flatten(action));
+      next(action);
+    }),
 
-  autotrackPress: autotrackPress(track),
-  autotrackSwitchChange: autotrackSwitchChange(track),
+  autotrackPress: bailOnError(autotrackPress(track)),
+  autotrackSwitchChange: bailOnError(autotrackSwitchChange(track)),
   withReactNavigationAutotrack: withReactNavigationAutotrack(track),
+  Ignore: HeapIgnore,
+  IgnoreTargetText: HeapIgnoreTargetText,
+  withHeapIgnore,
 };

@@ -2,6 +2,7 @@ require('coffeescript').register();
 _ = require('lodash');
 assert = require('should/as-function');
 
+nodeUtil = require('util');
 testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
@@ -149,6 +150,17 @@ describe('Basic React Native and Interaction Support', () => {
           );
         }
       );
+    });
+
+    it('preserve the same session between track calls', async () => {
+      const findAndroidEvent = nodeUtil.promisify(testUtil.findAndroidEventInRedisRequests);
+
+      const [[event1], [event2]] = await Promise.all([
+        findAndroidEvent({ envId: '2084764307', event: { custom: { name: 'pressInTestEvent1' } } }),
+        findAndroidEvent({ envId: '2084764307', event: { custom: { name: 'pressInTestEvent2' } } })
+      ]);
+
+      assert(event1.sessionInfo.id).equal(event2.sessionInfo.id);
     });
 
     it('should add event properties', async () => {

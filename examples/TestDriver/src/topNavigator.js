@@ -5,11 +5,9 @@ import InitialPage from './pages/initial';
 import BasicsPage from './pages/basics';
 import PropExtraction from './pages/propExtraction';
 import NavPage from './pages/nav';
+import HeapIgnorePage from './pages/heapIgnore';
 
 import Heap from '@heap/react-native-heap';
-
-Heap.setAppId('2084764307');
-console.log('Heap App ID set');
 
 const TabNavigator = createBottomTabNavigator({
   Initial: {
@@ -45,6 +43,17 @@ const TabNavigator = createBottomTabNavigator({
         tabBarLabel: 'Nav',
         tabBarAccessibilityLabel: 'Nav',
         tabBarTestID: 'Nav',
+      };
+    },
+  },
+  HeapIgnore: {
+    screen: HeapIgnorePage,
+    navigationOptions: () => {
+      return {
+        title: 'HeapIgnore',
+        tabBarLabel: 'HeapIgnore',
+        tabBarAccessibilityLabel: 'HeapIgnore',
+        tabBarTestID: 'HeapIgnore',
       };
     },
   },

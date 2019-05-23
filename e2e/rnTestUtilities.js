@@ -16,6 +16,23 @@ const assertEvent = (err, res, check) => {
   }
 };
 
+// Get all the events from redis
+const findAllEvents = async () => {
+  return new Promise((resolve, reject) => {
+    if (device.getPlatform() === 'android') {
+      testUtil.findAndroidEventInRedisRequests({}, (err, res) => {
+        resolve({ err, res });
+      });
+    } else if (device.getPlatform() === 'ios') {
+      testUtil.findEventInRedisRequests({}, (err, res) => {
+        resolve({ err, res });
+      });
+    } else {
+      reject(new Error(`Unknown device type: ${device.getPlatform()}`));
+    }
+  });
+};
+
 const assertIosPixel = async (event, check) => {
   const { err, res } = await new Promise((resolve, reject) => {
     testUtil.findEventInRedisRequests(event, (err, res) => {
@@ -174,6 +191,7 @@ pollForSentinel = async (sentinelValue, timeout = 60000) => {
 
 module.exports = {
   assertEvent,
+  findAllEvents,
   assertIosPixel,
   assertAndroidEvent,
   assertAndroidAutotrackHierarchy,
