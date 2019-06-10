@@ -3,6 +3,7 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
 import { makeSentinelButton } from '../sentinelUtilities';
+import NavigationService from '../navigatorService';
 
 const BaseView = props => {
   return (
@@ -16,6 +17,11 @@ const BaseView = props => {
         title="Navigate Modal"
         testID="navigate_modal"
         onPress={() => props.navigation.navigate('ModalStack')}
+      />
+      <Button
+        title="Navigate without prop"
+        testID="navigate_without_prop"
+        onPress={() => NavigationService.navigate('Nav')}
       />
       {makeSentinelButton('Nav')}
     </View>
