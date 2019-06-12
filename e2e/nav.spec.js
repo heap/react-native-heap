@@ -71,5 +71,11 @@ describe('Navigation', () => {
         'Navigation/NAVIGATE'
       );
     });
+
+    it("doesn't crash when ref is used for navigation without navigation prop", async () => {
+      await element(by.id('navigate_without_prop')).tap();
+      // Check that app doesn't crash by asserting the button is still visible.
+      await expect(element(by.id('navigate_without_prop'))).toBeVisible();
+    });
   });
 });

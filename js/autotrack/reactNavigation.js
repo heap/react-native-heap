@@ -9,8 +9,16 @@ const EVENT_TYPE = 'reactNavigationScreenview';
 const INITIAL_ROUTE_TYPE = 'Heap_Navigation/INITIAL';
 
 export const withReactNavigationAutotrack = track => AppContainer => {
-  return class HeapNavigationWrapper extends React.Component {
+  class HeapNavigationWrapper extends React.Component {
     topLevelNavigator = null;
+
+    setRef(ref, value) {
+      if (typeof ref === 'function') {
+        ref(value);
+      } else if (ref !== null) {
+        ref.current = value;
+      }
+    }
 
     trackInitialRoute() {
       const initialPageviewPath = getActiveRouteName(
@@ -28,14 +36,17 @@ export const withReactNavigationAutotrack = track => AppContainer => {
         return this._render();
       } catch (e) {
         bail(e);
-        return <AppContainer />;
+        const { forwardedRef, ...rest } = this.props;
+        return <AppContainer ref={forwardedRef} {...rest} />;
       }
     }
 
     _render() {
+      const { forwardedRef, ...rest } = this.props;
       return (
         <AppContainer
           ref={bailOnError(navigatorRef => {
+            this.setRef(forwardedRef, navigatorRef);
             if (this.topLevelNavigator !== navigatorRef) {
               console.log(
                 'Heap: React Navigation is instrumented for autocapture.'
@@ -55,13 +66,17 @@ export const withReactNavigationAutotrack = track => AppContainer => {
               });
             }
           })}
-          {...this.props}
+          {...rest}
         >
           {this.props.children}
         </AppContainer>
       );
     }
-  };
+  }
+
+  return React.forwardRef((props, ref) => {
+    return <HeapNavigationWrapper {...props} forwardedRef={ref} />;
+  });
 };
 
 const getActiveRouteName = navigationState => {

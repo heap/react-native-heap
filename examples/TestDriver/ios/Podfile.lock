@@ -55,7 +55,7 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
-  - RNGestureHandler (1.2.1):
+  - RNGestureHandler (1.3.0):
     - React
   - yoga (0.57.5.React)
 
