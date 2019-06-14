@@ -65,7 +65,13 @@ export const NATIVE_BASE_CONFIG: PropExtractorConfig = {
     exclude: [],
   },
   Header: {
-    include: ['searchBar', 'hasSubtitle', 'hasSegment', 'hasTabs', 'transparent'],
+    include: [
+      'searchBar',
+      'hasSubtitle',
+      'hasSegment',
+      'hasTabs',
+      'transparent',
+    ],
     exclude: [],
   },
 };
