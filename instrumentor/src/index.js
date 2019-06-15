@@ -140,14 +140,16 @@ const extendsReactComponent = path => {
   );
 };
 
-const isSwitchNode = (path) => {
+const isSwitchNode = path => {
   // The method we want to instrument:
   // * Is named '_handleChange'
   // * Has a variable declarator parent named 'Switch'
   // * The parent extends 'React.Component'.
   if (
-    !(path.node.left.property &&
-    path.node.left.property.name === '_handleChange')
+    !(
+      path.node.left.property &&
+      path.node.left.property.name === '_handleChange'
+    )
   ) {
     return false;
   }
@@ -161,7 +163,7 @@ const isSwitchNode = (path) => {
   });
 
   return !!parent;
-}
+};
 
 const instrumentSwitchComponent = path => {
   if (instrumentedComponentNodes.has(path)) {
