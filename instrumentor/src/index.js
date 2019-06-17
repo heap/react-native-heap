@@ -104,7 +104,7 @@ const instrumentScrollView = path => {
       path.node.value, // originalFunctionExpression
       '_this', // thisIdentifier
       'autocaptureScrollView', // autotrackMethodName
-      path.node.key.name // eventType
+      'scrollViewPage' // eventType
     );
     path.get('value').replaceWith(replacementFunc);
   }
