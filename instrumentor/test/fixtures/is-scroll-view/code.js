@@ -9,11 +9,6 @@ class ScrollView extends React.Component<Props, State> {
     };
 
     const {decelerationRate} = this.props;
-    return (
-      // $FlowFixMe
-      <ScrollViewClass {...props} ref={this._setScrollViewRef}>
-        {contentContainer}
-      </ScrollViewClass>
-    );
+    return;
   }
 }

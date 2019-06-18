@@ -1,7 +1,5 @@
 var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
 
-var _extends2 = _interopRequireDefault(require("@babel/runtime/helpers/extends"));
-
 var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/objectSpread"));
 
 var _classCallCheck2 = _interopRequireDefault(require("@babel/runtime/helpers/classCallCheck"));
@@ -50,9 +48,7 @@ var ScrollView = function (_React$Component) {
         }
       });
       var decelerationRate = this.props.decelerationRate;
-      return React.createElement(ScrollViewClass, (0, _extends2.default)({}, props, {
-        ref: this._setScrollViewRef
-      }), contentContainer);
+      return;
     }
   }]);
   return ScrollView;
