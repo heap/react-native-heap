@@ -18,5 +18,9 @@ export const autotrackScrollView = track => (eventType, componentThis, event) =>
     return;
   }
 
+  const pageIndex = event.nativeEvent.contentOffset.x / event.nativeEvent.layoutMeasurement.width;
+
+  autotrackProps.pageIndex = pageIndex;
+
   track(eventType, autotrackProps);
 };
