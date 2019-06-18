@@ -1,4 +1,5 @@
 import { getBaseComponentProps } from './common';
+import * as _ from 'lodash';
 
 export const autotrackScrollView = track => (eventType, componentThis, event) => {
   if (!componentThis.props.pagingEnabled) {
@@ -8,7 +9,9 @@ export const autotrackScrollView = track => (eventType, componentThis, event) =>
     return;
   }
 
-  const autotrackProps = getBaseComponentProps(componentThis);
+  // Target text in a scrollview will be the entire contents of the scrollview, which isn't
+  // particularly meaningful. Just leave out the target text.
+  const autotrackProps = _.omit(getBaseComponentProps(componentThis), 'targetText');
 
   if (!autotrackProps) {
     // We're not capturing this interaction.
