@@ -24,6 +24,12 @@ const doTestActions = async () => {
   await element(by.id('track3')).tap();
   await element(by.id('clearProps')).tap();
   await element(by.id('track4')).tap();
+
+  // :HACK: Break up long URL.
+  // :TODO: Remove once pixel endpoint is handling larger events again.
+  console.log('Waiting 15s to flush iOS events.');
+  await new Promise(resolve => setTimeout(resolve, 15000));
+
   await element(by.id('aup')).tap();
   await element(by.id('identify')).tap();
 
