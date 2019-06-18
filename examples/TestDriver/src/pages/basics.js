@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
   Button,
+  FlatList,
   Platform,
   StyleSheet,
   Switch,
@@ -13,10 +14,13 @@ import {
 } from 'react-native';
 import { Switch as NbSwitch } from 'native-base';
 import { connect } from 'react-redux';
+import * as _ from 'lodash';
 
 import Heap from '@heap/react-native-heap';
 import { incrementAction, decrementAction } from '../reduxElements';
 import { makeSentinelButton } from '../sentinelUtilities';
+
+const ITEMS = _.range(30).map(_.toString);
 
 class BasicsPage extends Component {
   render() {
@@ -86,6 +90,30 @@ class BasicsPage extends Component {
             <Text>Touchable Native Feedback</Text>
           </TouchableNativeFeedback>
         )}
+        <FlatList
+          style={{
+            width: 250,
+            borderRadius: 4,
+            borderWidth: 0.5,
+            borderColor: 'black',
+          }}
+          onMomentumScrollEnd={event => console.log(event.nativeEvent)}
+          renderItem={({ item }) => (
+            <View style={{ flex: 1, margin: 5 }}>
+              <Text>Scrollview</Text>
+              <Text>{item}</Text>
+            </View>
+          )}
+          keyExtractor={item => item}
+          ref={(ref: any): void => {
+            this._pagesListRef = ref;
+          }}
+          bounces={false}
+          pagingEnabled
+          data={ITEMS}
+          horizontal
+          testID='scrollView'
+        />
         {makeSentinelButton('Basics')}
       </View>
     );
@@ -107,6 +135,7 @@ export default connect(
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',

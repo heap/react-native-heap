@@ -40,7 +40,13 @@ describe('autotrack instrumentor plugin', () => {
     var actual = getActualTransformedFile('is-switch');
     var expected = getExpectedTransformedFile('is-switch');
     assert.equal(actual, expected);
-  })
+  });
+
+  it('scrollview should be instrumented', () => {
+    var actual = getActualTransformedFile('is-scroll-view');
+    var expected = getExpectedTransformedFile('is-scroll-view');
+    assert.equal(actual, expected);
+  });
 });
 
 const getActualTransformedFile = fixtureName => {
