@@ -315,12 +315,12 @@ describe('Basic React Native and Interaction Support', () => {
       });
     });
 
-    it("should autotrack ScrollView paging", async () => {
+    it('should autotrack ScrollView paging', async () => {
       const expectedHierarchy =
         'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|FlatList;[testID=scrollView];|VirtualizedList;[testID=scrollView];|ScrollView;[testID=scrollView];|';
       await rnTestUtil.assertAutotrackHierarchy('scrollViewPage', {
         touchableHierarchy: expectedHierarchy,
-        pageIndex: "1",
+        pageIndex: '1',
       });
     });
   });
