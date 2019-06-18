@@ -65,7 +65,7 @@
   "scripts": {
     "test": "jest",
     "test-instrumentor": "cd instrumentor && ../node_modules/mocha/bin/mocha -r @babel/register test/ && cd ..",
-    "lint": "./node_modules/prettylint/bin/cli.js \"js/**/*.{js,ts}\"",
+    "lint": "./node_modules/prettylint/bin/cli.js \"{js,e2e,instrumentor/src}/**/*.{js,ts}\"",
     "lint-example": "./node_modules/prettylint/bin/cli.js \"examples/**/*.{js,ts}\"",
     "compile": "./node_modules/typescript/bin/tsc",
     "prepublish": "npm run-script compile"
