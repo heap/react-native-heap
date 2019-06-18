@@ -87,13 +87,15 @@ const instrumentScrollView = path => {
     // Find the parent 'ScrollView' class.
     const scrollViewParent = propsParent.findParent(path => {
       return (
-        path.node.id &&
+        path.isVariableDeclarator() &&
         path.node.id.name === 'ScrollView' &&
-        path.node.init &&
-        path.node.init.callee &&
-        path.node.init.callee.name === 'createReactClass'
+        extendsReactComponent(path)
       );
     });
+
+    if (!scrollViewParent) {
+      return;
+    }
 
     // Create the expression for calling the original function for this listener.
     // '(<original function>).call(this, e)'.

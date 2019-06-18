@@ -47,6 +47,12 @@ describe('autotrack instrumentor plugin', () => {
     var expected = getExpectedTransformedFile('is-scroll-view');
     assert.equal(actual, expected);
   });
+
+  it('non-scrollview should not be instrumented', () => {
+    var actual = getActualTransformedFile('not-scroll-view');
+    var expected = getExpectedTransformedFile('not-scroll-view');
+    assert.equal(actual, expected);
+  });
 });
 
 const getActualTransformedFile = fixtureName => {
