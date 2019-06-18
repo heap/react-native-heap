@@ -112,7 +112,7 @@ class BasicsPage extends Component {
           pagingEnabled
           data={ITEMS}
           horizontal
-          testID='scrollView'
+          testID="scrollView"
         />
         {makeSentinelButton('Basics')}
       </View>

@@ -81,7 +81,6 @@ const instrumentScrollView = path => {
     });
 
     if (!propsParent) {
-      // console.log('no props parent');
       return;
     }
 
