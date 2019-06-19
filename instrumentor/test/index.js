@@ -42,9 +42,15 @@ describe('autotrack instrumentor plugin', () => {
     assert.equal(actual, expected);
   });
 
-  it('scrollview should be instrumented', () => {
-    var actual = getActualTransformedFile('is-scroll-view');
-    var expected = getExpectedTransformedFile('is-scroll-view');
+  it('scrollview with createReactClass should be instrumented', () => {
+    var actual = getActualTransformedFile('is-scroll-view-createreactclass');
+    var expected = getExpectedTransformedFile('is-scroll-view-createreactclass');
+    assert.equal(actual, expected);
+  });
+
+  it('scrollview extending React.Component should be instrumented', () => {
+    var actual = getActualTransformedFile('is-scroll-view-extends-component');
+    var expected = getExpectedTransformedFile('is-scroll-view-extends-component');
     assert.equal(actual, expected);
   });
 

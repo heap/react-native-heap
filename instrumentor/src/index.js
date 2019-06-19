@@ -89,7 +89,12 @@ const instrumentScrollView = path => {
       return (
         path.isVariableDeclarator() &&
         path.node.id.name === 'ScrollView' &&
-        extendsReactComponent(path)
+        // ScrollView in the source is either a class that extends 'React.Component', or it's an
+        // object passed to 'createReactClass', depending on RN version.
+        (extendsReactComponent(path) ||
+          (path.node.init &&
+            path.node.init.callee &&
+            path.node.init.callee.name === 'createReactClass'))
       );
     });
 
