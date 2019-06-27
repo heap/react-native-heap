@@ -54,7 +54,7 @@ const doTestActions = async () => {
   await element(by.id('switch')).tap();
   await element(by.id('nbSwitch')).tap();
 
-  await element(by.id('scrollView')).swipe('left', 'fast', 0.75);
+  await element(by.id('scrollView')).swipe('left');
 
   await element(by.id('basicsSentinel')).tap();
 };
