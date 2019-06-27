@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Autocapture of paging events on React Native `ScrollView` components with `pagingEnabled`.
-- Added default prop configs for NativeBase and React Native Elements component libraries.
+- Added automatic property capture for NativeBase and React Native Elements component libraries.
 
 ### Fixed
 - Ref-forwarding on the React Navigation HOC
