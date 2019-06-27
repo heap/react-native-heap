@@ -5,12 +5,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.5.0] - 2019-06-26
+## [0.5.0] - 2019-06-27
 
 ### Added
-- Autotrack of paging events on React Native `ScrollView` components with `pagingEnabled`.
-
-### Changed
+- Autocapture of paging events on React Native `ScrollView` components with `pagingEnabled`.
 - Added default prop configs for NativeBase and React Native Elements component libraries.
 
 ### Fixed
