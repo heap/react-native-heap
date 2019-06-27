@@ -45,7 +45,7 @@
     "@types/node": "^10.12.19",
     "coffeescript": "^1.12.7",
     "deep-freeze": "0.0.1",
-    "detox": "^12.1.1",
+    "detox": "12.1.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "jest": "^24.0.0",
