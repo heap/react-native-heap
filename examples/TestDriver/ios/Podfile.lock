@@ -8,7 +8,7 @@ PODS:
   - glog (0.3.5)
   - React (0.57.5):
     - React/Core (= 0.57.5)
-  - react-native-heap (0.4.0):
+  - react-native-heap (0.5.0):
     - React
   - React/Core (0.57.5):
     - yoga (= 0.57.5.React)
@@ -55,7 +55,7 @@ PODS:
     - React/Core
     - React/fishhook
     - React/RCTBlob
-  - RNGestureHandler (1.2.1):
+  - RNGestureHandler (1.3.0):
     - React
   - yoga (0.57.5.React)
 

@@ -24,6 +24,12 @@ const doTestActions = async () => {
   await element(by.id('track3')).tap();
   await element(by.id('clearProps')).tap();
   await element(by.id('track4')).tap();
+
+  // :HACK: Break up long URL.
+  // :TODO: Remove once pixel endpoint is handling larger events again.
+  console.log('Waiting 15s to flush iOS events.');
+  await new Promise(resolve => setTimeout(resolve, 15000));
+
   await element(by.id('aup')).tap();
   await element(by.id('identify')).tap();
 
@@ -40,8 +46,15 @@ const doTestActions = async () => {
     await element(by.id('touchableNativeFeedbackText')).tap();
   }
 
+  // :HACK: Break up long URL.
+  // :TODO: Remove once pixel endpoint is handling larger events again.
+  console.log('Waiting 15s to flush iOS events.');
+  await new Promise(resolve => setTimeout(resolve, 15000));
+
   await element(by.id('switch')).tap();
   await element(by.id('nbSwitch')).tap();
+
+  await element(by.id('scrollView')).swipe('left');
 
   await element(by.id('basicsSentinel')).tap();
 };
@@ -153,11 +166,19 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('preserve the same session between track calls', async () => {
-      const findAndroidEvent = nodeUtil.promisify(testUtil.findAndroidEventInRedisRequests);
+      const findAndroidEvent = nodeUtil.promisify(
+        testUtil.findAndroidEventInRedisRequests
+      );
 
       const [[event1], [event2]] = await Promise.all([
-        findAndroidEvent({ envId: '2084764307', event: { custom: { name: 'pressInTestEvent1' } } }),
-        findAndroidEvent({ envId: '2084764307', event: { custom: { name: 'pressInTestEvent2' } } })
+        findAndroidEvent({
+          envId: '2084764307',
+          event: { custom: { name: 'pressInTestEvent1' } },
+        }),
+        findAndroidEvent({
+          envId: '2084764307',
+          event: { custom: { name: 'pressInTestEvent2' } },
+        }),
       ]);
 
       assert(event1.sessionInfo.id).equal(event2.sessionInfo.id);
@@ -291,6 +312,15 @@ describe('Basic React Native and Interaction Support', () => {
         'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|StyledComponent;[testID=nbSwitch];|Switch;[testID=nbSwitch];|Switch;[testID=nbSwitch];|';
       await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
         touchableHierarchy: expectedHierarchy,
+      });
+    });
+
+    it('should autotrack ScrollView paging', async () => {
+      const expectedHierarchy =
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|FlatList;[testID=scrollView];|VirtualizedList;[testID=scrollView];|ScrollView;[testID=scrollView];|';
+      await rnTestUtil.assertAutotrackHierarchy('scrollViewPage', {
+        touchableHierarchy: expectedHierarchy,
+        pageIndex: '1',
       });
     });
   });

@@ -73,6 +73,49 @@ const instrumentTouchables = path => {
   }
 };
 
+const instrumentScrollView = path => {
+  if (path.node.key.name === 'onMomentumScrollEnd') {
+    // Find the parent 'props' declaration.
+    const propsParent = path.findParent(path => {
+      return path.isVariableDeclarator() && path.node.id.name === 'props';
+    });
+
+    if (!propsParent) {
+      return;
+    }
+
+    // Find the parent 'ScrollView' class.
+    const scrollViewParent = propsParent.findParent(path => {
+      return (
+        path.isVariableDeclarator() &&
+        path.node.id.name === 'ScrollView' &&
+        // ScrollView in the source is either a class that extends 'React.Component', or it's an
+        // object passed to 'createReactClass', depending on RN version.
+        (extendsReactComponent(path) ||
+          (path.node.init &&
+            path.node.init.callee &&
+            path.node.init.callee.name === 'createReactClass'))
+      );
+    });
+
+    if (!scrollViewParent) {
+      return;
+    }
+
+    // Create the expression for calling the original function for this listener.
+    // '(<original function>).call(this, e)'.
+    const originalFunctionExpression = path.node.value;
+
+    const replacementFunc = getOriginalFunctionReplacement(
+      path.node.value, // originalFunctionExpression
+      '_this', // thisIdentifier
+      'autocaptureScrollView', // autotrackMethodName
+      'scrollViewPage' // eventType
+    );
+    path.get('value').replaceWith(replacementFunc);
+  }
+};
+
 const getOriginalFunctionReplacement = (
   originalFunctionExpression,
   thisIdentifier,
@@ -140,14 +183,16 @@ const extendsReactComponent = path => {
   );
 };
 
-const isSwitchNode = (path) => {
+const isSwitchNode = path => {
   // The method we want to instrument:
   // * Is named '_handleChange'
   // * Has a variable declarator parent named 'Switch'
   // * The parent extends 'React.Component'.
   if (
-    !(path.node.left.property &&
-    path.node.left.property.name === '_handleChange')
+    !(
+      path.node.left.property &&
+      path.node.left.property.name === '_handleChange'
+    )
   ) {
     return false;
   }
@@ -161,7 +206,7 @@ const isSwitchNode = (path) => {
   });
 
   return !!parent;
-}
+};
 
 const instrumentSwitchComponent = path => {
   if (instrumentedComponentNodes.has(path)) {
@@ -231,6 +276,7 @@ function transform(babel) {
       ObjectProperty(path) {
         instrumentStartup(path);
         instrumentTouchables(path);
+        instrumentScrollView(path);
       },
       AssignmentExpression(path) {
         instrumentSwitchComponent(path);
