@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.5.1] - 2019-07-03
 
 ### Fixed
-- Handle `null` component `ref`s in React Navigation HOC.
+- Fixed bug where re-rendered React Navigation containers wrapped with the React Navigation HOC would cause a "Cannot read property 'nav' of null" error.
 
 ## [0.5.0] - 2019-06-27
 
