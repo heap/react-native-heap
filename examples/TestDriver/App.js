@@ -6,6 +6,12 @@ import TopNavigator from './src/topNavigator';
 import NavigationService from './src/navigatorService';
 
 export default class App extends React.Component {
+  componentDidMount() {
+    setTimeout(() => {
+      console.log('Forcing update of react nav HOC via setState().');
+      this.setState({});
+    }, 3000);
+  }
   render() {
     return (
       <Provider store={store}>
