@@ -1,5 +1,6 @@
 import React from 'react';
 import { bail, bailOnError } from '../util/bailer';
+import NavigationUtil from '../util/navigationUtil';
 
 const EVENT_TYPE = 'reactNavigationScreenview';
 
@@ -21,7 +22,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     }
 
     trackInitialRoute() {
-      const initialPageviewPath = getActiveRouteName(
+      const initialPageviewPath = NavigationUtil.getActiveRouteName(
         this.topLevelNavigator.state.nav
       );
 
@@ -60,10 +61,10 @@ export const withReactNavigationAutotrack = track => AppContainer => {
             }
           })}
           onNavigationStateChange={bailOnError((prev, next, action) => {
-            const prevScreenRoute = getActiveRouteName(prev);
-            const nextScreenRoute = getActiveRouteName(next);
+            const prevScreenRoute = NavigationUtil.getActiveRouteName(prev);
+            const nextScreenRoute = NavigationUtil.getActiveRouteName(next);
             if (prevScreenRoute !== nextScreenRoute) {
-              const currentScreen = getActiveRouteName(next);
+              const currentScreen = NavigationUtil.getActiveRouteName(next);
               track(EVENT_TYPE, {
                 path: currentScreen,
                 type: action.type,
@@ -81,17 +82,4 @@ export const withReactNavigationAutotrack = track => AppContainer => {
   return React.forwardRef((props, ref) => {
     return <HeapNavigationWrapper {...props} forwardedRef={ref} />;
   });
-};
-
-const getActiveRouteName = navigationState => {
-  if (!navigationState) {
-    return null;
-  }
-  const route = navigationState.routes[navigationState.index];
-  // dive into nested navigators
-  if (route.routes) {
-    return `${route.routeName}::${getActiveRouteName(route)}`;
-  }
-
-  return route.routeName;
 };
