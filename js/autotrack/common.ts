@@ -5,6 +5,7 @@ import { Fiber as FiberNode } from 'react-reconciler';
 import { extractProps } from '../util/extractProps';
 import { BASE_HEAP_IGNORE_PROPS, getNextHeapIgnoreProps } from './heapIgnore';
 import { builtinPropExtractorConfig } from '../propExtractorConfig';
+import NavigationUtil from '../util/navigationUtil';
 
 // The type definition of 'Component' from '@types/react' doesn't include the internal
 // '_reactInternalFiber' property, so create our own 'Component' type that includes this prop.
@@ -67,8 +68,11 @@ export const getBaseComponentProps: (
     targetText = '';
   }
 
+  const screenProps = NavigationUtil.getScreenPropsForCurrentRoute();
+
   const autotrackProps: AutotrackProps = {
     touchableHierarchy: hierarchy,
+    ...screenProps,
   };
 
   if (targetText !== '') {

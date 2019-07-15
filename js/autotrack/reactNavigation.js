@@ -22,7 +22,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     }
 
     trackInitialRoute() {
-      const initialPageviewPath = NavigationUtil.getActiveRouteName(
+      const { path: initialPageviewPath } = NavigationUtil.getActiveRouteProps(
         this.topLevelNavigator.state.nav
       );
 
@@ -48,6 +48,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
         <AppContainer
           ref={bailOnError(navigatorRef => {
             this.setRef(forwardedRef, navigatorRef);
+            NavigationUtil.setNavigationRef(navigatorRef);
             // Only update the 'topLevelNavigator' if the new nav ref is different and non-null.
             if (
               this.topLevelNavigator !== navigatorRef &&
@@ -61,12 +62,15 @@ export const withReactNavigationAutotrack = track => AppContainer => {
             }
           })}
           onNavigationStateChange={bailOnError((prev, next, action) => {
-            const prevScreenRoute = NavigationUtil.getActiveRouteName(prev);
-            const nextScreenRoute = NavigationUtil.getActiveRouteName(next);
+            const {
+              path: prevScreenRoute,
+            } = NavigationUtil.getActiveRouteProps(prev);
+            const {
+              path: nextScreenRoute,
+            } = NavigationUtil.getActiveRouteProps(next);
             if (prevScreenRoute !== nextScreenRoute) {
-              const currentScreen = NavigationUtil.getActiveRouteName(next);
               track(EVENT_TYPE, {
-                path: currentScreen,
+                path: nextScreenRoute,
                 type: action.type,
               });
             }

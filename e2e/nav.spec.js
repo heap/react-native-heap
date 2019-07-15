@@ -72,6 +72,23 @@ describe('Navigation', () => {
       );
     });
 
+    it('tracks events with screen name props', async () => {
+      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
+        screenName: 'Base',
+        path: 'Nav::MainStack::Base',
+      });
+
+      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
+        screenName: 'StackCard',
+        path: 'Nav::MainStack::StackCard',
+      });
+
+      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
+        screenName: 'ModalStack',
+        path: 'Nav::ModalStack',
+      });
+    });
+
     it("doesn't crash when ref is used for navigation without navigation prop", async () => {
       await element(by.id('navigate_without_prop')).tap();
       // Check that app doesn't crash by asserting the button is still visible.
