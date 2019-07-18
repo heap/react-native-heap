@@ -29,20 +29,24 @@ export default class NavigationUtil {
   static getActiveRouteProps(
     navigationState: any
   ): { path: string; screenName: string } {
+    const paths = this.getActiveRouteNames(navigationState);
+    return {
+      path: paths.join('::'),
+      screenName: paths[paths.length - 1] };
+  }
+
+  // Returns an array of route names, with the root name first, and the most nested name last.
+  private static getActiveRouteNames(
+    navigationState: any
+  ): Array<string> {
     const route = navigationState.routes[navigationState.index];
 
     // Dive into nested navigators.
     if (route.routes) {
-      const { path, screenName } = this.getActiveRouteProps(route);
-      return {
-        path: `${route.routeName}::${path}`,
-        screenName: screenName,
-      };
+      const paths = this.getActiveRouteNames(route);
+      return [ route.routeName ].concat(paths);
     }
 
-    return {
-      path: route.routeName,
-      screenName: route.routeName,
-    };
+    return [ route.routeName ];
   }
 }
