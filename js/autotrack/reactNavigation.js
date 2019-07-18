@@ -48,6 +48,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
         <AppContainer
           ref={bailOnError(navigatorRef => {
             this.setRef(forwardedRef, navigatorRef);
+            // Update the NavigationUtil's nav reference to the updated ref.
             NavigationUtil.setNavigationRef(navigatorRef);
             // Only update the 'topLevelNavigator' if the new nav ref is different and non-null.
             if (

@@ -18,6 +18,8 @@ interface Component extends ReactComponent {
 interface AutotrackProps {
   touchableHierarchy: string;
   targetText?: string;
+  path?: string;
+  screenName?: string;
 }
 
 interface HeapIgnoreProps {
