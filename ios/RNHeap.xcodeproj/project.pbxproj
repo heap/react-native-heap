@@ -141,7 +141,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "# pwd is <client_app>/node_modules/@heap/react-native-heap/ios\n\n/usr/bin/ruby HeapSettings.bundle/generate_settings_non_cocoapods.rb\n";
+			shellScript = "# pwd is <client_app>/node_modules/@heap/react-native-heap/ios\n\nHeapSettings.bundle/generate_settings_non_cocoapods.rb\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.6.0] - 2019-07-24
+
+### Added
+- React Navigation screen name + route path properties on autocaptured events.
+
+### Fixed
+- Fixed bug where iOS settings script might fail when the dev is using `rvm` or `rbenv` to manage Ruby versions.
+
 ## [0.5.1] - 2019-07-03
 
 ### Fixed

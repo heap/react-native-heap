@@ -76,7 +76,8 @@ describe('Basic React Native and Interaction Support', () => {
         event => {
           return !(
             _.includes(event.k, 'eventProp1') ||
-            _.includes(event.k, 'eventProp2')
+            _.includes(event.k, 'eventProp2') ||
+            _.includes(event.k, 'path')
           );
         }
       );
@@ -88,7 +89,8 @@ describe('Basic React Native and Interaction Support', () => {
         event => {
           return (
             _.includes(event.k, 'eventProp1') &&
-            _.includes(event.k, 'eventProp2')
+            _.includes(event.k, 'eventProp2') &&
+            !_.includes(event.k, 'path')
           );
         }
       );
@@ -100,7 +102,8 @@ describe('Basic React Native and Interaction Support', () => {
         event => {
           return (
             !_.includes(event.k, 'eventProp1') &&
-            _.includes(event.k, 'eventProp2')
+            _.includes(event.k, 'eventProp2') &&
+            !_.includes(event.k, 'path')
           );
         }
       );
@@ -112,7 +115,8 @@ describe('Basic React Native and Interaction Support', () => {
         event => {
           return !(
             _.includes(event.k, 'eventProp1') ||
-            _.includes(event.k, 'eventProp2')
+            _.includes(event.k, 'eventProp2') ||
+            _.includes(event.k, 'path')
           );
         }
       );
@@ -159,7 +163,8 @@ describe('Basic React Native and Interaction Support', () => {
         event => {
           return (
             !_.has(event.properties, 'eventProp1') &&
-            !_.has(event.properties, 'eventProp2')
+            !_.has(event.properties, 'eventProp2') &&
+            !_.has(event.properties, 'path')
           );
         }
       );
@@ -193,7 +198,8 @@ describe('Basic React Native and Interaction Support', () => {
         event => {
           return (
             _.has(event.properties, 'eventProp1') &&
-            _.has(event.properties, 'eventProp2')
+            _.has(event.properties, 'eventProp2') &&
+            !_.has(event.properties, 'path')
           );
         }
       );
@@ -208,7 +214,8 @@ describe('Basic React Native and Interaction Support', () => {
         event => {
           return (
             !_.has(event.properties, 'eventProp1') &&
-            _.has(event.properties, 'eventProp2')
+            _.has(event.properties, 'eventProp2') &&
+            !_.has(event.properties, 'path')
           );
         }
       );
@@ -223,7 +230,8 @@ describe('Basic React Native and Interaction Support', () => {
         event => {
           return (
             !_.has(event.properties, 'eventProp1') &&
-            !_.has(event.properties, 'eventProp2')
+            !_.has(event.properties, 'eventProp2') &&
+            !_.has(event.properties, 'path')
           );
         }
       );
@@ -266,6 +274,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
         targetText: expectedTargetText,
+        screenName: 'Basics',
+        path: 'Basics',
       });
     });
 
@@ -276,6 +286,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
         targetText: expectedTargetText,
+        screenName: 'Basics',
+        path: 'Basics',
       });
     });
 
@@ -286,6 +298,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
         targetText: expectedTargetText,
+        screenName: 'Basics',
+        path: 'Basics',
       });
     });
 
@@ -296,6 +310,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
         targetText: expectedTargetText,
+        screenName: 'Basics',
+        path: 'Basics',
       });
     });
 
@@ -304,6 +320,8 @@ describe('Basic React Native and Interaction Support', () => {
         'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|Switch;[testID=switch];|';
       await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
         touchableHierarchy: expectedHierarchy,
+        screenName: 'Basics',
+        path: 'Basics',
       });
     });
 
@@ -312,6 +330,8 @@ describe('Basic React Native and Interaction Support', () => {
         'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|StyledComponent;[testID=nbSwitch];|Switch;[testID=nbSwitch];|Switch;[testID=nbSwitch];|';
       await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
         touchableHierarchy: expectedHierarchy,
+        screenName: 'Basics',
+        path: 'Basics',
       });
     });
 
@@ -321,6 +341,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('scrollViewPage', {
         touchableHierarchy: expectedHierarchy,
         pageIndex: '1',
+        screenName: 'Basics',
+        path: 'Basics',
       });
     });
   });
