@@ -8,7 +8,7 @@ PODS:
   - glog (0.3.5)
   - React (0.57.5):
     - React/Core (= 0.57.5)
-  - react-native-heap (0.5.1):
+  - react-native-heap (0.6.0):
     - React
   - React/Core (0.57.5):
     - yoga (= 0.57.5.React)
@@ -106,7 +106,7 @@ SPEC CHECKSUMS:
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
   glog: e8acf0ebbf99759d3ff18c86c292a5898282dcde
   React: 1fe0eb13d90b625d94c3b117c274dcfd2e760e11
-  react-native-heap: 8888871d15efc6bc2f6596b9c7b8cb1bb5746dfd
+  react-native-heap: 4a472f188a82a8250d87144325c8c569ef6d5b1c
   RNGestureHandler: 7ccf2f3f60458e084f9ada01fbaf610f6fef073c
   yoga: b1ce48b6cf950b98deae82838f5173ea7cf89e85
 
