@@ -156,11 +156,17 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should reset identity', async () => {
       const { err1, err2, res1, res2 } = await new Promise(resolve => {
-        testUtil.findEventInRedisRequests({ t:  'pressInTestEvent2'}, (err1, res1) => {
-          testUtil.findEventInRedisRequests({ t:  'BASICS_SENTINEL'}, (err2, res2) => {
-            resolve({ err1, err2, res1, res2 });
-          });
-        });
+        testUtil.findEventInRedisRequests(
+          { t: 'pressInTestEvent2' },
+          (err1, res1) => {
+            testUtil.findEventInRedisRequests(
+              { t: 'BASICS_SENTINEL' },
+              (err2, res2) => {
+                resolve({ err1, err2, res1, res2 });
+              }
+            );
+          }
+        );
       });
 
       assert.not.exist(err1);
@@ -168,7 +174,7 @@ describe('Basic React Native and Interaction Support', () => {
       assert(res1.length).not.equal(0);
       assert(res2.length).not.equal(0);
       assert.not.exist(res2[0]['i']);
-      assert(res1[0]['u']).notEqual(res2[0]['u']);
+      assert(res1[0]['u']).not.equal(res2[0]['u']);
     });
   });
 
@@ -287,6 +293,29 @@ describe('Basic React Native and Interaction Support', () => {
       assert.not.exist(err);
       assert(res.length).equal(1);
       assert(res[0]['toIdentity']).equal('foobar');
+    });
+
+    it('should reset identity', async () => {
+      const { err1, err2, res1, res2 } = await new Promise(resolve => {
+        testUtil.findAndroidEventInRedisRequests(
+          { event: { custom: { name: 'pressInTestEvent2' } } },
+          (err1, res1) => {
+            testUtil.findAndroidEventInRedisRequests(
+              { event: { custom: { name: 'BASICS_SENTINEL' } } },
+              (err2, res2) => {
+                resolve({ err1, err2, res1, res2 });
+              }
+            );
+          }
+        );
+      });
+
+      assert.not.exist(err1);
+      assert.not.exist(err2);
+      assert(res1.length).not.equal(0);
+      assert(res2.length).not.equal(0);
+      assert.not.exist(res2[0]['user']['identity']);
+      assert(res1[0]['user']['id']).not.equal(res2[0]['user']['id']);
     });
   });
 
