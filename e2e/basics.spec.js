@@ -173,6 +173,9 @@ describe('Basic React Native and Interaction Support', () => {
       assert.not.exist(err2);
       assert(res1.length).not.equal(0);
       assert(res2.length).not.equal(0);
+
+      // Assert that there is no identity post-resetIdentity, and that the post-resetIdentity user ID is different from the
+      // pre-resetIdentity user ID.
       assert.not.exist(res2[0]['i']);
       assert(res1[0]['u']).not.equal(res2[0]['u']);
     });
@@ -314,6 +317,9 @@ describe('Basic React Native and Interaction Support', () => {
       assert.not.exist(err2);
       assert(res1.length).not.equal(0);
       assert(res2.length).not.equal(0);
+
+      // Assert that there is no identity post-resetIdentity, and that the post-resetIdentity user ID is different from the
+      // pre-resetIdentity user ID.
       assert.not.exist(res2[0]['user']['identity']);
       assert(res1[0]['user']['id']).not.equal(res2[0]['user']['id']);
     });
