@@ -223,7 +223,7 @@ const instrumentSwitchComponent = path => {
   const originalFunctionExpression = path.node.right;
   const replacementFunc = getOriginalFunctionReplacement(
     originalFunctionExpression, // originalFunctionExpression
-    t.thisExpression(), // thisIdentifier
+    t.identifier('_this'), // thisIdentifier
     'autotrackSwitchChange', // autotrackMethodName
     path.node.left.property.name // eventType
   );
