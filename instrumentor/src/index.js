@@ -65,7 +65,7 @@ const instrumentTouchables = path => {
 
     const replacementFunc = getOriginalFunctionReplacement(
       path.node.value, // originalFunctionExpression
-      t.identifier('this'), // thisIdentifier
+      t.identifier('this'), // thisExpression
       'autotrackPress', // autotrackMethodName
       path.node.key.name // eventType
     );
@@ -108,7 +108,7 @@ const instrumentScrollView = path => {
 
     const replacementFunc = getOriginalFunctionReplacement(
       path.node.value, // originalFunctionExpression
-      t.thisExpression(), // thisIdentifier
+      t.thisExpression(), // thisExpression
       'autocaptureScrollView', // autotrackMethodName
       'scrollViewPage' // eventType
     );
@@ -118,7 +118,7 @@ const instrumentScrollView = path => {
 
 const getOriginalFunctionReplacement = (
   originalFunctionExpression,
-  thisIdentifier,
+  thisExpression,
   autotrackMethodName,
   eventType
 ) => {
@@ -128,7 +128,7 @@ const getOriginalFunctionReplacement = (
   );
 
   const calledFunction = t.callExpression(callOriginalFunctionExpression, [
-    thisIdentifier,
+    thisExpression,
     t.identifier('e'),
   ]);
 
@@ -139,7 +139,7 @@ const getOriginalFunctionReplacement = (
     t.memberExpression(t.identifier('Heap'), t.identifier(autotrackMethodName)),
     [
       t.stringLiteral(eventType),
-      thisIdentifier,
+      thisExpression,
       t.identifier('e'),
     ]
   );
@@ -223,7 +223,7 @@ const instrumentSwitchComponent = path => {
   const originalFunctionExpression = path.node.right;
   const replacementFunc = getOriginalFunctionReplacement(
     originalFunctionExpression, // originalFunctionExpression
-    t.identifier('_this'), // thisIdentifier
+    t.identifier('_this'), // thisExpression
     'autotrackSwitchChange', // autotrackMethodName
     path.node.left.property.name // eventType
   );
