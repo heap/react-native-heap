@@ -42,9 +42,9 @@ var ScrollView = function (_React$Component) {
         onMomentumScrollEnd: function onMomentumScrollEnd(e) {
           var Heap = require('@heap/react-native-heap').default;
 
-          Heap.autocaptureScrollView("scrollViewPage", _this, e);
+          Heap.autocaptureScrollView("scrollViewPage", _this2, e);
 
-          _this2._scrollResponder.scrollResponderHandleMomentumScrollEnd.call(_this, e);
+          _this2._scrollResponder.scrollResponderHandleMomentumScrollEnd.call(_this2, e);
         }
       });
       var decelerationRate = this.props.decelerationRate;

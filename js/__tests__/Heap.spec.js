@@ -7,6 +7,7 @@ describe('The Heap object', () => {
   let mockTrack,
     mockSetAppId,
     mockIdentify,
+    mockResetIdentity,
     mockAddUserProperties,
     mockAddEventProperties,
     mockRemoveEventProperty,
@@ -31,6 +32,9 @@ describe('The Heap object', () => {
 
     NativeModules.RNHeap.identify.mockReset();
     mockIdentify = NativeModules.RNHeap.identify;
+
+    NativeModules.RNHeap.resetIdentity.mockReset();
+    mockResetIdentity = NativeModules.RNHeap.resetIdentity;
 
     NativeModules.RNHeap.addUserProperties.mockReset();
     mockAddUserProperties = NativeModules.RNHeap.addUserProperties;
@@ -111,6 +115,12 @@ describe('The Heap object', () => {
       expect(mockIdentify.mock.calls[0][0]).toBe('foo');
     });
 
+    it('resetIdentity - handles the common case', () => {
+      Heap.resetIdentity();
+      expect(mockResetIdentity.mock.calls.length).toBe(1);
+      expect(mockResetIdentity.mock.calls[0]).toEqual([]);
+    });
+
     it('addUserProperties - handles the common case', () => {
       Heap.addUserProperties({ foo: 'bar' });
       expect(mockAddUserProperties.mock.calls.length).toBe(1);
@@ -145,6 +155,11 @@ describe('The Heap object', () => {
     it('identify - prevents errors from bubbling up', () => {
       mockIdentify.mockImplementation(throwFn);
       expect(() => Heap.identify('foo')).not.toThrow();
+    });
+
+    it('resetIdentity - prevents errors from bubbling up', () => {
+      mockResetIdentity.mockImplementation(throwFn);
+      expect(() => Heap.resetIdentity()).not.toThrow();
     });
 
     it('addUserProperties - prevents errors from bubbling up', () => {

@@ -1,6 +1,6 @@
 //
 //  Heap.h
-//  Version 5.1.0
+//  Version 6.2.0
 //  Copyright (c) 2014 Heap Inc. All rights reserved.
 //
 
@@ -30,13 +30,27 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setAppId:(NSString *)newAppId;
 
 /**
- * Enable the Event Visualizer to allow defining events in Heap.
+ * Start the pairing process to connect to the Event Visualizer.
  *
- * This should not be called in the release version of an app.
+ * This is equivalent to entering the pairing initiation code, and should not be called in a release version of an app.
  *
- * @see [Event visualizer for iOS apps](https://heapanalytics.com/docs/define-events#visualizer-for-ios-apps)
+ * @see [Event visualizer for iOS apps](https://docs.heapanalytics.com/docs/define-events#visualizer-for-ios-apps)
  */
-+ (void)enableVisualizer;
++ (void)startEVPairing;
+
+/**
+ * Stop the Event Visualizer pairing process.
+ *
+ * @see [Event visualizer for iOS apps](https://docs.heapanalytics.com/docs/define-events#visualizer-for-ios-apps)
+ */
++ (void)stopEVPairing;
+
+/**
+ * Disable the pairing gesture (i.e. series of volume button presses) used to pair a device with the Event Visualizer.
+ *
+ * @see [Event visualizer for iOS apps](https://docs.heapanalytics.com/docs/define-events#visualizer-for-ios-apps)
+ */
++ (void)disableVisualizerPairingGesture;
 
 /**
  * Start debug logging of Heap activity via NSLog.
@@ -78,7 +92,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param identity     case-sensitive string that uniquely identifies a user
  *
  * @see addUserProperties:
- * @see [User identities and properties](https://heapanalytics.com/docs/using-identify)
+ * @see [User identities and properties](https://docs.heapanalytics.com/docs/using-identify)
  */
 + (void)identify:(NSString *)identity;
 
@@ -98,7 +112,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param properties    key-value pairs to be associated with a user
  *
  * @see identify:
- * @see [User identities and properties](https://heapanalytics.com/docs/using-identify)
+ * @see [User identities and properties](https://docs.heapanalytics.com/docs/using-identify)
  */
 + (void)addUserProperties:(NSDictionary *)properties;
 
@@ -113,7 +127,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param event        the event name
  *
  * @see track:withProperties:
- * @see [track in Heap documentation](https://heapanalytics.com/docs/custom-api#track)
+ * @see [track in Heap documentation](https://docs.heapanalytics.com/docs/custom-api#track)
  */
 + (void)track:(NSString *)event;
 
@@ -127,7 +141,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param properties   key-value pairs to associate with the event
  *
  * @see track:
- * @see [track in Heap documentation](https://heapanalytics.com/docs/custom-api#track)
+ * @see [track in Heap documentation](https://docs.heapanalytics.com/docs/custom-api#track)
  */
 + (void)track:(NSString *)event withProperties:(nullable NSDictionary *)properties;
 
@@ -170,6 +184,12 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)clearEventProperties;
 
+/**
+ * Resets a user's identity to a random anonymous user ID. A new session for an
+ * anonymous user will begin when called if the user was previously identified.
+ * The method has no effect if the user was previously anonymous when called.
+ */
++ (void)resetIdentity;
 
 /// @name Deprecated methods
 
@@ -177,6 +197,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)setEventProperties:(NSDictionary *)properties __deprecated_msg("Use addEventProperties instead");
 /// Alias for removeEventProperty:.
 + (void)unsetEventProperty:(NSString *)property __deprecated_msg("Use removeEventProperty instead");
+/// Alias for startEVPairing
++ (void)enableVisualizer __deprecated_msg("Use startEVPairing instead");
 
 @end
 NS_ASSUME_NONNULL_END

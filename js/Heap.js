@@ -40,6 +40,7 @@ export default {
 
   // User Properties
   identify: bailOnError(identity => RNHeap.identify(identity)),
+  resetIdentity: bailOnError(() => RNHeap.resetIdentity()),
   addUserProperties: bailOnError(properties => {
     const payload = properties || {};
     RNHeap.addUserProperties(flatten(payload));

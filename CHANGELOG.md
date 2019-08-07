@@ -5,13 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+__BEGIN_UNRELEASED__
+## [Unreleased]
+### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+__END_UNRELEASED__
+
+## [0.7.0] - 2019-08-07
+
+### Added
+- `resetIdentity` method for resetting an identified user to an anonymous user.
+
+### Changed
+- Updated sessionization semantics; sessions now expire after 5 idle minutes, regardless of the app's background/foreground state.
+
+### Fixed
+- Fixed bug on RN 0.60.4 in which `ScrollView` instrumentation breaks the component. [#119](https://github.com/heap/react-native-heap/issues/119)
+
 ## [0.6.0] - 2019-07-24
 
 ### Added
 - React Navigation screen name + route path properties on autocaptured events.
 
 ### Fixed
-- Fixed bug where iOS settings script might fail when the dev is using `rvm` or `rbenv` to manage Ruby versions.
+- Fixed bug where iOS settings script might fail when the dev is using `rvm` or `rbenv` to manage Ruby versions. (@marcferna)
 
 ## [0.5.1] - 2019-07-03
 
