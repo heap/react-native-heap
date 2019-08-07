@@ -137,11 +137,7 @@ const getOriginalFunctionReplacement = (
   // 'Heap.autotrackPress(<press type>, this, e)'.
   const autotrackExpression = t.callExpression(
     t.memberExpression(t.identifier('Heap'), t.identifier(autotrackMethodName)),
-    [
-      t.stringLiteral(eventType),
-      thisExpression,
-      t.identifier('e'),
-    ]
+    [t.stringLiteral(eventType), thisExpression, t.identifier('e')]
   );
 
   // Function body for tracking the Heap event, then calling the original function.
