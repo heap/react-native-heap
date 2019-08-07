@@ -54,6 +54,10 @@ RCT_EXPORT_METHOD(identify:(NSString *)identity) {
   [Heap identify:identity];
 }
 
+RCT_EXPORT_METHOD(resetIdentity) {
+  [Heap resetIdentity];
+}
+
 RCT_EXPORT_METHOD(addUserProperties:(NSDictionary *)properties) {
   [Heap addUserProperties:properties];
 }

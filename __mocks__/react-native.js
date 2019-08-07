@@ -5,6 +5,7 @@ reactNative.NativeModules = {
     track: jest.fn(),
     setAppId: jest.fn(),
     identify: jest.fn(),
+    resetIdentity: jest.fn(),
     addUserProperties: jest.fn(),
     addEventProperties: jest.fn(),
     removeEventProperty: jest.fn(),

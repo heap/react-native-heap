@@ -40,6 +40,11 @@ public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
     Heap.identify(identity);
   }
 
+  @ReactMethod
+  public void resetIdentity() {
+    Heap.resetIdentity();
+  }
+
   private static Map<String, String> convertToStringMap(ReadableMap readableMap) {
     Map<String, String> stringMap = new HashMap<>();
     ReadableMapKeySetIterator mapIterator = readableMap.keySetIterator();

@@ -3,6 +3,7 @@ import {
   Button,
   FlatList,
   Platform,
+  ScrollView,
   StyleSheet,
   Switch,
   Text,
@@ -25,7 +26,7 @@ const ITEMS = _.range(30).map(_.toString);
 class BasicsPage extends Component {
   render() {
     return (
-      <View style={styles.container}>
+      <ScrollView contentContainerStyle={styles.container}>
         <NbSwitch testID="nbSwitch" />
         <Switch testID="switch" />
         <Button
@@ -57,6 +58,11 @@ class BasicsPage extends Component {
           testID="identify"
           title="Call Identify"
           onPress={() => Heap.identify('foobar')}
+        />
+        <Button
+          testID="resetIdentity"
+          title="Call Reset Identity"
+          onPress={() => Heap.resetIdentity()}
         />
         <Button
           testID="aep"
@@ -115,7 +121,7 @@ class BasicsPage extends Component {
           testID="scrollView"
         />
         {makeSentinelButton('Basics')}
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -134,7 +140,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 650,
     padding: 50,
     justifyContent: 'center',
     alignItems: 'center',
