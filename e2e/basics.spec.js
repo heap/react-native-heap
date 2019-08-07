@@ -156,9 +156,11 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should reset identity', async () => {
       const { err1, err2, res1, res2 } = await new Promise(resolve => {
+        // Fetch a pre-resetIdentity event.
         testUtil.findEventInRedisRequests(
           { t: 'pressInTestEvent2' },
           (err1, res1) => {
+            // Fetch a post-resetIdentity event.
             testUtil.findEventInRedisRequests(
               { t: 'BASICS_SENTINEL' },
               (err2, res2) => {
@@ -300,9 +302,11 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should reset identity', async () => {
       const { err1, err2, res1, res2 } = await new Promise(resolve => {
+        // Fetch a pre-resetIdentity event.
         testUtil.findAndroidEventInRedisRequests(
           { event: { custom: { name: 'pressInTestEvent2' } } },
           (err1, res1) => {
+            // Fetch a post-resetIdentity event.
             testUtil.findAndroidEventInRedisRequests(
               { event: { custom: { name: 'BASICS_SENTINEL' } } },
               (err2, res2) => {
