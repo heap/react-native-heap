@@ -65,7 +65,7 @@ const instrumentTouchables = path => {
 
     const replacementFunc = getOriginalFunctionReplacement(
       path.node.value, // originalFunctionExpression
-      'this', // thisIdentifier
+      t.identifier('this'), // thisExpression
       'autotrackPress', // autotrackMethodName
       path.node.key.name // eventType
     );
@@ -108,7 +108,7 @@ const instrumentScrollView = path => {
 
     const replacementFunc = getOriginalFunctionReplacement(
       path.node.value, // originalFunctionExpression
-      '_this', // thisIdentifier
+      t.thisExpression(), // thisExpression
       'autocaptureScrollView', // autotrackMethodName
       'scrollViewPage' // eventType
     );
@@ -118,7 +118,7 @@ const instrumentScrollView = path => {
 
 const getOriginalFunctionReplacement = (
   originalFunctionExpression,
-  thisIdentifier,
+  thisExpression,
   autotrackMethodName,
   eventType
 ) => {
@@ -128,7 +128,7 @@ const getOriginalFunctionReplacement = (
   );
 
   const calledFunction = t.callExpression(callOriginalFunctionExpression, [
-    t.identifier(thisIdentifier),
+    thisExpression,
     t.identifier('e'),
   ]);
 
@@ -137,11 +137,7 @@ const getOriginalFunctionReplacement = (
   // 'Heap.autotrackPress(<press type>, this, e)'.
   const autotrackExpression = t.callExpression(
     t.memberExpression(t.identifier('Heap'), t.identifier(autotrackMethodName)),
-    [
-      t.stringLiteral(eventType),
-      t.identifier(thisIdentifier),
-      t.identifier('e'),
-    ]
+    [t.stringLiteral(eventType), thisExpression, t.identifier('e')]
   );
 
   // Function body for tracking the Heap event, then calling the original function.
@@ -223,7 +219,7 @@ const instrumentSwitchComponent = path => {
   const originalFunctionExpression = path.node.right;
   const replacementFunc = getOriginalFunctionReplacement(
     originalFunctionExpression, // originalFunctionExpression
-    '_this', // thisIdentifier
+    t.identifier('_this'), // thisExpression
     'autotrackSwitchChange', // autotrackMethodName
     path.node.left.property.name // eventType
   );

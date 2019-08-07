@@ -5,7 +5,7 @@ var _objectSpread2 = _interopRequireDefault(require("@babel/runtime/helpers/obje
 var ScrollView = createReactClass({
   displayName: "ScrollView",
   render: function render() {
-    var _this2 = this;
+    var _this = this;
 
     var props = (0, _objectSpread2.default)({}, this.props, {
       onMomentumScrollEnd: function onMomentumScrollEnd(e) {
@@ -13,7 +13,7 @@ var ScrollView = createReactClass({
 
         Heap.autocaptureScrollView("scrollViewPage", _this, e);
 
-        _this2.scrollResponderHandleMomentumScrollEnd.call(_this, e);
+        _this.scrollResponderHandleMomentumScrollEnd.call(_this, e);
       }
     });
     var decelerationRate = this.props.decelerationRate;
