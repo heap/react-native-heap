@@ -116,6 +116,35 @@ const instrumentScrollView = path => {
   }
 };
 
+const instrumentTextInput = path => {
+  if (path.node.key.name === '_onChange') {
+    const parent = path.findParent(path => {
+      return (
+        path.isVariableDeclarator() &&
+        path.node.id.name === 'TextInput' &&
+        t.isCallExpression(path.node.init) &&
+        path.node.init.callee.name === 'createReactClass'
+      );
+    });
+
+    if (!parent) {
+      return;
+    }
+
+    // Create the expression for calling the original function for this listener.
+    // '(<original function>).call(this, e)'.
+    const originalFunctionExpression = path.node.value;
+
+    const replacementFunc = getOriginalFunctionReplacement(
+      path.node.value, // originalFunctionExpression
+      t.identifier('this'), // thisExpression
+      'autocaptureTextInput', // autotrackMethodName
+      'textEdit' // eventType
+    );
+    path.get('value').replaceWith(replacementFunc);
+  }
+};
+
 const getOriginalFunctionReplacement = (
   originalFunctionExpression,
   thisExpression,
@@ -273,6 +302,7 @@ function transform(babel) {
         instrumentStartup(path);
         instrumentTouchables(path);
         instrumentScrollView(path);
+        instrumentTextInput(path);
       },
       AssignmentExpression(path) {
         instrumentSwitchComponent(path);
