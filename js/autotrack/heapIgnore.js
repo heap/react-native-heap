@@ -22,17 +22,25 @@ export const HeapIgnoreTargetText = props => {
 };
 
 export const withHeapIgnore = (IgnoredComponent, heapIgnoreConfig) => {
-  return class extends React.Component {
+  class WithHeapIgnore extends React.Component {
     render() {
+      const { forwardedRef, ...rest } = this.props;
       return (
         <HeapIgnore {...heapIgnoreConfig}>
-          <IgnoredComponent {...this.props}>
+          <IgnoredComponent ref={forwardedRef} {...rest}>
             {this.props.children}
           </IgnoredComponent>
         </HeapIgnore>
       );
     }
-  };
+  }
+
+  // :TODO: (jmtaber129): Change this to 'withHeapIgnore(<IgnoredComponent name>).
+  WithHeapIgnore.displayName = '_class';
+
+  return React.forwardRef((props, ref) => {
+    return <WithHeapIgnore {...props} forwardedRef={ref} />;
+  });
 };
 
 export const BASE_HEAP_IGNORE_PROPS = {

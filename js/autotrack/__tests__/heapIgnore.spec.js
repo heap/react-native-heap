@@ -193,7 +193,10 @@ describe('Common autotrack utils', () => {
     });
 
     it('Works as an HOC', () => {
-      const IgnoredText = withHeapIgnore(Text, { allowInteraction: true });
+      const IgnoredText = withHeapIgnore(Text, {
+        allowInteraction: true,
+        allowInnerHierarchy: true,
+      });
       const wrapper = mount(
         <Foo>
           <IgnoredText testID="targetElement">{'foobar'}</IgnoredText>
@@ -205,7 +208,7 @@ describe('Common autotrack utils', () => {
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
         touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|_class;[testID=targetElement];|HeapIgnore;|',
+          'WrapperComponent;|Foo;|BarClass;|BarFunction;|_class;[testID=targetElement];|HeapIgnore;|Text;|',
       });
     });
 
@@ -225,6 +228,29 @@ describe('Common autotrack utils', () => {
         touchableHierarchy:
           'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnoreTargetText;|HeapIgnore;|Text;[testID=targetElement];|',
       });
+    });
+
+    it('Forwards refs as an HOC', () => {
+      const NoOpIgnore = withHeapIgnore(Text, {
+        allowInteraction: true,
+        allowAllProps: true,
+        allowInnerHierarchy: true,
+        allowTargetText: true,
+      });
+
+      const myRef = React.createRef();
+
+      const wrapper = mount(
+        <Foo>
+          <NoOpIgnore ref={myRef} testID="targetElement">
+            {'foobar'}
+          </NoOpIgnore>
+        </Foo>
+      );
+
+      expect(myRef.current._reactInternalFiber.type.displayName).toEqual(
+        'Text'
+      );
     });
   });
 });
