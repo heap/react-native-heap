@@ -15,7 +15,7 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
-## [0.7.0] - 2019-08-14
+## [0.7.1] - 2019-08-15
 
 ### Fixed
 - Upgraded vendored iOS Heap library to 6.2.1, which fixed an issue where user IDs were not being reused across sessions in some cases.
