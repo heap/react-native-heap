@@ -19,6 +19,7 @@ __END_UNRELEASED__
 
 ### Fixed
 - Upgraded vendored iOS Heap library to 6.2.1, which fixed an issue where user IDs were not being reused across sessions in some cases.
+- Now using proper ref forwarding for HeapIgnore HOC.
 
 ## [0.7.0] - 2019-08-07
 
