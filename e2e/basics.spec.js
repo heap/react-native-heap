@@ -23,13 +23,13 @@ const doTestActions = async () => {
   await element(by.id('removeProp')).tap();
   await element(by.id('track3')).tap();
   await element(by.id('clearProps')).tap();
-  await element(by.id('track4')).tap();
 
   // :HACK: Break up long URL.
   // :TODO: Remove once pixel endpoint is handling larger events again.
   console.log('Waiting 15s to flush iOS events.');
   await new Promise(resolve => setTimeout(resolve, 15000));
 
+  await element(by.id('track4')).tap();
   await element(by.id('aup')).tap();
   await element(by.id('identify')).tap();
 
@@ -54,15 +54,27 @@ const doTestActions = async () => {
   await element(by.id('switch')).tap();
   await element(by.id('nbSwitch')).tap();
 
-  await element(by.id('scrollView')).swipe('left');
+  // :HACK: Break up long URL.
+  // :TODO: Remove once pixel endpoint is handling larger events again.
+  console.log('Waiting 15s to flush iOS events.');
+  await new Promise(resolve => setTimeout(resolve, 15000));
+
+  await element(by.id('textInput')).typeText('foo ');
+  await element(by.id('textInput')).tapReturnKey();
+
+  await element(by.id('resetIdentity')).tap();
 
   // :HACK: Break up long URL.
   // :TODO: Remove once pixel endpoint is handling larger events again.
   console.log('Waiting 15s to flush iOS events.');
   await new Promise(resolve => setTimeout(resolve, 15000));
 
-  await element(by.id('resetIdentity')).tap();
+  await waitFor(element(by.id('basicsSentinel')))
+    .toBeVisible()
+    .whileElement(by.id('scrollContainer'))
+    .scroll(200, 'down');
 
+  await element(by.id('scrollView')).swipe('left');
   await element(by.id('basicsSentinel')).tap();
 };
 
@@ -332,7 +344,7 @@ describe('Basic React Native and Interaction Support', () => {
   describe('Autotrack', () => {
     it("should autotrack 'TouchableOpacity's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|TouchableOpacity;[testID=touchableOpacityText];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|TouchableOpacity;[testID=touchableOpacityText];|';
       const expectedTargetText = 'Touchable Opacity Foo';
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
@@ -344,7 +356,7 @@ describe('Basic React Native and Interaction Support', () => {
 
     it("should autotrack 'TouchableHighlight's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|TouchableHighlight;[testID=touchableHighlightText];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|TouchableHighlight;[testID=touchableHighlightText];|';
       const expectedTargetText = 'Touchable Highlight';
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
@@ -356,7 +368,7 @@ describe('Basic React Native and Interaction Support', () => {
 
     it("should autotrack 'TouchableWithoutFeedback's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|';
       const expectedTargetText = 'Touchable Without Feedback';
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
@@ -368,7 +380,7 @@ describe('Basic React Native and Interaction Support', () => {
 
     it(":android: should autotrack 'TouchableNativeFeedback's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|';
       const expectedTargetText = 'Touchable Native Feedback';
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
@@ -380,7 +392,7 @@ describe('Basic React Native and Interaction Support', () => {
 
     it("should autotrack 'Switch's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|Switch;[testID=switch];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|Switch;[testID=switch];|';
       await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
         touchableHierarchy: expectedHierarchy,
         screenName: 'Basics',
@@ -390,7 +402,7 @@ describe('Basic React Native and Interaction Support', () => {
 
     it("should autotrack NativeBase 'Switch's", async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|StyledComponent;[testID=nbSwitch];|Switch;[testID=nbSwitch];|Switch;[testID=nbSwitch];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|StyledComponent;[testID=nbSwitch];|Switch;[testID=nbSwitch];|Switch;[testID=nbSwitch];|';
       await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
         touchableHierarchy: expectedHierarchy,
         screenName: 'Basics',
@@ -400,10 +412,21 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should autotrack ScrollView paging', async () => {
       const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|FlatList;[testID=scrollView];|VirtualizedList;[testID=scrollView];|ScrollView;[testID=scrollView];|';
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|FlatList;[testID=scrollView];|VirtualizedList;[testID=scrollView];|ScrollView;[testID=scrollView];|';
       await rnTestUtil.assertAutotrackHierarchy('scrollViewPage', {
         touchableHierarchy: expectedHierarchy,
         pageIndex: '1',
+        screenName: 'Basics',
+        path: 'Basics',
+      });
+    });
+
+    it('should autotrack TextInput edits', async () => {
+      const expectedHierarchy =
+        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|MyTextInput;[testID=textInput];|TextInput;[testID=textInput];|';
+      await rnTestUtil.assertAutotrackHierarchy('textEdit', {
+        touchableHierarchy: expectedHierarchy,
+        placeholderText: 'foo placeholder',
         screenName: 'Basics',
         path: 'Basics',
       });
