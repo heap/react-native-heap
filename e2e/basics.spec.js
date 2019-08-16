@@ -49,6 +49,7 @@ const doTestActions = async () => {
   await element(by.id('textInput')).typeText('foo ');
   await element(by.id('textInput')).tapReturnKey();
 
+  await expect(element(by.id('resetIdentity'))).toBeVisible();
   await element(by.id('resetIdentity')).tap();
 
   await rnTestUtil.waitIfIos();
