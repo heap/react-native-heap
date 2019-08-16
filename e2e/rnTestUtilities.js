@@ -7,6 +7,15 @@ testUtil = require('../../heap/test/util');
 
 const HEAP_ENV_ID = '2084764307';
 
+const waitIfIos = async () => {
+  if (device.getPlatform() === 'ios') {
+    // :HACK: Break up long URL.
+    // :TODO: Remove once pixel endpoint is handling larger events again.
+    console.log('Waiting 15s to flush iOS events.');
+    await new Promise(resolve => setTimeout(resolve, 15000));
+  }
+}
+
 const assertEvent = (err, res, check) => {
   assert.not.exist(err);
   assert(res.length).not.equal(0);
@@ -198,4 +207,5 @@ module.exports = {
   assertAutotrackHierarchy,
   assertNavigationEvent,
   pollForSentinel,
+  waitIfIos,
 };

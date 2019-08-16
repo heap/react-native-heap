@@ -14,19 +14,13 @@ const doTestActions = async () => {
   // Open the PropExtraction tab in the tab navigator.
   await element(by.id('PropExtraction')).tap();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
 
   await expect(element(by.id('button1'))).toBeVisible();
   await element(by.id('button1')).tap();
   await element(by.id('button2')).tap();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
 
   await element(by.id('button3')).tap();
 

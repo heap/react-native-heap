@@ -16,19 +16,14 @@ const doTestActions = async () => {
   await element(by.id('totallyIgnored')).tap();
   await element(by.id('totallyIgnoredHoc')).tap();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
 
   await element(by.id('allowedInteraction')).tap();
   await element(by.id('allowedInnerHierarchy')).tap();
   await element(by.id('allowedAllProps')).tap();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
+
   await element(by.id('allowedTargetText')).tap();
   await element(by.id('ignoredTargetText')).tap();
 
