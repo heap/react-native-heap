@@ -37,12 +37,9 @@ describe('Property Extraction in Hierarchies', () => {
         : ANDROID_BUTTON_SUFFIX;
   });
 
-  before(done => {
-    db.orm.connection.sharedRedis().flushall(done);
-  });
-
   describe('The property extractor', () => {
     before(async () => {
+      await rnTestUtil.flushAllRedis();
       await doTestActions();
       await rnTestUtil.pollForSentinel('PropExtraction');
     });

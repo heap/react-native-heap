@@ -64,16 +64,13 @@ const doTestActions = async () => {
 };
 
 describe('Basic React Native and Interaction Support', () => {
-  before(done => {
-    db.orm.connection.sharedRedis().flushall(done);
+  before(async () => {
+    await rnTestUtil.flushAllRedis();
+    await doTestActions();
+    await rnTestUtil.pollForSentinel('Basics');
   });
 
   describe(':ios: Bridge API', () => {
-    before(async () => {
-      await doTestActions();
-      await rnTestUtil.pollForSentinel('Basics');
-    });
-
     it('should call first track', async () => {
       await rnTestUtil.assertIosPixel(
         { a: '2084764307', t: 'pressInTestEvent1' },
@@ -181,11 +178,6 @@ describe('Basic React Native and Interaction Support', () => {
   });
 
   describe(':android: Bridge API', () => {
-    before(async () => {
-      await doTestActions();
-      await rnTestUtil.pollForSentinel('Basics');
-    });
-
     it('should call first track', async () => {
       await rnTestUtil.assertAndroidEvent(
         {

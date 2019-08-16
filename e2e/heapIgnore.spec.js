@@ -31,11 +31,8 @@ const doTestActions = async () => {
 };
 
 describe('HeapIgnore', () => {
-  before(done => {
-    db.orm.connection.sharedRedis().flushall(done);
-  });
-
   before(async () => {
+    await rnTestUtil.flushAllRedis();
     await doTestActions();
     await rnTestUtil.pollForSentinel('HeapIgnore');
   });

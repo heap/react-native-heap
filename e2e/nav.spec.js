@@ -33,12 +33,9 @@ const doTestActions = async () => {
 };
 
 describe('Navigation', () => {
-  before(done => {
-    db.orm.connection.sharedRedis().flushall(done);
-  });
-
   describe('React Navigation autotrack', () => {
     before(async () => {
+      await rnTestUtil.flushAllRedis();
       await doTestActions();
       await rnTestUtil.pollForSentinel('Nav');
     });
