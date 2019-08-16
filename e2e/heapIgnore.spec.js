@@ -6,7 +6,8 @@ nodeUtil = require('util');
 testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
-const HEAPIGNORE_PAGE_TOP_HIERARCHY = 'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=HeapIgnore];|SceneView;|HeapIgnorePage;|';
+const HEAPIGNORE_PAGE_TOP_HIERARCHY =
+  'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=HeapIgnore];|SceneView;|HeapIgnorePage;|';
 
 const doTestActions = async () => {
   // Open the HeapIgnore tab in the tab navigator.

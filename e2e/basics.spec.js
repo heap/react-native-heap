@@ -6,7 +6,8 @@ nodeUtil = require('util');
 testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
-const BASICS_PAGE_TOP_HIERARCHY = 'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|';
+const BASICS_PAGE_TOP_HIERARCHY =
+  'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|';
 
 const doTestActions = async () => {
   // Open the Basics tab in the tab navigator.

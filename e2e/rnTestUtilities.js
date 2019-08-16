@@ -15,9 +15,11 @@ const waitIfIos = async () => {
     console.log('Waiting 15s to flush iOS events.');
     await new Promise(resolve => setTimeout(resolve, 15000));
   }
-}
+};
 
-const flushAllRedis = nodeUtil.promisify((done) => db.orm.connection.sharedRedis().flushall(done));
+const flushAllRedis = nodeUtil.promisify(done =>
+  db.orm.connection.sharedRedis().flushall(done)
+);
 
 const assertEvent = (err, res, check) => {
   assert.not.exist(err);

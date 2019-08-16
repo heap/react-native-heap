@@ -8,7 +8,8 @@ rnTestUtil = require('./rnTestUtilities');
 const IOS_BUTTON_SUFFIX = 'TouchableOpacity;';
 const ANDROID_BUTTON_SUFFIX = 'TouchableNativeFeedback;';
 
-const PROPEXTRACTION_PAGE_TOP_HIERARCHY = 'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=PropExtraction];|SceneView;|PropExtraction;|';
+const PROPEXTRACTION_PAGE_TOP_HIERARCHY =
+  'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=PropExtraction];|SceneView;|PropExtraction;|';
 
 const doTestActions = async () => {
   // Open the PropExtraction tab in the tab navigator.
