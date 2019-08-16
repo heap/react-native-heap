@@ -1,6 +1,8 @@
 import { getBaseComponentProps } from './common';
 import * as _ from 'lodash';
 
+const DEBOUNCE_PERIOD_MS = 1000;
+
 export const autocaptureTextInputChange = track => (
   eventType,
   componentThis,
@@ -10,7 +12,7 @@ export const autocaptureTextInputChange = track => (
   if (!componentThis.__heap__debounceTextChange) {
     componentThis.__heap__debounceTextChange = _.debounce(
       debouncedAutocaptureTextInputChange(track),
-      1000
+      DEBOUNCE_PERIOD_MS
     );
   }
 
