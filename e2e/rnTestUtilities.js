@@ -1,11 +1,25 @@
 require('coffeescript').register();
 
 const _ = require('lodash');
+const nodeUtil = require('util');
 
 db = require('../../heap/back/db');
 testUtil = require('../../heap/test/util');
 
 const HEAP_ENV_ID = '2084764307';
+
+const waitIfIos = async () => {
+  if (device.getPlatform() === 'ios') {
+    // :HACK: Break up long URL.
+    // :TODO: Remove once pixel endpoint is handling larger events again.
+    console.log('Waiting 15s to flush iOS events.');
+    await new Promise(resolve => setTimeout(resolve, 15000));
+  }
+};
+
+const flushAllRedis = nodeUtil.promisify(done =>
+  db.orm.connection.sharedRedis().flushall(done)
+);
 
 const assertEvent = (err, res, check) => {
   assert.not.exist(err);
@@ -198,4 +212,6 @@ module.exports = {
   assertAutotrackHierarchy,
   assertNavigationEvent,
   pollForSentinel,
+  waitIfIos,
+  flushAllRedis,
 };

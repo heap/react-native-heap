@@ -6,6 +6,9 @@ nodeUtil = require('util');
 testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
+const HEAPIGNORE_PAGE_TOP_HIERARCHY =
+  'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=HeapIgnore];|SceneView;|HeapIgnorePage;|';
+
 const doTestActions = async () => {
   // Open the HeapIgnore tab in the tab navigator.
   await element(by.id('HeapIgnore')).tap();
@@ -14,19 +17,14 @@ const doTestActions = async () => {
   await element(by.id('totallyIgnored')).tap();
   await element(by.id('totallyIgnoredHoc')).tap();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
 
   await element(by.id('allowedInteraction')).tap();
   await element(by.id('allowedInnerHierarchy')).tap();
   await element(by.id('allowedAllProps')).tap();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
+
   await element(by.id('allowedTargetText')).tap();
   await element(by.id('ignoredTargetText')).tap();
 
@@ -34,11 +32,8 @@ const doTestActions = async () => {
 };
 
 describe('HeapIgnore', () => {
-  before(done => {
-    db.orm.connection.sharedRedis().flushall(done);
-  });
-
   before(async () => {
+    await rnTestUtil.flushAllRedis();
     await doTestActions();
     await rnTestUtil.pollForSentinel('HeapIgnore');
   });
@@ -57,24 +52,21 @@ describe('HeapIgnore', () => {
   });
 
   it('should ignore the inner hierarchy', async () => {
-    const expectedHierarchy =
-      'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=HeapIgnore];|SceneView;|HeapIgnorePage;|HeapIgnore;|';
+    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}HeapIgnore;|`;
     await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
       touchableHierarchy: expectedHierarchy,
     });
   });
 
   it('should ignore props and target text', async () => {
-    const expectedHierarchy =
-      'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=HeapIgnore];|SceneView;|HeapIgnorePage;|HeapIgnore;|TouchableOpacity;|';
+    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}HeapIgnore;|TouchableOpacity;|`;
     await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
       touchableHierarchy: expectedHierarchy,
     });
   });
 
   it('should ignore props', async () => {
-    const expectedHierarchy =
-      'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=HeapIgnore];|SceneView;|HeapIgnorePage;|HeapIgnore;|TouchableOpacity;|';
+    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}HeapIgnore;|TouchableOpacity;|`;
     await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
       touchableHierarchy: expectedHierarchy,
       targetText: 'Foobar',
@@ -82,8 +74,7 @@ describe('HeapIgnore', () => {
   });
 
   it('should ignore target text', async () => {
-    const expectedHierarchy =
-      'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=HeapIgnore];|SceneView;|HeapIgnorePage;|HeapIgnoreTargetText;|HeapIgnore;|TouchableOpacity;[testID=ignoredTargetText];|';
+    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}HeapIgnoreTargetText;|HeapIgnore;|TouchableOpacity;[testID=ignoredTargetText];|`;
     await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
       touchableHierarchy: expectedHierarchy,
     });

@@ -20,10 +20,7 @@ const doTestActions = async () => {
   await element(by.id('pop1')).tap();
   await delay();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
 
   await expect(element(by.id('navigate_modal'))).toBeVisible();
   await element(by.id('navigate_modal')).tap();
@@ -36,12 +33,9 @@ const doTestActions = async () => {
 };
 
 describe('Navigation', () => {
-  before(done => {
-    db.orm.connection.sharedRedis().flushall(done);
-  });
-
   describe('React Navigation autotrack', () => {
     before(async () => {
+      await rnTestUtil.flushAllRedis();
       await doTestActions();
       await rnTestUtil.pollForSentinel('Nav');
     });
