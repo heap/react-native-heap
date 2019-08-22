@@ -14,18 +14,17 @@ def perform_substitution(dir, app_id_dev, app_id_prod)
 end
 
 def get_heap_settings_from_json(json)
-  dev, prod, default = json.values_at('dev', 'prod', 'default')
+  dev = json.fetch('dev', {})
+  prod = json.fetch('prod', {})
+  default = json.fetch('default', {})
 
-  auto_init_dev = dev['heapAutoInit'] unless dev.nil?
-  auto_init_dev = default['heapAutoInit'] if auto_init_dev.nil?
-  auto_init_dev = true if auto_init_dev.nil?
+  return get_app_id_for_config(dev, default), get_app_id_for_config(prod, default)
+end
 
-  auto_init_prod = prod['heapAutoInit'] unless prod.nil?
-  auto_init_prod = default['heapAutoInit'] if auto_init_prod.nil?
-  auto_init_prod = true if auto_init_prod.nil?
+def get_app_id_for_config(specified_config, default_config)
+  is_auto_init = specified_config['heapAutoInit']
+  is_auto_init = default_config['heapAutoInit'] if is_auto_init.nil?
+  is_auto_init = true if is_auto_init.nil?
 
-  app_id_dev = (!dev.nil? && dev['heapAppId']) || default['heapAppId'] if auto_init_dev
-  app_id_prod = (!prod.nil? && prod['heapAppId']) || default['heapAppId'] if auto_init_prod
-
-  return app_id_dev, app_id_prod
+  return specified_config['heapAppId'] || default_config['heapAppId'] if is_auto_init
 end
