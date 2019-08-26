@@ -6,6 +6,9 @@ nodeUtil = require('util');
 testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
+const BASICS_PAGE_TOP_HIERARCHY =
+  'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|';
+
 const doTestActions = async () => {
   // Open the Basics tab in the tab navigator.
   await element(by.id('Basics')).tap();
@@ -15,28 +18,19 @@ const doTestActions = async () => {
   await element(by.id('aep')).tap();
   await element(by.id('track2')).tap();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
 
   await element(by.id('removeProp')).tap();
   await element(by.id('track3')).tap();
   await element(by.id('clearProps')).tap();
+
+  await rnTestUtil.waitIfIos();
+
   await element(by.id('track4')).tap();
-
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
-
   await element(by.id('aup')).tap();
   await element(by.id('identify')).tap();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
 
   await element(by.id('touchableOpacityText')).tap();
   await element(by.id('touchableHighlightText')).tap();
@@ -46,37 +40,38 @@ const doTestActions = async () => {
     await element(by.id('touchableNativeFeedbackText')).tap();
   }
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await rnTestUtil.waitIfIos();
 
   await element(by.id('switch')).tap();
   await element(by.id('nbSwitch')).tap();
 
-  await element(by.id('scrollView')).swipe('left');
+  await rnTestUtil.waitIfIos();
 
-  // :HACK: Break up long URL.
-  // :TODO: Remove once pixel endpoint is handling larger events again.
-  console.log('Waiting 15s to flush iOS events.');
-  await new Promise(resolve => setTimeout(resolve, 15000));
+  await element(by.id('textInput')).typeText('foo ');
+  await element(by.id('textInput')).tapReturnKey();
 
+  await expect(element(by.id('resetIdentity'))).toBeVisible();
   await element(by.id('resetIdentity')).tap();
 
+  await rnTestUtil.waitIfIos();
+
+  await waitFor(element(by.id('basicsSentinel')))
+    .toBeVisible()
+    .whileElement(by.id('scrollContainer'))
+    .scroll(200, 'down');
+
+  await element(by.id('scrollView')).swipe('left');
   await element(by.id('basicsSentinel')).tap();
 };
 
 describe('Basic React Native and Interaction Support', () => {
-  before(done => {
-    db.orm.connection.sharedRedis().flushall(done);
+  before(async () => {
+    await rnTestUtil.flushAllRedis();
+    await doTestActions();
+    await rnTestUtil.pollForSentinel('Basics');
   });
 
   describe(':ios: Bridge API', () => {
-    before(async () => {
-      await doTestActions();
-      await rnTestUtil.pollForSentinel('Basics');
-    });
-
     it('should call first track', async () => {
       await rnTestUtil.assertIosPixel(
         { a: '2084764307', t: 'pressInTestEvent1' },
@@ -184,11 +179,6 @@ describe('Basic React Native and Interaction Support', () => {
   });
 
   describe(':android: Bridge API', () => {
-    before(async () => {
-      await doTestActions();
-      await rnTestUtil.pollForSentinel('Basics');
-    });
-
     it('should call first track', async () => {
       await rnTestUtil.assertAndroidEvent(
         {
@@ -331,8 +321,7 @@ describe('Basic React Native and Interaction Support', () => {
 
   describe('Autotrack', () => {
     it("should autotrack 'TouchableOpacity's", async () => {
-      const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|TouchableOpacity;[testID=touchableOpacityText];|';
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableOpacity;[testID=touchableOpacityText];|`;
       const expectedTargetText = 'Touchable Opacity Foo';
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
@@ -343,8 +332,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it("should autotrack 'TouchableHighlight's", async () => {
-      const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|TouchableHighlight;[testID=touchableHighlightText];|';
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableHighlight;[testID=touchableHighlightText];|`;
       const expectedTargetText = 'Touchable Highlight';
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
@@ -355,8 +343,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it("should autotrack 'TouchableWithoutFeedback's", async () => {
-      const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|';
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|`;
       const expectedTargetText = 'Touchable Without Feedback';
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
@@ -367,8 +354,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it(":android: should autotrack 'TouchableNativeFeedback's", async () => {
-      const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|';
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|`;
       const expectedTargetText = 'Touchable Native Feedback';
       await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
         touchableHierarchy: expectedHierarchy,
@@ -379,8 +365,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it("should autotrack 'Switch's", async () => {
-      const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|Switch;[testID=switch];|';
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}Switch;[testID=switch];|`;
       await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
         touchableHierarchy: expectedHierarchy,
         screenName: 'Basics',
@@ -389,8 +374,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it("should autotrack NativeBase 'Switch's", async () => {
-      const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|StyledComponent;[testID=nbSwitch];|Switch;[testID=nbSwitch];|Switch;[testID=nbSwitch];|';
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}StyledComponent;[testID=nbSwitch];|Switch;[testID=nbSwitch];|Switch;[testID=nbSwitch];|`;
       await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
         touchableHierarchy: expectedHierarchy,
         screenName: 'Basics',
@@ -399,11 +383,20 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it('should autotrack ScrollView paging', async () => {
-      const expectedHierarchy =
-        'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;|FlatList;[testID=scrollView];|VirtualizedList;[testID=scrollView];|ScrollView;[testID=scrollView];|';
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}FlatList;[testID=scrollView];|VirtualizedList;[testID=scrollView];|ScrollView;[testID=scrollView];|`;
       await rnTestUtil.assertAutotrackHierarchy('scrollViewPage', {
         touchableHierarchy: expectedHierarchy,
         pageIndex: '1',
+        screenName: 'Basics',
+        path: 'Basics',
+      });
+    });
+
+    it('should autotrack TextInput edits', async () => {
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}MyTextInput;[testID=textInput];|TextInput;[testID=textInput];|`;
+      await rnTestUtil.assertAutotrackHierarchy('textEdit', {
+        touchableHierarchy: expectedHierarchy,
+        placeholderText: 'foo placeholder',
         screenName: 'Basics',
         path: 'Basics',
       });

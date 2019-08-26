@@ -59,6 +59,18 @@ describe('autotrack instrumentor plugin', () => {
     var expected = getExpectedTransformedFile('not-scroll-view');
     assert.equal(actual, expected);
   });
+
+  it('textinput should be instrumented', () => {
+    var actual = getActualTransformedFile('is-text-input');
+    var expected = getExpectedTransformedFile('is-text-input');
+    assert.equal(actual, expected);
+  });
+
+  it('non-textinput should not be instrumented', () => {
+    var actual = getActualTransformedFile('not-text-input');
+    var expected = getExpectedTransformedFile('not-text-input');
+    assert.equal(actual, expected);
+  });
 });
 
 const getActualTransformedFile = fixtureName => {

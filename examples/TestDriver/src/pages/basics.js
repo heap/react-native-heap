@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Switch,
   Text,
+  TextInput,
   TouchableHighlight,
   TouchableNativeFeedback,
   TouchableOpacity,
@@ -23,12 +24,39 @@ import { makeSentinelButton } from '../sentinelUtilities';
 
 const ITEMS = _.range(30).map(_.toString);
 
+class MyTextInput extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { text: '' };
+  }
+
+  _onChangeText(text) {
+    this.setState({ text });
+  }
+
+  render() {
+    return (
+      <TextInput
+        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+        onChangeText={text => this._onChangeText(text)}
+        value={this.state.text}
+        placeholder={'foo placeholder'}
+        testID={this.props.testID}
+      />
+    );
+  }
+}
+
 class BasicsPage extends Component {
   render() {
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView
+        testID="scrollContainer"
+        contentContainerStyle={styles.container}
+      >
         <NbSwitch testID="nbSwitch" />
         <Switch testID="switch" />
+        <MyTextInput testID="textInput" />
         <Button
           testID="track1"
           title="Call Track1"
@@ -140,7 +168,7 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    height: 650,
+    height: 800,
     padding: 50,
     justifyContent: 'center',
     alignItems: 'center',

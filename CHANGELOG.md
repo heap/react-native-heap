@@ -15,6 +15,14 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.8.0] - 2019-08-26
+
+### Added
+- Autocapture of changes to React Native `TextInput` components.
+
+### Fixed
+- Fixed bug where the iOS build would fail in an obscure way when the `prod` or `dev` field is missing from `heap.config.json`.
+
 ## [0.7.1] - 2019-08-15
 
 ### Fixed
