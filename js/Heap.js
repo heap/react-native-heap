@@ -1,6 +1,5 @@
 // Libraries
 import React from 'react';
-import { NativeModules } from 'react-native';
 
 import {
   HeapIgnore,
@@ -14,9 +13,10 @@ import { autocaptureTextInputChange } from './autotrack/textInput';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';
 import { withReactNavigationAutotrack } from './autotrack/reactNavigation';
 import { bailOnError } from './util/bailer';
+import Wrapper from "./Wrapper";
 
 const flatten = require('flat');
-const RNHeap = NativeModules.RNHeap;
+const RNHeap = new Wrapper();
 
 const track = bailOnError((event, payload) => {
   try {
