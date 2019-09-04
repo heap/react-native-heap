@@ -24,8 +24,8 @@ describe('The Heap object', () => {
   beforeEach(() => {
     jest.resetModules();
 
-    NativeModules.RNHeap.track.mockReset();
-    mockTrack = NativeModules.RNHeap.track;
+    NativeModules.RNHeap.manuallyTrackEvent.mockReset();
+    mockTrack = NativeModules.RNHeap.manuallyTrackEvent;
 
     NativeModules.RNHeap.setAppId.mockReset();
     mockSetAppId = NativeModules.RNHeap.setAppId;

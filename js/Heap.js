@@ -18,16 +18,25 @@ import { bailOnError } from './util/bailer';
 const flatten = require('flat');
 const RNHeap = NativeModules.RNHeap;
 
-const track = bailOnError((event, payload) => {
+const autocaptureTrack = bailOnError((event, payload) => {
+  try {
+    RNHeap.autocaptureEvent(event, payload);
+
+    checkDisplayNamePlugin();
+  } catch (e) {
+    console.log('Error autocapturing Heap event.\n', e);
+  }
+});
+
+const manualTrack = bailOnError((event, payload) => {
   try {
     // This looks a little strange, but helps for testing, to be able to mock the flatten function and
     // simulate a failure.
     const flatten = require('flat');
 
     payload = payload || {};
-    RNHeap.track(event, flatten(payload));
-
-    checkDisplayNamePlugin();
+    // :TODO: (jmtaber129): Update 'contextualProps' to use screen props from react navigation.
+    RNHeap.manuallyTrackEvent(event, flatten(payload), /*contextualProps=*/ {});
   } catch (e) {
     console.log('Error calling Heap.track\n', e);
   }
@@ -58,20 +67,22 @@ export default {
   clearEventProperties: bailOnError(() => RNHeap.clearEventProperties()),
 
   // Events
-  track: track,
+  track: manualTrack,
 
   // Redux middleware
   reduxMiddleware: store => next =>
     bailOnError(action => {
-      RNHeap.track('Redux Action', flatten(action));
+      RNHeap.manualTrack('Redux Action', flatten(action));
       next(action);
     }),
 
-  autotrackPress: bailOnError(autotrackPress(track)),
-  autotrackSwitchChange: bailOnError(autotrackSwitchChange(track)),
-  autocaptureScrollView: bailOnError(autotrackScrollView(track)),
-  autocaptureTextInput: bailOnError(autocaptureTextInputChange(track)),
-  withReactNavigationAutotrack: withReactNavigationAutotrack(track),
+  autotrackPress: bailOnError(autotrackPress(autocaptureTrack)),
+  autotrackSwitchChange: bailOnError(autotrackSwitchChange(autocaptureTrack)),
+  autocaptureScrollView: bailOnError(autotrackScrollView(autocaptureTrack)),
+  autocaptureTextInput: bailOnError(
+    autocaptureTextInputChange(autocaptureTrack)
+  ),
+  withReactNavigationAutotrack: withReactNavigationAutotrack(autocaptureTrack),
   Ignore: HeapIgnore,
   IgnoreTargetText: HeapIgnoreTargetText,
   withHeapIgnore,

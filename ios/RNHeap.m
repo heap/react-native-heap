@@ -31,7 +31,23 @@ RCT_EXPORT_METHOD(setAppId:(NSString *)appId) {
     }
 }
 
-RCT_EXPORT_METHOD(track:(NSString *)event withProperties:(NSDictionary *)properties) {
+RCT_EXPORT_METHOD(autocaptureEvent:(NSString *)event withProperties:(NSDictionary *)properties) {
+  [self checkForPageview];
+
+  // :TODO: (jmtaber129): Change this to look like:
+  // [Heap track:event withProperties:properties withFramework:"react_native"]
+  [Heap track:event withProperties:properties];
+}
+
+RCT_EXPORT_METHOD(manuallyTrackEvent:(NSString *)event withProperties:(NSDictionary *)properties withContext:(NSDictionary *)contextProperties) {
+  [self checkForPageview];
+
+  // :TODO: (jmtaber129): Change this to look like:
+  // [Heap track:event withProperties:properties withFramework:"react_native" withContextProperties:contextProperties]
+  [Heap track:event withProperties:properties];
+}
+
+-(void) checkForPageview {
     // The Heap library requires that a "page view" event be sent first, since properties
     // will get copied down to manual events.  Unfortunately, the first page view happens
     // before any JS code is run, and so the app doesn't yet have an ID.  This unfortunate
@@ -47,7 +63,6 @@ RCT_EXPORT_METHOD(track:(NSString *)event withProperties:(NSDictionary *)propert
         pageViewSent = YES;
     }
     #pragma clang diagnostic pop
-  [Heap track:event withProperties:properties];
 }
 
 RCT_EXPORT_METHOD(identify:(NSString *)identity) {

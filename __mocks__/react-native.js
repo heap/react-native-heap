@@ -2,7 +2,8 @@ const reactNative = jest.genMockFromModule('react-native');
 
 reactNative.NativeModules = {
   RNHeap: {
-    track: jest.fn(),
+    manuallyTrackEvent: jest.fn(),
+    autocaptureEvent: jest.fn(),
     setAppId: jest.fn(),
     identify: jest.fn(),
     resetIdentity: jest.fn(),
