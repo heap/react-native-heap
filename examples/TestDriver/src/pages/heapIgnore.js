@@ -13,6 +13,13 @@ const Foo = props => {
 
 const TouchableOpacityWithHeapIgnore = Heap.withHeapIgnore(TouchableOpacity);
 
+const TouchableOpacityWithHeapIgnoredTargetText = Heap.withHeapIgnore(TouchableOpacity, {
+  allowInteraction: true,
+  allowInnerHierarchy: true,
+  allowAllProps: true,
+  allowTargetText: false,
+});
+
 export default class HeapIgnorePage extends Component {
   render() {
     return (
@@ -29,6 +36,9 @@ export default class HeapIgnorePage extends Component {
             <Text>Foobar</Text>
           </TouchableOpacityWithHeapIgnore>
         </Foo>
+        <TouchableOpacityWithHeapIgnoredTargetText testID="allowedAllPropsHoc">
+          <Text>Foobar</Text>
+        </TouchableOpacityWithHeapIgnoredTargetText>
         <HeapIgnore allowInteraction={true}>
           <TouchableOpacity testID="allowedInteraction">
             <Text>Foobar</Text>

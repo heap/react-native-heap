@@ -1,6 +1,8 @@
 import * as _ from 'lodash';
 import React from 'react';
 
+import { getComponentDisplayName } from '../util/hocUtil';
+
 export const HeapIgnore = props => {
   // The only purpose of HeapIgnore is to tell the us which props apply to the subtree when we're
   // traversing, so we just need to render it's children here.
@@ -36,7 +38,9 @@ export const withHeapIgnore = (IgnoredComponent, heapIgnoreConfig) => {
   }
 
   // :TODO: (jmtaber129): Change this to 'withHeapIgnore(<IgnoredComponent name>).
-  WithHeapIgnore.displayName = '_class';
+  WithHeapIgnore.displayName = `withHeapIgnore(${getComponentDisplayName(
+    IgnoredComponent
+  )})`;
 
   return React.forwardRef((props, ref) => {
     return <WithHeapIgnore {...props} forwardedRef={ref} />;
