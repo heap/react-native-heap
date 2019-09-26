@@ -37,7 +37,6 @@ export const withHeapIgnore = (IgnoredComponent, heapIgnoreConfig) => {
     }
   }
 
-  // :TODO: (jmtaber129): Change this to 'withHeapIgnore(<IgnoredComponent name>).
   WithHeapIgnore.displayName = `withHeapIgnore(${getComponentDisplayName(
     IgnoredComponent
   )})`;
