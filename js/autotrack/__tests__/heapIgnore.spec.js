@@ -208,7 +208,7 @@ describe('Common autotrack utils', () => {
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
         touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|_class;[testID=targetElement];|HeapIgnore;|Text;|',
+          'WrapperComponent;|Foo;|BarClass;|BarFunction;|withHeapIgnore(Text);[testID=targetElement];|HeapIgnore;|Text;|',
       });
     });
 

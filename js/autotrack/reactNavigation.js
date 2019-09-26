@@ -1,5 +1,6 @@
 import React from 'react';
 import { bail, bailOnError } from '../util/bailer';
+import { getComponentDisplayName } from '../util/hocUtil';
 import NavigationUtil from '../util/navigationUtil';
 
 const EVENT_TYPE = 'reactNavigationScreenview';
@@ -83,6 +84,10 @@ export const withReactNavigationAutotrack = track => AppContainer => {
       );
     }
   }
+
+  HeapNavigationWrapper.displayName = `withReactNavigationAutotrack(${getComponentDisplayName(
+    AppContainer
+  )})`;
 
   return React.forwardRef((props, ref) => {
     return <HeapNavigationWrapper {...props} forwardedRef={ref} />;

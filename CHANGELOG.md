@@ -9,6 +9,8 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 ### Changed
+- Updated higher-order components to use display name conventions (described [here](https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging)).
+
 ### Deprecated
 ### Removed
 ### Fixed

@@ -7,7 +7,7 @@ testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
 const HEAPIGNORE_PAGE_TOP_HIERARCHY =
-  'AppContainer;|App;|Provider;|HeapNavigationWrapper;|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=HeapIgnore];|SceneView;|HeapIgnorePage;|';
+  'AppContainer;|App;|Provider;|withReactNavigationAutotrack(NavigationContainer);|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=HeapIgnore];|SceneView;|HeapIgnorePage;|';
 
 const doTestActions = async () => {
   // Open the HeapIgnore tab in the tab navigator.
@@ -16,6 +16,7 @@ const doTestActions = async () => {
   await expect(element(by.id('totallyIgnored'))).toBeVisible();
   await element(by.id('totallyIgnored')).tap();
   await element(by.id('totallyIgnoredHoc')).tap();
+  await element(by.id('allowedAllPropsHoc')).tap();
 
   await rnTestUtil.waitIfIos();
 
@@ -70,6 +71,13 @@ describe('HeapIgnore', () => {
     await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
       touchableHierarchy: expectedHierarchy,
       targetText: 'Foobar',
+    });
+  });
+
+  it('should allow everything except target text HOC', async () => {
+    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}withHeapIgnore(TouchableOpacity);[testID=allowedAllPropsHoc];|HeapIgnore;|TouchableOpacity;[testID=allowedAllPropsHoc];|`;
+    await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
+      touchableHierarchy: expectedHierarchy,
     });
   });
 
