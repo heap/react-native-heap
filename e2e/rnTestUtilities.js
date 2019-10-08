@@ -106,7 +106,7 @@ const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
   const props = expectedType
     ? {
         ...commonProps,
-        type: {
+        action: {
           string: expectedType,
         },
       }
