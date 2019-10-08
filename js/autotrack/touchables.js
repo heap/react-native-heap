@@ -15,7 +15,7 @@ export const autotrackPress = track => (eventType, componentThis, event) => {
     componentThis.state.touchable.touchState;
 
   autotrackProps.touchState = touchState;
-  autotrackProps.isLongPress = (eventType == 'touchableHandleLongPress');
+  autotrackProps.isLongPress = eventType === 'touchableHandleLongPress';
 
   track('touch', autotrackProps);
 };
