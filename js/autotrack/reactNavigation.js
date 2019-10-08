@@ -3,7 +3,7 @@ import { bail, bailOnError } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 import NavigationUtil from '../util/navigationUtil';
 
-const EVENT_TYPE = 'reactNavigationScreenview';
+const EVENT_TYPE = 'react_navigation_screenview';
 
 // `react-native-navigation` uses `Navigation/{NAVIGATE,POP,BACK}` to represent
 // different types of navigation actions. We build the initial navigation action

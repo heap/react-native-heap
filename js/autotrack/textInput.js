@@ -32,7 +32,7 @@ const debouncedAutocaptureTextInputChange = track => (
   }
 
   if (componentThis.props.placeholder) {
-    autotrackProps.placeholderText = componentThis.props.placeholder;
+    autotrackProps.placeholder_text = componentThis.props.placeholder;
   }
 
   track(eventType, autotrackProps);

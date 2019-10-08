@@ -16,10 +16,10 @@ interface Component extends ReactComponent {
 
 // Base properties for autotracked events.
 interface AutotrackProps {
-  touchableHierarchy: string;
-  targetText?: string;
+  hierarchy: string;
+  target_text?: string;
   path?: string;
-  screenName?: string;
+  screen_name?: string;
 }
 
 interface HeapIgnoreProps {
@@ -73,12 +73,12 @@ export const getBaseComponentProps: (
   const screenProps = NavigationUtil.getScreenPropsForCurrentRoute();
 
   const autotrackProps: AutotrackProps = {
-    touchableHierarchy: hierarchy,
+    hierarchy,
     ...screenProps,
   };
 
   if (targetText !== '') {
-    autotrackProps.targetText = targetText;
+    autotrackProps.target_text = targetText;
   }
 
   return autotrackProps;

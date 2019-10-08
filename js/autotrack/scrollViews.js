@@ -17,7 +17,7 @@ export const autotrackScrollView = track => (
   // particularly meaningful. Just leave out the target text.
   const autotrackProps = _.omit(
     getBaseComponentProps(componentThis),
-    'targetText'
+    'target_text'
   );
 
   if (!autotrackProps) {
@@ -31,7 +31,7 @@ export const autotrackScrollView = track => (
 
   // Integer props on android seem to come into Heap as decimals (regardless of whether the number is actually a float), while integer props
   // on iOS come into Heap as integers. To keep this prop consistent across platforms, send it as a string.
-  autotrackProps.pageIndex = `${Math.round(pageIndex)}`;
+  autotrackProps.page_index = `${Math.round(pageIndex)}`;
 
   track(eventType, autotrackProps);
 };
