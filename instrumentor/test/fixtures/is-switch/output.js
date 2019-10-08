@@ -29,7 +29,7 @@ var Switch = function (_React$Component) {
     _this._handleChange = function (e) {
       var Heap = require('@heap/react-native-heap').default;
 
-      Heap.autotrackSwitchChange("_handleChange", _this, e);
+      Heap.autotrackSwitchChange("change", _this, e);
       (function (event) {
         if (_this._nativeSwitchRef == null) {
           return;

@@ -11,7 +11,7 @@ var ScrollView = createReactClass({
       onMomentumScrollEnd: function onMomentumScrollEnd(e) {
         var Heap = require('@heap/react-native-heap').default;
 
-        Heap.autocaptureScrollView("scrollViewPage", _this, e);
+        Heap.autocaptureScrollView("scroll_view_page", _this, e);
 
         _this.scrollResponderHandleMomentumScrollEnd.call(_this, e);
       }
