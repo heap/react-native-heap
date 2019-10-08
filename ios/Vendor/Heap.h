@@ -1,6 +1,6 @@
 //
 //  Heap.h
-//  Version 6.2.1
+//  Version 6.5.0-alpha.1
 //  Copyright (c) 2014 Heap Inc. All rights reserved.
 //
 
@@ -145,6 +145,39 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (void)track:(NSString *)event withProperties:(nullable NSDictionary *)properties;
 
+/**
+ * Track an autocaptured framework event.
+ *
+ * Only supported source types will be processed correctly. Unsupported source
+ * types will not be processed as framework events.
+ *
+ * @param event              the event name
+ * @param source             the source name
+ * @param sourceProperties   key-value pairs to associate with the framework event
+ *
+ * @see frameworkTrack:withProperties:withSource:withSourceProperties:
+ */
++ (void)frameworkAutocaptureEvent:(NSString *)event
+                       withSource:(NSString *)source
+             withSourceProperties:(nullable NSDictionary *)sourceProperties;
+
+/**
+ * Track a custom event from a framework with properties and framework context.
+ *
+ * Only supported source types will be processed correctly. Unsupported source
+ * types will not be processed as framework events.
+ *
+ * @param event              the event name
+ * @param properties         key-value pairs to associate with the event
+ * @param source             the source name
+ * @param sourceProperties   key-value pairs to associate with the framework context of the event
+ *
+ * @see @frameworkAutocaptureEvent:withSource:withSourceProperties:
+ */
++ (void)frameworkTrack:(NSString *)event
+        withProperties:(nullable NSDictionary *)properties
+            withSource:(NSString *)source
+  withSourceProperties:(nullable NSDictionary *)sourceProperties;
 
 /// @name Global event properties
 
