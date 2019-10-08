@@ -4,7 +4,7 @@ var TextInput = createReactClass({
   _onChange: function _onChange(e) {
     var Heap = require('@heap/react-native-heap').default;
 
-    Heap.autocaptureTextInput("textEdit", this, e);
+    Heap.autocaptureTextInput("text_edit", this, e);
     (function (event) {
       if (this._inputRef && this._inputRef.setNativeProps) {
         ReactNative.setNativeProps(this._inputRef, {

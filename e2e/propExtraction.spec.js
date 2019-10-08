@@ -51,9 +51,9 @@ describe('Property Extraction in Hierarchies', () => {
         device.getPlatform() === 'ios'
           ? 'testButtonTitle1'
           : 'TESTBUTTONTITLE1';
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        touchableHierarchy: expectedHierarchy,
-        targetText: expectedTargetText,
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        hierarchy: expectedHierarchy,
+        target_text: expectedTargetText,
       });
     });
 
@@ -63,9 +63,9 @@ describe('Property Extraction in Hierarchies', () => {
         device.getPlatform() === 'ios'
           ? 'testButtonTitle2'
           : 'TESTBUTTONTITLE2';
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        touchableHierarchy: expectedHierarchy,
-        targetText: expectedTargetText,
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        hierarchy: expectedHierarchy,
+        target_text: expectedTargetText,
       });
     });
 
@@ -77,9 +77,9 @@ describe('Property Extraction in Hierarchies', () => {
         device.getPlatform() === 'ios'
           ? 'testButtonTitle3'
           : 'TESTBUTTONTITLE3';
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        touchableHierarchy: expectedHierarchy,
-        targetText: expectedTargetText,
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        hierarchy: expectedHierarchy,
+        target_text: expectedTargetText,
       });
     });
   });

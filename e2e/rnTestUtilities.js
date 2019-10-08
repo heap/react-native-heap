@@ -116,7 +116,7 @@ const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
     envId: HEAP_ENV_ID,
     event: {
       custom: {
-        name: 'reactNavigationScreenview',
+        name: 'react_navigation_screenview',
         properties: props,
       },
     },
@@ -129,7 +129,7 @@ const assertIosNavigationEvent = async (expectedPath, expectedType) => {
     ? [...commonProps, 'action', expectedType]
     : commonProps;
   return assertIosPixel({
-    t: 'reactNavigationScreenview',
+    t: 'react_navigation_screenview',
     source: 'react_native',
     sprops: props,
   });
