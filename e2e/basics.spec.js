@@ -79,7 +79,7 @@ describe('Basic React Native and Interaction Support', () => {
           return !(
             _.includes(event.k, 'eventProp1') ||
             _.includes(event.k, 'eventProp2') ||
-            _.includes(event.k, 'path')
+            _.includes(event.sprops, 'path')
           );
         }
       );
@@ -92,7 +92,7 @@ describe('Basic React Native and Interaction Support', () => {
           return (
             _.includes(event.k, 'eventProp1') &&
             _.includes(event.k, 'eventProp2') &&
-            !_.includes(event.k, 'path')
+            !_.includes(event.sprops, 'path')
           );
         }
       );
@@ -105,7 +105,7 @@ describe('Basic React Native and Interaction Support', () => {
           return (
             !_.includes(event.k, 'eventProp1') &&
             _.includes(event.k, 'eventProp2') &&
-            !_.includes(event.k, 'path')
+            !_.includes(event.sprops, 'path')
           );
         }
       );
@@ -118,7 +118,7 @@ describe('Basic React Native and Interaction Support', () => {
           return !(
             _.includes(event.k, 'eventProp1') ||
             _.includes(event.k, 'eventProp2') ||
-            _.includes(event.k, 'path')
+            _.includes(event.sprops, 'path')
           );
         }
       );

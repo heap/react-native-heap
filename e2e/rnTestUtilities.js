@@ -89,7 +89,8 @@ const assertAutotrackHierarchy = async (expectedName, expectedProps) => {
       t: expectedName,
       // Convert { key1: 'value1', key2: 'value2'} to ['key1', 'value1', 'key2', 'value2'] for
       // custom props.
-      k: _.flatMap(expectedProps, (value, key) => [key, value]),
+      source: 'react_native',
+      sprops: _.flatMap(expectedProps, (value, key) => [key, value]),
     });
   } else {
     throw new Error(`Unknown device type: ${device.getPlatform()}`);
@@ -129,7 +130,8 @@ const assertIosNavigationEvent = async (expectedPath, expectedType) => {
     : commonProps;
   return assertIosPixel({
     t: 'reactNavigationScreenview',
-    k: props,
+    source: 'react_native',
+    sprops: props,
   });
 };
 
