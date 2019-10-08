@@ -16,15 +16,19 @@ const doTestActions = async () => {
   await expect(element(by.id('navigate_stack'))).toBeVisible();
   await element(by.id('navigate_stack')).tap();
   await delay();
+
+  await rnTestUtil.waitIfIos();
+
   await expect(element(by.id('pop1'))).toBeVisible();
   await element(by.id('pop1')).tap();
   await delay();
 
-  await rnTestUtil.waitIfIos();
-
   await expect(element(by.id('navigate_modal'))).toBeVisible();
   await element(by.id('navigate_modal')).tap();
   await delay();
+
+  await rnTestUtil.waitIfIos();
+
   await expect(element(by.id('pop2'))).toBeVisible();
   await element(by.id('pop2')).tap();
   await delay();

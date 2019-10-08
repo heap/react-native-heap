@@ -29,7 +29,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
 
       track(EVENT_TYPE, {
         path: initialPageviewPath,
-        type: INITIAL_ROUTE_TYPE,
+        action: INITIAL_ROUTE_TYPE,
       });
     }
 
@@ -73,7 +73,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
             if (prevScreenRoute !== nextScreenRoute) {
               track(EVENT_TYPE, {
                 path: nextScreenRoute,
-                type: action.type,
+                action: action.type,
               });
             }
           })}
