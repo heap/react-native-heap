@@ -125,7 +125,7 @@ const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
 const assertIosNavigationEvent = async (expectedPath, expectedType) => {
   const commonProps = ['path', expectedPath];
   const props = expectedType
-    ? [...commonProps, 'type', expectedType]
+    ? [...commonProps, 'action', expectedType]
     : commonProps;
   return assertIosPixel({
     t: 'reactNavigationScreenview',
