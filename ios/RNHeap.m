@@ -34,16 +34,12 @@ RCT_EXPORT_METHOD(setAppId:(NSString *)appId) {
 RCT_EXPORT_METHOD(autocaptureEvent:(NSString *)event withProperties:(NSDictionary *)properties) {
   [self checkForPageview];
 
-  // :TODO: (jmtaber129): Change this to look like:
-  // [Heap track:event withProperties:properties withFramework:"react_native"]
   [Heap frameworkAutocaptureEvent:event withSource:@"react_native" withSourceProperties:properties];
 }
 
 RCT_EXPORT_METHOD(manuallyTrackEvent:(NSString *)event withProperties:(NSDictionary *)properties withContext:(NSDictionary *)contextProperties) {
   [self checkForPageview];
 
-  // :TODO: (jmtaber129): Change this to look like:
-  // [Heap track:event withProperties:properties withFramework:"react_native" withContextProperties:contextProperties]
   [Heap frameworkTrack:event withProperties:properties withSource:@"react_native" withSourceProperties:contextProperties];
 }
 
