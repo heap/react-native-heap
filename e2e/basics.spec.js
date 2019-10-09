@@ -195,13 +195,17 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent1' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent1',
+              sourceName: 'react_native',
+            },
+          },
         },
         event => {
           return (
             !_.has(event.properties, 'eventProp1') &&
-            !_.has(event.properties, 'eventProp2') &&
-            !_.has(event.properties, 'path')
+            !_.has(event.properties, 'eventProp2')
           );
         }
       );
@@ -215,11 +219,21 @@ describe('Basic React Native and Interaction Support', () => {
       const [[event1], [event2]] = await Promise.all([
         findAndroidEvent({
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent1' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent1',
+              sourceName: 'react_native',
+            },
+          },
         }),
         findAndroidEvent({
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent2' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent2',
+              sourceName: 'react_native',
+            },
+          },
         }),
       ]);
 
@@ -230,13 +244,17 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent2' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent2',
+              sourceName: 'react_native',
+            },
+          },
         },
         event => {
           return (
             _.has(event.properties, 'eventProp1') &&
-            _.has(event.properties, 'eventProp2') &&
-            !_.has(event.properties, 'path')
+            _.has(event.properties, 'eventProp2')
           );
         }
       );
@@ -246,13 +264,17 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent3' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent3',
+              sourceName: 'react_native',
+            },
+          },
         },
         event => {
           return (
             !_.has(event.properties, 'eventProp1') &&
-            _.has(event.properties, 'eventProp2') &&
-            !_.has(event.properties, 'path')
+            _.has(event.properties, 'eventProp2')
           );
         }
       );
@@ -262,13 +284,17 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent4' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent4',
+              sourceName: 'react_native',
+            },
+          },
         },
         event => {
           return (
             !_.has(event.properties, 'eventProp1') &&
-            !_.has(event.properties, 'eventProp2') &&
-            !_.has(event.properties, 'path')
+            !_.has(event.properties, 'eventProp2')
           );
         }
       );
@@ -306,11 +332,18 @@ describe('Basic React Native and Interaction Support', () => {
       const { err1, err2, res1, res2 } = await new Promise(resolve => {
         // Fetch a pre-resetIdentity event.
         testUtil.findAndroidEventInRedisRequests(
-          { event: { custom: { name: 'pressInTestEvent2' } } },
+          {
+            event: {
+              sourceCustomEvent: {
+                name: 'pressInTestEvent2',
+                sourceName: 'react_native',
+              },
+            },
+          },
           (err1, res1) => {
             // Fetch a post-resetIdentity event.
             testUtil.findAndroidEventInRedisRequests(
-              { event: { custom: { name: 'BASICS_SENTINEL' } } },
+              { event: { sourceCustomEvent: { name: 'BASICS_SENTINEL' } } },
               (err2, res2) => {
                 resolve({ err1, err2, res1, res2 });
               }
