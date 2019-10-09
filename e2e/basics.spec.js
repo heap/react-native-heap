@@ -74,12 +74,11 @@ describe('Basic React Native and Interaction Support', () => {
   describe(':ios: Bridge API', () => {
     it('should call first track', async () => {
       await rnTestUtil.assertIosPixel(
-        { a: '2084764307', t: 'pressInTestEvent1' },
+        { a: '2084764307', t: 'pressInTestEvent1', sprops: [ 'path', 'Basics', 'screen_name', 'Basics' ] },
         event => {
           return !(
             _.includes(event.k, 'eventProp1') ||
-            _.includes(event.k, 'eventProp2') ||
-            _.includes(event.sprops, 'path')
+            _.includes(event.k, 'eventProp2')
           );
         }
       );
@@ -87,12 +86,11 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should add event properties', async () => {
       await rnTestUtil.assertIosPixel(
-        { a: '2084764307', t: 'pressInTestEvent2' },
+        { a: '2084764307', t: 'pressInTestEvent2', sprops: [ 'path', 'Basics', 'screen_name', 'Basics' ] },
         event => {
           return (
             _.includes(event.k, 'eventProp1') &&
-            _.includes(event.k, 'eventProp2') &&
-            !_.includes(event.sprops, 'path')
+            _.includes(event.k, 'eventProp2')
           );
         }
       );
@@ -100,12 +98,11 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should remove event properties', async () => {
       await rnTestUtil.assertIosPixel(
-        { a: '2084764307', t: 'pressInTestEvent3' },
+        { a: '2084764307', t: 'pressInTestEvent3', sprops: [ 'path', 'Basics', 'screen_name', 'Basics' ]},
         event => {
           return (
             !_.includes(event.k, 'eventProp1') &&
-            _.includes(event.k, 'eventProp2') &&
-            !_.includes(event.sprops, 'path')
+            _.includes(event.k, 'eventProp2')
           );
         }
       );
@@ -113,12 +110,11 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should clear event properties', async () => {
       await rnTestUtil.assertIosPixel(
-        { a: '2084764307', t: 'pressInTestEvent4' },
+        { a: '2084764307', t: 'pressInTestEvent4', sprops: [ 'path', 'Basics', 'screen_name', 'Basics' ] },
         event => {
           return !(
             _.includes(event.k, 'eventProp1') ||
-            _.includes(event.k, 'eventProp2') ||
-            _.includes(event.sprops, 'path')
+            _.includes(event.k, 'eventProp2')
           );
         }
       );

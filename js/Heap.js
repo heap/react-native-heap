@@ -14,6 +14,7 @@ import { autocaptureTextInputChange } from './autotrack/textInput';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';
 import { withReactNavigationAutotrack } from './autotrack/reactNavigation';
 import { bailOnError } from './util/bailer';
+import NavigationUtil from './util/navigationUtil';
 
 const flatten = require('flat');
 const RNHeap = NativeModules.RNHeap;
@@ -34,9 +35,10 @@ const manualTrack = bailOnError((event, payload) => {
     // simulate a failure.
     const flatten = require('flat');
 
+    const contextualProps = NavigationUtil.getScreenPropsForCurrentRoute();
+
     payload = payload || {};
-    // :TODO: (jmtaber129): Update 'contextualProps' to use screen props from react navigation.
-    RNHeap.manuallyTrackEvent(event, flatten(payload), /*contextualProps=*/ {});
+    RNHeap.manuallyTrackEvent(event, flatten(payload), contextualProps);
   } catch (e) {
     console.log('Error calling Heap.track\n', e);
   }
