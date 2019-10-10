@@ -199,6 +199,14 @@ describe('Basic React Native and Interaction Support', () => {
             sourceCustomEvent: {
               name: 'pressInTestEvent1',
               sourceName: 'react_native',
+              sourceProperties: {
+                path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
             },
           },
         },
@@ -223,6 +231,14 @@ describe('Basic React Native and Interaction Support', () => {
             sourceCustomEvent: {
               name: 'pressInTestEvent1',
               sourceName: 'react_native',
+              sourceProperties: {
+                path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
             },
           },
         }),
@@ -232,6 +248,14 @@ describe('Basic React Native and Interaction Support', () => {
             sourceCustomEvent: {
               name: 'pressInTestEvent2',
               sourceName: 'react_native',
+              sourceProperties: {
+                path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
             },
           },
         }),
@@ -248,6 +272,14 @@ describe('Basic React Native and Interaction Support', () => {
             sourceCustomEvent: {
               name: 'pressInTestEvent2',
               sourceName: 'react_native',
+              sourceProperties: {
+                path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
             },
           },
         },
@@ -268,6 +300,14 @@ describe('Basic React Native and Interaction Support', () => {
             sourceCustomEvent: {
               name: 'pressInTestEvent3',
               sourceName: 'react_native',
+              sourceProperties: {
+                path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
             },
           },
         },
@@ -288,6 +328,14 @@ describe('Basic React Native and Interaction Support', () => {
             sourceCustomEvent: {
               name: 'pressInTestEvent4',
               sourceName: 'react_native',
+              sourceProperties: {
+                path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
             },
           },
         },
