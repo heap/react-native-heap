@@ -55,8 +55,8 @@ describe('The Heap object', () => {
       return {
         path: 'Basics::Foo',
         screen_name: 'Foo',
-      }
-    })
+      };
+    });
   });
 
   describe('track', () => {
@@ -64,7 +64,10 @@ describe('The Heap object', () => {
       expect(mockTrack.mock.calls.length).toBe(1);
       expect(mockTrack.mock.calls[0][0]).toBe('foo');
       expect(mockTrack.mock.calls[0][1]).toEqual(expectedProps);
-      expect(mockTrack.mock.calls[0][2]).toEqual({ path: 'Basics::Foo', screen_name: 'Foo' });
+      expect(mockTrack.mock.calls[0][2]).toEqual({
+        path: 'Basics::Foo',
+        screen_name: 'Foo',
+      });
     };
 
     it('works in the common case', () => {
