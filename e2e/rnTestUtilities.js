@@ -17,6 +17,13 @@ const waitIfIos = async () => {
   }
 };
 
+const getPlatformBoolean = (boolean) => {
+  if (device.getPlatform() === 'ios') {
+    return boolean ? '1' : '0';
+  }
+  return boolean.toString();
+}
+
 const flushAllRedis = nodeUtil.promisify(done =>
   db.orm.connection.sharedRedis().flushall(done)
 );
@@ -215,5 +222,6 @@ module.exports = {
   assertNavigationEvent,
   pollForSentinel,
   waitIfIos,
+  getPlatformBoolean,
   flushAllRedis,
 };
