@@ -13,6 +13,9 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url 'https://heap-maven-public.s3.amazonaws.com/android-testing'
+        }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
@@ -32,6 +35,9 @@ allprojects {
         maven {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
+        }
+        maven {
+            url 'https://heap-maven-public.s3.amazonaws.com/android-testing'
         }
     }
 }
