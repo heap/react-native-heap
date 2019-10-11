@@ -71,9 +71,10 @@ const assertAndroidAutotrackHierarchy = async (expectedName, expectedProps) => {
   return assertAndroidEvent({
     envId: HEAP_ENV_ID,
     event: {
-      custom: {
+      sourceEvent: {
         name: expectedName,
-        properties: _.mapValues(expectedProps, value => {
+        sourceName: 'react_native',
+        sourceProperties: _.mapValues(expectedProps, value => {
           return { string: value };
         }),
       },
@@ -115,9 +116,10 @@ const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
   return assertAndroidEvent({
     envId: HEAP_ENV_ID,
     event: {
-      custom: {
+      sourceEvent: {
         name: 'react_navigation_screenview',
-        properties: props,
+        sourceName: 'react_native',
+        sourceProperties: props,
       },
     },
   });
@@ -175,7 +177,7 @@ pollForSentinel = async (sentinelValue, timeout = 60000) => {
       const event = {
         envId: HEAP_ENV_ID,
         event: {
-          custom: {
+          sourceCustomEvent: {
             name: eventName,
           },
         },
