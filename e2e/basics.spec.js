@@ -419,6 +419,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(false),
+        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
         path: 'Basics',
       });
@@ -430,6 +432,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(false),
+        touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
         screen_name: 'Basics',
         path: 'Basics',
       });
@@ -441,6 +445,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(false),
+        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
         path: 'Basics',
       });
@@ -452,6 +458,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(true),
+        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
         path: 'Basics',
       });
