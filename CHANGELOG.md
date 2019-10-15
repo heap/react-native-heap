@@ -9,6 +9,7 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 ### Changed
+- Updated the way events are sent to the Heap backend to allow for first-class support of React Native as a library.  See <TODO: upgrade guide link> for details.
 - Updated higher-order components to use display name conventions (described [here](https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging)).
 
 ### Deprecated
