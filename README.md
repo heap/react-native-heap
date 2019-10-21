@@ -33,25 +33,7 @@ For autotrack, add the following plugins to your `.babelrc` or `babel.config.js`
 - [Android](docs/android-setup.md)
 
 ## Usage
-
-```js
-// Import Heap.
-import Heap from '@heap/react-native-heap';
-
-// Identify your user.
-Heap.identify('123456');
-Heap.addUserProperties({ name: 'John', age: 54 });
-
-// Add event properties (these persist across sessions).
-Heap.addEventProperties({ isLoggedIn: true });
-
-// You can remove a specific property or clear everything.
-Heap.removeEventProperty('isLoggedIn');
-Heap.clearEventProperties();
-
-// To track an event, use:
-Heap.track('signed-up', { isPaid: true, amount: 20 });
-```
+See our [docs](https://docs.heap.io/docs/react-native).
 
 ## Acknowledgements
 
