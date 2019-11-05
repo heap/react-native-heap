@@ -52,7 +52,7 @@ describe('Property Extraction in Hierarchies', () => {
           ? 'testButtonTitle1'
           : 'TESTBUTTONTITLE1';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
       });
     });
@@ -64,7 +64,7 @@ describe('Property Extraction in Hierarchies', () => {
           ? 'testButtonTitle2'
           : 'TESTBUTTONTITLE2';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
       });
     });
@@ -78,7 +78,7 @@ describe('Property Extraction in Hierarchies', () => {
           ? 'testButtonTitle3'
           : 'TESTBUTTONTITLE3';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
       });
     });

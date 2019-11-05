@@ -16,7 +16,7 @@ interface Component extends ReactComponent {
 
 // Base properties for autotracked events.
 interface AutotrackProps {
-  hierarchy: string;
+  rn_hierarchy: string;
   target_text?: string;
   path?: string;
   screen_name?: string;
@@ -73,7 +73,7 @@ export const getBaseComponentProps: (
   const screenProps = NavigationUtil.getScreenPropsForCurrentRoute();
 
   const autotrackProps: AutotrackProps = {
-    hierarchy,
+    rn_hierarchy: hierarchy,
     ...screenProps,
   };
 

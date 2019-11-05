@@ -417,7 +417,7 @@ describe('Basic React Native and Interaction Support', () => {
       const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableOpacity;[testID=touchableOpacityText];|`;
       const expectedTargetText = 'Touchable Opacity Foo';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
         is_long_press: rnTestUtil.getPlatformBoolean(false),
         touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
@@ -430,7 +430,7 @@ describe('Basic React Native and Interaction Support', () => {
       const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableHighlight;[testID=touchableHighlightText];|`;
       const expectedTargetText = 'Touchable Highlight';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
         is_long_press: rnTestUtil.getPlatformBoolean(false),
         touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
@@ -443,7 +443,7 @@ describe('Basic React Native and Interaction Support', () => {
       const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|`;
       const expectedTargetText = 'Touchable Without Feedback';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
         is_long_press: rnTestUtil.getPlatformBoolean(false),
         touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
@@ -456,7 +456,7 @@ describe('Basic React Native and Interaction Support', () => {
       const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|`;
       const expectedTargetText = 'Touchable Native Feedback';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
         is_long_press: rnTestUtil.getPlatformBoolean(true),
         touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
@@ -468,7 +468,7 @@ describe('Basic React Native and Interaction Support', () => {
     it("should autotrack 'Switch's", async () => {
       const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}Switch;[testID=switch];|`;
       await rnTestUtil.assertAutotrackHierarchy('change', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         screen_name: 'Basics',
         path: 'Basics',
       });
@@ -477,7 +477,7 @@ describe('Basic React Native and Interaction Support', () => {
     it("should autotrack NativeBase 'Switch's", async () => {
       const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}StyledComponent;[testID=nbSwitch];|Switch;[testID=nbSwitch];|Switch;[testID=nbSwitch];|`;
       await rnTestUtil.assertAutotrackHierarchy('change', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         screen_name: 'Basics',
         path: 'Basics',
       });
@@ -486,7 +486,7 @@ describe('Basic React Native and Interaction Support', () => {
     it('should autotrack ScrollView paging', async () => {
       const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}FlatList;[testID=scrollView];|VirtualizedList;[testID=scrollView];|ScrollView;[testID=scrollView];|`;
       await rnTestUtil.assertAutotrackHierarchy('scroll_view_page', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         page_index: '1',
         screen_name: 'Basics',
         path: 'Basics',
@@ -496,7 +496,7 @@ describe('Basic React Native and Interaction Support', () => {
     it('should autotrack TextInput edits', async () => {
       const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}MyTextInput;[testID=textInput];|TextInput;[testID=textInput];|`;
       await rnTestUtil.assertAutotrackHierarchy('text_edit', {
-        hierarchy: expectedHierarchy,
+        rn_hierarchy: expectedHierarchy,
         placeholder_text: 'foo placeholder',
         screen_name: 'Basics',
         path: 'Basics',
