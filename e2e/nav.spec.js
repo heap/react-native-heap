@@ -73,17 +73,17 @@ describe('Navigation', () => {
     it('tracks events with screen name props', async () => {
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         screen_name: 'Base',
-        path: 'Nav::MainStack::Base',
+        screen_path: 'Nav::MainStack::Base',
       });
 
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         screen_name: 'StackCard',
-        path: 'Nav::MainStack::StackCard',
+        screen_path: 'Nav::MainStack::StackCard',
       });
 
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         screen_name: 'ModalStack',
-        path: 'Nav::ModalStack',
+        screen_path: 'Nav::ModalStack',
       });
     });
 

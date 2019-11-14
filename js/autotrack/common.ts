@@ -18,7 +18,7 @@ interface Component extends ReactComponent {
 interface AutotrackProps {
   rn_hierarchy: string;
   target_text?: string;
-  path?: string;
+  screen_path?: string;
   screen_name?: string;
 }
 

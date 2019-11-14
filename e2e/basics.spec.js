@@ -77,7 +77,7 @@ describe('Basic React Native and Interaction Support', () => {
         {
           a: '2084764307',
           t: 'pressInTestEvent1',
-          sprops: ['path', 'Basics', 'screen_name', 'Basics'],
+          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
         },
         event => {
           return !(
@@ -93,7 +93,7 @@ describe('Basic React Native and Interaction Support', () => {
         {
           a: '2084764307',
           t: 'pressInTestEvent2',
-          sprops: ['path', 'Basics', 'screen_name', 'Basics'],
+          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
         },
         event => {
           return (
@@ -109,7 +109,7 @@ describe('Basic React Native and Interaction Support', () => {
         {
           a: '2084764307',
           t: 'pressInTestEvent3',
-          sprops: ['path', 'Basics', 'screen_name', 'Basics'],
+          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
         },
         event => {
           return (
@@ -125,7 +125,7 @@ describe('Basic React Native and Interaction Support', () => {
         {
           a: '2084764307',
           t: 'pressInTestEvent4',
-          sprops: ['path', 'Basics', 'screen_name', 'Basics'],
+          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
         },
         event => {
           return !(
@@ -200,7 +200,7 @@ describe('Basic React Native and Interaction Support', () => {
               name: 'pressInTestEvent1',
               sourceName: 'react_native',
               sourceProperties: {
-                path: {
+                screen_path: {
                   string: 'Basics',
                 },
                 screen_name: {
@@ -232,7 +232,7 @@ describe('Basic React Native and Interaction Support', () => {
               name: 'pressInTestEvent1',
               sourceName: 'react_native',
               sourceProperties: {
-                path: {
+                screen_path: {
                   string: 'Basics',
                 },
                 screen_name: {
@@ -249,7 +249,7 @@ describe('Basic React Native and Interaction Support', () => {
               name: 'pressInTestEvent2',
               sourceName: 'react_native',
               sourceProperties: {
-                path: {
+                screen_path: {
                   string: 'Basics',
                 },
                 screen_name: {
@@ -273,7 +273,7 @@ describe('Basic React Native and Interaction Support', () => {
               name: 'pressInTestEvent2',
               sourceName: 'react_native',
               sourceProperties: {
-                path: {
+                screen_path: {
                   string: 'Basics',
                 },
                 screen_name: {
@@ -301,7 +301,7 @@ describe('Basic React Native and Interaction Support', () => {
               name: 'pressInTestEvent3',
               sourceName: 'react_native',
               sourceProperties: {
-                path: {
+                screen_path: {
                   string: 'Basics',
                 },
                 screen_name: {
@@ -329,7 +329,7 @@ describe('Basic React Native and Interaction Support', () => {
               name: 'pressInTestEvent4',
               sourceName: 'react_native',
               sourceProperties: {
-                path: {
+                screen_path: {
                   string: 'Basics',
                 },
                 screen_name: {
@@ -422,7 +422,7 @@ describe('Basic React Native and Interaction Support', () => {
         is_long_press: rnTestUtil.getPlatformBoolean(false),
         touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
-        path: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
@@ -435,7 +435,7 @@ describe('Basic React Native and Interaction Support', () => {
         is_long_press: rnTestUtil.getPlatformBoolean(false),
         touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
         screen_name: 'Basics',
-        path: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
@@ -448,7 +448,7 @@ describe('Basic React Native and Interaction Support', () => {
         is_long_press: rnTestUtil.getPlatformBoolean(false),
         touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
-        path: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
@@ -461,7 +461,7 @@ describe('Basic React Native and Interaction Support', () => {
         is_long_press: rnTestUtil.getPlatformBoolean(true),
         touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
-        path: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
@@ -470,7 +470,7 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('change', {
         rn_hierarchy: expectedHierarchy,
         screen_name: 'Basics',
-        path: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
@@ -479,7 +479,7 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('change', {
         rn_hierarchy: expectedHierarchy,
         screen_name: 'Basics',
-        path: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
@@ -489,7 +489,7 @@ describe('Basic React Native and Interaction Support', () => {
         rn_hierarchy: expectedHierarchy,
         page_index: '1',
         screen_name: 'Basics',
-        path: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
@@ -499,7 +499,7 @@ describe('Basic React Native and Interaction Support', () => {
         rn_hierarchy: expectedHierarchy,
         placeholder_text: 'foo placeholder',
         screen_name: 'Basics',
-        path: 'Basics',
+        screen_path: 'Basics',
       });
     });
   });

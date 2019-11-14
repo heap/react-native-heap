@@ -53,7 +53,7 @@ describe('The Heap object', () => {
 
     NavigationUtil.getScreenPropsForCurrentRoute.mockImplementation(() => {
       return {
-        path: 'Basics::Foo',
+        screen_path: 'Basics::Foo',
         screen_name: 'Foo',
       };
     });
@@ -65,7 +65,7 @@ describe('The Heap object', () => {
       expect(mockTrack.mock.calls[0][0]).toBe('foo');
       expect(mockTrack.mock.calls[0][1]).toEqual(expectedProps);
       expect(mockTrack.mock.calls[0][2]).toEqual({
-        path: 'Basics::Foo',
+        screen_path: 'Basics::Foo',
         screen_name: 'Foo',
       });
     };

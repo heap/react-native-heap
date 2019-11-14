@@ -107,7 +107,7 @@ const assertAutotrackHierarchy = async (expectedName, expectedProps) => {
 
 const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
   const commonProps = {
-    path: {
+    screen_path: {
       string: expectedPath,
     },
   };
@@ -133,7 +133,7 @@ const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
 };
 
 const assertIosNavigationEvent = async (expectedPath, expectedType) => {
-  const commonProps = ['path', expectedPath];
+  const commonProps = ['screen_path', expectedPath];
   const props = expectedType
     ? [...commonProps, 'action', expectedType]
     : commonProps;
