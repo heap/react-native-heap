@@ -23,12 +23,12 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     }
 
     trackInitialRoute() {
-      const { path: initialPageviewPath } = NavigationUtil.getActiveRouteProps(
-        this.topLevelNavigator.state.nav
-      );
+      const {
+        screen_path: initialPageviewPath,
+      } = NavigationUtil.getActiveRouteProps(this.topLevelNavigator.state.nav);
 
       track(EVENT_TYPE, {
-        path: initialPageviewPath,
+        screen_path: initialPageviewPath,
         action: INITIAL_ROUTE_TYPE,
       });
     }
@@ -65,14 +65,14 @@ export const withReactNavigationAutotrack = track => AppContainer => {
           })}
           onNavigationStateChange={bailOnError((prev, next, action) => {
             const {
-              path: prevScreenRoute,
+              screen_path: prevScreenRoute,
             } = NavigationUtil.getActiveRouteProps(prev);
             const {
-              path: nextScreenRoute,
+              screen_path: nextScreenRoute,
             } = NavigationUtil.getActiveRouteProps(next);
             if (prevScreenRoute !== nextScreenRoute) {
               track(EVENT_TYPE, {
-                path: nextScreenRoute,
+                screen_path: nextScreenRoute,
                 action: action.type,
               });
             }
