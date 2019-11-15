@@ -39,9 +39,6 @@ buildscript {
     repositories {
         jcenter()
         google()
-        maven {
-            url 'https://heap-maven-public.s3.amazonaws.com/android-testing'
-        }
     }
 
     dependencies {
@@ -79,13 +76,10 @@ android {
 repositories {
     jcenter()
     google()
-    maven {
-        url 'https://heap-maven-public.s3.amazonaws.com/android-testing'
-    }
 }
 
 dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
-    api 'com.heapanalytics.android:heap-android-client:1.3.0-SNAPSHOT'
+    api 'com.heapanalytics.android:heap-android-client:1.3.0'
 }
 
