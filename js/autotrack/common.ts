@@ -168,9 +168,9 @@ const getHierarchyStringFromTraversal: (
         // current subhierarchy, return an empty string for the current component.
         currElementString = '';
       } else if (!currentHeapIgnoreProps.allowAllProps) {
-        currElementString = `${element.elementName};|`;
+        currElementString = `@${element.elementName};|`;
       } else {
-        currElementString = `${element.elementName};${element.propsString}|`;
+        currElementString = `@${element.elementName};${element.propsString}|`;
       }
 
       // Doing this at the end allows us to capture HeapIgnore components.
