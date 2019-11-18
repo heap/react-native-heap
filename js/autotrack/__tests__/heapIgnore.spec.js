@@ -52,7 +52,7 @@ describe('Common autotrack utils', () => {
       expect(normalProps).toEqual({
         target_text: 'foobar',
         rn_hierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|Text;[testID=targetElement];|',
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@Text;[testID=targetElement];|',
       });
     });
 
@@ -86,7 +86,7 @@ describe('Common autotrack utils', () => {
       expect(normalProps).toEqual({
         target_text: 'foobar',
         rn_hierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|',
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|',
       });
     });
 
@@ -109,7 +109,7 @@ describe('Common autotrack utils', () => {
       expect(normalProps).toEqual({
         target_text: 'foobar',
         rn_hierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|Text;|',
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;|',
       });
     });
 
@@ -131,7 +131,7 @@ describe('Common autotrack utils', () => {
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
         rn_hierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|Text;[testID=targetElement];|',
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
       });
     });
 
@@ -157,7 +157,7 @@ describe('Common autotrack utils', () => {
       expect(normalProps).toEqual({
         target_text: 'foobar',
         rn_hierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|Text;[testID=targetElement];|',
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
       });
     });
 
@@ -188,7 +188,7 @@ describe('Common autotrack utils', () => {
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
         rn_hierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|BarFunction;|HeapIgnore;|',
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@BarFunction;|@HeapIgnore;|',
       });
     });
 
@@ -208,7 +208,7 @@ describe('Common autotrack utils', () => {
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
         rn_hierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|withHeapIgnore(Text);[testID=targetElement];|HeapIgnore;|Text;|',
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@withHeapIgnore(Text);[testID=targetElement];|@HeapIgnore;|@Text;|',
       });
     });
 
@@ -226,7 +226,7 @@ describe('Common autotrack utils', () => {
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
         rn_hierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnoreTargetText;|HeapIgnore;|Text;[testID=targetElement];|',
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnoreTargetText;|@HeapIgnore;|@Text;[testID=targetElement];|',
       });
     });
 
