@@ -32,16 +32,6 @@ const doTestActions = async () => {
 
   await rnTestUtil.waitIfIos();
 
-  await element(by.id('touchableOpacityText')).tap();
-  await element(by.id('touchableHighlightText')).tap();
-  await element(by.id('touchableWithoutFeedbackText')).tap();
-
-  if (device.getPlatform() === 'android') {
-    await element(by.id('touchableNativeFeedbackText')).tap();
-  }
-
-  await rnTestUtil.waitIfIos();
-
   await element(by.id('switch')).tap();
   await element(by.id('nbSwitch')).tap();
 
@@ -50,7 +40,10 @@ const doTestActions = async () => {
   await element(by.id('textInput')).typeText('foo ');
   await element(by.id('textInput')).tapReturnKey();
 
-  await expect(element(by.id('resetIdentity'))).toBeVisible();
+  await waitFor(element(by.id('resetIdentity')))
+    .toBeVisible()
+    .withTimeout(1000);
+
   await element(by.id('resetIdentity')).tap();
 
   await rnTestUtil.waitIfIos();
@@ -59,6 +52,18 @@ const doTestActions = async () => {
     .toBeVisible()
     .whileElement(by.id('scrollContainer'))
     .scroll(200, 'down');
+
+  await element(by.id('touchableOpacityText')).tap();
+  await element(by.id('touchableHighlightText')).tap();
+  await element(by.id('touchableWithoutFeedbackText')).tap();
+
+  if (device.getPlatform() === 'android') {
+    await element(by.id('touchableNativeFeedbackText')).tap();
+  }
+
+  await element(by.id('longPressedTouchableOpacity')).longPress();
+
+  await rnTestUtil.waitIfIos();
 
   await element(by.id('scrollView')).swipe('left');
   await element(by.id('basicsSentinel')).tap();
@@ -426,6 +431,61 @@ describe('Basic React Native and Interaction Support', () => {
       });
     });
 
+    it("should autotrack long presses on 'TouchableOpacity's", async () => {
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|`;
+      const expectedTargetText = 'Touchable Opacity Long press';
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        rn_hierarchy: expectedHierarchy,
+        target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(true),
+        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
+        screen_name: 'Basics',
+        screen_path: 'Basics',
+      });
+    });
+
+    it(":ios: should not autotrack short press after a long press on 'TouchableOpacity's", async () => {
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|`;
+      const event = {
+        t: 'touch',
+        source: 'react_native',
+        sprops: ['rn_hierarchy', expectedHierarchy],
+      };
+
+      const { err, res } = await new Promise((resolve, reject) => {
+        testUtil.findEventInRedisRequests(event, (err, res) => {
+          resolve({ err, res });
+        });
+      });
+
+      assert.not.exist(err);
+      assert(res.length).equal(1);
+    });
+
+    it(":android: should not autotrack short press after a long press on 'TouchableOpacity's", async () => {
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|`;
+      const event = {
+        sourceEvent: {
+          name: 'touch',
+          sourceName: 'react_native',
+          sourceProperties: {
+            rn_hierarchy: {
+              string: expectedHierarchy,
+            },
+          },
+        },
+      };
+
+      const { err, res } = await new Promise(resolve => {
+        testUtil.findAndroidEventInRedisRequests({ event }, (err, res) => {
+          resolve({ err, res });
+        });
+      });
+
+      assert.not.exist(err);
+      assert(res.length).equal(1);
+    });
+
     it("should autotrack 'TouchableHighlight's", async () => {
       const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableHighlight;[testID=touchableHighlightText];|`;
       const expectedTargetText = 'Touchable Highlight';
@@ -458,8 +518,8 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
-        is_long_press: rnTestUtil.getPlatformBoolean(true),
-        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
+        is_long_press: rnTestUtil.getPlatformBoolean(false),
+        touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
       });
