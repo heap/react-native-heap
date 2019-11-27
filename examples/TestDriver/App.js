@@ -15,7 +15,10 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <TopNavigator ref={NavigationService.setTopLevelNavigator} />
+        <TopNavigator
+          ref={NavigationService.setTopLevelNavigator}
+          onNavigationStateChange={() => {}} // Checks that manually instrumenting screen tracking works.
+        />
       </Provider>
     );
   }
