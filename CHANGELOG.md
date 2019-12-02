@@ -16,6 +16,8 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+- Fixed React Navigation autocapture when [manual screen tracking](https://reactnavigation.org/docs/en/screen-tracking.html) is also used.
+
 ### Security
 __END_UNRELEASED__
 
