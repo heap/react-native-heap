@@ -17,7 +17,9 @@ export default class App extends React.Component {
       <Provider store={store}>
         <TopNavigator
           ref={NavigationService.setTopLevelNavigator}
-          onNavigationStateChange={() => {}} // Checks that manually instrumenting screen tracking works.
+          // Check that manually instrumenting screen tracking doesn't break autocapture by passing in a no-op function as the
+          // 'onNavigationStateChange' handler.
+          onNavigationStateChange={() => {}}
         />
       </Provider>
     );
