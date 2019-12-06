@@ -16,15 +16,19 @@ const doTestActions = async () => {
   await expect(element(by.id('navigate_stack'))).toBeVisible();
   await element(by.id('navigate_stack')).tap();
   await delay();
+
+  await rnTestUtil.waitIfIos();
+
   await expect(element(by.id('pop1'))).toBeVisible();
   await element(by.id('pop1')).tap();
   await delay();
 
-  await rnTestUtil.waitIfIos();
-
   await expect(element(by.id('navigate_modal'))).toBeVisible();
   await element(by.id('navigate_modal')).tap();
   await delay();
+
+  await rnTestUtil.waitIfIos();
+
   await expect(element(by.id('pop2'))).toBeVisible();
   await element(by.id('pop2')).tap();
   await delay();
@@ -67,19 +71,19 @@ describe('Navigation', () => {
     });
 
     it('tracks events with screen name props', async () => {
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        screenName: 'Base',
-        path: 'Nav::MainStack::Base',
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        screen_name: 'Base',
+        screen_path: 'Nav::MainStack::Base',
       });
 
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        screenName: 'StackCard',
-        path: 'Nav::MainStack::StackCard',
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        screen_name: 'StackCard',
+        screen_path: 'Nav::MainStack::StackCard',
       });
 
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        screenName: 'ModalStack',
-        path: 'Nav::ModalStack',
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        screen_name: 'ModalStack',
+        screen_path: 'Nav::ModalStack',
       });
     });
 

@@ -17,6 +17,13 @@ const waitIfIos = async () => {
   }
 };
 
+const getPlatformBoolean = boolean => {
+  if (device.getPlatform() === 'ios') {
+    return boolean ? '1' : '0';
+  }
+  return boolean.toString();
+};
+
 const flushAllRedis = nodeUtil.promisify(done =>
   db.orm.connection.sharedRedis().flushall(done)
 );
@@ -71,9 +78,10 @@ const assertAndroidAutotrackHierarchy = async (expectedName, expectedProps) => {
   return assertAndroidEvent({
     envId: HEAP_ENV_ID,
     event: {
-      custom: {
+      sourceEvent: {
         name: expectedName,
-        properties: _.mapValues(expectedProps, value => {
+        sourceName: 'react_native',
+        sourceProperties: _.mapValues(expectedProps, value => {
           return { string: value };
         }),
       },
@@ -89,7 +97,8 @@ const assertAutotrackHierarchy = async (expectedName, expectedProps) => {
       t: expectedName,
       // Convert { key1: 'value1', key2: 'value2'} to ['key1', 'value1', 'key2', 'value2'] for
       // custom props.
-      k: _.flatMap(expectedProps, (value, key) => [key, value]),
+      source: 'react_native',
+      sprops: _.flatMap(expectedProps, (value, key) => [key, value]),
     });
   } else {
     throw new Error(`Unknown device type: ${device.getPlatform()}`);
@@ -98,14 +107,14 @@ const assertAutotrackHierarchy = async (expectedName, expectedProps) => {
 
 const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
   const commonProps = {
-    path: {
+    screen_path: {
       string: expectedPath,
     },
   };
   const props = expectedType
     ? {
         ...commonProps,
-        type: {
+        action: {
           string: expectedType,
         },
       }
@@ -114,22 +123,24 @@ const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
   return assertAndroidEvent({
     envId: HEAP_ENV_ID,
     event: {
-      custom: {
-        name: 'reactNavigationScreenview',
-        properties: props,
+      sourceEvent: {
+        name: 'react_navigation_screenview',
+        sourceName: 'react_native',
+        sourceProperties: props,
       },
     },
   });
 };
 
 const assertIosNavigationEvent = async (expectedPath, expectedType) => {
-  const commonProps = ['path', expectedPath];
+  const commonProps = ['screen_path', expectedPath];
   const props = expectedType
-    ? [...commonProps, 'type', expectedType]
+    ? [...commonProps, 'action', expectedType]
     : commonProps;
   return assertIosPixel({
-    t: 'reactNavigationScreenview',
-    k: props,
+    t: 'react_navigation_screenview',
+    source: 'react_native',
+    sprops: props,
   });
 };
 
@@ -173,7 +184,7 @@ pollForSentinel = async (sentinelValue, timeout = 60000) => {
       const event = {
         envId: HEAP_ENV_ID,
         event: {
-          custom: {
+          sourceCustomEvent: {
             name: eventName,
           },
         },
@@ -213,5 +224,6 @@ module.exports = {
   assertNavigationEvent,
   pollForSentinel,
   waitIfIos,
+  getPlatformBoolean,
   flushAllRedis,
 };

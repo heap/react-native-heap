@@ -1,7 +1,10 @@
 import React from 'react';
 import { NativeModules } from 'react-native';
 
+import NavigationUtil from '../util/navigationUtil';
 import Heap from '../Heap';
+
+jest.mock('../util/navigationUtil');
 
 describe('The Heap object', () => {
   let mockTrack,
@@ -24,8 +27,8 @@ describe('The Heap object', () => {
   beforeEach(() => {
     jest.resetModules();
 
-    NativeModules.RNHeap.track.mockReset();
-    mockTrack = NativeModules.RNHeap.track;
+    NativeModules.RNHeap.manuallyTrackEvent.mockReset();
+    mockTrack = NativeModules.RNHeap.manuallyTrackEvent;
 
     NativeModules.RNHeap.setAppId.mockReset();
     mockSetAppId = NativeModules.RNHeap.setAppId;
@@ -47,6 +50,13 @@ describe('The Heap object', () => {
 
     NativeModules.RNHeap.clearEventProperties.mockReset();
     mockClearEventProperties = NativeModules.RNHeap.clearEventProperties;
+
+    NavigationUtil.getScreenPropsForCurrentRoute.mockImplementation(() => {
+      return {
+        screen_path: 'Basics::Foo',
+        screen_name: 'Foo',
+      };
+    });
   });
 
   describe('track', () => {
@@ -54,6 +64,10 @@ describe('The Heap object', () => {
       expect(mockTrack.mock.calls.length).toBe(1);
       expect(mockTrack.mock.calls[0][0]).toBe('foo');
       expect(mockTrack.mock.calls[0][1]).toEqual(expectedProps);
+      expect(mockTrack.mock.calls[0][2]).toEqual({
+        screen_path: 'Basics::Foo',
+        screen_name: 'Foo',
+      });
     };
 
     it('works in the common case', () => {
