@@ -9,18 +9,22 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 ### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+__END_UNRELEASED__
+
+## [0.9.0] - 2019-12-05
+
+### Changed
 - Updated the way events are sent to the Heap backend to allow for first-class support of React Native as a library.  See [the upgrade guide](https://docs.heap.io//docs/migrating-legacy-react-native-events-for-heap-090) for details.
 - Upgraded the native Android Heap SDK to v1.3.0.
 - Upgraded vendored iOS Heap library to 6.5.1.
 - Updated higher-order components to use display name conventions (described [here](https://reactjs.org/docs/higher-order-components.html#convention-wrap-the-display-name-for-easy-debugging)).
 
-### Deprecated
-### Removed
 ### Fixed
 - Fixed React Navigation autocapture when [manual screen tracking](https://reactnavigation.org/docs/en/screen-tracking.html) is also used.
-
-### Security
-__END_UNRELEASED__
 
 ## [0.8.0] - 2019-08-26
 
