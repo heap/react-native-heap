@@ -113,6 +113,9 @@ class BasicsPage extends Component {
           <Text>Touchable Opacity</Text>
           <Text>Foo</Text>
         </TouchableOpacity>
+        <TouchableOpacity testID="longPressedTouchableOpacity">
+          <Text>Touchable Opacity Long press</Text>
+        </TouchableOpacity>
         <TouchableHighlight testID="touchableHighlightText">
           <Text>Touchable Highlight</Text>
         </TouchableHighlight>

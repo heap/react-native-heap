@@ -16,10 +16,10 @@ interface Component extends ReactComponent {
 
 // Base properties for autotracked events.
 interface AutotrackProps {
-  touchableHierarchy: string;
-  targetText?: string;
-  path?: string;
-  screenName?: string;
+  rn_hierarchy: string;
+  target_text?: string;
+  screen_path?: string;
+  screen_name?: string;
 }
 
 interface HeapIgnoreProps {
@@ -73,12 +73,12 @@ export const getBaseComponentProps: (
   const screenProps = NavigationUtil.getScreenPropsForCurrentRoute();
 
   const autotrackProps: AutotrackProps = {
-    touchableHierarchy: hierarchy,
+    rn_hierarchy: hierarchy,
     ...screenProps,
   };
 
   if (targetText !== '') {
-    autotrackProps.targetText = targetText;
+    autotrackProps.target_text = targetText;
   }
 
   return autotrackProps;
@@ -168,9 +168,9 @@ const getHierarchyStringFromTraversal: (
         // current subhierarchy, return an empty string for the current component.
         currElementString = '';
       } else if (!currentHeapIgnoreProps.allowAllProps) {
-        currElementString = `${element.elementName};|`;
+        currElementString = `@${element.elementName};|`;
       } else {
-        currElementString = `${element.elementName};${element.propsString}|`;
+        currElementString = `@${element.elementName};${element.propsString}|`;
       }
 
       // Doing this at the end allows us to capture HeapIgnore components.

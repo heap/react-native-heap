@@ -80,6 +80,6 @@ repositories {
 
 dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
-    api 'com.heapanalytics.android:heap-android-client:1.1.0'
+    api 'com.heapanalytics.android:heap-android-client:1.3.0'
 }
 

@@ -7,7 +7,7 @@ testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
 
 const BASICS_PAGE_TOP_HIERARCHY =
-  'AppContainer;|App;|Provider;|withReactNavigationAutotrack(NavigationContainer);|NavigationContainer;|Navigator;|NavigationView;|TabNavigationView;|ScreenContainer;|ResourceSavingScene;[key=Basics];|SceneView;|Connect(BasicsPage);|BasicsPage;|ScrollView;[testID=scrollContainer];|';
+  '@AppContainer;|@App;|@Provider;|@withReactNavigationAutotrack(NavigationContainer);|@NavigationContainer;|@Navigator;|@NavigationView;|@TabNavigationView;|@ScreenContainer;|@ResourceSavingScene;[key=Basics];|@SceneView;|@Connect(BasicsPage);|@BasicsPage;|@ScrollView;[testID=scrollContainer];|';
 
 const doTestActions = async () => {
   // Open the Basics tab in the tab navigator.
@@ -32,16 +32,6 @@ const doTestActions = async () => {
 
   await rnTestUtil.waitIfIos();
 
-  await element(by.id('touchableOpacityText')).tap();
-  await element(by.id('touchableHighlightText')).tap();
-  await element(by.id('touchableWithoutFeedbackText')).tap();
-
-  if (device.getPlatform() === 'android') {
-    await element(by.id('touchableNativeFeedbackText')).tap();
-  }
-
-  await rnTestUtil.waitIfIos();
-
   await element(by.id('switch')).tap();
   await element(by.id('nbSwitch')).tap();
 
@@ -50,7 +40,10 @@ const doTestActions = async () => {
   await element(by.id('textInput')).typeText('foo ');
   await element(by.id('textInput')).tapReturnKey();
 
-  await expect(element(by.id('resetIdentity'))).toBeVisible();
+  await waitFor(element(by.id('resetIdentity')))
+    .toBeVisible()
+    .withTimeout(1000);
+
   await element(by.id('resetIdentity')).tap();
 
   await rnTestUtil.waitIfIos();
@@ -59,6 +52,18 @@ const doTestActions = async () => {
     .toBeVisible()
     .whileElement(by.id('scrollContainer'))
     .scroll(200, 'down');
+
+  await element(by.id('touchableOpacityText')).tap();
+  await element(by.id('touchableHighlightText')).tap();
+  await element(by.id('touchableWithoutFeedbackText')).tap();
+
+  if (device.getPlatform() === 'android') {
+    await element(by.id('touchableNativeFeedbackText')).tap();
+  }
+
+  await element(by.id('longPressedTouchableOpacity')).longPress();
+
+  await rnTestUtil.waitIfIos();
 
   await element(by.id('scrollView')).swipe('left');
   await element(by.id('basicsSentinel')).tap();
@@ -74,12 +79,15 @@ describe('Basic React Native and Interaction Support', () => {
   describe(':ios: Bridge API', () => {
     it('should call first track', async () => {
       await rnTestUtil.assertIosPixel(
-        { a: '2084764307', t: 'pressInTestEvent1' },
+        {
+          a: '2084764307',
+          t: 'pressInTestEvent1',
+          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
+        },
         event => {
           return !(
             _.includes(event.k, 'eventProp1') ||
-            _.includes(event.k, 'eventProp2') ||
-            _.includes(event.k, 'path')
+            _.includes(event.k, 'eventProp2')
           );
         }
       );
@@ -87,12 +95,15 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should add event properties', async () => {
       await rnTestUtil.assertIosPixel(
-        { a: '2084764307', t: 'pressInTestEvent2' },
+        {
+          a: '2084764307',
+          t: 'pressInTestEvent2',
+          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
+        },
         event => {
           return (
             _.includes(event.k, 'eventProp1') &&
-            _.includes(event.k, 'eventProp2') &&
-            !_.includes(event.k, 'path')
+            _.includes(event.k, 'eventProp2')
           );
         }
       );
@@ -100,12 +111,15 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should remove event properties', async () => {
       await rnTestUtil.assertIosPixel(
-        { a: '2084764307', t: 'pressInTestEvent3' },
+        {
+          a: '2084764307',
+          t: 'pressInTestEvent3',
+          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
+        },
         event => {
           return (
             !_.includes(event.k, 'eventProp1') &&
-            _.includes(event.k, 'eventProp2') &&
-            !_.includes(event.k, 'path')
+            _.includes(event.k, 'eventProp2')
           );
         }
       );
@@ -113,12 +127,15 @@ describe('Basic React Native and Interaction Support', () => {
 
     it('should clear event properties', async () => {
       await rnTestUtil.assertIosPixel(
-        { a: '2084764307', t: 'pressInTestEvent4' },
+        {
+          a: '2084764307',
+          t: 'pressInTestEvent4',
+          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
+        },
         event => {
           return !(
             _.includes(event.k, 'eventProp1') ||
-            _.includes(event.k, 'eventProp2') ||
-            _.includes(event.k, 'path')
+            _.includes(event.k, 'eventProp2')
           );
         }
       );
@@ -183,13 +200,25 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent1' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent1',
+              sourceName: 'react_native',
+              sourceProperties: {
+                screen_path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
+            },
+          },
         },
         event => {
           return (
             !_.has(event.properties, 'eventProp1') &&
-            !_.has(event.properties, 'eventProp2') &&
-            !_.has(event.properties, 'path')
+            !_.has(event.properties, 'eventProp2')
           );
         }
       );
@@ -203,11 +232,37 @@ describe('Basic React Native and Interaction Support', () => {
       const [[event1], [event2]] = await Promise.all([
         findAndroidEvent({
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent1' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent1',
+              sourceName: 'react_native',
+              sourceProperties: {
+                screen_path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
+            },
+          },
         }),
         findAndroidEvent({
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent2' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent2',
+              sourceName: 'react_native',
+              sourceProperties: {
+                screen_path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
+            },
+          },
         }),
       ]);
 
@@ -218,13 +273,25 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent2' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent2',
+              sourceName: 'react_native',
+              sourceProperties: {
+                screen_path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
+            },
+          },
         },
         event => {
           return (
             _.has(event.properties, 'eventProp1') &&
-            _.has(event.properties, 'eventProp2') &&
-            !_.has(event.properties, 'path')
+            _.has(event.properties, 'eventProp2')
           );
         }
       );
@@ -234,13 +301,25 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent3' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent3',
+              sourceName: 'react_native',
+              sourceProperties: {
+                screen_path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
+            },
+          },
         },
         event => {
           return (
             !_.has(event.properties, 'eventProp1') &&
-            _.has(event.properties, 'eventProp2') &&
-            !_.has(event.properties, 'path')
+            _.has(event.properties, 'eventProp2')
           );
         }
       );
@@ -250,13 +329,25 @@ describe('Basic React Native and Interaction Support', () => {
       await rnTestUtil.assertAndroidEvent(
         {
           envId: '2084764307',
-          event: { custom: { name: 'pressInTestEvent4' } },
+          event: {
+            sourceCustomEvent: {
+              name: 'pressInTestEvent4',
+              sourceName: 'react_native',
+              sourceProperties: {
+                screen_path: {
+                  string: 'Basics',
+                },
+                screen_name: {
+                  string: 'Basics',
+                },
+              },
+            },
+          },
         },
         event => {
           return (
             !_.has(event.properties, 'eventProp1') &&
-            !_.has(event.properties, 'eventProp2') &&
-            !_.has(event.properties, 'path')
+            !_.has(event.properties, 'eventProp2')
           );
         }
       );
@@ -294,11 +385,18 @@ describe('Basic React Native and Interaction Support', () => {
       const { err1, err2, res1, res2 } = await new Promise(resolve => {
         // Fetch a pre-resetIdentity event.
         testUtil.findAndroidEventInRedisRequests(
-          { event: { custom: { name: 'pressInTestEvent2' } } },
+          {
+            event: {
+              sourceCustomEvent: {
+                name: 'pressInTestEvent2',
+                sourceName: 'react_native',
+              },
+            },
+          },
           (err1, res1) => {
             // Fetch a post-resetIdentity event.
             testUtil.findAndroidEventInRedisRequests(
-              { event: { custom: { name: 'BASICS_SENTINEL' } } },
+              { event: { sourceCustomEvent: { name: 'BASICS_SENTINEL' } } },
               (err2, res2) => {
                 resolve({ err1, err2, res1, res2 });
               }
@@ -321,84 +419,147 @@ describe('Basic React Native and Interaction Support', () => {
 
   describe('Autotrack', () => {
     it("should autotrack 'TouchableOpacity's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableOpacity;[testID=touchableOpacityText];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=touchableOpacityText];|`;
       const expectedTargetText = 'Touchable Opacity Foo';
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        touchableHierarchy: expectedHierarchy,
-        targetText: expectedTargetText,
-        screenName: 'Basics',
-        path: 'Basics',
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        rn_hierarchy: expectedHierarchy,
+        target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(false),
+        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
+        screen_name: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
+    it("should autotrack long presses on 'TouchableOpacity's", async () => {
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|`;
+      const expectedTargetText = 'Touchable Opacity Long press';
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        rn_hierarchy: expectedHierarchy,
+        target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(true),
+        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
+        screen_name: 'Basics',
+        screen_path: 'Basics',
+      });
+    });
+
+    it(":ios: should not autotrack short press after a long press on 'TouchableOpacity's", async () => {
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|`;
+      const event = {
+        t: 'touch',
+        source: 'react_native',
+        sprops: ['rn_hierarchy', expectedHierarchy],
+      };
+
+      const { err, res } = await new Promise((resolve, reject) => {
+        testUtil.findEventInRedisRequests(event, (err, res) => {
+          resolve({ err, res });
+        });
+      });
+
+      assert.not.exist(err);
+      assert(res.length).equal(1);
+    });
+
+    it(":android: should not autotrack short press after a long press on 'TouchableOpacity's", async () => {
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|`;
+      const event = {
+        sourceEvent: {
+          name: 'touch',
+          sourceName: 'react_native',
+          sourceProperties: {
+            rn_hierarchy: {
+              string: expectedHierarchy,
+            },
+          },
+        },
+      };
+
+      const { err, res } = await new Promise(resolve => {
+        testUtil.findAndroidEventInRedisRequests({ event }, (err, res) => {
+          resolve({ err, res });
+        });
+      });
+
+      assert.not.exist(err);
+      assert(res.length).equal(1);
+    });
+
     it("should autotrack 'TouchableHighlight's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableHighlight;[testID=touchableHighlightText];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableHighlight;[testID=touchableHighlightText];|`;
       const expectedTargetText = 'Touchable Highlight';
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        touchableHierarchy: expectedHierarchy,
-        targetText: expectedTargetText,
-        screenName: 'Basics',
-        path: 'Basics',
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        rn_hierarchy: expectedHierarchy,
+        target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(false),
+        touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
+        screen_name: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
     it("should autotrack 'TouchableWithoutFeedback's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|`;
       const expectedTargetText = 'Touchable Without Feedback';
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        touchableHierarchy: expectedHierarchy,
-        targetText: expectedTargetText,
-        screenName: 'Basics',
-        path: 'Basics',
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        rn_hierarchy: expectedHierarchy,
+        target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(false),
+        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
+        screen_name: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
     it(":android: should autotrack 'TouchableNativeFeedback's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|`;
       const expectedTargetText = 'Touchable Native Feedback';
-      await rnTestUtil.assertAutotrackHierarchy('touchableHandlePress', {
-        touchableHierarchy: expectedHierarchy,
-        targetText: expectedTargetText,
-        screenName: 'Basics',
-        path: 'Basics',
+      await rnTestUtil.assertAutotrackHierarchy('touch', {
+        rn_hierarchy: expectedHierarchy,
+        target_text: expectedTargetText,
+        is_long_press: rnTestUtil.getPlatformBoolean(false),
+        touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
+        screen_name: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
     it("should autotrack 'Switch's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}Switch;[testID=switch];|`;
-      await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
-        touchableHierarchy: expectedHierarchy,
-        screenName: 'Basics',
-        path: 'Basics',
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@Switch;[testID=switch];|`;
+      await rnTestUtil.assertAutotrackHierarchy('change', {
+        rn_hierarchy: expectedHierarchy,
+        screen_name: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
     it("should autotrack NativeBase 'Switch's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}StyledComponent;[testID=nbSwitch];|Switch;[testID=nbSwitch];|Switch;[testID=nbSwitch];|`;
-      await rnTestUtil.assertAutotrackHierarchy('_handleChange', {
-        touchableHierarchy: expectedHierarchy,
-        screenName: 'Basics',
-        path: 'Basics',
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@StyledComponent;[testID=nbSwitch];|@Switch;[testID=nbSwitch];|@Switch;[testID=nbSwitch];|`;
+      await rnTestUtil.assertAutotrackHierarchy('change', {
+        rn_hierarchy: expectedHierarchy,
+        screen_name: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
     it('should autotrack ScrollView paging', async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}FlatList;[testID=scrollView];|VirtualizedList;[testID=scrollView];|ScrollView;[testID=scrollView];|`;
-      await rnTestUtil.assertAutotrackHierarchy('scrollViewPage', {
-        touchableHierarchy: expectedHierarchy,
-        pageIndex: '1',
-        screenName: 'Basics',
-        path: 'Basics',
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@FlatList;[testID=scrollView];|@VirtualizedList;[testID=scrollView];|@ScrollView;[testID=scrollView];|`;
+      await rnTestUtil.assertAutotrackHierarchy('scroll_view_page', {
+        rn_hierarchy: expectedHierarchy,
+        page_index: '1',
+        screen_name: 'Basics',
+        screen_path: 'Basics',
       });
     });
 
     it('should autotrack TextInput edits', async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}MyTextInput;[testID=textInput];|TextInput;[testID=textInput];|`;
-      await rnTestUtil.assertAutotrackHierarchy('textEdit', {
-        touchableHierarchy: expectedHierarchy,
-        placeholderText: 'foo placeholder',
-        screenName: 'Basics',
-        path: 'Basics',
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@MyTextInput;[testID=textInput];|@TextInput;[testID=textInput];|`;
+      await rnTestUtil.assertAutotrackHierarchy('text_edit', {
+        rn_hierarchy: expectedHierarchy,
+        placeholder_text: 'foo placeholder',
+        screen_name: 'Basics',
+        screen_path: 'Basics',
       });
     });
   });

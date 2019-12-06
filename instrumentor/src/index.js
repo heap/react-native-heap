@@ -110,7 +110,7 @@ const instrumentScrollView = path => {
       path.node.value, // originalFunctionExpression
       t.thisExpression(), // thisExpression
       'autocaptureScrollView', // autotrackMethodName
-      'scrollViewPage' // eventType
+      'scroll_view_page' // eventType
     );
     path.get('value').replaceWith(replacementFunc);
   }
@@ -139,7 +139,7 @@ const instrumentTextInput = path => {
       path.node.value, // originalFunctionExpression
       t.identifier('this'), // thisExpression
       'autocaptureTextInput', // autotrackMethodName
-      'textEdit' // eventType
+      'text_edit' // eventType
     );
     path.get('value').replaceWith(replacementFunc);
   }
@@ -250,7 +250,7 @@ const instrumentSwitchComponent = path => {
     originalFunctionExpression, // originalFunctionExpression
     t.identifier('_this'), // thisExpression
     'autotrackSwitchChange', // autotrackMethodName
-    path.node.left.property.name // eventType
+    'change' // eventType
   );
 
   path.get('right').replaceWith(replacementFunc);

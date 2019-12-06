@@ -96,15 +96,11 @@ public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void autocaptureEvent(String event, ReadableMap payload) {
-    // :TODO: (jmtaber129): Update this to look like:
-    // Heap.track(event, convertToStringMap(payload), "react_native").
-    Heap.track(event, convertToStringMap(payload));
+    HeapImpl.frameworkAutocaptureEvent(event, "react_native", convertToStringMap(payload));
   }
 
   @ReactMethod
   public void manuallyTrackEvent(String event, ReadableMap payload, ReadableMap contextualProps) {
-    // :TODO: (jmtaber129): Update this to look like:
-    // Heap.track(event, convertToStringMap(payload), "react_native", contextualProps).
-    Heap.track(event, convertToStringMap(payload));
+    HeapImpl.frameworkTrack(event, convertToStringMap(payload), "react_native", convertToStringMap(contextualProps));
   }
 }

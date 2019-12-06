@@ -3,7 +3,7 @@ import { bail, bailOnError } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 import NavigationUtil from '../util/navigationUtil';
 
-const EVENT_TYPE = 'reactNavigationScreenview';
+const EVENT_TYPE = 'react_navigation_screenview';
 
 // `react-native-navigation` uses `Navigation/{NAVIGATE,POP,BACK}` to represent
 // different types of navigation actions. We build the initial navigation action
@@ -11,6 +11,21 @@ const EVENT_TYPE = 'reactNavigationScreenview';
 const INITIAL_ROUTE_TYPE = 'Heap_Navigation/INITIAL';
 
 export const withReactNavigationAutotrack = track => AppContainer => {
+  const captureNavigationStateChange = bailOnError((prev, next, action) => {
+    const { screen_path: prevScreenRoute } = NavigationUtil.getActiveRouteProps(
+      prev
+    );
+    const { screen_path: nextScreenRoute } = NavigationUtil.getActiveRouteProps(
+      next
+    );
+    if (prevScreenRoute !== nextScreenRoute) {
+      track(EVENT_TYPE, {
+        screen_path: nextScreenRoute,
+        action: action.type,
+      });
+    }
+  });
+
   class HeapNavigationWrapper extends React.Component {
     topLevelNavigator = null;
 
@@ -23,13 +38,13 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     }
 
     trackInitialRoute() {
-      const { path: initialPageviewPath } = NavigationUtil.getActiveRouteProps(
-        this.topLevelNavigator.state.nav
-      );
+      const {
+        screen_path: initialPageviewPath,
+      } = NavigationUtil.getActiveRouteProps(this.topLevelNavigator.state.nav);
 
       track(EVENT_TYPE, {
-        path: initialPageviewPath,
-        type: INITIAL_ROUTE_TYPE,
+        screen_path: initialPageviewPath,
+        action: INITIAL_ROUTE_TYPE,
       });
     }
 
@@ -44,7 +59,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     }
 
     _render() {
-      const { forwardedRef, ...rest } = this.props;
+      const { forwardedRef, onNavigationStateChange, ...rest } = this.props;
       return (
         <AppContainer
           ref={bailOnError(navigatorRef => {
@@ -63,20 +78,15 @@ export const withReactNavigationAutotrack = track => AppContainer => {
               this.trackInitialRoute();
             }
           })}
-          onNavigationStateChange={bailOnError((prev, next, action) => {
-            const {
-              path: prevScreenRoute,
-            } = NavigationUtil.getActiveRouteProps(prev);
-            const {
-              path: nextScreenRoute,
-            } = NavigationUtil.getActiveRouteProps(next);
-            if (prevScreenRoute !== nextScreenRoute) {
-              track(EVENT_TYPE, {
-                path: nextScreenRoute,
-                type: action.type,
-              });
+          onNavigationStateChange={(...args) => {
+            // Capture the screenview, then delegate to the 'onNavigationStateChange' passed to the HOC if it's a function. The logic to
+            // determine whether to call 'onNavigationStateChange' is the same as what's in the 'react-navigation' library.
+            // See https://github.com/react-navigation/native/blob/d0b24924b2e075fed3bd6586339d34fdd4c2b78e/src/createAppContainer.js#L184
+            captureNavigationStateChange(...args);
+            if (typeof onNavigationStateChange === 'function') {
+              onNavigationStateChange(...args);
             }
-          })}
+          }}
           {...rest}
         >
           {this.props.children}

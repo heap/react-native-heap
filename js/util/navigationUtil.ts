@@ -7,8 +7,8 @@ export default class NavigationUtil {
   }
 
   static getScreenPropsForCurrentRoute(): {
-    path: string;
-    screenName: string;
+    screen_path: string;
+    screen_name: string;
   } | null {
     if (
       !(this.heapNavRef && this.heapNavRef.state && this.heapNavRef.state.nav)
@@ -28,11 +28,11 @@ export default class NavigationUtil {
   // :TODO: (jmtaber129): Add type for navigationState.
   static getActiveRouteProps(
     navigationState: any
-  ): { path: string; screenName: string } {
+  ): { screen_path: string; screen_name: string } {
     const paths = this.getActiveRouteNames(navigationState);
     return {
-      path: paths.join('::'),
-      screenName: paths[paths.length - 1],
+      screen_path: paths.join('::'),
+      screen_name: paths[paths.length - 1],
     };
   }
 

@@ -50,9 +50,9 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
-        targetText: 'foobar',
-        touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|Text;[testID=targetElement];|',
+        target_text: 'foobar',
+        rn_hierarchy:
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@Text;[testID=targetElement];|',
       });
     });
 
@@ -84,9 +84,9 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
-        targetText: 'foobar',
-        touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|',
+        target_text: 'foobar',
+        rn_hierarchy:
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|',
       });
     });
 
@@ -107,9 +107,9 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
-        targetText: 'foobar',
-        touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|Text;|',
+        target_text: 'foobar',
+        rn_hierarchy:
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;|',
       });
     });
 
@@ -130,8 +130,8 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
-        touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|Text;[testID=targetElement];|',
+        rn_hierarchy:
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
       });
     });
 
@@ -155,9 +155,9 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
-        targetText: 'foobar',
-        touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|Text;[testID=targetElement];|',
+        target_text: 'foobar',
+        rn_hierarchy:
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
       });
     });
 
@@ -187,8 +187,8 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
-        touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnore;|BarFunction;|HeapIgnore;|',
+        rn_hierarchy:
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@BarFunction;|@HeapIgnore;|',
       });
     });
 
@@ -207,8 +207,8 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
-        touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|withHeapIgnore(Text);[testID=targetElement];|HeapIgnore;|Text;|',
+        rn_hierarchy:
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@withHeapIgnore(Text);[testID=targetElement];|@HeapIgnore;|@Text;|',
       });
     });
 
@@ -225,8 +225,8 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
-        touchableHierarchy:
-          'WrapperComponent;|Foo;|BarClass;|BarFunction;|HeapIgnoreTargetText;|HeapIgnore;|Text;[testID=targetElement];|',
+        rn_hierarchy:
+          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnoreTargetText;|@HeapIgnore;|@Text;[testID=targetElement];|',
       });
     });
 
