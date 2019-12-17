@@ -130,11 +130,11 @@ describe('Extracting Props with a configuration', () => {
     );
   });
 
-  test('removes any brackets in a prop', () => {
+  test('removes any reserved characters in a prop', () => {
     const obj2 = _.merge({}, obj1, {
       stateNode: {
         props: {
-          a: 'bracket][bracket][bracket]',
+          a: 'bracket]@[|;;bracket][bracket]',
         },
       },
     });

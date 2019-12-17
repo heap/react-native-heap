@@ -160,6 +160,7 @@ const getHierarchyStringFromTraversal: (
   const hierarchyString: string = hierarchyArray
     .map(element => {
       let currElementString = '';
+      const sanitizedElementName = element.elementName.replace(/[\[\]\|\;\@]/g, '');
       if (
         !currentHeapIgnoreProps.allowInteraction ||
         !currentHeapIgnoreProps.allowInnerHierarchy
@@ -168,9 +169,9 @@ const getHierarchyStringFromTraversal: (
         // current subhierarchy, return an empty string for the current component.
         currElementString = '';
       } else if (!currentHeapIgnoreProps.allowAllProps) {
-        currElementString = `@${element.elementName};|`;
+        currElementString = `@${sanitizedElementName};|`;
       } else {
-        currElementString = `@${element.elementName};${element.propsString}|`;
+        currElementString = `@${sanitizedElementName};${element.propsString}|`;
       }
 
       // Doing this at the end allows us to capture HeapIgnore components.
