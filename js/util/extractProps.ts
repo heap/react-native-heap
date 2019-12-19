@@ -110,9 +110,15 @@ export const extractProps = (
     if (
       flattenedProps[key] !== null &&
       flattenedProps[key] !== undefined &&
-      typeof flattenedProps[key] !== 'function' &&
-      !containsReservedCharacter(key)
+      typeof flattenedProps[key] !== 'function'
     ) {
+      if (containsReservedCharacter(key)) {
+        console.warn(
+          `Prop key '${key}' contains reserved characters; ignoring.`
+        );
+        return;
+      }
+
       // Remove all brackets from string.
       const prop = stripReservedCharacters(flattenedProps[key].toString());
       propsString += `[${key}=${prop}];`;
