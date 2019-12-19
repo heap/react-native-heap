@@ -12,6 +12,8 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+- Fixed bug where app would crash when `Heap.track()` is called if React Navigation autocapture isn't set up. [#165](https://github.com/heap/react-native-heap/issues/165).
+
 ### Security
 __END_UNRELEASED__
 
