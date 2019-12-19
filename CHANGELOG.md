@@ -13,6 +13,7 @@ __BEGIN_UNRELEASED__
 ### Removed
 ### Fixed
 - Fixed bug where app would crash when `Heap.track()` is called if React Navigation autocapture isn't set up. [#165](https://github.com/heap/react-native-heap/issues/165).
+- Upgraded Heap iOS SDK dependency to 6.5.3 to pick up bug fixes since version 6.5.0.
 
 ### Security
 __END_UNRELEASED__
