@@ -134,7 +134,7 @@ describe('Extracting Props with a configuration', () => {
     const obj2 = _.merge({}, obj1, {
       stateNode: {
         props: {
-          a: 'bracket]@[|;;bracket][bracket]',
+          a: 'bracket]@[|=#;;bracket][bracket]',
         },
       },
     });
