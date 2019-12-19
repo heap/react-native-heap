@@ -13,6 +13,7 @@ __BEGIN_UNRELEASED__
 ### Removed
 ### Fixed
 - Fixed bug where app would crash when `Heap.track()` is called if React Navigation autocapture isn't set up. [#165](https://github.com/heap/react-native-heap/issues/165).
+- Strip additional special characters from props and component names to prevent hierarchy matching/parsing breakages.
 
 ### Security
 __END_UNRELEASED__
