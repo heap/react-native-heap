@@ -57,9 +57,9 @@ describe('Common autotrack utils', () => {
     });
 
     it('Removes special characters from component names', () => {
-      const MySpecialComponent = (props) => {
-        return (<View>{props.children}</View>);
-      }
+      const MySpecialComponent = props => {
+        return <View>{props.children}</View>;
+      };
 
       MySpecialComponent.displayName = '@My@Special;|[Component#=';
 

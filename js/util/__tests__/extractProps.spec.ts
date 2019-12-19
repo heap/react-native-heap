@@ -157,9 +157,7 @@ describe('Extracting Props with a configuration', () => {
       Element: { include: ['a', 'abc@;|=#'] },
     });
 
-    expect(extractProps('Element', obj2, config2)).toEqual(
-      '[a=foo];'
-    );
+    expect(extractProps('Element', obj2, config2)).toEqual('[a=foo];');
   });
 
   test('extracts class configurations', () => {

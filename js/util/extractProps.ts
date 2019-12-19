@@ -1,5 +1,8 @@
 import { getCombinedInclusionList } from './combineConfigs';
-import { containsReservedCharacter, stripReservedCharacters } from './reservedCharacters';
+import {
+  containsReservedCharacter,
+  stripReservedCharacters,
+} from './reservedCharacters';
 
 const _ = require('lodash');
 const flatten = require('flat');
