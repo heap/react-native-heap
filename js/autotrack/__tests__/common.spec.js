@@ -38,7 +38,7 @@ const Foo = props => {
 };
 
 describe('Common autotrack utils', () => {
-  describe('HeapIgnore', () => {
+  describe('Hierarchy capture', () => {
     it('Captures hierarchies normally when not ignored', () => {
       const wrapper = mount(
         <Foo>
@@ -55,7 +55,9 @@ describe('Common autotrack utils', () => {
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@Text;[testID=targetElement];|',
       });
     });
+  });
 
+  describe('HeapIgnore', () => {
     it('Ignores interaction', () => {
       const wrapper = mount(
         <Foo>
