@@ -46,6 +46,10 @@ public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
   }
 
   private static Map<String, String> convertToStringMap(ReadableMap readableMap) {
+    if (readableMap == null) {
+      return null;
+    }
+
     Map<String, String> stringMap = new HashMap<>();
     ReadableMapKeySetIterator mapIterator = readableMap.keySetIterator();
     while (mapIterator.hasNextKey()) {
