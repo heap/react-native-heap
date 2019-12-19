@@ -144,6 +144,24 @@ describe('Extracting Props with a configuration', () => {
     );
   });
 
+  test('removes any props with keys containing reserved characters', () => {
+    const obj2 = _.merge({}, obj1, {
+      stateNode: {
+        props: {
+          'abc@;|=#': 'foo',
+        },
+      },
+    });
+
+    const config2 = _.merge({}, config, {
+      Element: { include: ['a', 'abc@;|=#'] },
+    });
+
+    expect(extractProps('Element', obj2, config2)).toEqual(
+      '[a=foo];'
+    );
+  });
+
   test('extracts class configurations', () => {
     expect(extractProps('Element', objWithEventProps, config)).toEqual(
       '[a=foo];[b=7];[c=true];'

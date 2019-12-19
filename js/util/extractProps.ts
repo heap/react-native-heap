@@ -1,5 +1,5 @@
 import { getCombinedInclusionList } from './combineConfigs';
-import { stripReservedCharacters } from './reservedCharacters';
+import { containsReservedCharacter, stripReservedCharacters } from './reservedCharacters';
 
 const _ = require('lodash');
 const flatten = require('flat');
@@ -107,10 +107,11 @@ export const extractProps = (
     if (
       flattenedProps[key] !== null &&
       flattenedProps[key] !== undefined &&
-      typeof flattenedProps[key] !== 'function'
+      typeof flattenedProps[key] !== 'function' &&
+      !containsReservedCharacter(key)
     ) {
       // Remove all brackets from string.
-      let prop = stripReservedCharacters(flattenedProps[key].toString());
+      const prop = stripReservedCharacters(flattenedProps[key].toString());
       propsString += `[${key}=${prop}];`;
     }
   });
