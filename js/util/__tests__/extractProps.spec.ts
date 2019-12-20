@@ -85,6 +85,15 @@ describe('Extracting Props with a configuration', () => {
     expect(extractProps('Element', obj1, config2)).toEqual('[a=foo];[c=true];');
   });
 
+  test('can handle if a prop has a circular ref', () => {
+    const myProp: { foo?: any } = {};
+    myProp.foo = myProp;
+    const obj2 = _.merge({}, obj1, { stateNode: { props: { c: myProp } } });
+    expect(extractProps('Element', obj2, config)).toEqual(
+      '[a=foo];[c.foo.foo.foo=object Object];'
+    );
+  });
+
   test("functions don't come through", () => {
     const obj2 = _.merge({}, obj1, {
       stateNode: {
