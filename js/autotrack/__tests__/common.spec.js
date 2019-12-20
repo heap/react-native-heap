@@ -38,8 +38,8 @@ const Foo = props => {
 };
 
 describe('Common autotrack utils', () => {
-  describe('HeapIgnore', () => {
-    it('Captures hierarchies normally when not ignored', () => {
+  describe('Hierarchy capture', () => {
+    it('Captures hierarchies normally', () => {
       const wrapper = mount(
         <Foo>
           <Text testID="targetElement">{'foobar'}</Text>
@@ -56,6 +56,31 @@ describe('Common autotrack utils', () => {
       });
     });
 
+    it('Removes special characters from component names', () => {
+      const MySpecialComponent = props => {
+        return <View>{props.children}</View>;
+      };
+
+      MySpecialComponent.displayName = '@My@Special;|[Component#=';
+
+      const wrapper = mount(
+        <MySpecialComponent>
+          <Text testID="targetElement">{'foobar'}</Text>
+        </MySpecialComponent>
+      );
+      const normalComponent = wrapper
+        .find({ testID: 'targetElement' })
+        .filter(Text);
+      const normalProps = getBaseComponentProps(normalComponent.instance());
+      expect(normalProps).toEqual({
+        target_text: 'foobar',
+        rn_hierarchy:
+          '@WrapperComponent;|@MySpecialComponent;|@Text;[testID=targetElement];|',
+      });
+    });
+  });
+
+  describe('HeapIgnore', () => {
     it('Ignores interaction', () => {
       const wrapper = mount(
         <Foo>
