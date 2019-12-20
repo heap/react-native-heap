@@ -35,7 +35,8 @@ const manualTrack = bailOnError((event, payload) => {
     // simulate a failure.
     const flatten = require('flat');
 
-    const contextualProps = NavigationUtil.getScreenPropsForCurrentRoute();
+    const contextualProps =
+      NavigationUtil.getScreenPropsForCurrentRoute() || {};
 
     payload = payload || {};
     RNHeap.manuallyTrackEvent(event, flatten(payload), contextualProps);

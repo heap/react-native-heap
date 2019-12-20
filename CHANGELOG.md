@@ -15,6 +15,14 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.9.1] - 2019-12-20
+
+### Fixed
+- Fixed bug where app would crash when `Heap.track()` is called if React Navigation autocapture isn't set up. [#165](https://github.com/heap/react-native-heap/issues/165).
+- Strip additional special characters from props and component names to prevent hierarchy matching/parsing breakages.
+- Upgraded Heap iOS SDK dependency to 6.5.3 to pick up bug fixes since version 6.5.0.
+- Don't crash when capturing props with circular references or React JSX elements.
+
 ## [0.9.0] - 2019-12-05
 
 ### Changed

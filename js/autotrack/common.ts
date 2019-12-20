@@ -6,6 +6,7 @@ import { extractProps } from '../util/extractProps';
 import { BASE_HEAP_IGNORE_PROPS, getNextHeapIgnoreProps } from './heapIgnore';
 import { builtinPropExtractorConfig } from '../propExtractorConfig';
 import NavigationUtil from '../util/navigationUtil';
+import { stripReservedCharacters } from '../util/reservedCharacters';
 
 // The type definition of 'Component' from '@types/react' doesn't include the internal
 // '_reactInternalFiber' property, so create our own 'Component' type that includes this prop.
@@ -160,6 +161,7 @@ const getHierarchyStringFromTraversal: (
   const hierarchyString: string = hierarchyArray
     .map(element => {
       let currElementString = '';
+      const sanitizedElementName = stripReservedCharacters(element.elementName);
       if (
         !currentHeapIgnoreProps.allowInteraction ||
         !currentHeapIgnoreProps.allowInnerHierarchy
@@ -168,9 +170,9 @@ const getHierarchyStringFromTraversal: (
         // current subhierarchy, return an empty string for the current component.
         currElementString = '';
       } else if (!currentHeapIgnoreProps.allowAllProps) {
-        currElementString = `@${element.elementName};|`;
+        currElementString = `@${sanitizedElementName};|`;
       } else {
-        currElementString = `@${element.elementName};${element.propsString}|`;
+        currElementString = `@${sanitizedElementName};${element.propsString}|`;
       }
 
       // Doing this at the end allows us to capture HeapIgnore components.
