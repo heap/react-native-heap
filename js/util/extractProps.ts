@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { getCombinedInclusionList } from './combineConfigs';
 import {
   containsReservedCharacter,
@@ -91,7 +92,16 @@ export const extractProps = (
     props = fiberNode.memoizedProps;
   }
 
-  const filteredProps = _.pick(props, inclusionList);
+  const filteredProps = _(props)
+    .pick(inclusionList)
+    .mapValues((prop: any) => {
+      if (React.isValidElement(prop)) {
+        // :TODO: (jmtaber129): Consider pulling information from the React element.
+        return 'React.element';
+      }
+      return prop;
+    })
+    .value();
 
   // KLUDGE: We want to capture the `key` property for list components that have it set,
   // but we can't simply add to the list of props captured for all components in
@@ -100,7 +110,7 @@ export const extractProps = (
   // prop for its own use; it is intended to be reserved for internal use. (HEAP-8473)
   const flattenedProps = Object.assign(
     { key: fiberNode.key },
-    flatten(filteredProps)
+    flatten(filteredProps, { maxDepth: 4 })
   );
 
   let propsString = '';

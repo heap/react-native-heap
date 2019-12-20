@@ -78,6 +78,26 @@ describe('Common autotrack utils', () => {
           '@WrapperComponent;|@MySpecialComponent;|@Text;[testID=targetElement];|',
       });
     });
+
+    it('Can capture props that are JSX components', () => {
+      const ListItem = props => {
+        return <View>{props.children}</View>;
+      };
+      const wrapper = mount(
+        <ListItem rightTitle={<Text>Foo</Text>}>
+          <Text testID="targetElement">{'foobar'}</Text>
+        </ListItem>
+      );
+      const normalComponent = wrapper
+        .find({ testID: 'targetElement' })
+        .filter(Text);
+      const normalProps = getBaseComponentProps(normalComponent.instance());
+      expect(normalProps).toEqual({
+        target_text: 'foobar',
+        rn_hierarchy:
+          '@WrapperComponent;|@ListItem;[rightTitle=React.element];|@Text;[testID=targetElement];|',
+      });
+    });
   });
 
   describe('HeapIgnore', () => {
