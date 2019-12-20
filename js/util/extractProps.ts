@@ -119,7 +119,6 @@ export const extractProps = (
         return;
       }
 
-      // Remove all brackets from string.
       const prop = stripReservedCharacters(flattenedProps[key].toString());
       propsString += `[${key}=${prop}];`;
     }
