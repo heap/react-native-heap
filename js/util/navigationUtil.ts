@@ -25,7 +25,7 @@ export default class NavigationUtil {
     return null;
   }
 
-  static isEnabled(): boolean {
+  static isHocEnabled(): boolean {
     return !!this.heapNavRef;
   }
 
