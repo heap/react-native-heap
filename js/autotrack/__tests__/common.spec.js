@@ -13,6 +13,11 @@ import {
   withHeapIgnore,
 } from '../heapIgnore';
 
+const packageJson = require('../../../package.json');
+
+const SDK_VERSION = packageJson.version;
+expect(SDK_VERSION).toBeDefined();
+
 jest.unmock('react-native');
 
 // Placeholder functional component for hierarchy tests.
@@ -50,9 +55,11 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@Text;[testID=targetElement];|',
+        source_version: SDK_VERSION,
       });
     });
 
@@ -73,9 +80,11 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@MySpecialComponent;|@Text;[testID=targetElement];|',
+        source_version: SDK_VERSION,
       });
     });
 
@@ -93,9 +102,11 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@ListItem;[rightTitle=React.element];|@Text;[testID=targetElement];|',
+        source_version: SDK_VERSION,
       });
     });
   });
@@ -129,9 +140,11 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|',
+        source_version: SDK_VERSION,
       });
     });
 
@@ -152,9 +165,11 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;|',
+        source_version: SDK_VERSION,
       });
     });
 
@@ -175,8 +190,10 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
+        source_version: SDK_VERSION,
       });
     });
 
@@ -200,9 +217,11 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
+        source_version: SDK_VERSION,
       });
     });
 
@@ -232,8 +251,10 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@BarFunction;|@HeapIgnore;|',
+        source_version: SDK_VERSION,
       });
     });
 
@@ -252,8 +273,10 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@withHeapIgnore(Text);[testID=targetElement];|@HeapIgnore;|@Text;|',
+        source_version: SDK_VERSION,
       });
     });
 
@@ -270,8 +293,10 @@ describe('Common autotrack utils', () => {
         .filter(Text);
       const normalProps = getBaseComponentProps(normalComponent.instance());
       expect(normalProps).toEqual({
+        is_using_react_navigation_hoc: false,
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnoreTargetText;|@HeapIgnore;|@Text;[testID=targetElement];|',
+        source_version: SDK_VERSION,
       });
     });
 
