@@ -220,6 +220,7 @@ describe('Basic React Native and Interaction Support', () => {
       assert.not.exist(err);
       assert(res.length).not.equal(0);
 
+      // Make the page display the current userId, and assert on the displayed userId.
       await element(by.id('getUserId')).tap();
       await expect(element(by.id('userIdValue'))).toHaveText(res[0]['u']);
     });
@@ -489,6 +490,7 @@ describe('Basic React Native and Interaction Support', () => {
       assert.not.exist(err);
       assert(res.length).not.equal(0);
 
+      // Make the page display the current userId, and assert on the displayed userId.
       await element(by.id('getUserId')).tap();
       await expect(element(by.id('userIdValue'))).toHaveText(
         res[0]['user']['id']['value']
