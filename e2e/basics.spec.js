@@ -206,6 +206,25 @@ describe('Basic React Native and Interaction Support', () => {
       assert(res[0]['i']).equal('foobar');
     });
 
+    it('should get user id', async () => {
+      const { err, res } = await new Promise(resolve => {
+        // Fetch a post-resetIdentity event.
+        testUtil.findEventInRedisRequests(
+          { t: 'BASICS_SENTINEL' },
+          (err, res) => {
+            resolve({ err, res });
+          }
+        );
+      });
+
+      assert.not.exist(err);
+      assert(res.length).not.equal(0);
+
+      // Make the page display the current userId, and assert on the displayed userId.
+      await element(by.id('getUserId')).tap();
+      await expect(element(by.id('userIdValue'))).toHaveText(res[0]['u']);
+    });
+
     it('should reset identity', async () => {
       const { err1, err2, res1, res2 } = await new Promise(resolve => {
         // Fetch a pre-resetIdentity event.
@@ -455,6 +474,27 @@ describe('Basic React Native and Interaction Support', () => {
       assert.not.exist(err);
       assert(res.length).equal(1);
       assert(res[0]['toIdentity']).equal('foobar');
+    });
+
+    it('should get user id', async () => {
+      const { err, res } = await new Promise(resolve => {
+        // Fetch a post-resetIdentity event.
+        testUtil.findAndroidEventInRedisRequests(
+          { event: { sourceCustomEvent: { name: 'BASICS_SENTINEL' } } },
+          (err, res) => {
+            resolve({ err, res });
+          }
+        );
+      });
+
+      assert.not.exist(err);
+      assert(res.length).not.equal(0);
+
+      // Make the page display the current userId, and assert on the displayed userId.
+      await element(by.id('getUserId')).tap();
+      await expect(element(by.id('userIdValue'))).toHaveText(
+        res[0]['user']['id']['value']
+      );
     });
 
     it('should reset identity', async () => {

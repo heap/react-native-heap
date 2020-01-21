@@ -14,6 +14,7 @@ jest.mock('../util/navigationUtil');
 describe('The Heap object', () => {
   let mockTrack,
     mockSetAppId,
+    mockGetUserId,
     mockIdentify,
     mockResetIdentity,
     mockAddUserProperties,
@@ -37,6 +38,9 @@ describe('The Heap object', () => {
 
     NativeModules.RNHeap.setAppId.mockReset();
     mockSetAppId = NativeModules.RNHeap.setAppId;
+
+    NativeModules.RNHeap.getUserId.mockReset();
+    mockGetUserId = NativeModules.RNHeap.getUserId;
 
     NativeModules.RNHeap.identify.mockReset();
     mockIdentify = NativeModules.RNHeap.identify;
@@ -132,6 +136,12 @@ describe('The Heap object', () => {
       expect(mockSetAppId.mock.calls[0][0]).toBe('foo');
     });
 
+    it('getUserId - handles the common case', async () => {
+      mockGetUserId.mockReturnValue(Promise.resolve('1234'));
+      const userId = await Heap.getUserId();
+      expect(userId).toBe('1234');
+    });
+
     it('identify - handles the common case', () => {
       Heap.identify('foo');
       expect(mockIdentify.mock.calls.length).toBe(1);
@@ -173,6 +183,11 @@ describe('The Heap object', () => {
     it('setAppId - prevents errors from bubbling up', () => {
       mockSetAppId.mockImplementation(throwFn);
       expect(() => Heap.setAppId('foo')).not.toThrow();
+    });
+
+    it('getUserId - prevents errors from bubbling up', () => {
+      mockGetUserId.mockImplementation(throwFn);
+      expect(() => Heap.getUserId()).not.toThrow();
     });
 
     it('identify - prevents errors from bubbling up', () => {
