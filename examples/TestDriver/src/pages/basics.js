@@ -48,6 +48,17 @@ class MyTextInput extends Component {
 }
 
 class BasicsPage extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { userId: '' };
+  }
+
+  _onGetUserId() {
+    Heap.getUserId().then(userId => {
+      this.setState({ userId });
+    });
+  }
+
   render() {
     return (
       <ScrollView
@@ -109,6 +120,14 @@ class BasicsPage extends Component {
           title="Clear Event Properties"
           onPress={() => Heap.clearEventProperties()}
         />
+        <Button
+          testID="getUserId"
+          title="Log user ID"
+          onPress={() => this._onGetUserId()}
+        />
+        <Text testID="userIdValue">
+          {this.state.userId}
+        </Text>
         <TouchableOpacity testID="touchableOpacityText">
           <Text>Touchable Opacity</Text>
           <Text>Foo</Text>

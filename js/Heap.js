@@ -51,6 +51,7 @@ export default {
   setAppId: bailOnError(appId => RNHeap.setAppId(appId)),
 
   // User Properties
+  getUserId: bailOnError(() => RNHeap.getUserId()),
   identify: bailOnError(identity => RNHeap.identify(identity)),
   resetIdentity: bailOnError(() => RNHeap.resetIdentity()),
   addUserProperties: bailOnError(properties => {
