@@ -125,9 +125,7 @@ class BasicsPage extends Component {
           title="Log user ID"
           onPress={() => this._onGetUserId()}
         />
-        <Text testID="userIdValue">
-          {this.state.userId}
-        </Text>
+        <Text testID="userIdValue">{this.state.userId}</Text>
         <TouchableOpacity testID="touchableOpacityText">
           <Text>Touchable Opacity</Text>
           <Text>Foo</Text>
