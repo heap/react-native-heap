@@ -51,6 +51,7 @@ export default {
   setAppId: bailOnError(appId => RNHeap.setAppId(appId)),
 
   // User Properties
+  // Returns a promise that resolves to the Heap user ID.
   getUserId: bailOnError(() => RNHeap.getUserId()),
   identify: bailOnError(identity => RNHeap.identify(identity)),
   resetIdentity: bailOnError(() => RNHeap.resetIdentity()),
