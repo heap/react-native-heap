@@ -5,7 +5,7 @@ import { Fiber as FiberNode } from 'react-reconciler';
 import { extractProps } from '../util/extractProps';
 import { BASE_HEAP_IGNORE_PROPS, getNextHeapIgnoreProps } from './heapIgnore';
 import { builtinPropExtractorConfig } from '../propExtractorConfig';
-import NavigationUtil from '../util/navigationUtil';
+import { getContextualProps } from '../util/contextualProps';
 import { stripReservedCharacters } from '../util/reservedCharacters';
 
 // The type definition of 'Component' from '@types/react' doesn't include the internal
@@ -71,7 +71,7 @@ export const getBaseComponentProps: (
     targetText = '';
   }
 
-  const screenProps = NavigationUtil.getScreenPropsForCurrentRoute();
+  const screenProps = getContextualProps();
 
   const autotrackProps: AutotrackProps = {
     rn_hierarchy: hierarchy,

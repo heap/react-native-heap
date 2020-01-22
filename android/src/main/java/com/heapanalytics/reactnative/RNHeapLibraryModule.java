@@ -1,5 +1,6 @@
 package com.heapanalytics.reactnative;
 
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -38,6 +39,11 @@ public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void identify(String identity) {
     Heap.identify(identity);
+  }
+
+  @ReactMethod
+  public void getUserId(Promise promise) {
+    promise.resolve(Heap.getUserId());
   }
 
   @ReactMethod

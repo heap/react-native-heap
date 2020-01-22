@@ -25,6 +25,10 @@ export default class NavigationUtil {
     return null;
   }
 
+  static isHocEnabled(): boolean {
+    return !!this.heapNavRef;
+  }
+
   // :TODO: (jmtaber129): Add type for navigationState.
   static getActiveRouteProps(
     navigationState: any

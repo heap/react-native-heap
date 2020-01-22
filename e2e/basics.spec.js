@@ -5,9 +5,13 @@ assert = require('should/as-function');
 nodeUtil = require('util');
 testUtil = require('../../heap/test/util');
 rnTestUtil = require('./rnTestUtilities');
+packageJson = require('../package.json');
 
 const BASICS_PAGE_TOP_HIERARCHY =
   '@AppContainer;|@App;|@Provider;|@withReactNavigationAutotrack(NavigationContainer);|@NavigationContainer;|@Navigator;|@NavigationView;|@TabNavigationView;|@ScreenContainer;|@ResourceSavingScene;[key=Basics];|@SceneView;|@Connect(BasicsPage);|@BasicsPage;|@ScrollView;[testID=scrollContainer];|';
+
+const SDK_VERSION = packageJson.version;
+assert.exist(SDK_VERSION);
 
 const doTestActions = async () => {
   // Open the Basics tab in the tab navigator.
@@ -82,7 +86,16 @@ describe('Basic React Native and Interaction Support', () => {
         {
           a: '2084764307',
           t: 'pressInTestEvent1',
-          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
+          sprops: [
+            'screen_path',
+            'Basics',
+            'screen_name',
+            'Basics',
+            'is_using_react_navigation_hoc',
+            '1',
+            'source_version',
+            SDK_VERSION,
+          ],
         },
         event => {
           return !(
@@ -98,7 +111,16 @@ describe('Basic React Native and Interaction Support', () => {
         {
           a: '2084764307',
           t: 'pressInTestEvent2',
-          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
+          sprops: [
+            'screen_path',
+            'Basics',
+            'screen_name',
+            'Basics',
+            'is_using_react_navigation_hoc',
+            '1',
+            'source_version',
+            SDK_VERSION,
+          ],
         },
         event => {
           return (
@@ -114,7 +136,16 @@ describe('Basic React Native and Interaction Support', () => {
         {
           a: '2084764307',
           t: 'pressInTestEvent3',
-          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
+          sprops: [
+            'screen_path',
+            'Basics',
+            'screen_name',
+            'Basics',
+            'is_using_react_navigation_hoc',
+            '1',
+            'source_version',
+            SDK_VERSION,
+          ],
         },
         event => {
           return (
@@ -130,7 +161,16 @@ describe('Basic React Native and Interaction Support', () => {
         {
           a: '2084764307',
           t: 'pressInTestEvent4',
-          sprops: ['screen_path', 'Basics', 'screen_name', 'Basics'],
+          sprops: [
+            'screen_path',
+            'Basics',
+            'screen_name',
+            'Basics',
+            'is_using_react_navigation_hoc',
+            '1',
+            'source_version',
+            SDK_VERSION,
+          ],
         },
         event => {
           return !(
@@ -164,6 +204,25 @@ describe('Basic React Native and Interaction Support', () => {
       assert.not.exist(err);
       assert(res.length).equal(1);
       assert(res[0]['i']).equal('foobar');
+    });
+
+    it('should get user id', async () => {
+      const { err, res } = await new Promise(resolve => {
+        // Fetch a post-resetIdentity event.
+        testUtil.findEventInRedisRequests(
+          { t: 'BASICS_SENTINEL' },
+          (err, res) => {
+            resolve({ err, res });
+          }
+        );
+      });
+
+      assert.not.exist(err);
+      assert(res.length).not.equal(0);
+
+      // Make the page display the current userId, and assert on the displayed userId.
+      await element(by.id('getUserId')).tap();
+      await expect(element(by.id('userIdValue'))).toHaveText(res[0]['u']);
     });
 
     it('should reset identity', async () => {
@@ -211,6 +270,12 @@ describe('Basic React Native and Interaction Support', () => {
                 screen_name: {
                   string: 'Basics',
                 },
+                source_version: {
+                  string: SDK_VERSION,
+                },
+                is_using_react_navigation_hoc: {
+                  string: 'true',
+                },
               },
             },
           },
@@ -243,6 +308,12 @@ describe('Basic React Native and Interaction Support', () => {
                 screen_name: {
                   string: 'Basics',
                 },
+                source_version: {
+                  string: SDK_VERSION,
+                },
+                is_using_react_navigation_hoc: {
+                  string: 'true',
+                },
               },
             },
           },
@@ -259,6 +330,12 @@ describe('Basic React Native and Interaction Support', () => {
                 },
                 screen_name: {
                   string: 'Basics',
+                },
+                source_version: {
+                  string: SDK_VERSION,
+                },
+                is_using_react_navigation_hoc: {
+                  string: 'true',
                 },
               },
             },
@@ -283,6 +360,12 @@ describe('Basic React Native and Interaction Support', () => {
                 },
                 screen_name: {
                   string: 'Basics',
+                },
+                source_version: {
+                  string: SDK_VERSION,
+                },
+                is_using_react_navigation_hoc: {
+                  string: 'true',
                 },
               },
             },
@@ -312,6 +395,12 @@ describe('Basic React Native and Interaction Support', () => {
                 screen_name: {
                   string: 'Basics',
                 },
+                source_version: {
+                  string: SDK_VERSION,
+                },
+                is_using_react_navigation_hoc: {
+                  string: 'true',
+                },
               },
             },
           },
@@ -339,6 +428,12 @@ describe('Basic React Native and Interaction Support', () => {
                 },
                 screen_name: {
                   string: 'Basics',
+                },
+                source_version: {
+                  string: SDK_VERSION,
+                },
+                is_using_react_navigation_hoc: {
+                  string: 'true',
                 },
               },
             },
@@ -379,6 +474,27 @@ describe('Basic React Native and Interaction Support', () => {
       assert.not.exist(err);
       assert(res.length).equal(1);
       assert(res[0]['toIdentity']).equal('foobar');
+    });
+
+    it('should get user id', async () => {
+      const { err, res } = await new Promise(resolve => {
+        // Fetch a post-resetIdentity event.
+        testUtil.findAndroidEventInRedisRequests(
+          { event: { sourceCustomEvent: { name: 'BASICS_SENTINEL' } } },
+          (err, res) => {
+            resolve({ err, res });
+          }
+        );
+      });
+
+      assert.not.exist(err);
+      assert(res.length).not.equal(0);
+
+      // Make the page display the current userId, and assert on the displayed userId.
+      await element(by.id('getUserId')).tap();
+      await expect(element(by.id('userIdValue'))).toHaveText(
+        res[0]['user']['id']['value']
+      );
     });
 
     it('should reset identity', async () => {
@@ -428,6 +544,8 @@ describe('Basic React Native and Interaction Support', () => {
         touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
+        source_version: SDK_VERSION,
+        is_using_react_navigation_hoc: rnTestUtil.getPlatformBoolean(true),
       });
     });
 
@@ -441,6 +559,8 @@ describe('Basic React Native and Interaction Support', () => {
         touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
+        source_version: SDK_VERSION,
+        is_using_react_navigation_hoc: rnTestUtil.getPlatformBoolean(true),
       });
     });
 
@@ -496,6 +616,8 @@ describe('Basic React Native and Interaction Support', () => {
         touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
+        source_version: SDK_VERSION,
+        is_using_react_navigation_hoc: rnTestUtil.getPlatformBoolean(true),
       });
     });
 
@@ -509,6 +631,8 @@ describe('Basic React Native and Interaction Support', () => {
         touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
+        source_version: SDK_VERSION,
+        is_using_react_navigation_hoc: rnTestUtil.getPlatformBoolean(true),
       });
     });
 
@@ -522,6 +646,8 @@ describe('Basic React Native and Interaction Support', () => {
         touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
+        source_version: SDK_VERSION,
+        is_using_react_navigation_hoc: rnTestUtil.getPlatformBoolean(true),
       });
     });
 
@@ -531,6 +657,8 @@ describe('Basic React Native and Interaction Support', () => {
         rn_hierarchy: expectedHierarchy,
         screen_name: 'Basics',
         screen_path: 'Basics',
+        source_version: SDK_VERSION,
+        is_using_react_navigation_hoc: rnTestUtil.getPlatformBoolean(true),
       });
     });
 
@@ -540,6 +668,8 @@ describe('Basic React Native and Interaction Support', () => {
         rn_hierarchy: expectedHierarchy,
         screen_name: 'Basics',
         screen_path: 'Basics',
+        source_version: SDK_VERSION,
+        is_using_react_navigation_hoc: rnTestUtil.getPlatformBoolean(true),
       });
     });
 
@@ -550,6 +680,8 @@ describe('Basic React Native and Interaction Support', () => {
         page_index: '1',
         screen_name: 'Basics',
         screen_path: 'Basics',
+        source_version: SDK_VERSION,
+        is_using_react_navigation_hoc: rnTestUtil.getPlatformBoolean(true),
       });
     });
 
@@ -560,6 +692,8 @@ describe('Basic React Native and Interaction Support', () => {
         placeholder_text: 'foo placeholder',
         screen_name: 'Basics',
         screen_path: 'Basics',
+        source_version: SDK_VERSION,
+        is_using_react_navigation_hoc: rnTestUtil.getPlatformBoolean(true),
       });
     });
   });

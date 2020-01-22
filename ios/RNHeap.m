@@ -61,6 +61,11 @@ RCT_EXPORT_METHOD(manuallyTrackEvent:(NSString *)event withProperties:(NSDiction
     #pragma clang diagnostic pop
 }
 
+RCT_REMAP_METHOD(getUserId, getUserIdWithResolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+  NSString *userId = [Heap userId];
+  resolve(userId);
+}
+
 RCT_EXPORT_METHOD(identify:(NSString *)identity) {
   [Heap identify:identity];
 }

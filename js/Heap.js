@@ -14,7 +14,7 @@ import { autocaptureTextInputChange } from './autotrack/textInput';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';
 import { withReactNavigationAutotrack } from './autotrack/reactNavigation';
 import { bailOnError } from './util/bailer';
-import NavigationUtil from './util/navigationUtil';
+import { getContextualProps } from './util/contextualProps';
 
 const flatten = require('flat');
 const RNHeap = NativeModules.RNHeap;
@@ -35,8 +35,7 @@ const manualTrack = bailOnError((event, payload) => {
     // simulate a failure.
     const flatten = require('flat');
 
-    const contextualProps =
-      NavigationUtil.getScreenPropsForCurrentRoute() || {};
+    const contextualProps = getContextualProps();
 
     payload = payload || {};
     RNHeap.manuallyTrackEvent(event, flatten(payload), contextualProps);
@@ -52,6 +51,8 @@ export default {
   setAppId: bailOnError(appId => RNHeap.setAppId(appId)),
 
   // User Properties
+  // Returns a promise that resolves to the Heap user ID.
+  getUserId: bailOnError(() => RNHeap.getUserId()),
   identify: bailOnError(identity => RNHeap.identify(identity)),
   resetIdentity: bailOnError(() => RNHeap.resetIdentity()),
   addUserProperties: bailOnError(properties => {

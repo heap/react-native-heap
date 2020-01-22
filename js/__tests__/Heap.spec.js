@@ -4,11 +4,17 @@ import { NativeModules } from 'react-native';
 import NavigationUtil from '../util/navigationUtil';
 import Heap from '../Heap';
 
+const packageJson = require('../../package.json');
+
+const SDK_VERSION = packageJson.version;
+expect(SDK_VERSION).toBeDefined();
+
 jest.mock('../util/navigationUtil');
 
 describe('The Heap object', () => {
   let mockTrack,
     mockSetAppId,
+    mockGetUserId,
     mockIdentify,
     mockResetIdentity,
     mockAddUserProperties,
@@ -33,6 +39,9 @@ describe('The Heap object', () => {
     NativeModules.RNHeap.setAppId.mockReset();
     mockSetAppId = NativeModules.RNHeap.setAppId;
 
+    NativeModules.RNHeap.getUserId.mockReset();
+    mockGetUserId = NativeModules.RNHeap.getUserId;
+
     NativeModules.RNHeap.identify.mockReset();
     mockIdentify = NativeModules.RNHeap.identify;
 
@@ -53,8 +62,10 @@ describe('The Heap object', () => {
 
     NavigationUtil.getScreenPropsForCurrentRoute.mockImplementation(() => {
       return {
+        is_using_react_navigation_hoc: false,
         screen_path: 'Basics::Foo',
         screen_name: 'Foo',
+        source_version: SDK_VERSION,
       };
     });
   });
@@ -65,8 +76,10 @@ describe('The Heap object', () => {
       expect(mockTrack.mock.calls[0][0]).toBe('foo');
       expect(mockTrack.mock.calls[0][1]).toEqual(expectedProps);
       expect(mockTrack.mock.calls[0][2]).toEqual({
+        is_using_react_navigation_hoc: false,
         screen_path: 'Basics::Foo',
         screen_name: 'Foo',
+        source_version: SDK_VERSION,
       });
     };
 
@@ -123,6 +136,12 @@ describe('The Heap object', () => {
       expect(mockSetAppId.mock.calls[0][0]).toBe('foo');
     });
 
+    it('getUserId - handles the common case', async () => {
+      mockGetUserId.mockReturnValue(Promise.resolve('1234'));
+      const userId = await Heap.getUserId();
+      expect(userId).toBe('1234');
+    });
+
     it('identify - handles the common case', () => {
       Heap.identify('foo');
       expect(mockIdentify.mock.calls.length).toBe(1);
@@ -164,6 +183,11 @@ describe('The Heap object', () => {
     it('setAppId - prevents errors from bubbling up', () => {
       mockSetAppId.mockImplementation(throwFn);
       expect(() => Heap.setAppId('foo')).not.toThrow();
+    });
+
+    it('getUserId - prevents errors from bubbling up', () => {
+      mockGetUserId.mockImplementation(throwFn);
+      expect(() => Heap.getUserId()).not.toThrow();
     });
 
     it('identify - prevents errors from bubbling up', () => {
