@@ -8,14 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
-- Added `getUserId()` method for fetching the current Heap User ID from the underlying native SDK.
-
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
 __END_UNRELEASED__
+
+## [0.10.0] - 2019-01-21
+
+### Added
+- Added `getUserId()` method for fetching the current Heap User ID from the underlying native SDK.
 
 ## [0.9.1] - 2019-12-20
 
