@@ -12,6 +12,8 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+- Updated `index.d.ts` typings to include `resetIdentity()` and `getUserId()` methods.
+
 ### Security
 __END_UNRELEASED__
 
