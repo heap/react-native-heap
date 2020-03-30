@@ -9,6 +9,8 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 ### Changed
+- Upgraded the native Android Heap SDK to v1.6.0.
+
 ### Deprecated
 ### Removed
 ### Fixed
