@@ -1,10 +1,16 @@
 require('coffeescript').register();
 
 const _ = require('lodash');
+assert = require('should/as-function');
 const nodeUtil = require('util');
 
 db = require('../../heap/back/db');
 testUtil = require('../../heap/test/util');
+
+packageJson = require('../package.json');
+
+const SDK_VERSION = packageJson.version;
+assert.exist(SDK_VERSION);
 
 const HEAP_ENV_ID = '2084764307';
 
@@ -105,53 +111,14 @@ const assertAutotrackHierarchy = async (expectedName, expectedProps) => {
   }
 };
 
-const assertAndroidNavigationEvent = async (expectedPath, expectedType) => {
-  const commonProps = {
-    screen_path: {
-      string: expectedPath,
-    },
-  };
-  const props = expectedType
-    ? {
-        ...commonProps,
-        action: {
-          string: expectedType,
-        },
-      }
-    : commonProps;
-
-  return assertAndroidEvent({
-    envId: HEAP_ENV_ID,
-    event: {
-      sourceEvent: {
-        name: 'react_navigation_screenview',
-        sourceName: 'react_native',
-        sourceProperties: props,
-      },
-    },
-  });
-};
-
-const assertIosNavigationEvent = async (expectedPath, expectedType) => {
-  const commonProps = ['screen_path', expectedPath];
-  const props = expectedType
-    ? [...commonProps, 'action', expectedType]
-    : commonProps;
-  return assertIosPixel({
-    t: 'react_navigation_screenview',
-    source: 'react_native',
-    sprops: props,
-  });
-};
-
 const assertNavigationEvent = async (expectedPath, expectedType) => {
-  if (device.getPlatform() === 'android') {
-    return assertAndroidNavigationEvent(expectedPath, expectedType);
-  } else if (device.getPlatform() === 'ios') {
-    return assertIosNavigationEvent(expectedPath, expectedType);
-  } else {
-    throw new Error(`Unknown device type: ${device.getPlatform()}`);
-  }
+  const expectedProps = {
+    action: expectedType,
+    screen_path: expectedPath,
+    source_version: SDK_VERSION,
+  };
+
+  return assertAutotrackHierarchy('react_navigation_screenview', expectedProps);
 };
 
 pollForSentinel = async (sentinelValue, timeout = 60000) => {
@@ -226,4 +193,5 @@ module.exports = {
   waitIfIos,
   getPlatformBoolean,
   flushAllRedis,
+  SDK_VERSION,
 };
