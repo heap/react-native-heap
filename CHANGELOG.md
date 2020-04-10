@@ -15,7 +15,16 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
-## [0.10.0] - 2019-01-21
+## [0.11.0] - 2020-04-10
+
+### Changed
+- Upgraded the native Android Heap SDK to v1.6.0.
+- Upgraded Heap iOS SDK dependency to 6.7.0.
+
+### Fixed
+- Updated `index.d.ts` typings to include `resetIdentity()` and `getUserId()` methods.
+
+## [0.10.0] - 2020-01-21
 
 ### Added
 - Added `getUserId()` method for fetching the current Heap User ID from the underlying native SDK.

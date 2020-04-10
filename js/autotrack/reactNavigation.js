@@ -2,6 +2,7 @@ import React from 'react';
 import { bail, bailOnError } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 import NavigationUtil from '../util/navigationUtil';
+import { getContextualProps } from '../util/contextualProps';
 
 const EVENT_TYPE = 'react_navigation_screenview';
 
@@ -20,6 +21,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     );
     if (prevScreenRoute !== nextScreenRoute) {
       track(EVENT_TYPE, {
+        ...getContextualProps(),
         screen_path: nextScreenRoute,
         action: action.type,
       });
@@ -43,6 +45,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
       } = NavigationUtil.getActiveRouteProps(this.topLevelNavigator.state.nav);
 
       track(EVENT_TYPE, {
+        ...getContextualProps(),
         screen_path: initialPageviewPath,
         action: INITIAL_ROUTE_TYPE,
       });

@@ -104,13 +104,22 @@ export function removeEventProperty(property: string): void;
 export function clearEventProperties(): void;
 
 /**
+ * Resets a user's identity to a random anonymous user ID. A new session for an anonymous user will begin when called if the user was
+ * previously identified. The method has no effect if the user was previously anonymous when called.
+ */
+export function resetIdentity(): void;
+
+/**
+ * Returns  a promise that resolves to the stringified version of the numeric user ID associated with user.
+ */
+export function getUserId(): Promise<string>;
+
+/**
  * The following functions are not available via the iOS and Android API.
  *
  * export function enableVisualizer(): void;
  * export function startDebug(): void;
  * export function stopDebug(): void;
- * export function resetIdentify(): void;
- * export function userId(): Promise<string>;
  * export function libVersion(): Promise<string>;
  * export function changeInterval(interval: number): void;
  */
