@@ -1,6 +1,6 @@
 //
 //  Heap.h
-//  Version 6.5.3
+//  Version 6.7.0
 //  Copyright (c) 2014 Heap Inc. All rights reserved.
 //
 
@@ -11,6 +11,25 @@
 // nullable if necessary. This makes Swift use non-optional types instead of
 // implicitly unwrapped optionals.
 NS_ASSUME_NONNULL_BEGIN
+
+/// @name Heap options library
+
+/// The Heap initialization options API.
+@interface HeapOptions : NSObject
+
+/// Start debug logging of Heap activity via NSLog. This should not be called in the release version of an app.
+@property (assign) BOOL debug;
+
+/// Disable target text capture.
+@property (assign) BOOL disableTextCapture;
+
+ /// Don't capture the iOS vendor ID (IDFV).
+@property (assign) BOOL disableVendorIdCapture;
+
+/// Don't capture the iOS advertiser ID (IDFA).
+@property (assign) BOOL disableAdvertiserIdCapture;
+
+@end
 
 /// @name Heap library
 
@@ -26,8 +45,25 @@ NS_ASSUME_NONNULL_BEGIN
  * Set the app ID for your project, and begin tracking events automatically.
  *
  * @param newAppId       the Heap app ID
+ * @deprecated "setAppId" is deprecated, please use "initialize" instead.
  */
-+ (void)setAppId:(NSString *)newAppId;
++ (void)setAppId:(NSString *)newAppId __deprecated_msg("Use initialize instead");
+
+/**
+ * Initialize the Heap library.
+ *
+ * @param envId           the Heap environment ID
+ */
++ (void)initialize:(NSString *)envId;
+
+/**
+ * Initialize the Heap library.
+ *
+ * @param envId           the Heap environment ID
+ * @param options         initialization options
+ */
++ (void)initialize:(NSString *)envId
+       withOptions:(HeapOptions *)options;
 
 /**
  * Start the pairing process to connect to the Event Visualizer.
@@ -56,8 +92,9 @@ NS_ASSUME_NONNULL_BEGIN
  * Start debug logging of Heap activity via NSLog.
  *
  * This should not be called in the release version of an app.
+  * @deprecated "startDebug" is deprecated, please use "initialize" instead with "HeapOptions" where "debug" is set to true.
  */
-+ (void)startDebug;
++ (void)startDebug __deprecated_msg("Use initialize instead");
 
 /**
  * Stop debug logging.
