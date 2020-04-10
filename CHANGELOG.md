@@ -10,6 +10,7 @@ __BEGIN_UNRELEASED__
 ### Added
 ### Changed
 - Upgraded the native Android Heap SDK to v1.6.0.
+- Upgraded Heap iOS SDK dependency to 6.7.0.
 
 ### Deprecated
 ### Removed
