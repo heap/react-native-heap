@@ -12,6 +12,8 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+- Improve support for 'HeapIgnore' and its convenience components in minified apps.
+
 ### Security
 __END_UNRELEASED__
 
