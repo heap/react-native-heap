@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-// apply plugin: 'com.heapanalytics.android'
+apply plugin: 'com.heapanalytics.android'
 
 import com.android.build.OutputFile
 

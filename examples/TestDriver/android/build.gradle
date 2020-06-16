@@ -16,7 +16,7 @@ buildscript {
     }
     dependencies {
         classpath("com.android.tools.build:gradle:3.4.1")
-        // classpath "com.heapanalytics.android:heap-android-gradle:${heapVersion}"
+        classpath "com.heapanalytics.android:heap-android-gradle:${heapVersion}"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
 
         // NOTE: Do not place your application dependencies here; they belong
