@@ -1,3 +1,7 @@
+import * as React from 'react';
+
+import { HeapIgnore, HeapIgnoreTargetText } from './js/autotrack/heapIgnore';
+
 /**
  * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch
  * between projects or between your production and development environments.
@@ -22,7 +26,7 @@ export function setAppId(appId: string): void;
  * @param withProperties a JSON object containing key-value pairs to be associated with an event.  Nested objects
  * will be flattened.
  */
-export function track(event: string, withProperties: object): void;
+export function track(event: string, properties?: object): void;
 
 /**
  * Attach a unique identity to a user.
@@ -110,9 +114,29 @@ export function clearEventProperties(): void;
 export function resetIdentity(): void;
 
 /**
- * Returns  a promise that resolves to the stringified version of the numeric user ID associated with user.
+ * Returns a promise that resolves to the stringified version of the numeric user ID associated with user.
  */
 export function getUserId(): Promise<string>;
+
+/**
+ * Returns an HOC of a component with specific HeapIgnore properties.
+ *
+ * @param IgnoredComponent the component to wrap with HeapIgnore.
+ * @param heapIgnoreConfig the HeapIgnore configuration
+ */
+export function withHeapIgnore(IgnoredComponent: React.Component, heapIgnoreConfig?: object): React.Component;
+
+/**
+ * Component for ignoring all or parts of interactions with children of this component.
+ */
+export class Ignore extends React.Component {}
+
+/**
+ * Convenience component for ignoring 'target_text' on interactions with children of this component.
+ */
+export const IgnoreTargetText: React.SFC;
+
+export { HeapIgnore, HeapIgnoreTargetText };
 
 /**
  * The following functions are not available via the iOS and Android API.
