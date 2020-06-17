@@ -1,6 +1,6 @@
 //
 //  Heap.h
-//  Version 6.7.0
+//  Version 6.8.1
 //  Copyright (c) 2014 Heap Inc. All rights reserved.
 //
 
@@ -28,6 +28,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Don't capture the iOS advertiser ID (IDFA).
 @property (assign) BOOL disableAdvertiserIdCapture;
+
+/// Opt-out of telemetry capture.
+@property (assign) BOOL disableTelemetryCapture;
 
 @end
 
