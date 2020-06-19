@@ -15,6 +15,7 @@ __BEGIN_UNRELEASED__
 ### Removed
 ### Fixed
 - Improve support for 'HeapIgnore' and its convenience components in minified apps.
+- Updated `index.d.ts` typings to include `HeapIgnore` and related components.
 
 ### Security
 __END_UNRELEASED__
