@@ -3,11 +3,12 @@ import React from 'react';
 
 import { getComponentDisplayName } from '../util/hocUtil';
 
-export const HeapIgnore = props => {
-  // The only purpose of HeapIgnore is to tell the us which props apply to the subtree when we're
-  // traversing, so we just need to render it's children here.
-  return props.children;
-};
+export class HeapIgnore extends React.Component {
+  render() {
+    return this.props.children;
+  }
+}
+HeapIgnore.displayName = 'HeapIgnore';
 
 // Convenience component for only ignoring target text.
 export const HeapIgnoreTargetText = props => {
@@ -55,7 +56,7 @@ export const BASE_HEAP_IGNORE_PROPS = {
 };
 
 export const getNextHeapIgnoreProps = (currProps, element) => {
-  if (element.elementName !== 'HeapIgnore') {
+  if (element.elementName !== HeapIgnore.displayName) {
     return currProps;
   }
 
