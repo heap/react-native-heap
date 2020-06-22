@@ -9,16 +9,20 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 ### Changed
-- Upgraded the native Heap iOS SDK dependency to 6.8.1.
-
 ### Deprecated
 ### Removed
 ### Fixed
-- Improve support for 'HeapIgnore' and its convenience components in minified apps.
-- Updated `index.d.ts` typings to include `HeapIgnore` and related components.
-
 ### Security
 __END_UNRELEASED__
+
+## [0.12.0] - 2020-06-22
+
+### Changed
+- Upgraded the native Heap iOS SDK dependency to 6.8.1. This fixes an issue in which Install/Upgrade events would not fire for some installations
+
+### Fixed
+- Improve support for 'HeapIgnore' and its convenience components in minified apps.
+- Updated `index.d.ts` typings to include `HeapIgnore` and related components.
 
 ## [0.11.0] - 2020-04-10
 
