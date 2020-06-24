@@ -295,6 +295,28 @@ const instrumentStartup = path => {
   }
 };
 
+const pressabilityWrappingTemplate = template(`
+  const Heap = require('@heap/react-native-heap').default;
+  CONFIG_IDENTIFIER = Heap.wrapPressabilityConfig(CONFIG_IDENTIFIER) || CONFIG_IDENTIFIER;
+`);
+
+// Instruments 'Touchable's in RN 0.62+ by passing the 'Pressability' config to the Heap library to wrap the config.
+const pressabilityInstrumentationVisitor = {
+  ClassMethod(path) {
+    const { node } = path;
+
+    if (node.key.name !== 'constructor') {
+      return;
+    }
+
+    const configWrapExpression = pressabilityWrappingTemplate({
+      CONFIG_IDENTIFIER: node.params[0],
+    });
+
+    path.get('body').unshiftContainer('body', configWrapExpression);
+  }
+};
+
 function transform(babel) {
   return {
     visitor: {
@@ -307,6 +329,11 @@ function transform(babel) {
       AssignmentExpression(path) {
         instrumentSwitchComponent(path);
       },
+      ClassDeclaration(path) {
+        if (path.node.id.name === 'Pressability') {
+          path.traverse(pressabilityInstrumentationVisitor);
+        }
+      }
     },
   };
 }
