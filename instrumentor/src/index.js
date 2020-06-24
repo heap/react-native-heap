@@ -314,7 +314,7 @@ const pressabilityInstrumentationVisitor = {
     });
 
     path.get('body').unshiftContainer('body', configWrapExpression);
-  }
+  },
 };
 
 function transform(babel) {
@@ -333,7 +333,7 @@ function transform(babel) {
         if (path.node.id.name === 'Pressability') {
           path.traverse(pressabilityInstrumentationVisitor);
         }
-      }
+      },
     },
   };
 }

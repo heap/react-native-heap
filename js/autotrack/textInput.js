@@ -1,4 +1,4 @@
-import { getBaseComponentProps } from './common';
+import { getBaseComponentPropsFromComponent } from './common';
 import * as _ from 'lodash';
 
 const DEBOUNCE_PERIOD_MS = 1000;
@@ -24,7 +24,7 @@ const debouncedAutocaptureTextInputChange = track => (
   componentThis,
   event
 ) => {
-  const autotrackProps = getBaseComponentProps(componentThis);
+  const autotrackProps = getBaseComponentPropsFromComponent(componentThis);
 
   if (!autotrackProps) {
     // We're not capturing this interaction.
