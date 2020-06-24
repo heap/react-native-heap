@@ -17,6 +17,8 @@ Pod::Spec.new do |s|
   s.vendored_libraries = "ios/Vendor/libHeap.a"
 
   s.dependency "React"
+  
+  s.frameworks = "SystemConfiguration"
 
   s.script_phase = {
     name: 'Generate `HeapSettings.plist`',
