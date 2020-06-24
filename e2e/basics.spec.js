@@ -531,13 +531,12 @@ describe('Basic React Native and Interaction Support', () => {
 
   describe('Autotrack', () => {
     it("should autotrack 'TouchableOpacity's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=touchableOpacityText];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=touchableOpacityText];|@AnimatedComponent;[testID=touchableOpacityText];|`;
       const expectedTargetText = 'Touchable Opacity Foo';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
         is_long_press: rnTestUtil.getPlatformBoolean(false),
-        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
         source_version: rnTestUtil.SDK_VERSION,
@@ -546,13 +545,12 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it("should autotrack long presses on 'TouchableOpacity's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|@AnimatedComponent;[testID=longPressedTouchableOpacity];|`;
       const expectedTargetText = 'Touchable Opacity Long press';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
         is_long_press: rnTestUtil.getPlatformBoolean(true),
-        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
         source_version: rnTestUtil.SDK_VERSION,
@@ -561,7 +559,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it(":ios: should not autotrack short press after a long press on 'TouchableOpacity's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|@AnimatedComponent;[testID=longPressedTouchableOpacity];|`;
       const event = {
         t: 'touch',
         source: 'react_native',
@@ -579,7 +577,7 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it(":android: should not autotrack short press after a long press on 'TouchableOpacity's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableOpacity;[testID=longPressedTouchableOpacity];|@AnimatedComponent;[testID=longPressedTouchableOpacity];|`;
       const event = {
         sourceEvent: {
           name: 'touch',
@@ -609,7 +607,6 @@ describe('Basic React Native and Interaction Support', () => {
         rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
         is_long_press: rnTestUtil.getPlatformBoolean(false),
-        touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
         source_version: rnTestUtil.SDK_VERSION,
@@ -618,13 +615,12 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it("should autotrack 'TouchableWithoutFeedback's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableWithoutFeedback;[testID=touchableWithoutFeedbackText];|@Text;[testID=touchableWithoutFeedbackText];|@TouchableText;[testID=touchableWithoutFeedbackText];|`;
       const expectedTargetText = 'Touchable Without Feedback';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
         is_long_press: rnTestUtil.getPlatformBoolean(false),
-        touch_state: 'RESPONDER_ACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
         source_version: rnTestUtil.SDK_VERSION,
@@ -633,13 +629,12 @@ describe('Basic React Native and Interaction Support', () => {
     });
 
     it(":android: should autotrack 'TouchableNativeFeedback's", async () => {
-      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|`;
+      const expectedHierarchy = `${BASICS_PAGE_TOP_HIERARCHY}@TouchableNativeFeedback;[testID=touchableNativeFeedbackText];|@Text;[testID=touchableNativeFeedbackText];|@TouchableText;[testID=touchableNativeFeedbackText];|`;
       const expectedTargetText = 'Touchable Native Feedback';
       await rnTestUtil.assertAutotrackHierarchy('touch', {
         rn_hierarchy: expectedHierarchy,
         target_text: expectedTargetText,
         is_long_press: rnTestUtil.getPlatformBoolean(false),
-        touch_state: 'RESPONDER_INACTIVE_PRESS_IN',
         screen_name: 'Basics',
         screen_path: 'Basics',
         source_version: rnTestUtil.SDK_VERSION,

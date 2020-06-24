@@ -60,14 +60,14 @@ describe('HeapIgnore', () => {
   });
 
   it('should ignore props and target text', async () => {
-    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}@HeapIgnore;|@TouchableOpacity;|`;
+    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}@HeapIgnore;|@TouchableOpacity;|@AnimatedComponent;|`;
     await rnTestUtil.assertAutotrackHierarchy('touch', {
       rn_hierarchy: expectedHierarchy,
     });
   });
 
   it('should ignore props', async () => {
-    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}@HeapIgnore;|@TouchableOpacity;|`;
+    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}@HeapIgnore;|@TouchableOpacity;|@AnimatedComponent;|`;
     await rnTestUtil.assertAutotrackHierarchy('touch', {
       rn_hierarchy: expectedHierarchy,
       target_text: 'Foobar',
@@ -75,14 +75,14 @@ describe('HeapIgnore', () => {
   });
 
   it('should allow everything except target text HOC', async () => {
-    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}@withHeapIgnore(TouchableOpacity);[testID=allowedAllPropsHoc];|@HeapIgnore;|@TouchableOpacity;[testID=allowedAllPropsHoc];|`;
+    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}@withHeapIgnore(Component);[testID=allowedAllPropsHoc];|@HeapIgnore;|@TouchableOpacity;[testID=allowedAllPropsHoc];|@AnimatedComponent;[testID=allowedAllPropsHoc];|`;
     await rnTestUtil.assertAutotrackHierarchy('touch', {
       rn_hierarchy: expectedHierarchy,
     });
   });
 
   it('should ignore target text', async () => {
-    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}@HeapIgnoreTargetText;|@HeapIgnore;|@TouchableOpacity;[testID=ignoredTargetText];|`;
+    const expectedHierarchy = `${HEAPIGNORE_PAGE_TOP_HIERARCHY}@HeapIgnoreTargetText;|@HeapIgnore;|@TouchableOpacity;[testID=ignoredTargetText];|@AnimatedComponent;[testID=ignoredTargetText];|`;
     await rnTestUtil.assertAutotrackHierarchy('touch', {
       rn_hierarchy: expectedHierarchy,
     });
