@@ -44,6 +44,9 @@ const unsafePressHandler = (event, track, isLongPress) => {
 
 const pressHandler = bailOnError(unsafePressHandler);
 
+// Wrap the config passed to the 'Pressability' constructor by wrapping the 'onPress' and 'onLongPress' properties in the config, and
+// keeping all other properties as-is.  See the config passed to the 'Pressability' constructor in
+// https://github.com/facebook/react-native/blob/a5151c2b5f6f03896eb7d9df873c5f61a706f055/Libraries/Components/Touchable/TouchableOpacity.js#L143-L186.
 export const wrapPressabilityConfig = track => pressabilityConfig => {
   const newConfig = {
     ...pressabilityConfig,
