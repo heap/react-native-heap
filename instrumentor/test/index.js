@@ -78,7 +78,7 @@ describe('autotrack instrumentor plugin', () => {
     assert.equal(actual, expected);
   });
 
-  it('non-pressability should be instrumented', () => {
+  it('non-pressability should not be instrumented', () => {
     var actual = getActualTransformedFile('is-not-pressability');
     var expected = getExpectedTransformedFile('is-not-pressability');
     assert.equal(actual, expected);
