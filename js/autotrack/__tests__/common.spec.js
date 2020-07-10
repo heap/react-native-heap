@@ -6,7 +6,7 @@ import { Text, View } from 'react-native';
 const foo = require('react-native');
 import { shallow, mount, render } from 'enzyme';
 
-import { getBaseComponentProps } from '../common';
+import { getBaseComponentPropsFromComponent } from '../common';
 import {
   HeapIgnore,
   HeapIgnoreTargetText,
@@ -53,7 +53,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         target_text: 'foobar',
@@ -78,7 +80,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         target_text: 'foobar',
@@ -100,7 +104,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         target_text: 'foobar',
@@ -123,7 +129,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toBe(null);
     });
 
@@ -138,7 +146,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         target_text: 'foobar',
@@ -163,7 +173,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         target_text: 'foobar',
@@ -188,7 +200,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         rn_hierarchy:
@@ -215,7 +229,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         target_text: 'foobar',
@@ -249,7 +265,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         rn_hierarchy:
@@ -271,7 +289,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         rn_hierarchy:
@@ -291,7 +311,9 @@ describe('Common autotrack utils', () => {
       const normalComponent = wrapper
         .find({ testID: 'targetElement' })
         .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalProps = getBaseComponentPropsFromComponent(
+        normalComponent.instance()
+      );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         rn_hierarchy:
