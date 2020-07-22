@@ -7,7 +7,7 @@ import {
   HeapIgnoreTargetText,
   withHeapIgnore,
 } from './autotrack/heapIgnore';
-import { autotrackPress, wrapPressabilityConfig } from './autotrack/touchables';
+import { autotrackPress } from './autotrack/touchables';
 import { autotrackSwitchChange } from './autotrack/switches';
 import { autotrackScrollView } from './autotrack/scrollViews';
 import { autocaptureTextInputChange } from './autotrack/textInput';
@@ -86,7 +86,6 @@ export default {
   autocaptureTextInput: bailOnError(
     autocaptureTextInputChange(autocaptureTrack)
   ),
-  wrapPressabilityConfig: bailOnError(wrapPressabilityConfig(autocaptureTrack)),
   withReactNavigationAutotrack: withReactNavigationAutotrack(autocaptureTrack),
   Ignore: HeapIgnore,
   IgnoreTargetText: HeapIgnoreTargetText,
