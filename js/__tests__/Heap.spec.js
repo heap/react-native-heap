@@ -63,6 +63,7 @@ describe('The Heap object', () => {
     NavigationUtil.getScreenPropsForCurrentRoute.mockImplementation(() => {
       return {
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         screen_path: 'Basics::Foo',
         screen_name: 'Foo',
         source_version: SDK_VERSION,
@@ -77,6 +78,7 @@ describe('The Heap object', () => {
       expect(mockTrack.mock.calls[0][1]).toEqual(expectedProps);
       expect(mockTrack.mock.calls[0][2]).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         screen_path: 'Basics::Foo',
         screen_name: 'Foo',
         source_version: SDK_VERSION,
