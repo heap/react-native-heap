@@ -7,7 +7,10 @@ import {
   HeapIgnoreTargetText,
   withHeapIgnore,
 } from './autotrack/heapIgnore';
-import { autotrackPress } from './autotrack/touchables';
+import {
+  autotrackPress,
+  withHeapTouchableAutocapture,
+} from './autotrack/touchables';
 import { autotrackSwitchChange } from './autotrack/switches';
 import { autotrackScrollView } from './autotrack/scrollViews';
 import { autocaptureTextInputChange } from './autotrack/textInput';
@@ -81,6 +84,7 @@ export default {
     }),
 
   autotrackPress: bailOnError(autotrackPress(autocaptureTrack)),
+  withHeapTouchableAutocapture: withHeapTouchableAutocapture(autocaptureTrack),
   autotrackSwitchChange: bailOnError(autotrackSwitchChange(autocaptureTrack)),
   autocaptureScrollView: bailOnError(autotrackScrollView(autocaptureTrack)),
   autocaptureTextInput: bailOnError(

@@ -71,6 +71,12 @@ describe('autotrack instrumentor plugin', () => {
     var expected = getExpectedTransformedFile('not-text-input');
     assert.equal(actual, expected);
   });
+
+  it('touchables on RN 0.62+ should be instrumented', () => {
+    var actual = getActualTransformedFile('is-touchable-0-62');
+    var expected = getExpectedTransformedFile('is-touchable-0-62');
+    assert.equal(actual, expected);
+  });
 });
 
 const getActualTransformedFile = fixtureName => {

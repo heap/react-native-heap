@@ -20,6 +20,11 @@ const buildStartupWrapper = template(`{
   ORIGINAL_FUNCTION_CALL
 }`);
 
+const buildInstrumentationHoc = template(`
+  const Heap = require('@heap/react-native-heap').default;
+  const COMPONENT_ID = HOC_CALL_EXPRESSION;
+`);
+
 const identifierVisitor = {
   Identifier(path) {
     if (path.node.name === 'Touchable') {
@@ -295,6 +300,43 @@ const instrumentStartup = path => {
   }
 };
 
+const TOUCHABLE_COMPONENTS = [
+  'TouchableOpacity',
+  'TouchableNativeFeedback',
+  'TouchableWithoutFeedback',
+  'TouchableHighlight',
+];
+
+const instrumentTouchableHoc = path => {
+  if (!TOUCHABLE_COMPONENTS.includes(path.node.id.name)) {
+    return;
+  }
+
+  // 'path.node' represents a class *declaration*, so we need to convert 'path.node' to a class *expression* before we can pass it as an
+  // argument to our HOC function.
+  const equivalentExpression = t.classExpression(
+    path.node.id,
+    path.node.superClass,
+    path.node.body,
+    path.node.decorators || []
+  );
+
+  const autotrackExpression = t.callExpression(
+    t.memberExpression(
+      t.identifier('Heap'),
+      t.identifier('withHeapTouchableAutocapture')
+    ),
+    [equivalentExpression]
+  );
+
+  const replacement = buildInstrumentationHoc({
+    COMPONENT_ID: path.node.id,
+    HOC_CALL_EXPRESSION: autotrackExpression,
+  });
+
+  path.replaceWithMultiple(replacement);
+};
+
 function transform(babel) {
   return {
     visitor: {
@@ -306,6 +348,9 @@ function transform(babel) {
       },
       AssignmentExpression(path) {
         instrumentSwitchComponent(path);
+      },
+      ClassDeclaration(path) {
+        instrumentTouchableHoc(path);
       },
     },
   };
