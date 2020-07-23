@@ -58,6 +58,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@Text;[testID=targetElement];|',
@@ -85,6 +86,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@MySpecialComponent;|@Text;[testID=targetElement];|',
@@ -109,6 +111,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@ListItem;[rightTitle=React.element];|@Text;[testID=targetElement];|',
@@ -151,6 +154,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|',
@@ -178,6 +182,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;|',
@@ -205,6 +210,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
         source_version: SDK_VERSION,
@@ -234,6 +240,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
@@ -270,6 +277,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@BarFunction;|@HeapIgnore;|',
         source_version: SDK_VERSION,
@@ -294,6 +302,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@withHeapIgnore(Text);[testID=targetElement];|@HeapIgnore;|@Text;|',
         source_version: SDK_VERSION,
@@ -316,6 +325,7 @@ describe('Common autotrack utils', () => {
       );
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
+        react_native_version: null,
         rn_hierarchy:
           '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnoreTargetText;|@HeapIgnore;|@Text;[testID=targetElement];|',
         source_version: SDK_VERSION,
