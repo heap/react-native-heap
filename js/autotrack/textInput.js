@@ -1,5 +1,10 @@
-import { getBaseComponentProps } from './common';
+import * as React from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
 import * as _ from 'lodash';
+
+import { getBaseComponentProps } from './common';
+import { bailOnError } from '../util/bailer';
+import { getComponentDisplayName } from '../util/hocUtil';
 
 const DEBOUNCE_PERIOD_MS = 1000;
 
@@ -36,4 +41,58 @@ const debouncedAutocaptureTextInputChange = track => (
   }
 
   track(eventType, autotrackProps);
+};
+
+// :HACK: In previous implementations, there would be a 'TextInput' component somewhere in the hierarchy.  However, with this
+// implementation, this is not the case (even the TextInputComponent has a displayName of 'InternalTextInput').  This means that any event
+// definitions on 'TextInput' would break.
+// To get around this, wrap the returned HOC with a no-op component with the 'TextInput' display name.
+// :TODO: (jmtaber129): Consider other workarounds to this, like setting the display name of instrumented components when they're exported
+// from the React Native lib (via instrumentation).
+const NoopTextInput = props => {
+  return props.children;
+};
+
+NoopTextInput.displayName = 'TextInput';
+
+export const withHeapTextInputAutocapture = track => TextInputComponent => {
+  class HeapTextInputAutocapture extends React.Component {
+    autocaptureTextInputChangeWithDebounce = bailOnError(
+      _.debounce(debouncedAutocaptureTextInputChange(track), DEBOUNCE_PERIOD_MS)
+    );
+
+    render() {
+      const { forwardedRef, onChange, ...rest } = this.props;
+
+      return (
+        <TextInputComponent
+          ref={forwardedRef}
+          onChange={e => {
+            this.autocaptureTextInputChangeWithDebounce('text_edit', this, e);
+
+            onChange && onChange(e);
+          }}
+          {...rest}
+        >
+          {this.props.children}
+        </TextInputComponent>
+      );
+    }
+  }
+
+  HeapTextInputAutocapture.displayName = `withHeapTextInputAutocapture(${getComponentDisplayName(
+    TextInputComponent
+  )})`;
+
+  const forwardRefHoc = React.forwardRef((props, ref) => {
+    return (
+      <NoopTextInput {...props}>
+        <HeapTextInputAutocapture {...props} forwardedRef={ref} />
+      </NoopTextInput>
+    );
+  });
+
+  hoistNonReactStatic(forwardRefHoc, TextInputComponent);
+
+  return forwardRefHoc;
 };

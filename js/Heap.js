@@ -13,7 +13,10 @@ import {
 } from './autotrack/touchables';
 import { autotrackSwitchChange } from './autotrack/switches';
 import { autotrackScrollView } from './autotrack/scrollViews';
-import { autocaptureTextInputChange } from './autotrack/textInput';
+import {
+  autocaptureTextInputChange,
+  withHeapTextInputAutocapture,
+} from './autotrack/textInput';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';
 import { withReactNavigationAutotrack } from './autotrack/reactNavigation';
 import { bailOnError } from './util/bailer';
@@ -90,6 +93,7 @@ export default {
   autocaptureTextInput: bailOnError(
     autocaptureTextInputChange(autocaptureTrack)
   ),
+  withHeapTextInputAutocapture: withHeapTextInputAutocapture(autocaptureTrack),
   withReactNavigationAutotrack: withReactNavigationAutotrack(autocaptureTrack),
   Ignore: HeapIgnore,
   IgnoreTargetText: HeapIgnoreTargetText,
