@@ -1,4 +1,4 @@
-import { getBaseComponentPropsFromComponent } from './common';
+import { getBaseComponentProps } from './common';
 import * as _ from 'lodash';
 
 export const autotrackScrollView = track => (
@@ -16,7 +16,7 @@ export const autotrackScrollView = track => (
   // Target text on a scrollview will be the entire contents of the scrollview, which isn't
   // particularly meaningful. Just leave out the target text.
   const autotrackProps = _.omit(
-    getBaseComponentPropsFromComponent(componentThis),
+    getBaseComponentProps(componentThis),
     'target_text'
   );
 

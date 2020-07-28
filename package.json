@@ -32,7 +32,8 @@
     "babel-plugin-add-react-displayname": "0.0.5",
     "babel-template": "^6.26.0",
     "babel-types": "^6.26.0",
-    "flat": "^4.1.0"
+    "flat": "^4.1.0",
+    "hoist-non-react-statics": "^3.3.2"
   },
   "peerDependencies": {
     "react-native": "x.x"

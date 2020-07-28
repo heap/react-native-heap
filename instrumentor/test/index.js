@@ -72,15 +72,9 @@ describe('autotrack instrumentor plugin', () => {
     assert.equal(actual, expected);
   });
 
-  it('pressability should be instrumented', () => {
-    var actual = getActualTransformedFile('is-pressability');
-    var expected = getExpectedTransformedFile('is-pressability');
-    assert.equal(actual, expected);
-  });
-
-  it('non-pressability should not be instrumented', () => {
-    var actual = getActualTransformedFile('is-not-pressability');
-    var expected = getExpectedTransformedFile('is-not-pressability');
+  it('touchables on RN 0.62+ should be instrumented', () => {
+    var actual = getActualTransformedFile('is-touchable-0-62');
+    var expected = getExpectedTransformedFile('is-touchable-0-62');
     assert.equal(actual, expected);
   });
 });

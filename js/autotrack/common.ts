@@ -44,21 +44,17 @@ interface ComponentHierarchyTraversalElement {
   propsString: string;
 }
 
-export const getBaseComponentPropsFromComponent: (
-  component: Component
-) => AutotrackProps | null = componentThis => {
-  return getBaseComponentPropsFromFiber(componentThis._reactInternalFiber);
-};
-
 // Returns an 'AutotrackProps' containing a base set of component properties if we're not ignoring
 // the full interaction due to HeapIgnore.
 // Returns null if we're ignoring the full interaction due to HeapIgnore.
-export const getBaseComponentPropsFromFiber: (
-  fiberNode: FiberNode
-) => AutotrackProps | null = fiberNode => {
+export const getBaseComponentProps: (
+  component: Component
+) => AutotrackProps | null = componentThis => {
   // Get the hierarchy traversal from root to target component, then get the actual hierarchy from
   // the traversal representation.
-  const touchableHierarchyTraversal = getComponentHierarchyTraversal(fiberNode);
+  const touchableHierarchyTraversal = getComponentHierarchyTraversal(
+    componentThis
+  );
   const { hierarchy, heapIgnoreProps } = getHierarchyStringFromTraversal(
     touchableHierarchyTraversal
   );
@@ -70,7 +66,7 @@ export const getBaseComponentPropsFromFiber: (
   // Only look for target text if we're not HeapIgnore-ing target text.
   let targetText;
   if (heapIgnoreProps.allowTargetText) {
-    targetText = getTargetText(fiberNode);
+    targetText = getTargetText(componentThis._reactInternalFiber);
   } else {
     targetText = '';
   }
@@ -90,16 +86,18 @@ export const getBaseComponentPropsFromFiber: (
 };
 
 const getComponentHierarchyTraversal: (
-  fiberNode: FiberNode
-) => ComponentHierarchyTraversalElement[] = fiberNode => {
+  comp: Component
+) => ComponentHierarchyTraversalElement[] = componentThis => {
   // :TODO: (jmtaber129): Remove this if/when we support pre-fiber React.
-  if (!fiberNode) {
+  if (!componentThis._reactInternalFiber) {
     throw new Error(
       'Pre-fiber React versions (React 16) are currently not supported by Heap autotrack.'
     );
   }
 
-  return getFiberNodeComponentHierarchyTraversal(fiberNode);
+  return getFiberNodeComponentHierarchyTraversal(
+    componentThis._reactInternalFiber
+  );
 };
 
 // Traverse up the hierarchy from the current component up to the root, and return an array of
