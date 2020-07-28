@@ -8,8 +8,11 @@ var _getPrototypeOf2 = _interopRequireDefault(require("@babel/runtime/helpers/ge
 
 var _inherits2 = _interopRequireDefault(require("@babel/runtime/helpers/inherits"));
 
-var Heap = require('@heap/react-native-heap').default;
-
+var Heap = require('@heap/react-native-heap').default || {
+  withHeapTouchableAutocapture: function withHeapTouchableAutocapture(Component) {
+    return Component;
+  }
+};
 var TouchableOpacity = Heap.withHeapTouchableAutocapture(function (_React$Component) {
   (0, _inherits2.default)(TouchableOpacity, _React$Component);
 

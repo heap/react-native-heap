@@ -21,7 +21,10 @@ const buildStartupWrapper = template(`{
 }`);
 
 const buildInstrumentationHoc = template(`
-  const Heap = require('@heap/react-native-heap').default;
+  const Heap = require('@heap/react-native-heap').default || {
+    HOC_IDENTIFIER: (Component) => Component,
+  };
+
   const COMPONENT_ID = HOC_CALL_EXPRESSION;
 `);
 
@@ -321,16 +324,19 @@ const instrumentTouchableHoc = path => {
     path.node.decorators || []
   );
 
+  const hocIdentifier = t.identifier('withHeapTouchableAutocapture');
+
   const autotrackExpression = t.callExpression(
     t.memberExpression(
       t.identifier('Heap'),
-      t.identifier('withHeapTouchableAutocapture')
+      hocIdentifier
     ),
     [equivalentExpression]
   );
 
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
+    HOC_IDENTIFIER: hocIdentifier,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 
