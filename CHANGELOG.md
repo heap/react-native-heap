@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
-- Added support for `Touchable` components in React Native v0.62+ via Pressability instrumentation.
+- Added support for `Touchable` components in React Native v0.62+ via HOC instrumentation.
 
 ### Changed
 ### Deprecated

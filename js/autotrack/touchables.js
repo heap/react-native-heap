@@ -1,11 +1,12 @@
-import {
-  getBaseComponentPropsFromComponent,
-  getBaseComponentPropsFromFiber,
-} from './common';
+import * as React from 'react';
+import hoistNonReactStatic from 'hoist-non-react-statics';
+
+import { getBaseComponentProps } from './common';
 import { bailOnError } from '../util/bailer';
+import { getComponentDisplayName } from '../util/hocUtil';
 
 export const autotrackPress = track => (eventType, componentThis, event) => {
-  const autotrackProps = getBaseComponentPropsFromComponent(componentThis);
+  const autotrackProps = getBaseComponentProps(componentThis);
 
   if (!autotrackProps) {
     // We're not capturing this interaction.
@@ -29,44 +30,45 @@ export const autotrackPress = track => (eventType, componentThis, event) => {
   track('touch', autotrackProps);
 };
 
-const unsafePressHandler = (event, track, isLongPress) => {
-  const autocaptureProps = getBaseComponentPropsFromFiber(event._targetInst);
+export const withHeapTouchableAutocapture = track => TouchableComponent => {
+  class HeapTouchableAutocapture extends React.Component {
+    render() {
+      const { forwardedRef, onPress, onLongPress, ...rest } = this.props;
 
-  if (!autocaptureProps) {
-    // We're not capturing this interaction.
-    return;
+      return (
+        <TouchableComponent
+          ref={forwardedRef}
+          onPress={e => {
+            bailOnError(autotrackPress(track))('touchableHandlePress', this, e);
+
+            onPress && onPress(e);
+          }}
+          onLongPress={e => {
+            bailOnError(autotrackPress(track))(
+              'touchableHandleLongPress',
+              this,
+              e
+            );
+
+            onLongPress && onLongPress(e);
+          }}
+          {...rest}
+        >
+          {this.props.children}
+        </TouchableComponent>
+      );
+    }
   }
 
-  autocaptureProps.is_long_press = isLongPress;
+  HeapTouchableAutocapture.displayName = `withHeapTouchableAutocapture(${getComponentDisplayName(
+    TouchableComponent
+  )})`;
 
-  track('touch', autocaptureProps);
-};
+  const forwardRefHoc = React.forwardRef((props, ref) => {
+    return <HeapTouchableAutocapture {...props} forwardedRef={ref} />;
+  });
 
-const pressHandler = bailOnError(unsafePressHandler);
+  hoistNonReactStatic(forwardRefHoc, TouchableComponent);
 
-// Wrap the config passed to the 'Pressability' constructor by wrapping the 'onPress' and 'onLongPress' properties in the config, and
-// keeping all other properties as-is.  See the config passed to the 'Pressability' constructor in
-// https://github.com/facebook/react-native/blob/a5151c2b5f6f03896eb7d9df873c5f61a706f055/Libraries/Components/Touchable/TouchableOpacity.js#L143-L186.
-export const wrapPressabilityConfig = track => pressabilityConfig => {
-  const newConfig = {
-    ...pressabilityConfig,
-  };
-
-  if (newConfig.onPress) {
-    newConfig.onPress = event => {
-      pressHandler(event, track, false);
-
-      pressabilityConfig.onPress(event);
-    };
-  }
-
-  if (newConfig.onLongPress) {
-    newConfig.onLongPress = event => {
-      pressHandler(event, track, true);
-
-      pressabilityConfig.onLongPress(event);
-    };
-  }
-
-  return newConfig;
+  return forwardRefHoc;
 };

@@ -1,6 +1,6 @@
 {
   "name": "@heap/react-native-heap",
-  "version": "0.13.0-alpha1",
+  "version": "0.13.0-alpha2",
   "description": "React Native event tracking with Heap.",
   "license": "MIT",
   "author": "Heap <http://www.heapanalytics.com>",
@@ -32,7 +32,8 @@
     "babel-plugin-add-react-displayname": "0.0.5",
     "babel-template": "^6.26.0",
     "babel-types": "^6.26.0",
-    "flat": "^4.1.0"
+    "flat": "^4.1.0",
+    "hoist-non-react-statics": "^3.3.2"
   },
   "peerDependencies": {
     "react-native": "x.x"
