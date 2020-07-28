@@ -327,10 +327,7 @@ const instrumentTouchableHoc = path => {
   const hocIdentifier = t.identifier('withHeapTouchableAutocapture');
 
   const autotrackExpression = t.callExpression(
-    t.memberExpression(
-      t.identifier('Heap'),
-      hocIdentifier
-    ),
+    t.memberExpression(t.identifier('Heap'), hocIdentifier),
     [equivalentExpression]
   );
 
