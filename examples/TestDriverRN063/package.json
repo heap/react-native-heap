@@ -7,9 +7,11 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "preinstall": "../preinstall_pack_lib.sh"
   },
   "dependencies": {
+    "@heap/react-native-heap": "heap-react-native-heap-0.13.0-alpha2.tgz",
     "react": "16.13.1",
     "react-native": "0.63.2"
   },

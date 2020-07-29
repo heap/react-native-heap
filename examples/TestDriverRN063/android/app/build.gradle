@@ -1,4 +1,5 @@
 apply plugin: "com.android.application"
+apply plugin: 'com.heapanalytics.android'
 
 import com.android.build.OutputFile
 
@@ -154,6 +155,10 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
+            buildConfigField "String", "heap_endpoint_track", "\"http://10.0.2.2:3000/api/integrations/android/track\""
+            buildConfigField "String", "heap_endpoint_identify", "\"http://10.0.2.2:3000/api/integrations/android/identify\""
+            buildConfigField "String", "heap_endpoint_adduserproperties", "\"http://10.0.2.2:3000/api/integrations/android/add_user_properties\""
+            buildConfigField "String", "heap_endpoint_eventdef", "\"http://10.0.2.2:5000/api/ev/android/message\""
         }
         release {
             // Caution! In production, you need to generate your own keystore file.

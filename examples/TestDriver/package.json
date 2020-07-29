@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-    "preinstall": "./preinstall_pack_lib.sh"
+    "preinstall": "../preinstall_pack_lib.sh"
   },
   "dependencies": {
     "@heap/react-native-heap": "heap-react-native-heap-0.13.0-alpha2.tgz",

@@ -24,6 +24,10 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+import Heap from '@heap/react-native-heap';
+
+console.log(Heap.getUserId());
+
 const App: () => React$Node = () => {
   return (
     <>
