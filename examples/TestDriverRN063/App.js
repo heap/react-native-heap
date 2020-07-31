@@ -19,14 +19,20 @@ import { TouchablesScreen } from './src/screens/TouchablesScreen';
 
 const Stack = createStackNavigator();
 
-const HeapNavigationContainer = Heap.withReactNavigationAutotrack(NavigationContainer);
+const HeapNavigationContainer = Heap.withReactNavigationAutotrack(
+  NavigationContainer,
+);
 
 const App: () => React$Node = () => {
   return (
     <HeapNavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Navigation" component={NavigationStackScreen} options={{ headerShown: false }} />
+        <Stack.Screen
+          name="Navigation"
+          component={NavigationStackScreen}
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="Touchables" component={TouchablesScreen} />
       </Stack.Navigator>
     </HeapNavigationContainer>
