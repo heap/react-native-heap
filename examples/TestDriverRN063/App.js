@@ -20,7 +20,7 @@ import { TouchablesScreen } from './src/screens/TouchablesScreen';
 const Stack = createStackNavigator();
 
 const HeapNavigationContainer = Heap.withReactNavigationAutotrack(
-  NavigationContainer,
+  NavigationContainer
 );
 
 const App: () => React$Node = () => {
