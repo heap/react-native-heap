@@ -351,16 +351,16 @@ const instrumentTextInputHoc = path => {
     path.node.body
   );
 
+  const hocIdentifier = t.identifier('withHeapTextInputAutocapture');
+
   const autotrackExpression = t.callExpression(
-    t.memberExpression(
-      t.identifier('Heap'),
-      t.identifier('withHeapTextInputAutocapture')
-    ),
+    t.memberExpression(t.identifier('Heap'), hocIdentifier),
     [equivalentExpression]
   );
 
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
+    HOC_IDENTIFIER: hocIdentifier,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 
