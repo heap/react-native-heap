@@ -10,13 +10,16 @@ export default class NavigationUtil {
     screen_path: string;
     screen_name: string;
   } | null {
-    if (
-      !(this.heapNavRef && this.heapNavRef.state && this.heapNavRef.state.nav)
-    ) {
+    let rootState: any = null;
+    if (this.heapNavRef && this.heapNavRef.state && this.heapNavRef.state.nav) {
+      rootState = this.heapNavRef.state.nav;
+    } else if (this.heapNavRef && this.heapNavRef.getRootState) {
+      rootState = this.heapNavRef.getRootState();
+    } else {
       return null;
     }
 
-    const routeProps = this.getActiveRouteProps(this.heapNavRef.state.nav);
+    const routeProps = this.getActiveRouteProps(rootState);
 
     if (routeProps) {
       return routeProps;
@@ -45,11 +48,19 @@ export default class NavigationUtil {
     const route = navigationState.routes[navigationState.index];
 
     // Dive into nested navigators.
+    let paths;
     if (route.routes) {
-      const paths = this.getActiveRouteNames(route);
-      return [route.routeName].concat(paths);
+      paths = this.getActiveRouteNames(route);
+    } else if (route.state && route.state.routes) {
+      paths = this.getActiveRouteNames(route.state);
     }
 
-    return [route.routeName];
+    const routeName = route.routeName || route.name;
+
+    if (paths) {
+      return [routeName].concat(paths);
+    }
+
+    return [routeName];
   }
 }

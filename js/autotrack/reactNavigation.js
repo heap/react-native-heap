@@ -12,7 +12,7 @@ const EVENT_TYPE = 'react_navigation_screenview';
 const INITIAL_ROUTE_TYPE = 'Heap_Navigation/INITIAL';
 
 export const withReactNavigationAutotrack = track => AppContainer => {
-  const captureNavigationStateChange = bailOnError((prev, next, action) => {
+  const captureOldNavigationStateChange = bailOnError((prev, next, action) => {
     const { screen_path: prevScreenRoute } = NavigationUtil.getActiveRouteProps(
       prev
     );
@@ -30,6 +30,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
 
   class HeapNavigationWrapper extends React.Component {
     topLevelNavigator = null;
+    currentPath = null;
 
     setRef(ref, value) {
       if (typeof ref === 'function') {
@@ -39,10 +40,36 @@ export const withReactNavigationAutotrack = track => AppContainer => {
       }
     }
 
-    trackInitialRoute() {
+    captureStateChange = bailOnError(state => {
+      const { screen_path: nextPath } = NavigationUtil.getActiveRouteProps(
+        state
+      );
+
+      if (nextPath !== this.currentPath) {
+        track(EVENT_TYPE, {
+          ...getContextualProps(),
+          screen_path: nextPath,
+        });
+      }
+
+      this.currentPath = nextPath;
+    });
+
+    captureOnReady = bailOnError(() => {
+      if (this.topLevelNavigator.getRootState) {
+        this.trackInitialRouteForState(this.topLevelNavigator.getRootState());
+        const { screen_path: currentPath } = NavigationUtil.getActiveRouteProps(
+          this.topLevelNavigator.getRootState()
+        );
+
+        this.currentPath = currentPath;
+      }
+    });
+
+    trackInitialRouteForState(navigationState) {
       const {
         screen_path: initialPageviewPath,
-      } = NavigationUtil.getActiveRouteProps(this.topLevelNavigator.state.nav);
+      } = NavigationUtil.getActiveRouteProps(navigationState);
 
       track(EVENT_TYPE, {
         ...getContextualProps(),
@@ -62,7 +89,12 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     }
 
     _render() {
-      const { forwardedRef, onNavigationStateChange, ...rest } = this.props;
+      const {
+        forwardedRef,
+        onNavigationStateChange,
+        onStateChange,
+        ...rest
+      } = this.props;
       return (
         <AppContainer
           ref={bailOnError(navigatorRef => {
@@ -78,14 +110,33 @@ export const withReactNavigationAutotrack = track => AppContainer => {
                 'Heap: React Navigation is instrumented for autocapture.'
               );
               this.topLevelNavigator = navigatorRef;
-              this.trackInitialRoute();
+              if (this.topLevelNavigator.state) {
+                // We're on React Navigation 4, so track the initial route now.
+                this.trackInitialRouteForState(
+                  this.topLevelNavigator.state.nav
+                );
+              }
             }
           })}
+          onReady={(...args) => {
+            this.captureOnReady();
+
+            if (typeof onReady === 'function') {
+              onReady(...args);
+            }
+          }}
+          onStateChange={(...args) => {
+            this.captureStateChange(...args);
+
+            if (typeof onStateChange === 'function') {
+              onStateChange(...args);
+            }
+          }}
           onNavigationStateChange={(...args) => {
             // Capture the screenview, then delegate to the 'onNavigationStateChange' passed to the HOC if it's a function. The logic to
             // determine whether to call 'onNavigationStateChange' is the same as what's in the 'react-navigation' library.
             // See https://github.com/react-navigation/native/blob/d0b24924b2e075fed3bd6586339d34fdd4c2b78e/src/createAppContainer.js#L184
-            captureNavigationStateChange(...args);
+            captureOldNavigationStateChange(...args);
             if (typeof onNavigationStateChange === 'function') {
               onNavigationStateChange(...args);
             }

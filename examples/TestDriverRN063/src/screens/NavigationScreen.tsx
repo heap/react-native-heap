@@ -2,6 +2,9 @@ import React from 'react';
 import { Button, ScrollView, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { StackNavigationScreen } from './navigationScreens/StackNavigationScreen';
+import { TabNavigationScreen } from './navigationScreens/TabNavigationScreen';
+
 const NavigationScreen = ({ navigation }) => {
   return (
     <ScrollView>
@@ -21,16 +24,8 @@ const NavigationScreen = ({ navigation }) => {
   );
 };
 
-const TabNavigationScreen = ({ navigation }) => {
-  return <Text>TODO: `${navigation}`</Text>;
-};
-
-const StackNavigationScreen = ({ navigation }) => {
-  return <Text>TODO `${navigation}`</Text>;
-};
-
 const DrawerNavigationScreen = ({ navigation }) => {
-  return <Text>TODO `${navigation}`</Text>;
+  return (<Text>TODO</Text>);
 };
 
 const NavigationStack = createStackNavigator();
