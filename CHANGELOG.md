@@ -9,6 +9,7 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 - Added support for `Touchable` components in React Native v0.62+ via HOC instrumentation.
+- Added support for `TextInput` components in React Native v0.62+ via HOC instrumentation.
 - Added support for React Navigation 5.
 
 ### Changed

@@ -340,6 +340,33 @@ const instrumentTouchableHoc = path => {
   path.replaceWithMultiple(replacement);
 };
 
+const instrumentTextInputHoc = path => {
+  if (path.node.id.name !== 'InternalTextInput') {
+    return;
+  }
+
+  const equivalentExpression = t.functionExpression(
+    path.node.id,
+    path.node.params,
+    path.node.body
+  );
+
+  const hocIdentifier = t.identifier('withHeapTextInputAutocapture');
+
+  const autotrackExpression = t.callExpression(
+    t.memberExpression(t.identifier('Heap'), hocIdentifier),
+    [equivalentExpression]
+  );
+
+  const replacement = buildInstrumentationHoc({
+    COMPONENT_ID: path.node.id,
+    HOC_IDENTIFIER: hocIdentifier,
+    HOC_CALL_EXPRESSION: autotrackExpression,
+  });
+
+  path.replaceWithMultiple(replacement);
+};
+
 function transform(babel) {
   return {
     visitor: {
@@ -354,6 +381,9 @@ function transform(babel) {
       },
       ClassDeclaration(path) {
         instrumentTouchableHoc(path);
+      },
+      FunctionDeclaration(path) {
+        instrumentTextInputHoc(path);
       },
     },
   };
