@@ -80,7 +80,7 @@ export const withHeapTextInputAutocapture = track => TextInputComponent => {
     }
   }
 
-  HeapTextInputAutocapture.displayName = `withHeapTextInputAutocapture(${getComponentDisplayName(
+  HeapTextInputAutocapture.displayName = `WithHeapTextInputAutocapture(${getComponentDisplayName(
     TextInputComponent
   )})`;
 
