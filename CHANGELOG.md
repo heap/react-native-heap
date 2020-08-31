@@ -8,16 +8,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
-- Added support for `Touchable` components in React Native v0.62+ via HOC instrumentation.
-- Added support for `TextInput` components in React Native v0.62+ via HOC instrumentation.
-- Added support for React Navigation 5.
-
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
 __END_UNRELEASED__
+
+## [0.13.0] - 2020-08-31
+
+### Added
+- Added support for `Touchable` components in React Native v0.62+ via HOC instrumentation.
+- Added support for `TextInput` components in React Native v0.62+ via HOC instrumentation.
+- Added support for React Navigation 5.
 
 ## [0.12.0] - 2020-06-22
 
