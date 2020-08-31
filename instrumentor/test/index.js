@@ -77,6 +77,18 @@ describe('autotrack instrumentor plugin', () => {
     var expected = getExpectedTransformedFile('is-touchable-0-62');
     assert.equal(actual, expected);
   });
+
+  it('functional textinput should be instrumented with HOC', () => {
+    var actual = getActualTransformedFile('is-functional-textinput');
+    var expected = getExpectedTransformedFile('is-functional-textinput');
+    assert.equal(actual, expected);
+  });
+
+  it('function declarations without ID field should not crash instrumentor', () => {
+    var actual = getActualTransformedFile('is-function-declaration-no-id');
+    var expected = getExpectedTransformedFile('is-function-declaration-no-id');
+    assert.equal(actual, expected);
+  });
 });
 
 const getActualTransformedFile = fixtureName => {
