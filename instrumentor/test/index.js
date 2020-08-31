@@ -83,6 +83,12 @@ describe('autotrack instrumentor plugin', () => {
     var expected = getExpectedTransformedFile('is-functional-textinput');
     assert.equal(actual, expected);
   });
+
+  it('function declarations without ID field should not crash instrumentor', () => {
+    var actual = getActualTransformedFile('is-function-declaration-no-id');
+    var expected = getExpectedTransformedFile('is-function-declaration-no-id');
+    assert.equal(actual, expected);
+  });
 });
 
 const getActualTransformedFile = fixtureName => {
