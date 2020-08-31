@@ -341,7 +341,7 @@ const instrumentTouchableHoc = path => {
 };
 
 const instrumentTextInputHoc = path => {
-  if (path.node.id.name !== 'InternalTextInput') {
+  if (!path.node.id || path.node.id.name !== 'InternalTextInput') {
     return;
   }
 
