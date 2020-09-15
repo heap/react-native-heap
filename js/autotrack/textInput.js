@@ -62,11 +62,11 @@ export const withHeapTextInputAutocapture = track => TextInputComponent => {
     );
 
     render() {
-      const { forwardedRef, onChange, ...rest } = this.props;
+      const { heapForwardedRef, onChange, ...rest } = this.props;
 
       return (
         <TextInputComponent
-          ref={forwardedRef}
+          ref={heapForwardedRef}
           onChange={e => {
             this.autocaptureTextInputChangeWithDebounce('text_edit', this, e);
 
@@ -87,7 +87,7 @@ export const withHeapTextInputAutocapture = track => TextInputComponent => {
   const forwardRefHoc = React.forwardRef((props, ref) => {
     return (
       <NoopTextInput {...props}>
-        <HeapTextInputAutocapture {...props} forwardedRef={ref} />
+        <HeapTextInputAutocapture {...props} heapForwardedRef={ref} />
       </NoopTextInput>
     );
   });
