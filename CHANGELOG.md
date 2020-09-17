@@ -9,6 +9,8 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 ### Changed
+- Upgraded the native Heap iOS SDK dependency to 7.2.0.
+
 ### Deprecated
 ### Removed
 ### Fixed
