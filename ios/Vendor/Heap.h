@@ -1,6 +1,6 @@
 //
 //  Heap.h
-//  Version 6.8.1
+//  Version 7.2.0
 //  Copyright (c) 2014 Heap Inc. All rights reserved.
 //
 
@@ -31,6 +31,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Opt-out of telemetry capture.
 @property (assign) BOOL disableTelemetryCapture;
+
+/// Disable Heap autocapture when the app has been backgrounded.
+@property (assign) BOOL disableAutocaptureWhenBackgrounded;
+
+/// Disable Heap event capture
+@property (assign) BOOL disableTracking;
+
+/// Disable Heap autocapture for touches, fieldedits, swipes, gesture recognizers, etc.
+@property (assign) BOOL disableTouchAutocapture;
 
 @end
 
@@ -73,21 +82,21 @@ NS_ASSUME_NONNULL_BEGIN
  *
  * This is equivalent to entering the pairing initiation code, and should not be called in a release version of an app.
  *
- * @see [Event visualizer for iOS apps](https://docs.heapanalytics.com/docs/define-events#visualizer-for-ios-apps)
+ * @see [Event visualizer for iOS apps](https://help.heap.io/heap-administration/data-management/event-visualizer/#tab--ios)
  */
 + (void)startEVPairing;
 
 /**
  * Stop the Event Visualizer pairing process.
  *
- * @see [Event visualizer for iOS apps](https://docs.heapanalytics.com/docs/define-events#visualizer-for-ios-apps)
+ * @see [Event visualizer for iOS apps](https://help.heap.io/heap-administration/data-management/event-visualizer/#tab--ios)
  */
 + (void)stopEVPairing;
 
 /**
  * Disable the pairing gesture (i.e. series of volume button presses) used to pair a device with the Event Visualizer.
  *
- * @see [Event visualizer for iOS apps](https://docs.heapanalytics.com/docs/define-events#visualizer-for-ios-apps)
+ * @see [Event visualizer for iOS apps](https://help.heap.io/heap-administration/data-management/event-visualizer/#tab--ios)
  */
 + (void)disableVisualizerPairingGesture;
 
@@ -115,6 +124,17 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)changeInterval:(double)interval;
 
 
+/// Enable or disable tracking
+///
+/// When tracking is disabled, events are not recorded or sent to Heap servers. This value is not persisted across app launches.
+/// The default value is YES
+///
++ (void)setTrackingEnabled:(BOOL)trackingEnabled;
+
+/// Indicates whether or not tracking is enabled
++ (BOOL)isTrackingEnabled;
+
+
 /// @name User identities and properties
 
 /// Return the Heap-generated user ID of the current user.
@@ -132,7 +152,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param identity     case-sensitive string that uniquely identifies a user
  *
  * @see addUserProperties:
- * @see [User identities and properties](https://docs.heapanalytics.com/docs/using-identify)
+ * @see [User identities and properties](https://developers.heap.io/docs/using-identify)
  */
 + (void)identify:(NSString *)identity;
 
@@ -152,7 +172,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param properties    key-value pairs to be associated with a user
  *
  * @see identify:
- * @see [User identities and properties](https://docs.heapanalytics.com/docs/using-identify)
+ * @see [User identities and properties](https://developers.heap.io/docs/using-identify)
  */
 + (void)addUserProperties:(NSDictionary *)properties;
 
@@ -167,7 +187,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param event        the event name
  *
  * @see track:withProperties:
- * @see [track in Heap documentation](https://docs.heapanalytics.com/docs/custom-api#track)
+ * @see [track in Heap documentation](https://developers.heap.io/reference#track)
  */
 + (void)track:(NSString *)event;
 
@@ -181,7 +201,7 @@ NS_ASSUME_NONNULL_BEGIN
  * @param properties   key-value pairs to associate with the event
  *
  * @see track:
- * @see [track in Heap documentation](https://docs.heapanalytics.com/docs/custom-api#track)
+ * @see [track in Heap documentation](https://developers.heap.io/reference#track)
  */
 + (void)track:(NSString *)event withProperties:(nullable NSDictionary *)properties;
 
@@ -274,4 +294,15 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)enableVisualizer __deprecated_msg("Use startEVPairing instead");
 
 @end
+
+@interface UIView (HeapIgnore)
+/**
+ * Whether Heap should ignore this view and its descendents in the view hierarchy.
+ *
+ * Defaults to false. This is not thread-safe, and should only be accessed from
+ * the main thread.
+ */
+@property (nonatomic, assign) IBInspectable BOOL heapIgnore;
+@end
+
 NS_ASSUME_NONNULL_END
