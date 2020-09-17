@@ -14,6 +14,8 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+- Fixed bug that broke ref-forwarding on `TextInput` components on React Native v0.62+.
+
 ### Security
 __END_UNRELEASED__
 
