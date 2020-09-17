@@ -6,5 +6,9 @@
 	<string>__HEAP_APP_ID_DEV__</string>
 	<key>HeapAppIdProd</key>
 	<string>__HEAP_APP_ID_PROD__</string>
+	<key>HeapEnableAutocaptureDev</key>
+	<string>__HEAP_ENABLE_AUTOCAPTURE_DEV__</string>
+	<key>HeapEnableAutocaptureProd</key>
+	<string>__HEAP_ENABLE_AUTOCAPTURE_PROD__</string>
 </dict>
 </plist>
