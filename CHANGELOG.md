@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
+- Added 'enableNativeTouchEventCapture' config option that controls whether the native iOS SDK captures touch-like events.
+
 ### Changed
 - Upgraded the native Heap iOS SDK dependency to 7.2.0.
 
