@@ -20,12 +20,12 @@ def write_heap_settings
   if File.file?(settings_filename)
     json = JSON.parse File.read(settings_filename).strip
 
-    app_id_dev, app_id_prod = get_heap_settings_from_json(json)
+    perform_substitution __dir__, json
   else
     puts "Not auto-initializing Heap; couldn't find #{HEAP_CONFIG_FILENAME}."
-  end
 
-  perform_substitution __dir__, app_id_dev, app_id_prod
+    perform_empty_substitution __dir__
+  end
 end
 
 write_heap_settings
