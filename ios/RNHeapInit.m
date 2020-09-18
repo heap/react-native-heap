@@ -18,7 +18,7 @@
     #endif
 
     if ([heapAppId length] > 0) {
-        NSLog(@"Auto-initializing the Heap library with app ID %@.", heapAppId, enableAutocapture);
+        NSLog(@"Auto-initializing the Heap library with app ID %@ with native autocapture enabled=%@.", heapAppId, enableAutocapture);
 
         HeapOptions *options = [[HeapOptions alloc] init];
         if (![enableAutocapture isEqualToString:@"true"]) {

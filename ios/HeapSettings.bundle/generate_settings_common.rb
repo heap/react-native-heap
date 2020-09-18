@@ -32,14 +32,14 @@ def perform_empty_substitution(dir)
   IO.write output_path, settings
 end
 
-def get_app_id_for_config(specified_config, default_config)
-  is_auto_init = specified_config['heapAutoInit']
+def get_app_id_for_config(config_for_selected_environment, default_config)
+  is_auto_init = config_for_selected_environment['heapAutoInit']
   is_auto_init = default_config['heapAutoInit'] if is_auto_init.nil?
   is_auto_init = true if is_auto_init.nil?
 
-  return specified_config['heapAppId'] || default_config['heapAppId'] if is_auto_init
+  return config_for_selected_environment['heapAppId'] || default_config['heapAppId'] if is_auto_init
 end
 
-def get_enable_autocapture_for_config(specified_config, default_config)
-  return specified_config['enableNativeTouchEventCapture'] || default_config['enableNativeTouchEventCapture']
+def get_enable_autocapture_for_config(config_for_selected_environment, default_config)
+  return config_for_selected_environment['enableNativeTouchEventCapture'] || default_config['enableNativeTouchEventCapture']
 end
