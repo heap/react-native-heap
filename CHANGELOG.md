@@ -8,18 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+__END_UNRELEASED__
+
+
+## [0.14.0] - 2020-09-23
+### Added
 - Added 'enableNativeTouchEventCapture' config option that controls whether the native iOS SDK captures touch-like events.
 
 ### Changed
 - Upgraded the native Heap iOS SDK dependency to 7.2.0.
 
-### Deprecated
-### Removed
 ### Fixed
 - Fixed bug that broke ref-forwarding on `TextInput` components on React Native v0.62+.
-
-### Security
-__END_UNRELEASED__
 
 ## [0.13.0] - 2020-08-31
 
