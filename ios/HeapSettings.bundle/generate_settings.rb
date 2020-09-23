@@ -30,15 +30,19 @@ def write_heap_settings
   if File.file?(settings_filename)
     json = JSON.parse File.read(settings_filename).strip
 
-    app_id_dev, app_id_prod = get_heap_settings_from_json(json)
+    perform_substitution BUNDLE_DIRECTORY, json
+
+    if APP_DIRECTORY && File.directory?(APP_DIRECTORY)
+      perform_substitution APP_DIRECTORY, json
+    end
   else
     puts "Not auto-initializing Heap; couldn't find #{HEAP_CONFIG_FILENAME}."
-  end
 
-  perform_substitution BUNDLE_DIRECTORY, app_id_dev, app_id_prod
+    perform_empty_substitution BUNDLE_DIRECTORY
 
-  if APP_DIRECTORY && File.directory?(APP_DIRECTORY)
-    perform_substitution APP_DIRECTORY, app_id_dev, app_id_prod
+    if APP_DIRECTORY && File.directory?(APP_DIRECTORY)
+      perform_empty_substitution APP_DIRECTORY
+    end
   end
 end
 

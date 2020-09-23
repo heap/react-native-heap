@@ -11,13 +11,21 @@
 
     #ifdef DEBUG
         NSString *heapAppId = heapPlistData[@"HeapAppIdDev"];
+        NSString *enableAutocapture = heapPlistData[@"HeapEnableAutocaptureDev"];
     #else
         NSString *heapAppId = heapPlistData[@"HeapAppIdProd"];
+        NSString *enableAutocapture = heapPlistData[@"HeapEnableAutocaptureProd"];
     #endif
 
     if ([heapAppId length] > 0) {
-        NSLog(@"Auto-initializing the Heap library with app ID %@.", heapAppId);
-        [Heap setAppId:heapAppId];
+        NSLog(@"Auto-initializing the Heap library with app ID %@ with native autocapture enabled=%@.", heapAppId, enableAutocapture);
+
+        HeapOptions *options = [[HeapOptions alloc] init];
+        if (![enableAutocapture isEqualToString:@"true"]) {
+            options.disableTouchAutocapture = YES;
+        }
+
+        [Heap initialize:heapAppId withOptions:options];
     } else {
         NSLog(@"Not auto-initializing Heap library.");
     }

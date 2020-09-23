@@ -45,10 +45,6 @@ static void InitializeFlipper(UIApplication *application) {
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
                                                    moduleName:@"TestDriverRN063"
                                             initialProperties:nil];
-
-  // Suppress native iOS events to make pixels smaller, reducing flakiness.  See https://github.com/heap/react-native-heap/pull/144.
-  [rootView setValue:@true forKey:@"heapIgnore"];
-
   rootView.backgroundColor = [[UIColor alloc] initWithRed:1.0f green:1.0f blue:1.0f alpha:1];
 
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
