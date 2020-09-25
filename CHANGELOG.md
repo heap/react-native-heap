@@ -8,6 +8,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
+- Added support for `Pressable` components (introduced in React Native v0.63) via HOC instrumentation.
+
 ### Changed
 ### Deprecated
 ### Removed
