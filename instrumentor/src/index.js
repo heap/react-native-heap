@@ -20,10 +20,14 @@ const buildStartupWrapper = template(`{
   ORIGINAL_FUNCTION_CALL
 }`);
 
-const buildInstrumentationHoc = template(`
-  const Heap = require('@heap/react-native-heap').default || {
+const buildHeapImport = template(`(
+  require('@heap/react-native-heap').default || {
     HOC_IDENTIFIER: (Component) => Component,
-  };
+  }
+)`)
+
+const buildInstrumentationHoc = template(`
+  const Heap = HEAP_IMPORT;
 
   const COMPONENT_ID = HOC_CALL_EXPRESSION;
 `);
@@ -331,9 +335,13 @@ const instrumentTouchableHoc = path => {
     [equivalentExpression]
   );
 
+  const heapImport = buildHeapImport({
+    HOC_IDENTIFIER: hocIdentifier,
+  });
+
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
-    HOC_IDENTIFIER: hocIdentifier,
+    HEAP_IMPORT: heapImport,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 
@@ -358,14 +366,37 @@ const instrumentTextInputHoc = path => {
     [equivalentExpression]
   );
 
+  const heapImport = buildHeapImport({
+    HOC_IDENTIFIER: hocIdentifier,
+  });
+
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
-    HOC_IDENTIFIER: hocIdentifier,
+    HEAP_IMPORT: heapImport,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 
   path.replaceWithMultiple(replacement);
 };
+
+const instrumentPressableHoc = path => {
+  if (!path.node.id || path.node.id.name !== 'MemoedPressable') {
+    return;
+  }
+
+  const hocIdentifier = t.identifier('withHeapPressableAutocapture');
+
+  const heapImport = buildHeapImport({
+    HOC_IDENTIFIER: hocIdentifier,
+  }).expression;
+
+  const autotrackExpression = t.callExpression(
+    t.memberExpression(heapImport, hocIdentifier),
+    [path.node.init]
+  );
+
+  path.get('init').replaceWith(autotrackExpression);
+}
 
 function transform(babel) {
   return {
@@ -385,6 +416,9 @@ function transform(babel) {
       FunctionDeclaration(path) {
         instrumentTextInputHoc(path);
       },
+      VariableDeclarator(path) {
+        instrumentPressableHoc(path);
+      }
     },
   };
 }
