@@ -5,9 +5,6 @@ import { getBaseComponentProps } from './common';
 import { bailOnError } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 
-export const autotrackPress = track => (eventType, componentThis, event) => {
-};
-
 export const withHeapPressableAutocapture = track => PressableComponent => {
   class HeapPressableAutocapture extends React.Component {
     trackEvent(isLongPress) {

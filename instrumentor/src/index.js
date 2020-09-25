@@ -24,7 +24,7 @@ const buildHeapImport = template(`(
   require('@heap/react-native-heap').default || {
     HOC_IDENTIFIER: (Component) => Component,
   }
-)`)
+)`);
 
 const buildInstrumentationHoc = template(`
   const Heap = HEAP_IMPORT;
@@ -396,7 +396,7 @@ const instrumentPressableHoc = path => {
   );
 
   path.get('init').replaceWith(autotrackExpression);
-}
+};
 
 function transform(babel) {
   return {
@@ -418,7 +418,7 @@ function transform(babel) {
       },
       VariableDeclarator(path) {
         instrumentPressableHoc(path);
-      }
+      },
     },
   };
 }
