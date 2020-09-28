@@ -380,6 +380,9 @@ const instrumentTextInputHoc = path => {
 };
 
 const instrumentPressableHoc = path => {
+  // 'MemoedPressable' is the component that actually gets exported from 'Pressable.js' in the react-native library, so wrap that instead of
+  // the 'Pressable' component defined in that file.
+  // See https://github.com/facebook/react-native/blob/2c896d35782cd04c873aefadc947447cc30a7f60/Libraries/Components/Pressable/Pressable.js#L242-L245.
   if (!path.node.id || path.node.id.name !== 'MemoedPressable') {
     return;
   }
