@@ -89,6 +89,12 @@ describe('autotrack instrumentor plugin', () => {
     var expected = getExpectedTransformedFile('is-function-declaration-no-id');
     assert.equal(actual, expected);
   });
+
+  it('pressable components should be instrumented', () => {
+    var actual = getActualTransformedFile('is-pressable');
+    var expected = getExpectedTransformedFile('is-pressable');
+    assert.equal(actual, expected);
+  });
 });
 
 const getActualTransformedFile = fixtureName => {

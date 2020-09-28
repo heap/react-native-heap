@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, TouchableOpacity, ScrollView, Text, TextInput } from 'react-native';
+import { Button, Pressable, TouchableOpacity, ScrollView, Text, TextInput } from 'react-native';
 
 const myRef = React.createRef();
 
@@ -25,6 +25,9 @@ export const TouchablesScreen = () => {
         onPress={() => console.log('pressed touchable opacity')}>
         <Text>Touchable Opacity</Text>
       </TouchableOpacity>
+      <Pressable onPress={() => console.log('pressed pressable')} onPressIn={() => console.log('pressed in pressable')}>
+        <Text>Pressable</Text>
+      </Pressable>
       <MyTextInput />
     </ScrollView>
   );
