@@ -13,7 +13,7 @@
     "android",
     "react-native"
   ],
-  "main": "dist/Heap",
+  "main": "js/Heap",
   "files": [
     "android",
     "instrumentor",

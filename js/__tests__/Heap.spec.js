@@ -33,33 +33,6 @@ describe('The Heap object', () => {
   beforeEach(() => {
     jest.resetModules();
 
-    NativeModules.RNHeap.manuallyTrackEvent.mockReset();
-    mockTrack = NativeModules.RNHeap.manuallyTrackEvent;
-
-    NativeModules.RNHeap.setAppId.mockReset();
-    mockSetAppId = NativeModules.RNHeap.setAppId;
-
-    NativeModules.RNHeap.getUserId.mockReset();
-    mockGetUserId = NativeModules.RNHeap.getUserId;
-
-    NativeModules.RNHeap.identify.mockReset();
-    mockIdentify = NativeModules.RNHeap.identify;
-
-    NativeModules.RNHeap.resetIdentity.mockReset();
-    mockResetIdentity = NativeModules.RNHeap.resetIdentity;
-
-    NativeModules.RNHeap.addUserProperties.mockReset();
-    mockAddUserProperties = NativeModules.RNHeap.addUserProperties;
-
-    NativeModules.RNHeap.addEventProperties.mockReset();
-    mockAddEventProperties = NativeModules.RNHeap.addEventProperties;
-
-    NativeModules.RNHeap.removeEventProperty.mockReset();
-    mockRemoveEventProperty = NativeModules.RNHeap.removeEventProperty;
-
-    NativeModules.RNHeap.clearEventProperties.mockReset();
-    mockClearEventProperties = NativeModules.RNHeap.clearEventProperties;
-
     NavigationUtil.getScreenPropsForCurrentRoute.mockImplementation(() => {
       return {
         is_using_react_navigation_hoc: false,
