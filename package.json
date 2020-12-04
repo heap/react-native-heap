@@ -63,12 +63,4 @@
     "ts-jest": "^24.0.0",
     "typescript": "^3.2.4"
   },
-  "scripts": {
-    "test": "jest",
-    "test-instrumentor": "cd instrumentor && ../node_modules/mocha/bin/mocha -r @babel/register test/ && cd ..",
-    "lint": "./node_modules/prettylint/bin/cli.js \"{js,e2e,instrumentor/src}/**/*.{js,ts}\"",
-    "lint-example": "./node_modules/prettylint/bin/cli.js \"examples/**/*.{js,ts}\"",
-    "compile": "./node_modules/typescript/bin/tsc",
-    "prepare": "npm run-script compile"
-  }
 }
