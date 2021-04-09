@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "babel-jest": "23.6.0",
-    "detox": "12.1.1",
+    "detox": "18.9.0",
     "jest": "23.6.0",
     "metro-react-native-babel-preset": "0.49.2",
     "mocha": "^5.2.0",
