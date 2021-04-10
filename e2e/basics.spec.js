@@ -66,6 +66,11 @@ const doTestActions = async () => {
   await rnTestUtil.waitIfIos();
 
   await element(by.id('scrollView')).swipe('left');
+  // Depending on device dimensions, the Basics Sentinel button can be obscured by the bottom navigation tab.
+  // A click on the button can inadvertently trigger a navigation change to a different part of the app. In
+  // order to avoid that, we bring the Basics Sentinel button safely above the navigation tab by scrolling
+  // down.
+  await element(by.id('scrollContainer')).scrollTo('bottom');
   await element(by.id('basicsSentinel')).tap();
 };
 
