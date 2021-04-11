@@ -17,6 +17,9 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.15.0] - Unreleased
+### Changed
+- Upgraded the native Heap iOS SDK dependency to 7.5.0-alpha.1
 
 ## [0.14.0] - 2020-09-23
 ### Added
