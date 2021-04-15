@@ -38,6 +38,7 @@ def heapAppId(buildType) {
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
         google()
     }
 
@@ -75,11 +76,12 @@ android {
 
 repositories {
     jcenter()
+    mavenCentral()
     google()
 }
 
 dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
-    api 'com.heapanalytics.android:heap-android-client:1.6.0'
+    api 'com.heapanalytics.android:heap-android-client:1.9.1'
 }
 
