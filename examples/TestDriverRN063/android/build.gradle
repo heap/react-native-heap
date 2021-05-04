@@ -6,7 +6,7 @@ buildscript {
         minSdkVersion = 16
         compileSdkVersion = 29
         targetSdkVersion = 29
-        ext.heapVersion = '1.6.0'
+        ext.heapVersion = '1.9.1'
     }
     repositories {
         google()
