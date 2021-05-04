@@ -1,6 +1,6 @@
 //
 //  Heap.h
-//  Version 7.2.0
+//  Version 7.5.0
 //  Copyright (c) 2014 Heap Inc. All rights reserved.
 //
 
@@ -40,6 +40,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Disable Heap autocapture for touches, fieldedits, swipes, gesture recognizers, etc.
 @property (assign) BOOL disableTouchAutocapture;
+
+/// Limit the size of the hierarchy (of parent view elements) captured for every autocaptured interaction. (Default: 30)
+@property (assign) NSInteger hierarchyCaptureLimit;
 
 @end
 
@@ -293,6 +296,10 @@ NS_ASSUME_NONNULL_BEGIN
 /// Alias for startEVPairing
 + (void)enableVisualizer __deprecated_msg("Use startEVPairing instead");
 
+/// Call this method in [UIAppDelegate application:openURL:options:] to launch
+/// application with QR code provided by Heap.
++ (void)handleOpenURL:(NSURL *)url
+              options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options;
 @end
 
 @interface UIView (HeapIgnore)
