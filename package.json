@@ -1,6 +1,6 @@
 {
   "name": "@heap/react-native-heap",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "React Native event tracking with Heap.",
   "license": "MIT",
   "author": "Heap <http://www.heapanalytics.com>",
@@ -46,7 +46,7 @@
     "@types/node": "^10.12.19",
     "coffeescript": "^1.12.7",
     "deep-freeze": "0.0.1",
-    "detox": "12.1.1",
+    "detox": "18.9.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "jest": "^24.0.0",

@@ -15,6 +15,12 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.15.0] - 2021-05-04
+### Added
+- Added support for `Pressable` components (introduced in React Native v0.63) via HOC instrumentation.
+
+### Changed
+- Upgraded the native Heap iOS (7.5.0) and Android (1.9.1) libraries
 
 ## [0.14.0] - 2020-09-23
 ### Added

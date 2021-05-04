@@ -20,10 +20,14 @@ const buildStartupWrapper = template(`{
   ORIGINAL_FUNCTION_CALL
 }`);
 
-const buildInstrumentationHoc = template(`
-  const Heap = require('@heap/react-native-heap').default || {
+const buildHeapImport = template(`(
+  require('@heap/react-native-heap').default || {
     HOC_IDENTIFIER: (Component) => Component,
-  };
+  }
+)`);
+
+const buildInstrumentationHoc = template(`
+  const Heap = HEAP_IMPORT;
 
   const COMPONENT_ID = HOC_CALL_EXPRESSION;
 `);
@@ -331,9 +335,13 @@ const instrumentTouchableHoc = path => {
     [equivalentExpression]
   );
 
+  const heapImport = buildHeapImport({
+    HOC_IDENTIFIER: hocIdentifier,
+  });
+
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
-    HOC_IDENTIFIER: hocIdentifier,
+    HEAP_IMPORT: heapImport,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 
@@ -358,13 +366,39 @@ const instrumentTextInputHoc = path => {
     [equivalentExpression]
   );
 
+  const heapImport = buildHeapImport({
+    HOC_IDENTIFIER: hocIdentifier,
+  });
+
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
-    HOC_IDENTIFIER: hocIdentifier,
+    HEAP_IMPORT: heapImport,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 
   path.replaceWithMultiple(replacement);
+};
+
+const instrumentPressableHoc = path => {
+  // 'MemoedPressable' is the component that actually gets exported from 'Pressable.js' in the react-native library, so wrap that instead of
+  // the 'Pressable' component defined in that file.
+  // See https://github.com/facebook/react-native/blob/2c896d35782cd04c873aefadc947447cc30a7f60/Libraries/Components/Pressable/Pressable.js#L242-L245.
+  if (!path.node.id || path.node.id.name !== 'MemoedPressable') {
+    return;
+  }
+
+  const hocIdentifier = t.identifier('withHeapPressableAutocapture');
+
+  const heapImport = buildHeapImport({
+    HOC_IDENTIFIER: hocIdentifier,
+  }).expression;
+
+  const autotrackExpression = t.callExpression(
+    t.memberExpression(heapImport, hocIdentifier),
+    [path.node.init]
+  );
+
+  path.get('init').replaceWith(autotrackExpression);
 };
 
 function transform(babel) {
@@ -384,6 +418,9 @@ function transform(babel) {
       },
       FunctionDeclaration(path) {
         instrumentTextInputHoc(path);
+      },
+      VariableDeclarator(path) {
+        instrumentPressableHoc(path);
       },
     },
   };
