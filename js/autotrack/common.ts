@@ -12,6 +12,7 @@ import { stripReservedCharacters } from '../util/reservedCharacters';
 // '_reactInternalFiber' property, so create our own 'Component' type that includes this prop.
 // :TODO: (jmtaber129): Consider pulling this out if other TS files need this extended typing.
 interface Component extends ReactComponent {
+  _reactInternals: FiberNode;
   _reactInternalFiber: FiberNode;
 }
 
@@ -66,7 +67,7 @@ export const getBaseComponentProps: (
   // Only look for target text if we're not HeapIgnore-ing target text.
   let targetText;
   if (heapIgnoreProps.allowTargetText) {
-    targetText = getTargetText(componentThis._reactInternalFiber);
+    targetText = getTargetText(getReactInternalFiber(componentThis));
   } else {
     targetText = '';
   }
@@ -89,15 +90,18 @@ const getComponentHierarchyTraversal: (
   comp: Component
 ) => ComponentHierarchyTraversalElement[] = componentThis => {
   // :TODO: (jmtaber129): Remove this if/when we support pre-fiber React.
-  if (!componentThis._reactInternalFiber) {
+  const fiber = getReactInternalFiber(componentThis);
+  if (!fiber) {
     throw new Error(
       'Pre-fiber React versions (React 16) are currently not supported by Heap autotrack.'
     );
   }
 
-  return getFiberNodeComponentHierarchyTraversal(
-    componentThis._reactInternalFiber
-  );
+  return getFiberNodeComponentHierarchyTraversal(fiber);
+};
+
+const getReactInternalFiber = (comp: Component) => {
+  return comp._reactInternals || comp._reactInternalFiber;
 };
 
 // Traverse up the hierarchy from the current component up to the root, and return an array of
