@@ -8,7 +8,7 @@ PODS:
   - glog (0.3.5)
   - React (0.57.5):
     - React/Core (= 0.57.5)
-  - react-native-heap (0.14.0):
+  - react-native-heap (0.16.0):
     - React
   - React/Core (0.57.5):
     - yoga (= 0.57.5.React)
@@ -18,7 +18,9 @@ PODS:
     - React/cxxreact
   - React/cxxreact (0.57.5):
     - boost-for-react-native (= 1.63.0)
+    - DoubleConversion
     - Folly (= 2016.10.31.00)
+    - glog
     - React/jschelpers
     - React/jsinspector
   - React/DevSupport (0.57.5):
@@ -102,14 +104,14 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
-  DoubleConversion: 5805e889d232975c086db112ece9ed034df7a0b2
+  DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: c89ac2d5c6ab169cd7397ef27485c44f35f742c7
-  glog: 1f3da668190260b06b429bb211bfbee5cd790c28
-  React: 01aa04500b2957c2767e1dff9fe12e09444a467c
-  react-native-heap: c9924c2f98e9c48e6a8ce86c0a114c896900aec2
+  glog: e8acf0ebbf99759d3ff18c86c292a5898282dcde
+  React: 6bf0c347fee354f01a5495e957eab059a9d8b9b7
+  react-native-heap: c405c239fcc85500b836088c911765ca9cc0f38b
   RNGestureHandler: 5329a942fce3d41c68b84c2c2276ce06a696d8b0
   yoga: a5c0ba30ebe82c13612b4c9301ad29708b8978dc
 
 PODFILE CHECKSUM: 94963ca9da08a6f38a9019eb8da64ec0f890b712
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.10.1
