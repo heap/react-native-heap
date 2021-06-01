@@ -8,14 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
-- Added support for React 17 (resolves #241).
-
 ### Changed
 ### Deprecated
 ### Removed
 ### Fixed
 ### Security
 __END_UNRELEASED__
+
+## [0.16.0] - 2021-06-01
+### Added
+- Added support for React 17 (resolves #241).
 
 ## [0.15.0] - 2021-05-04
 ### Added
