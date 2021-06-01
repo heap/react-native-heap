@@ -15,6 +15,10 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.16.0] - 2021-06-01
+### Added
+- Added support for React 17 (resolves #241).
+
 ## [0.15.0] - 2021-05-04
 ### Added
 - Added support for `Pressable` components (introduced in React Native v0.63) via HOC instrumentation.
