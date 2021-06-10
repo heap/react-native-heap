@@ -38,6 +38,7 @@ def heapAppId(buildType) {
 buildscript {
     repositories {
         jcenter()
+        mavenCentral()
         google()
     }
 
@@ -75,6 +76,7 @@ android {
 
 repositories {
     jcenter()
+    mavenCentral()
     google()
 }
 
