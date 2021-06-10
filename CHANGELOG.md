@@ -15,6 +15,10 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.17.0-alpha1] - 2021-06-09
+### Fixed
+- Fixed sporadic Babel instrumentation (`Cannot read property 'end' of null`) issues
+
 ## [0.16.0] - 2021-06-01
 ### Added
 - Added support for React 17 (resolves #241).
