@@ -27,8 +27,6 @@ const buildHeapImport = template(`(
 )`);
 
 const buildInstrumentationHoc = template(`
-  const Heap = HEAP_IMPORT;
-
   const COMPONENT_ID = HOC_CALL_EXPRESSION;
 `);
 
@@ -330,22 +328,21 @@ const instrumentTouchableHoc = path => {
 
   const hocIdentifier = t.identifier('withHeapTouchableAutocapture');
 
-  const autotrackExpression = t.callExpression(
-    t.memberExpression(t.identifier('Heap'), hocIdentifier),
-    [equivalentExpression]
-  );
-
   const heapImport = buildHeapImport({
     HOC_IDENTIFIER: hocIdentifier,
   });
 
+  const autotrackExpression = t.callExpression(
+    t.memberExpression(heapImport.expression, hocIdentifier),
+    [equivalentExpression]
+  );
+
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
-    HEAP_IMPORT: heapImport,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 
-  path.replaceWithMultiple(replacement);
+  path.replaceWith(replacement);
 };
 
 const instrumentTextInputHoc = path => {
@@ -361,22 +358,21 @@ const instrumentTextInputHoc = path => {
 
   const hocIdentifier = t.identifier('withHeapTextInputAutocapture');
 
-  const autotrackExpression = t.callExpression(
-    t.memberExpression(t.identifier('Heap'), hocIdentifier),
-    [equivalentExpression]
-  );
-
   const heapImport = buildHeapImport({
     HOC_IDENTIFIER: hocIdentifier,
   });
 
+  const autotrackExpression = t.callExpression(
+    t.memberExpression(heapImport.expression, hocIdentifier),
+    [equivalentExpression]
+  );
+
   const replacement = buildInstrumentationHoc({
     COMPONENT_ID: path.node.id,
-    HEAP_IMPORT: heapImport,
     HOC_CALL_EXPRESSION: autotrackExpression,
   });
 
-  path.replaceWithMultiple(replacement);
+  path.replaceWith(replacement);
 };
 
 const instrumentPressableHoc = path => {
