@@ -119,6 +119,13 @@ export function resetIdentity(): void;
 export function getUserId(): Promise<string>;
 
 /**
+ * Returns React Navigation's NavigationContainer injected with the ability to autocapture screenviews.
+ *
+ * @param NavigationContainer the NavigationContainer component to wrap.
+ */
+ export function withReactNavigationAutotrack(NavigationContainer: React.Component): React.Component;
+
+/**
  * Returns an HOC of a component with specific HeapIgnore properties.
  *
  * @param IgnoredComponent the component to wrap with HeapIgnore.
