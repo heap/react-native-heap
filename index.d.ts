@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { GestureResponderEvent, NativeSyntheticEvent, TargetedEvent } from 'react-native';
 
 import { HeapIgnore, HeapIgnoreTargetText } from './js/autotrack/heapIgnore';
 
@@ -117,6 +118,42 @@ export function resetIdentity(): void;
  * Returns a promise that resolves to the stringified version of the numeric user ID associated with user.
  */
 export function getUserId(): Promise<string>;
+
+/**
+ * Returns an HOC of a component that tracks touches, i.e. calls to `onPress` or
+ * `onLongPress`
+ * 
+ * @param TouchableComponent the component to autocapture touches for
+ */
+ export function withHeapTouchableAutocapture<
+  P extends {
+    onPress?: (e: GestureResponderEvent) => void;
+    onLongPress?: (e: GestureResponderEvent) => void;
+  }
+>(TouchableComponent: React.ComponentType<P>): React.ComponentType<P>;
+export function getUserId(): Promise<string>;
+
+/**
+ * Returns an HOC of a component that tracks presses, i.e. calls to `onPress` or
+ * `onLongPress`
+ * 
+ * @param PressableComponent the component to autocapture presses for
+ */
+ export function withHeapPressableAutocapture<
+  P extends {
+    onPress?: (e: GestureResponderEvent) => void;
+    onLongPress?: (e: GestureResponderEvent) => void;
+  }
+>(PressableComponent: React.ComponentType<P>): React.ComponentType<P>;
+
+/**
+ * Returns an HOC of a component that tracks focuses, i.e. calls to `onFocus`
+ * 
+ * @param FocusableComponent the component to autocapture focuses for
+ */
+ export function withHeapFocusableAutocapture<
+ P extends { onFocus?: (e: NativeSyntheticEvent<TargetedEvent>) => void }
+>(FocusableComponent: React.ComponentType<P>): React.ComponentType<P>;
 
 /**
  * Returns an HOC of a component with specific HeapIgnore properties.
