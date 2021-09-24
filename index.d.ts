@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { HeapIgnore, HeapIgnoreTargetText } from './js/autotrack/heapIgnore';
-
 /**
  * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch
  * between projects or between your production and development environments.
@@ -136,7 +134,8 @@ export class Ignore extends React.Component {}
  */
 export const IgnoreTargetText: React.SFC;
 
-export { HeapIgnore, HeapIgnoreTargetText };
+export class HeapIgnore extends React.Component {}
+export class HeapIgnoreTargetText extends React.Component {}
 
 /**
  * The following functions are not available via the iOS and Android API.
