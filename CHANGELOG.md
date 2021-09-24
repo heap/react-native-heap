@@ -12,6 +12,8 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+- Improve the types declared for `HeapIgnore` and `HeapIgnoreTargetText` so that
+  `tsc` does not complain that it cannot find the modules.
 ### Security
 __END_UNRELEASED__
 
