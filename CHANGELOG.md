@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
+- Added `withHeapAutocapture` to support HOC instrumentation of components that
+  may have a custom prop
+- Added type declarations for HOC instrumentation for `Touchable` and `Pressable`
 ### Changed
 ### Deprecated
 ### Removed
