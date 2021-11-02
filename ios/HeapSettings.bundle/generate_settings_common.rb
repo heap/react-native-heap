@@ -1,45 +1,42 @@
 #!/usr/bin/env ruby
 
 require 'fileutils'
+require 'json'
 
 def perform_substitution(dir, json)
   dev = json.fetch('dev', {})
   prod = json.fetch('prod', {})
   default = json.fetch('default', {})
-
-  template = File.read File.join(dir, 'HeapSettings.plist.template')
   output_path = File.join dir, 'HeapSettings.plist'
-
-  settings = template
-    .gsub('__HEAP_APP_ID_DEV__', get_app_id_for_config(dev, default) || '')
-    .gsub('__HEAP_APP_ID_PROD__', get_app_id_for_config(prod, default) || '')
-    .gsub('__HEAP_ENABLE_AUTOCAPTURE_DEV__', get_enable_autocapture_for_config(dev, default) ? 'true' : 'false')
-    .gsub('__HEAP_ENABLE_AUTOCAPTURE_PROD__', get_enable_autocapture_for_config(prod, default) ? 'true' : 'false')
-
-  IO.write output_path, settings
+  
+  %x{/usr/libexec/PlistBuddy -c 'Add :HeapAppIdDev string "#{get_app_id(dev, default)}"' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Add :HeapAppIdProd string "#{get_app_id(prod, default)}"' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Add :HeapEnableAutocaptureDev bool #{get_enable_autocapture(dev, default)}' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Add :HeapEnableAutocaptureProd bool #{get_enable_autocapture(prod, default)}' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Add :HeapCaptureBaseUrlDev string "#{get_capture_base_url(dev, default)}"' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Add :HeapCaptureBaseUrlProd string "#{get_capture_base_url(prod, default)}"' '#{output_path}'}
 end
 
 def perform_empty_substitution(dir)
-  template = File.read File.join(dir, 'HeapSettings.plist.template')
-  output_path = File.join dir, 'HeapSettings.plist'
-
-  settings = template
-    .gsub('__HEAP_APP_ID_DEV__', '')
-    .gsub('__HEAP_APP_ID_PROD__', '')
-    .gsub('__HEAP_ENABLE_AUTOCAPTURE_DEV__', 'false')
-    .gsub('__HEAP_ENABLE_AUTOCAPTURE_PROD__', 'false')
-
-  IO.write output_path, settings
+  perform_substitution dir, JSON.parse("{}")
 end
 
-def get_app_id_for_config(config_for_selected_environment, default_config)
-  is_auto_init = config_for_selected_environment['heapAutoInit']
-  is_auto_init = default_config['heapAutoInit'] if is_auto_init.nil?
-  is_auto_init = true if is_auto_init.nil?
-
-  return config_for_selected_environment['heapAppId'] || default_config['heapAppId'] if is_auto_init
+def get_app_id(selectedConfig, defaultConfig)
+  return '' unless get_property('heapAutoInit', true, selectedConfig, defaultConfig)
+  return get_property('heapAppId', '', selectedConfig, defaultConfig)
 end
 
-def get_enable_autocapture_for_config(config_for_selected_environment, default_config)
-  return config_for_selected_environment['enableNativeTouchEventCapture'] || default_config['enableNativeTouchEventCapture']
+def get_enable_autocapture(selectedConfig, defaultConfig)
+  return get_property('enableNativeTouchEventCapture', false, selectedConfig, defaultConfig)
+end
+
+def get_capture_base_url(selectedConfig, defaultConfig)
+  return get_property('captureBaseUrl', false, selectedConfig, defaultConfig)
+end
+
+def get_property(name, valueIfNil, selectedConfig, defaultConfig)
+  value = selectedConfig[name]
+  value = defaultConfig[name] if value.nil?
+  value = valueIfNil if value.nil?
+  return value
 end
