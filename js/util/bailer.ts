@@ -16,7 +16,11 @@ const bailOnError = (f: Function) => (...args: any[]) => {
   try {
     return f(...args);
   } catch (e) {
-    bail(e);
+    if (e instanceof Error) {
+      bail(e);
+    } else {
+      bail(new Error(String(e)));
+    }
   }
 };
 
