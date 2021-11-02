@@ -1,6 +1,6 @@
 #import "RNHeapInit.h"
 #import <Foundation/Foundation.h>
-#import "Heap.h"
+#import <Heap/Heap.h>
 
 @implementation RNHeapInit
 
