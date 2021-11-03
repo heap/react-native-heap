@@ -1,7 +1,0 @@
-{
-    "default": {
-        "heapAutoInit": true,
-        "heapAppId": "2084764307",
-        "captureBaseUrl": "http://localhost:3000"
-    }
-}
