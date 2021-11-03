@@ -30,7 +30,7 @@
     
     options.disableTouchAutocapture = !enableTouchAutocapture;
     
-    if (captureBaseUrl) {
+    if (captureBaseUrl.length > 0) {
         options.captureBaseUrl = [NSURL URLWithString:captureBaseUrl];
     }
     

@@ -9,6 +9,13 @@ def perform_substitution(dir, json)
   default = json.fetch('default', {})
   output_path = File.join dir, 'HeapSettings.plist'
   
+  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapAppIdDev' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapAppIdProd' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapEnableAutocaptureDev' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapEnableAutocaptureProd' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapCaptureBaseUrlDev' '#{output_path}'}
+  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapCaptureBaseUrlProd' '#{output_path}'}
+
   %x{/usr/libexec/PlistBuddy -c 'Add :HeapAppIdDev string "#{get_app_id(dev, default)}"' '#{output_path}'}
   %x{/usr/libexec/PlistBuddy -c 'Add :HeapAppIdProd string "#{get_app_id(prod, default)}"' '#{output_path}'}
   %x{/usr/libexec/PlistBuddy -c 'Add :HeapEnableAutocaptureDev bool #{get_enable_autocapture(dev, default)}' '#{output_path}'}
