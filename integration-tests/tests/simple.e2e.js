@@ -18,7 +18,7 @@ describe('On a simple touch navigation', () => {
     await server.stop();
   });
 
-  it('the app should emit ', async () => {
+  it('the app should emit touch and pageview events', async () => {
     await element(by.label('Touchables')).tap();
 
     await server.expectSourceEventWithProperties("touch", {
