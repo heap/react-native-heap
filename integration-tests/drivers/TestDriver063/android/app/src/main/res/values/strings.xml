@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TestDriver063</string>
+    <string name="com.heapanalytics.android.buildConfigPkgName">com.testdriver063</string>
 </resources>

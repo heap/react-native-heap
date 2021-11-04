@@ -7,6 +7,9 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
+# Life is suffering.
+export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
+
 DRIVER=TestDriver063
 
 # Rebuild the package
