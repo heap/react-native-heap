@@ -1,4 +1,5 @@
 import {CaptureServer} from './server';
+import assert from 'assert';
 
 function buttonCase(text) {
   if (device.type === 'android.emulator') {
@@ -53,5 +54,53 @@ describe('On a simple touch navigation', () => {
         is_using_react_navigation_hoc: booleanProperty(true),
       },
     );
+  });
+});
+
+describe('Properties', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+    server = new CaptureServer();
+    server.start(3000);
+  });
+
+  beforeEach(async () => {
+    server.reset();
+    await device.reloadReactNative();
+    await element(by.text(buttonCase('Properties'))).tap();
+  });
+
+  afterAll(async () => {
+    await server.stop();
+  });
+
+  describe('Add user properties', () => {
+    it('should send a pixel request', async () => {
+      await element(by.text(buttonCase('Add User Properties'))).tap();
+
+      await server.expectUserProperties({prop1: 'foo', prop2: 'bar'});
+    });
+  });
+
+  describe('Identify', () => {
+    var userId;
+
+    it('should send a pixel request', async () => {
+      await element(by.text(buttonCase('Identify'))).tap();
+
+      userId = await server.expectIdentify('foobar');
+    });
+
+    it('should carry forward on future requests', async () => {
+      await element(by.text(buttonCase('Back'))).tap();
+
+      const message = await server.expectSourceEventWithProperties('touch', {
+        target_text: buttonCase('Back'),
+        screen_name: 'Properties',
+      });
+
+      assert.equal(message.user?.identity, 'foobar');
+      assert.equal(message.user?.id, userId);
+    });
   });
 });

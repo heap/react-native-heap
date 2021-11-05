@@ -3,12 +3,6 @@ import EventEmitter from 'events';
 import {Server} from 'http';
 import protobuf from 'protobufjs';
 
-interface CaptureApplicationInfo {
-  appName: string;
-  appVersion: string;
-  libraryVersion: string;
-}
-
 interface CaptureEvent {
   appVisibilityState: 0 | 1 | 2;
 }
@@ -86,7 +80,7 @@ class CaptureServer extends EventEmitter {
   constructor() {
     super();
     this.app = express();
-    this.app.get('/h', this.onGetRequest.bind(this));
+    this.app.get('*', this.onGetRequest.bind(this));
     this.app.post(
       '/api/integrations/ios/track',
       express.json(),
@@ -174,7 +168,7 @@ class CaptureServer extends EventEmitter {
     this.emit('pixel', url);
   }
 
-  waitForMessage(
+  waitForMatchingMessage(
     matcher: (message: CaptureMessage<CaptureEvent>) => boolean,
     timeout: number = 10,
   ): Promise<CaptureMessage<CaptureEvent>> {
@@ -202,11 +196,66 @@ class CaptureServer extends EventEmitter {
     });
   }
 
+  waitForMatchingPixelRequest(
+    matcher: (url: URL) => boolean,
+    errorMessage: () => string = () => 'timeout',
+    timeout: number = 10,
+  ): Promise<URL> {
+    return new Promise((resolve, reject) => {
+      for (const url of this.pixelRequests) {
+        if (matcher(url)) {
+          resolve(url);
+          return;
+        }
+      }
+
+      function onEvent(url: URL) {
+        if (matcher(url)) {
+          resolve(url);
+          clearTimeout(timer);
+        }
+      }
+
+      const timer = setTimeout(() => {
+        reject(
+          errorMessage() +
+            '\n' +
+            JSON.stringify(this.pixelRequests, undefined, 4),
+        );
+        this.off('pixel', onEvent);
+      }, timeout * 1000);
+
+      this.on('pixel', onEvent);
+    });
+  }
+
+  expectPixelRequest(path: string, expectedParams: {[key: string]: string}) {
+    return this.waitForMatchingPixelRequest(
+      (url) => {
+        if (path !== url.pathname) {
+          return false;
+        }
+        for (const [key, value] of Object.entries(expectedParams)) {
+          if (url.searchParams.get(key) !== value) {
+            return false;
+          }
+        }
+        return true;
+      },
+      () =>
+        `timeout waiting for ${path} with ${JSON.stringify(
+          expectedParams,
+          undefined,
+          2,
+        )}`,
+    );
+  }
+
   async expectSourceEventWithProperties(
     expectedType: 'touch' | 'react_navigation_screenview',
     expectedProperties: {[key: string]: string | boolean},
   ): Promise<CaptureMessage<CaptureSourceEvent>> {
-    const result = await this.waitForMessage((message) => {
+    const result = await this.waitForMatchingMessage((message) => {
       const event = message.event;
 
       if (!isSourceEvent(event)) {
@@ -231,6 +280,27 @@ class CaptureServer extends EventEmitter {
       return true;
     });
     return <CaptureMessage<CaptureSourceEvent>>result;
+  }
+
+  async expectUserProperties(expectedParams: {
+    [key: string]: string;
+  }): Promise<URL> {
+    const prefixed = Object.fromEntries(
+      Object.entries(expectedParams).map((arr) => ['_' + arr[0], arr[1]]),
+    );
+
+    return await this.expectPixelRequest(
+      '/api/add_user_properties_v3',
+      prefixed,
+    );
+  }
+
+  async expectIdentify(identity: string): Promise<string> {
+    let matched = await this.expectPixelRequest('/api/identify_v3', {
+      i: identity,
+    });
+
+    return matched.searchParams.get('u');
   }
 }
 
