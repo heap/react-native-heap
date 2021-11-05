@@ -1,0 +1,952 @@
+{
+ "nested": {
+  "tracker": {
+   "nested": {
+    "android": {
+     "nested": {
+      "proto": {
+       "options": {
+        "java_package": "com.heapanalytics.android.internal",
+        "java_outer_classname": "UserPropertiesProtos"
+       },
+       "nested": {
+        "UserInfo": {
+         "fields": {
+          "id": {
+           "type": "google.protobuf.UInt64Value",
+           "id": 1
+          },
+          "identity": {
+           "type": "string",
+           "id": 2
+          }
+         }
+        },
+        "Value": {
+         "fields": {
+          "string": {
+           "type": "string",
+           "id": 1
+          }
+         }
+        },
+        "Properties": {
+         "fields": {
+          "properties": {
+           "keyType": "string",
+           "type": "Value",
+           "id": 1
+          }
+         }
+        },
+        "ApplicationInfo": {
+         "fields": {
+          "applicationId": {
+           "type": "string",
+           "id": 1
+          },
+          "debug": {
+           "type": "bool",
+           "id": 2
+          },
+          "buildType": {
+           "type": "string",
+           "id": 3
+          },
+          "flavor": {
+           "type": "string",
+           "id": 4
+          },
+          "versionCode": {
+           "type": "int32",
+           "id": 5
+          },
+          "versionName": {
+           "type": "string",
+           "id": 6
+          },
+          "flavorDimensions": {
+           "keyType": "string",
+           "type": "string",
+           "id": 7
+          },
+          "library": {
+           "type": "LibraryInfo",
+           "id": 8
+          }
+         }
+        },
+        "LibraryInfo": {
+         "fields": {
+          "libraryVersion": {
+           "type": "string",
+           "id": 1
+          },
+          "ancestryCaptureEnabled": {
+           "type": "bool",
+           "id": 2
+          },
+          "boundingBoxCaptureEnabled": {
+           "type": "bool",
+           "id": 3
+          }
+         }
+        },
+        "DeviceInfo": {
+         "fields": {
+          "brand": {
+           "type": "string",
+           "id": 1
+          },
+          "manufacturer": {
+           "type": "string",
+           "id": 2
+          },
+          "model": {
+           "type": "string",
+           "id": 3
+          },
+          "release": {
+           "type": "string",
+           "id": 4
+          },
+          "sdk": {
+           "type": "int32",
+           "id": 5
+          },
+          "sdkCodename": {
+           "type": "string",
+           "id": 6
+          },
+          "carrier": {
+           "type": "string",
+           "id": 7
+          },
+          "layoutSize": {
+           "type": "LayoutSize",
+           "id": 8
+          },
+          "widthPixels": {
+           "type": "uint64",
+           "id": 9
+          },
+          "heightPixels": {
+           "type": "uint64",
+           "id": 10
+          },
+          "xdpi": {
+           "type": "float",
+           "id": 11
+          },
+          "ydpi": {
+           "type": "float",
+           "id": 12
+          },
+          "logicalDpi": {
+           "type": "uint32",
+           "id": 13
+          },
+          "density": {
+           "type": "float",
+           "id": 14
+          },
+          "chromebook": {
+           "type": "bool",
+           "id": 15
+          },
+          "androidId": {
+           "type": "string",
+           "id": 16
+          },
+          "advertiserId": {
+           "type": "string",
+           "id": 17
+          }
+         },
+         "nested": {
+          "LayoutSize": {
+           "values": {
+            "UNKNOWN": 0,
+            "UNDEFINED": 1,
+            "SMALL": 2,
+            "NORMAL": 3,
+            "LARGE": 4,
+            "XLARGE": 5
+           }
+          }
+         }
+        },
+        "Point": {
+         "fields": {
+          "x": {
+           "type": "int32",
+           "id": 1
+          },
+          "y": {
+           "type": "int32",
+           "id": 2
+          }
+         }
+        },
+        "Dimensions": {
+         "fields": {
+          "width": {
+           "type": "uint32",
+           "id": 1
+          },
+          "height": {
+           "type": "uint32",
+           "id": 2
+          }
+         }
+        },
+        "Message": {
+         "oneofs": {
+          "kind": {
+           "oneof": [
+            "session",
+            "pageview",
+            "event"
+           ]
+          }
+         },
+         "fields": {
+          "id": {
+           "type": "uint64",
+           "id": 1
+          },
+          "envId": {
+           "type": "string",
+           "id": 2
+          },
+          "user": {
+           "type": "UserInfo",
+           "id": 3
+          },
+          "time": {
+           "type": "google.protobuf.Timestamp",
+           "id": 4
+          },
+          "sessionInfo": {
+           "type": "SessionInfo",
+           "id": 5
+          },
+          "pageviewInfo": {
+           "type": "PageviewInfo",
+           "id": 6
+          },
+          "properties": {
+           "keyType": "string",
+           "type": "Value",
+           "id": 7
+          },
+          "application": {
+           "type": "ApplicationInfo",
+           "id": 8
+          },
+          "device": {
+           "type": "DeviceInfo",
+           "id": 9
+          },
+          "session": {
+           "type": "google.protobuf.Empty",
+           "id": 10
+          },
+          "pageview": {
+           "type": "google.protobuf.Empty",
+           "id": 11
+          },
+          "event": {
+           "type": "Event",
+           "id": 12
+          }
+         }
+        },
+        "ViewInfo": {
+         "fields": {
+          "className": {
+           "type": "string",
+           "id": 1
+          },
+          "id": {
+           "type": "string",
+           "id": 2
+          },
+          "accessibilityInfo": {
+           "type": "AccessibilityInfo",
+           "id": 3
+          },
+          "text": {
+           "type": "string",
+           "id": 4
+          },
+          "tabHostTag": {
+           "type": "string",
+           "id": 5
+          },
+          "ancestors": {
+           "rule": "repeated",
+           "type": "ViewInfo",
+           "id": 6
+          },
+          "fragment": {
+           "type": "FragmentInfo",
+           "id": 7
+          },
+          "boundingBox": {
+           "type": "BoundingBox",
+           "id": 8
+          }
+         }
+        },
+        "PageviewInfo": {
+         "fields": {
+          "id": {
+           "type": "uint64",
+           "id": 1
+          },
+          "activity": {
+           "type": "ActivityInfo",
+           "id": 2
+          },
+          "time": {
+           "type": "google.protobuf.Timestamp",
+           "id": 3
+          },
+          "source": {
+           "type": "Source",
+           "id": 4
+          }
+         },
+         "nested": {
+          "Source": {
+           "values": {
+            "UNKNOWN": 0,
+            "ACTIVITY_NAVIGATION": 1,
+            "USER_ID_CHANGE": 2,
+            "ENVID_CHANGE": 3,
+            "SESSION_REFRESH": 4,
+            "SYNTHETIC": 5
+           }
+          }
+         }
+        },
+        "SessionInfo": {
+         "fields": {
+          "id": {
+           "type": "uint64",
+           "id": 1
+          },
+          "time": {
+           "type": "google.protobuf.Timestamp",
+           "id": 2
+          }
+         }
+        },
+        "Event": {
+         "oneofs": {
+          "kind": {
+           "oneof": [
+            "custom",
+            "click",
+            "fragmentTransition",
+            "textChange",
+            "swipe",
+            "pageTransition",
+            "appPackageChange",
+            "sourceEvent",
+            "sourceCustomEvent"
+           ]
+          }
+         },
+         "fields": {
+          "custom": {
+           "type": "Custom",
+           "id": 1
+          },
+          "click": {
+           "type": "Click",
+           "id": 2
+          },
+          "fragmentTransition": {
+           "type": "FragmentTransition",
+           "id": 3
+          },
+          "textChange": {
+           "type": "TextChange",
+           "id": 5
+          },
+          "swipe": {
+           "type": "Swipe",
+           "id": 6
+          },
+          "pageTransition": {
+           "type": "PageTransition",
+           "id": 7
+          },
+          "appPackageChange": {
+           "type": "AppPackageChange",
+           "id": 8
+          },
+          "sourceEvent": {
+           "type": "SourceEvent",
+           "id": 9
+          },
+          "sourceCustomEvent": {
+           "type": "SourceCustomEvent",
+           "id": 10
+          },
+          "appVisibilityState": {
+           "type": "AppVisibility",
+           "id": 11
+          },
+          "visibleFragments": {
+           "rule": "repeated",
+           "type": "FragmentInfo",
+           "id": 4
+          }
+         },
+         "nested": {
+          "AppVisibility": {
+           "values": {
+            "UNKNOWN": 0,
+            "BACKGROUNDED": 1,
+            "FOREGROUNDED": 2
+           }
+          },
+          "Custom": {
+           "fields": {
+            "name": {
+             "type": "string",
+             "id": 1
+            },
+            "properties": {
+             "keyType": "string",
+             "type": "Value",
+             "id": 2
+            }
+           }
+          },
+          "Click": {
+           "fields": {
+            "view": {
+             "type": "ViewInfo",
+             "id": 1
+            },
+            "activity": {
+             "type": "ActivityInfo",
+             "id": 2,
+             "options": {
+              "deprecated": true
+             }
+            },
+            "onClickAttributeTarget": {
+             "type": "string",
+             "id": 3
+            }
+           }
+          },
+          "FragmentTransition": {
+           "fields": {
+            "added": {
+             "rule": "repeated",
+             "type": "FragmentInfo",
+             "id": 1
+            },
+            "removed": {
+             "rule": "repeated",
+             "type": "FragmentInfo",
+             "id": 2
+            }
+           }
+          },
+          "TextChange": {
+           "fields": {
+            "view": {
+             "type": "ViewInfo",
+             "id": 1
+            }
+           }
+          },
+          "Swipe": {
+           "fields": {
+            "view": {
+             "type": "ViewInfo",
+             "id": 1
+            }
+           },
+           "reserved": [
+            [
+             2,
+             2
+            ]
+           ]
+          },
+          "PageTransition": {
+           "fields": {
+            "from": {
+             "type": "PageInfo",
+             "id": 1
+            },
+            "to": {
+             "type": "PageInfo",
+             "id": 2
+            },
+            "container": {
+             "type": "ViewInfo",
+             "id": 3
+            },
+            "userInitiated": {
+             "type": "bool",
+             "id": 4
+            }
+           }
+          },
+          "AppPackageChange": {
+           "fields": {
+            "previousAppPackageInfo": {
+             "type": "ApplicationInfo",
+             "id": 1
+            },
+            "currentAppPackageInfo": {
+             "type": "ApplicationInfo",
+             "id": 2
+            },
+            "isUpgrade": {
+             "type": "bool",
+             "id": 3
+            }
+           }
+          },
+          "SourceEvent": {
+           "fields": {
+            "sourceName": {
+             "type": "string",
+             "id": 1
+            },
+            "name": {
+             "type": "string",
+             "id": 2
+            },
+            "sourceProperties": {
+             "keyType": "string",
+             "type": "Value",
+             "id": 3
+            }
+           }
+          },
+          "SourceCustomEvent": {
+           "fields": {
+            "sourceName": {
+             "type": "string",
+             "id": 1
+            },
+            "name": {
+             "type": "string",
+             "id": 2
+            },
+            "sourceProperties": {
+             "keyType": "string",
+             "type": "Value",
+             "id": 3
+            },
+            "customProperties": {
+             "keyType": "string",
+             "type": "Value",
+             "id": 4
+            }
+           }
+          }
+         }
+        },
+        "PageInfo": {
+         "oneofs": {
+          "kind": {
+           "oneof": [
+            "view",
+            "fragment"
+           ]
+          }
+         },
+         "fields": {
+          "view": {
+           "type": "ViewInfo",
+           "id": 1
+          },
+          "fragment": {
+           "type": "FragmentInfo",
+           "id": 2
+          },
+          "index": {
+           "type": "uint32",
+           "id": 3
+          },
+          "title": {
+           "type": "string",
+           "id": 4
+          }
+         }
+        },
+        "ActivityInfo": {
+         "fields": {
+          "className": {
+           "type": "string",
+           "id": 1
+          }
+         }
+        },
+        "AccessibilityInfo": {
+         "fields": {
+          "className": {
+           "type": "string",
+           "id": 1
+          },
+          "contentDescription": {
+           "type": "string",
+           "id": 2
+          }
+         }
+        },
+        "FragmentInfo": {
+         "fields": {
+          "className": {
+           "type": "string",
+           "id": 1
+          },
+          "objectHashCode": {
+           "type": "int32",
+           "id": 2
+          }
+         }
+        },
+        "MessageBatch": {
+         "fields": {
+          "events": {
+           "rule": "repeated",
+           "type": "Message",
+           "id": 1
+          }
+         }
+        },
+        "BoundingBox": {
+         "fields": {
+          "position": {
+           "type": "tracker.android.proto.Point",
+           "id": 1
+          },
+          "size": {
+           "type": "tracker.android.proto.Dimensions",
+           "id": 2
+          }
+         }
+        },
+        "UserMigration": {
+         "fields": {
+          "envId": {
+           "type": "string",
+           "id": 1
+          },
+          "fromUserId": {
+           "type": "uint64",
+           "id": 2
+          },
+          "toIdentity": {
+           "type": "string",
+           "id": 3
+          },
+          "time": {
+           "type": "google.protobuf.Timestamp",
+           "id": 4
+          }
+         }
+        },
+        "MigrationCache": {
+         "fields": {
+          "migration": {
+           "rule": "repeated",
+           "type": "UserMigration",
+           "id": 1
+          }
+         }
+        },
+        "UserProperties": {
+         "fields": {
+          "envId": {
+           "type": "string",
+           "id": 1
+          },
+          "user": {
+           "type": "UserInfo",
+           "id": 2
+          },
+          "properties": {
+           "keyType": "string",
+           "type": "Value",
+           "id": 3
+          },
+          "initialDevice": {
+           "type": "DeviceInfo",
+           "id": 4
+          },
+          "initialApplication": {
+           "type": "ApplicationInfo",
+           "id": 5
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "mobile": {
+   "nested": {
+    "eventdefinition": {
+     "nested": {
+      "v0alpha": {
+       "options": {
+        "java_package": "com.heapanalytics.android.eventdef",
+        "java_multiple_files": true
+       },
+       "nested": {
+        "EVRequest": {
+         "oneofs": {
+          "kind": {
+           "oneof": [
+            "pairStart",
+            "pairAccept",
+            "pairReject",
+            "heartbeat",
+            "event",
+            "disconnect"
+           ]
+          }
+         },
+         "fields": {
+          "sessionInfo": {
+           "type": "EVSessionInfo",
+           "id": 1
+          },
+          "pairStart": {
+           "type": "google.protobuf.Empty",
+           "id": 2
+          },
+          "pairAccept": {
+           "type": "google.protobuf.Empty",
+           "id": 3
+          },
+          "pairReject": {
+           "type": "google.protobuf.Empty",
+           "id": 4
+          },
+          "heartbeat": {
+           "type": "google.protobuf.Empty",
+           "id": 5
+          },
+          "event": {
+           "type": "EVEvent",
+           "id": 6
+          },
+          "disconnect": {
+           "type": "google.protobuf.Empty",
+           "id": 7
+          }
+         }
+        },
+        "EVSessionInfo": {
+         "fields": {
+          "deviceInfo": {
+           "type": "EVDeviceInfo",
+           "id": 1
+          },
+          "envId": {
+           "type": "string",
+           "id": 2
+          },
+          "pairingCode": {
+           "type": "string",
+           "id": 3
+          },
+          "version": {
+           "type": "uint32",
+           "id": 4
+          }
+         }
+        },
+        "EVDeviceInfo": {
+         "fields": {
+          "deviceId": {
+           "type": "string",
+           "id": 1
+          },
+          "prettyName": {
+           "type": "string",
+           "id": 2
+          },
+          "osDeviceInfo": {
+           "type": "tracker.android.proto.DeviceInfo",
+           "id": 3
+          }
+         }
+        },
+        "EVEvent": {
+         "fields": {
+          "event": {
+           "type": "tracker.android.proto.Message",
+           "id": 1
+          },
+          "screenshot": {
+           "type": "ScreenshotInfo",
+           "id": 2
+          }
+         }
+        },
+        "ScreenshotInfo": {
+         "fields": {
+          "touchLocation": {
+           "type": "tracker.android.proto.Point",
+           "id": 1
+          },
+          "content": {
+           "type": "bytes",
+           "id": 2
+          },
+          "dimensions": {
+           "type": "tracker.android.proto.Dimensions",
+           "id": 3
+          }
+         }
+        },
+        "EVResponse": {
+         "oneofs": {
+          "body": {
+           "oneof": [
+            "pairingPending",
+            "pairingCode",
+            "receiverConnected"
+           ]
+          }
+         },
+         "fields": {
+          "pairingPending": {
+           "type": "google.protobuf.Empty",
+           "id": 1
+          },
+          "pairingCode": {
+           "type": "string",
+           "id": 2
+          },
+          "receiverConnected": {
+           "type": "bool",
+           "id": 3
+          },
+          "version": {
+           "type": "uint32",
+           "id": 4
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "google": {
+   "nested": {
+    "protobuf": {
+     "nested": {
+      "DoubleValue": {
+       "fields": {
+        "value": {
+         "type": "double",
+         "id": 1
+        }
+       }
+      },
+      "FloatValue": {
+       "fields": {
+        "value": {
+         "type": "float",
+         "id": 1
+        }
+       }
+      },
+      "Int64Value": {
+       "fields": {
+        "value": {
+         "type": "int64",
+         "id": 1
+        }
+       }
+      },
+      "UInt64Value": {
+       "fields": {
+        "value": {
+         "type": "uint64",
+         "id": 1
+        }
+       }
+      },
+      "Int32Value": {
+       "fields": {
+        "value": {
+         "type": "int32",
+         "id": 1
+        }
+       }
+      },
+      "UInt32Value": {
+       "fields": {
+        "value": {
+         "type": "uint32",
+         "id": 1
+        }
+       }
+      },
+      "BoolValue": {
+       "fields": {
+        "value": {
+         "type": "bool",
+         "id": 1
+        }
+       }
+      },
+      "StringValue": {
+       "fields": {
+        "value": {
+         "type": "string",
+         "id": 1
+        }
+       }
+      },
+      "BytesValue": {
+       "fields": {
+        "value": {
+         "type": "bytes",
+         "id": 1
+        }
+       }
+      },
+      "Empty": {
+       "fields": {}
+      },
+      "Timestamp": {
+       "fields": {
+        "seconds": {
+         "type": "int64",
+         "id": 1
+        },
+        "nanos": {
+         "type": "int32",
+         "id": 2
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ }
+}

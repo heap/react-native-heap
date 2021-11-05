@@ -24,7 +24,13 @@ cd "drivers/${DRIVER}"
 rm -rf node_modules/@heap || true
 npm install
 
-# Build and test ios
+# Prepare iOS
 cd ios && pod install && cd ..
+
+# Build both
 npx detox build --configuration ios
+npx detox build --configuration android
+
+# Test both
 npx detox test --configuration ios
+npx detox test --configuration android

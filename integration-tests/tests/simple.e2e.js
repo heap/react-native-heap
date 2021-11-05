@@ -1,4 +1,20 @@
-import { CaptureServer } from './server';
+import {CaptureServer} from './server';
+
+function buttonCase(text) {
+  if (device.type === 'android.emulator') {
+    return text.toUpperCase();
+  } else {
+    return text;
+  }
+}
+
+function booleanProperty(value) {
+  if (device.type === 'android.emulator') {
+    return value ? 'true' : 'false';
+  } else {
+    return value;
+  }
+}
 
 let server;
 
@@ -19,20 +35,23 @@ describe('On a simple touch navigation', () => {
   });
 
   it('the app should emit touch and pageview events', async () => {
-    await element(by.label('Touchables')).tap();
+    await element(by.text(buttonCase('Touchables'))).tap();
 
-    await server.expectSourceEventWithProperties("touch", {
-      target_text: "Touchables",
-      screen_path: "Home",
-      screen_name: "Home",
-      is_using_react_navigation_hoc: true,
-      is_long_press: false,
+    await server.expectSourceEventWithProperties('touch', {
+      target_text: buttonCase('Touchables'),
+      screen_path: 'Home',
+      screen_name: 'Home',
+      is_using_react_navigation_hoc: booleanProperty(true),
+      is_long_press: booleanProperty(false),
     });
 
-    await server.expectSourceEventWithProperties("react_navigation_screenview", {
-      screen_path: "Touchables",
-      screen_name: "Touchables",
-      is_using_react_navigation_hoc: true,
-    });
+    await server.expectSourceEventWithProperties(
+      'react_navigation_screenview',
+      {
+        screen_path: 'Touchables',
+        screen_name: 'Touchables',
+        is_using_react_navigation_hoc: booleanProperty(true),
+      },
+    );
   });
 });

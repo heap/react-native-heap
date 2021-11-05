@@ -26,11 +26,14 @@
     "@babel/core": "^7.10.5",
     "@babel/runtime": "^7.10.5",
     "@react-native-community/eslint-config": "^2.0.0",
+    "@types/express": "^4.17.13",
     "babel-jest": "^26.1.0",
     "detox": "^18.23.1",
     "eslint": "^7.5.0",
+    "express": "^4.17.1",
     "jest": "^27.3.1",
     "metro-react-native-babel-preset": "^0.61.0",
+    "protobufjs": "^6.11.2",
     "react-test-renderer": "16.13.1"
   },
   "jest": {

@@ -1,182 +1,237 @@
-import { createServer, IncomingMessage, METHODS, Server, ServerResponse } from 'http';
-
+import express from 'express';
 import EventEmitter from 'events';
+import {Server} from 'http';
+import protobuf from 'protobufjs';
 
 interface CaptureApplicationInfo {
-    appName: string;
-    appVersion: string;
-    libraryVersion: string;
+  appName: string;
+  appVersion: string;
+  libraryVersion: string;
 }
 
 interface CaptureEvent {
-    appVisibilityState: 0 | 1 | 2;
+  appVisibilityState: 0 | 1 | 2;
 }
 
 interface CaptureSourceEvent extends CaptureEvent {
-    sourceEvent: CaptureSourceEventPayload;
+  sourceEvent: CaptureSourceEventPayload;
 }
 
 interface BoolProperty {
-    bool: boolean;
+  bool: boolean;
 }
 
 interface StringProperty {
-    string: string;
+  string: string;
 }
 
 interface CaptureSourceEventPayload {
-    type: string;
-    sourceProperties: { [key: string]: BoolProperty | StringProperty };
-    source: string;
+  type?: string;
+  name?: string;
+  sourceProperties: {[key: string]: BoolProperty | StringProperty};
+  source: string;
 }
 
-interface CaptureMessage {
-    envId: string;
-    id: string;
-    applicationInfo: CaptureApplicationInfo;
-    event: CaptureEvent;
+interface CaptureMessage<T extends CaptureEvent> {
+  envId: string;
+  id: string;
+  event: T | null;
+  [key: string]: any;
 }
 
-interface CaptureBatch {
-    sentTime: string;
-    messages: CaptureMessage[];
+interface CaptureIOSBatch {
+  sentTime: string;
+  messages: CaptureMessage<CaptureEvent>[];
 }
 
-interface CaptureRequest {
-    url: URL;
-    body?: CaptureBatch;
+interface CaptureAndroidBatch {
+  events: CaptureMessage<CaptureEvent>[];
 }
 
 function isSourceEvent(event: CaptureEvent): event is CaptureSourceEvent {
-    return event["sourceEvent"] !== undefined;
+  return has(event, 'sourceEvent');
 }
 
-function getPropertyValue(propertyName: string, properties: { [key: string]: BoolProperty | StringProperty }): boolean | string | undefined {
-    for (const [key, value] of Object.entries(properties)) {
-        if (key === propertyName) {
-            if (value["bool"] !== undefined) { return (<BoolProperty>value).bool }
-            if (value["string"] !== undefined) { return (<StringProperty>value).string }
-            return undefined;
-        }
+// This keeps getting formatted away. :(
+function has(obj: any, property: string): boolean {
+  return obj && obj[property] !== undefined;
+}
+
+function getPropertyValue(
+  propertyName: string,
+  properties: {[key: string]: BoolProperty | StringProperty},
+): boolean | string | undefined {
+  for (const [key, value] of Object.entries(properties)) {
+    if (key === propertyName) {
+      if (has(value, 'bool')) {
+        return (<BoolProperty>value).bool;
+      }
+      if (has(value, 'string') !== undefined) {
+        return (<StringProperty>value).string;
+      }
+      return undefined;
     }
-    return undefined;
+  }
+  return undefined;
 }
-
 
 class CaptureServer extends EventEmitter {
+  app: express.Express;
+  server: Server;
+  root: protobuf.Root;
 
-    httpServer: Server;
+  pixelRequests: URL[];
+  eventMessages: CaptureMessage<CaptureEvent>[];
 
-    requests: CaptureRequest[];
+  constructor() {
+    super();
+    this.app = express();
+    this.app.get('/h', this.onGetRequest.bind(this));
+    this.app.post(
+      '/api/integrations/ios/track',
+      express.json(),
+      this.onIOSTrackRequest.bind(this),
+    );
+    this.app.post(
+      '/api/integrations/android/track',
+      express.raw({inflate: true, type: 'application/x-protobuf'}),
+      this.onAndroidTrackRequest.bind(this),
+    );
+    this.app.all('*', (r) => console.log(r.url));
+    this.eventMessages = [];
+    this.pixelRequests = [];
 
-    constructor() {
-        super();
-        this.httpServer = createServer(this.onRequest.bind(this));
-        this.requests = [];
+    const jsonSchema = require('./root.proto.json');
+    this.root = protobuf.Root.fromJSON(jsonSchema);
+  }
+
+  start(port: number) {
+    this.server = this.app.listen(port);
+  }
+
+  stop(): Promise<void> {
+    if (!this.server) {
+      return Promise.resolve();
     }
 
-    start(port: number) {
-        this.httpServer.listen(port);
-    }
-
-    stop(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
-            this.httpServer.close((error) => {
-                if (error) { reject(error); } else { resolve(); }
-            });
-        });
-    }
-
-    reset() {
-        this.requests = [];
-    }
-
-    onRequest(req: IncomingMessage, res: ServerResponse) {
-
-        const urlStr = req.url;
-
-        if (urlStr) {
-
-            const url = new URL(urlStr, "https://heapanalytics.com/");
-
-            let body = '';
-            req.on('data', (chunk) => {
-                body += chunk;
-            });
-            req.on('end', () => {
-
-                const request =  body ? { url, body: JSON.parse(body) } : { url };
-                this.requests.push(request);
-                this.emit('request', request);
-
-                res.writeHead(200);
-                res.end('{}');
-            });
+    return new Promise<void>((resolve, reject) => {
+      this.server.close((error) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve();
         }
+      });
+    });
+  }
+
+  reset() {
+    this.eventMessages = [];
+    this.pixelRequests = [];
+  }
+
+  onGetRequest(req: express.Request, res: express.Response) {
+    const url = this.getUrl(req);
+    this.addPixel(url);
+    res.writeHead(200);
+    res.end('{}');
+  }
+
+  onAndroidTrackRequest(req: express.Request, res: express.Response) {
+    const MessageBatch = this.root.lookupType(
+      'tracker.android.proto.MessageBatch',
+    );
+
+    const batch = <CaptureAndroidBatch>MessageBatch.decode(req.body).toJSON();
+
+    for (const message of batch.events) {
+      this.addEvent(message);
     }
 
-    waitFor(test: ((request: CaptureRequest) => boolean), timeout: number = 10): Promise<CaptureRequest> {
-        return new Promise((resolve, reject) => {
+    res.writeHead(200);
+    res.end('{}');
+  }
 
-            for (const request of this.requests) {
-                if (test(request)) {
-                    resolve(request);
-                    return;
-                }
-            }
-
-            function onEvent(request: CaptureRequest) {
-                if (test(request)) {
-                    resolve(request);
-                    clearTimeout(timer);
-                }
-            }
-
-            const timer = setTimeout(() => {
-                reject("timeout\n" + JSON.stringify(this.requests, undefined, 4));
-                this.off('request', onEvent);
-            }, timeout * 1000);
-
-            this.on('request', onEvent);
-        });
+  onIOSTrackRequest(req: express.Request, res: express.Response) {
+    for (const message of (<CaptureIOSBatch>req.body).messages) {
+      this.addEvent(message);
     }
+    res.writeHead(200);
+    res.end('{}');
+  }
 
-    async expectSourceEventWithProperties(
-        expectedType: "touch" | "react_navigation_screenview",
-        expectedProperties: { [key: string]: string | boolean }): Promise<CaptureSourceEvent> {
+  getUrl(req: express.Request): URL {
+    return new URL(req.url, 'https://heapanalytics.com/');
+  }
 
-        var result: CaptureSourceEvent;
+  addEvent(event: CaptureMessage<CaptureEvent>) {
+    this.eventMessages.push(event);
+    this.emit('eventMessage', event);
+  }
 
-        await this.waitFor((req) => {
+  addPixel(url: URL) {
+    this.pixelRequests.push(url);
+    this.emit('pixel', url);
+  }
 
-            const body = req.body;
+  waitForMessage(
+    matcher: (message: CaptureMessage<CaptureEvent>) => boolean,
+    timeout: number = 10,
+  ): Promise<CaptureMessage<CaptureEvent>> {
+    return new Promise((resolve, reject) => {
+      for (const message of this.eventMessages) {
+        if (matcher(message)) {
+          resolve(message);
+          return;
+        }
+      }
 
-            if (req.url.pathname !== '/api/integrations/ios/track' || !body) {
-                return false;
-            }
+      function onEvent(message: CaptureMessage<CaptureEvent>) {
+        if (matcher(message)) {
+          resolve(message);
+          clearTimeout(timer);
+        }
+      }
 
-            for (const message of body.messages) {
-                const event = message.event;
+      const timer = setTimeout(() => {
+        reject('timeout\n' + JSON.stringify(this.eventMessages, undefined, 4));
+        this.off('eventMessage', onEvent);
+      }, timeout * 1000);
 
-                if (!isSourceEvent(event) || event.sourceEvent.type !== expectedType) { continue; }
+      this.on('eventMessage', onEvent);
+    });
+  }
 
-                let perfectMatch = true;
-                for (const [key, value] of Object.entries(expectedProperties)) {
-                    if (getPropertyValue(key, event.sourceEvent.sourceProperties) !== value) {
-                        perfectMatch = false;
-                        break;
-                    }
-                }
+  async expectSourceEventWithProperties(
+    expectedType: 'touch' | 'react_navigation_screenview',
+    expectedProperties: {[key: string]: string | boolean},
+  ): Promise<CaptureMessage<CaptureSourceEvent>> {
+    const result = await this.waitForMessage((message) => {
+      const event = message.event;
 
-                if (perfectMatch) {
-                    result = event;
-                    return true;
-                }
-            }
-        });
+      if (!isSourceEvent(event)) {
+        return false;
+      }
 
-        return result;
-    }
+      if (
+        event.sourceEvent.type !== expectedType &&
+        event.sourceEvent.name !== expectedType
+      ) {
+        return false;
+      }
+
+      for (const [key, value] of Object.entries(expectedProperties)) {
+        if (
+          getPropertyValue(key, event.sourceEvent.sourceProperties) !== value
+        ) {
+          return false;
+        }
+      }
+
+      return true;
+    });
+    return <CaptureMessage<CaptureSourceEvent>>result;
+  }
 }
 
-export { CaptureServer }
+export {CaptureServer};
