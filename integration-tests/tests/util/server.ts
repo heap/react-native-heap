@@ -278,7 +278,7 @@ export class CaptureServer extends EventEmitter {
   }
 
   async expectSourceEventWithProperties(
-    expectedType: 'touch' | 'react_navigation_screenview',
+    expectedType: 'touch' | 'react_navigation_screenview' | 'text_edit',
     expectedProperties: {[key: string]: string | boolean},
   ): Promise<CaptureMessage<CaptureSourceEvent>> {
     const result = await this.waitForMatchingMessage((message) => {
