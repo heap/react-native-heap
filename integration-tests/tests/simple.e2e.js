@@ -1,4 +1,4 @@
-import {CaptureServer} from './server';
+import {CaptureServer, getPropertyValue} from './server';
 import assert from 'assert';
 
 function buttonCase(text) {
@@ -101,6 +101,52 @@ describe('Properties', () => {
 
       assert.equal(message.user?.identity, 'foobar');
       assert.equal(message.user?.id, userId);
+    });
+  });
+
+  describe('Event properties', () => {
+    beforeEach(async () => {
+      await element(by.text(buttonCase('Add Event Properties'))).tap();
+    });
+
+    it('should be added to requests', async () => {
+      await element(by.text(buttonCase('Back'))).tap();
+
+      const message = await server.expectSourceEventWithProperties('touch', {
+        target_text: buttonCase('Back'),
+        screen_name: 'Properties',
+      });
+
+      assert.equal(getPropertyValue('eventProp1', message.properties), 'bar');
+      assert.equal(getPropertyValue('eventProp2', message.properties), 'foo');
+    });
+
+    it('should be individually removable', async () => {
+      await element(by.text(buttonCase('Remove Event Property'))).tap();
+      await element(by.text(buttonCase('Back'))).tap();
+
+      const message = await server.expectSourceEventWithProperties('touch', {
+        target_text: buttonCase('Back'),
+        screen_name: 'Properties',
+      });
+
+      assert.equal(getPropertyValue('eventProp2', message.properties), 'foo');
+      assert.equal(
+        getPropertyValue('eventProp1', message.properties),
+        undefined,
+      );
+    });
+
+    it('should be clearable', async () => {
+      await element(by.text(buttonCase('Clear Event Properties'))).tap();
+      await element(by.text(buttonCase('Back'))).tap();
+
+      const message = await server.expectSourceEventWithProperties('touch', {
+        target_text: buttonCase('Back'),
+        screen_name: 'Properties',
+      });
+
+      assert.equal(message.properties, undefined);
     });
   });
 });

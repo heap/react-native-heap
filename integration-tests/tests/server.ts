@@ -30,6 +30,7 @@ interface CaptureMessage<T extends CaptureEvent> {
   envId: string;
   id: string;
   event: T | null;
+  properties?: {[key: string]: BoolProperty | StringProperty};
   [key: string]: any;
 }
 
@@ -304,4 +305,4 @@ class CaptureServer extends EventEmitter {
   }
 }
 
-export {CaptureServer};
+export {CaptureServer, getPropertyValue};
