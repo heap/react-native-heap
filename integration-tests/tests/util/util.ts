@@ -60,7 +60,8 @@ export function standardSetup(
 
 export function assertHierarchy(
   message: CaptureMessage<CaptureSourceEvent>,
-  parts: string[],
+  includes: string[],
+  excludes: string[] = [],
 ) {
   let hierarchy = getPropertyValue(
     'rn_hierarchy',
@@ -71,7 +72,7 @@ export function assertHierarchy(
   let split = hierarchy.toString().split('|');
 
   let index = 0;
-  for (const part of parts) {
+  for (const part of includes) {
     let found = split.indexOf(part, index);
     assert.notEqual(
       found,
@@ -80,4 +81,24 @@ export function assertHierarchy(
     );
     index = found + 1;
   }
+
+  for (const part of excludes) {
+    assert.equal(
+      split.indexOf(part),
+      -1,
+      `Found unexpected ${part} in ${hierarchy}`,
+    );
+  }
+}
+
+export async function tapSentinelButtonAndWait(
+  text: string,
+  currentScreenName: string,
+  server: CaptureServer,
+): Promise<CaptureMessage<CaptureSourceEvent>> {
+  let target_text = await tapButton(text);
+  return await server.expectSourceEventWithProperties('touch', {
+    target_text,
+    screen_name: currentScreenName,
+  });
 }

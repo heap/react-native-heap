@@ -11,9 +11,10 @@ import {
   CaptureAndroidBatch,
   CaptureSourceEvent,
   getPropertyValue,
-  isSourceEvent,
+  matcherForSourceEventWithProperties,
 } from './types';
 import {isAndroid} from './util';
+import assert from 'assert';
 
 export class CaptureServer extends EventEmitter {
   app: express.Express;
@@ -281,31 +282,37 @@ export class CaptureServer extends EventEmitter {
     expectedType: 'touch' | 'react_navigation_screenview' | 'text_edit',
     expectedProperties: {[key: string]: string | boolean},
   ): Promise<CaptureMessage<CaptureSourceEvent>> {
-    const result = await this.waitForMatchingMessage((message) => {
-      const event = message.event;
-
-      if (!isSourceEvent(event)) {
-        return false;
-      }
-
-      if (
-        event.sourceEvent.type !== expectedType &&
-        event.sourceEvent.name !== expectedType
-      ) {
-        return false;
-      }
-
-      for (const [key, value] of Object.entries(expectedProperties)) {
-        if (
-          getPropertyValue(key, event.sourceEvent.sourceProperties) !== value
-        ) {
-          return false;
-        }
-      }
-
-      return true;
-    });
+    const result = await this.waitForMatchingMessage(
+      matcherForSourceEventWithProperties(expectedType, expectedProperties),
+      () =>
+        `timeout waiting for ${expectedType} event with ${JSON.stringify(
+          expectedProperties,
+          undefined,
+          2,
+        )}`,
+    );
     return <CaptureMessage<CaptureSourceEvent>>result;
+  }
+
+  assertNoExistingSourceEventWithProperties(
+    expectedType: 'touch' | 'react_navigation_screenview' | 'text_edit',
+    expectedProperties: {[key: string]: string | boolean},
+  ) {
+    const matcher = matcherForSourceEventWithProperties(
+      expectedType,
+      expectedProperties,
+    );
+    for (const message of this.eventMessages) {
+      if (matcher(message)) {
+        assert.fail(
+          `found unexpected ${expectedType} event with ${JSON.stringify(
+            expectedProperties,
+            undefined,
+            2,
+          )}:\n\n${JSON.stringify(message, undefined, 2)}`,
+        );
+      }
+    }
   }
 
   async expectUserProperties(expectedParams: {

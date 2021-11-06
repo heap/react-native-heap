@@ -17,6 +17,7 @@ import {HomeScreen} from './screens/HomeScreen';
 import {NavigationStackScreen} from './screens/NavigationScreen';
 import {TouchablesScreen} from './screens/TouchablesScreen';
 import {PropertiesScreen} from './screens/PropertiesScreen';
+import {HeapIgnoreScreen} from './screens/HeapIgnoreScreen';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +36,7 @@ const App: () => React$Node = () => {
         />
         <Stack.Screen name="Touchables" component={TouchablesScreen} />
         <Stack.Screen name="Properties" component={PropertiesScreen} />
+        <Stack.Screen name="HeapIgnore" component={HeapIgnoreScreen} />
       </Stack.Navigator>
     </HeapNavigationContainer>
   );

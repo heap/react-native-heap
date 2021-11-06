@@ -75,3 +75,33 @@ export function getPropertyValue(
   }
   return undefined;
 }
+
+export function matcherForSourceEventWithProperties(
+  expectedType: string,
+  expectedProperties: {[key: string]: string | boolean},
+): (
+  message: CaptureMessage<CaptureEvent>,
+) => message is CaptureMessage<CaptureSourceEvent> {
+  return (message): message is CaptureMessage<CaptureSourceEvent> => {
+    const event = message.event;
+
+    if (!isSourceEvent(event)) {
+      return false;
+    }
+
+    if (
+      event.sourceEvent.type !== expectedType &&
+      event.sourceEvent.name !== expectedType
+    ) {
+      return false;
+    }
+
+    for (const [key, value] of Object.entries(expectedProperties)) {
+      if (getPropertyValue(key, event.sourceEvent.sourceProperties) !== value) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+}

@@ -6,7 +6,6 @@ export const HomeScreen = ({navigation}) => {
     <ScrollView>
       <Button
         title="Touchables"
-        id="TESTTEST"
         onPress={() => navigation.navigate('Touchables')}
         onLongPress={() => console.log('long press')}
       />
@@ -17,6 +16,10 @@ export const HomeScreen = ({navigation}) => {
       <Button
         title="Properties"
         onPress={() => navigation.navigate('Properties')}
+      />
+      <Button
+        title="HeapIgnore"
+        onPress={() => navigation.navigate('HeapIgnore')}
       />
     </ScrollView>
   );
