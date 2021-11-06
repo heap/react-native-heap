@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { HeapIgnore, HeapIgnoreTargetText } from './js/autotrack/heapIgnore';
+import { HeapIgnore, HeapIgnoreTargetText } from './dist/autotrack/heapIgnore';
 
 /**
  * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch
@@ -124,7 +124,7 @@ export function getUserId(): Promise<string>;
  * @param IgnoredComponent the component to wrap with HeapIgnore.
  * @param heapIgnoreConfig the HeapIgnore configuration
  */
-export function withHeapIgnore(IgnoredComponent: React.Component, heapIgnoreConfig?: object): React.Component;
+ export function withHeapIgnore<P>(IgnoredComponent: React.JSXElementConstructor<P>, heapIgnoreConfig?: object): React.JSXElementConstructor<P>;
 
 /**
  * Component for ignoring all or parts of interactions with children of this component.
