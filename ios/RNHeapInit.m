@@ -28,7 +28,10 @@
     
     HeapOptions *options = [[HeapOptions alloc] init];
     
-    options.disableTouchAutocapture = !enableTouchAutocapture;
+    if (!enableTouchAutocapture) {
+        options.disableTouchAutocapture = YES;
+        options.hierarchyCaptureLimit = -1;
+    }
     
     if (captureBaseUrl.length > 0) {
         options.captureBaseUrl = [NSURL URLWithString:captureBaseUrl];
