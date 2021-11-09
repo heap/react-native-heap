@@ -1,7 +1,5 @@
 import * as React from 'react';
 
-import { HeapIgnore, HeapIgnoreTargetText } from './dist/autotrack/heapIgnore';
-
 /**
  * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch
  * between projects or between your production and development environments.
@@ -118,13 +116,23 @@ export function resetIdentity(): void;
  */
 export function getUserId(): Promise<string>;
 
+export interface HeapIgnoreProps {
+    allowInteraction?: boolean | undefined;
+    allowInnerHierarchy?: boolean | undefined;
+    allowAllProps?: boolean | undefined;
+    allowTargetText?: boolean | undefined;
+}
+
 /**
  * Returns an HOC of a component with specific HeapIgnore properties.
  *
  * @param IgnoredComponent the component to wrap with HeapIgnore.
  * @param heapIgnoreConfig the HeapIgnore configuration
  */
- export function withHeapIgnore<P>(IgnoredComponent: React.JSXElementConstructor<P>, heapIgnoreConfig?: object): React.JSXElementConstructor<P>;
+export function withHeapIgnore<P>(IgnoredComponent: React.JSXElementConstructor<P>, heapIgnoreConfig?: HeapIgnoreProps): React.JSXElementConstructor<P>;
+
+export class HeapIgnore extends React.Component<HeapIgnoreProps> {}
+export class HeapIgnoreTargetText extends React.Component {}
 
 /**
  * Component for ignoring all or parts of interactions with children of this component.
@@ -135,8 +143,6 @@ export class Ignore extends React.Component {}
  * Convenience component for ignoring 'target_text' on interactions with children of this component.
  */
 export const IgnoreTargetText: React.SFC;
-
-export { HeapIgnore, HeapIgnoreTargetText };
 
 /**
  * The following functions are not available via the iOS and Android API.
