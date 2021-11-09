@@ -34,3 +34,6 @@ npx detox build --configuration android
 # Test both
 npx detox test --configuration ios
 npx detox test --configuration android
+
+# TODO: The android test assumes there'll be a device named Pixel_5_API_30.  We should autocreate that but I've yet to get avdmanager to
+# work on the command line.

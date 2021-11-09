@@ -1,45 +1,31 @@
 # Installation
 
-In some cases, simply doing `react-native link` will correctly set up the tracker on Android.
-However, if you encounter any issues (either with the command itself or at compile-time/run-time),
-you should revert any changes made by `react-native link` and try the following steps, instead.
+Run `react-native link` to link the library then add the following to `android/build.gradle`:
 
-Add the following to your `settings.gradle`:
-
-  ```groovy
-  include ':react-native-heap'
-  project(':react-native-heap').projectDir =
-      new File(rootProject.projectDir, '../node_modules/@heap/react-native-heap/android')
-  ```
-
-Then add the following to `app/build.gradle`:
-
-  ```groovy
-  implementation project(':react-native-heap')
-  ```
-
-Import the package and add it to your app's MainApplication:
-
-  ```java
-  @Override
-  import com.heapanalytics.reactnative.RNHeapLibraryPackage;
-  ...
-  protected List<ReactPackage> getPackages() {
-    return Arrays.<ReactPackage>asList(
-      new MainReactPackage(),
-      new RNHeapLibraryPackage()
-    );
+```groovy
+buildscript {
+  ext {
+    ...
+    heapVersion = '1.9.+'
   }
-  ```
+  dependencies {
+    ...
+    classpath "com.heapanalytics.android:heap-android-gradle:${heapVersion}"
+  }
+}
+```
 
-If you are seeing runtime warnings at startup mentioning `Heap: Could not find BuildConfig`, add the
-following line to the resources section of `res/values/strings.xml`:
+Add the following to `android/app/build.gradle`:
 
-  ```xml
-  <string name="com.heapanalytics.android.buildConfigPkgName">com.your_package_name</string>
-  ```
-
-and replace `com.your_package_name` with the package name from the manifest tag in `AndroidManifest.xml`.
+```groovy
+...
+implementation "com.heapanalytics.android:heap-android-client:$heapVersion"
+...
+dependencies {
+  ...
+  implementation "com.heapanalytics.android:heap-android-client:$heapVersion"
+}
+```
 
 # Configuration
 
