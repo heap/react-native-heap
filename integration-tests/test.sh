@@ -22,6 +22,7 @@ cd "drivers/${DRIVER}"
 
 # Remove the existing installation of heap-react-native and install all.
 rm -rf node_modules/@heap || true
+rm package-lock.json || true
 npm install
 
 # Prepare iOS
