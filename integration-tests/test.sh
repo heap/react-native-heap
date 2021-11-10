@@ -20,10 +20,9 @@ npm pack ..
 rsync -r src tests "drivers/${DRIVER}/"
 cd "drivers/${DRIVER}"
 
-# Remove the existing installation of heap-react-native and install all.
-rm -rf node_modules/@heap || true
-rm package-lock.json || true
-npm install
+# Remove the existing installation of react-native-heap and install all.
+npm uninstall @heap/react-native-heap || true
+npm install ../../heap-react-native-heap-*.tgz
 
 # Prepare iOS
 cd ios && pod install && cd ..

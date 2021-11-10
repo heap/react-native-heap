@@ -27,6 +27,7 @@ __END_UNRELEASED__
 - Linked heap-ios-sdk now supports development on M1 Macs.
 - Fixed performance issue on iOS where Heap would scan the native view hierarchy despite native touch autocapture being disabled.
 - Improved TypeScript definitions.
+- Fixed a path issue in the podspec.
 
 ### Removed
 - Support for manually linking Heap on iOS.
