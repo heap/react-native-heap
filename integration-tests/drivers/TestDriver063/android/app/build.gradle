@@ -1,5 +1,4 @@
 apply plugin: "com.android.application"
-apply plugin: 'com.heapanalytics.android'
 
 import com.android.build.OutputFile
 
@@ -194,7 +193,6 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
-    implementation "com.heapanalytics.android:heap-android-client:$heapVersion"
 
     debugImplementation("com.facebook.flipper:flipper:${FLIPPER_VERSION}") {
       exclude group:'com.facebook.fbjni'

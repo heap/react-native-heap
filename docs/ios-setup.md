@@ -20,7 +20,7 @@ You're done! :tada:
 
 ## Without Cocoapods
 
-Heap does not currently support iOS deployment without React Native.
+Heap does not currently support iOS deployment without Cocoapods.
 
 # Configuration
 

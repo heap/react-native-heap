@@ -1,31 +1,15 @@
 # Installation
 
-Run `react-native link` to link the library then add the following to `android/build.gradle`:
+Run `react-native link` to link the library.
 
-```groovy
-buildscript {
-  ext {
-    ...
-    heapVersion = '1.9.+'
-  }
-  dependencies {
-    ...
-    classpath "com.heapanalytics.android:heap-android-gradle:${heapVersion}"
-  }
-}
-```
+If you are seeing runtime warnings at startup mentioning `Heap: Could not find BuildConfig`, add the
+following line to the resources section of `res/values/strings.xml`:
 
-Add the following to `android/app/build.gradle`:
+  ```xml
+   <string name="com.heapanalytics.android.buildConfigPkgName">com.your_package_name</string>
+   ```
 
-```groovy
-...
-implementation "com.heapanalytics.android:heap-android-client:$heapVersion"
-...
-dependencies {
-  ...
-  implementation "com.heapanalytics.android:heap-android-client:$heapVersion"
-}
-```
+and replace `com.your_package_name` with the package name from the manifest tag in `AndroidManifest.xml`.
 
 # Configuration
 
