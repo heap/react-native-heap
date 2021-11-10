@@ -116,6 +116,16 @@ export function resetIdentity(): void;
  */
 export function getUserId(): Promise<string>;
 
+/**
+ * Returns an HOC of a navigation container that autotracks pageviews on navigation change.
+ * 
+ * @param NavigationContainer The navigation container to track.
+ */
+export function withReactNavigationAutotrack<P>(NavigationContainer: React.ForwardRefExoticComponent<P>): React.ForwardRefExoticComponent<P>;
+
+/**
+ * Properties to allow or ignore in withHeapIgnore.  All options default to false.
+ */
 export interface HeapIgnoreProps {
     allowInteraction?: boolean | undefined;
     allowInnerHierarchy?: boolean | undefined;
@@ -131,18 +141,25 @@ export interface HeapIgnoreProps {
  */
 export function withHeapIgnore<P>(IgnoredComponent: React.JSXElementConstructor<P>, heapIgnoreConfig?: HeapIgnoreProps): React.JSXElementConstructor<P>;
 
-export class HeapIgnore extends React.Component<HeapIgnoreProps> {}
-export class HeapIgnoreTargetText extends React.Component {}
-
 /**
  * Component for ignoring all or parts of interactions with children of this component.
  */
-export class Ignore extends React.Component {}
+export class HeapIgnore extends React.Component<HeapIgnoreProps> {}
+
+/**
+ * An alias for HeapIgnore.
+ */
+export class Ignore extends React.Component<HeapIgnoreProps> {}
 
 /**
  * Convenience component for ignoring 'target_text' on interactions with children of this component.
  */
-export const IgnoreTargetText: React.SFC;
+export const HeapIgnoreTargetText: React.FunctionComponent;
+
+/**
+ * An alias for HeapIgnoreTargetText.
+ */
+export const IgnoreTargetText: React.FunctionComponent;
 
 /**
  * The following functions are not available via the iOS and Android API.

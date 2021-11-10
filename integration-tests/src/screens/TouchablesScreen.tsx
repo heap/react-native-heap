@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {
   Button,
@@ -8,10 +9,10 @@ import {
   TextInput,
 } from 'react-native';
 
-const myRef = React.createRef();
+const myRef = React.createRef<TextInput>();
 
 const MyTextInput = () => {
-  const [value, onChangeText] = React.useState();
+  const [value, onChangeText] = React.useState<string>();
 
   return (
     <TextInput

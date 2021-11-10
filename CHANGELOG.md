@@ -20,11 +20,13 @@ __END_UNRELEASED__
 ### Changed
 
 - iOS now consumes the Heap sdk via CocoaPods, linking to versions 8.0.0 and above, but not 9.0.0.
+- Upgraded the Android library to use 1.9.+.
 
 ### Fixed
 
-- Heap now supports development on M1 Macs.
+- Linked heap-ios-sdk now supports development on M1 Macs.
 - Fixed performance issue on iOS where Heap would scan the native view hierarchy despite native touch autocapture being disabled.
+- Improved TypeScript definitions.
 
 ### Removed
 - Support for manually linking Heap on iOS.

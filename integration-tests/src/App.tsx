@@ -24,7 +24,7 @@ const Stack = createStackNavigator();
 const HeapNavigationContainer =
   Heap.withReactNavigationAutotrack(NavigationContainer);
 
-const App: () => React$Node = () => {
+const App: () => React.ReactNode = () => {
   return (
     <HeapNavigationContainer>
       <Stack.Navigator>
