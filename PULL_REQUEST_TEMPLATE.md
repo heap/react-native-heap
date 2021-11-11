@@ -13,5 +13,5 @@ Were additional test cases added?
 Was there manual testing?
 
 ## Checklist
-- [ ] Detox tests pass (only Heap employees are able run these)
+- [ ] Detox tests pass
 - [ ] If this is a bugfix/feature, the changelog has been updated
