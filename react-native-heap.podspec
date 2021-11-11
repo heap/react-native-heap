@@ -12,17 +12,16 @@ Pod::Spec.new do |s|
   s.homepage = package[:homepage]
   s.source = { git: package[:repository] }
   s.source_files = "ios/**/*.{h,m}"
-  s.platform = :ios, "8.0"
-  s.preserve_paths = "ios/Vendor"
-  s.vendored_libraries = "ios/Vendor/libHeap.a"
+  s.platform = :ios, "10.0"
 
   s.dependency "React"
+  s.dependency "Heap", "~> 8.0"
   
   s.frameworks = "SystemConfiguration"
 
   s.script_phase = {
     name: 'Generate `HeapSettings.plist`',
-    script: '../../node_modules/@heap/react-native-heap/ios/HeapSettings.bundle/generate_settings.rb',
+    script: '$PODS_TARGET_SRCROOT/ios/HeapSettings.bundle/generate_settings.rb',
     execution_position: :after_compile,
     shell_path: '/bin/bash'
   }

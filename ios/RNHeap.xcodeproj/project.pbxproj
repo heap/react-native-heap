@@ -3,19 +3,17 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		21C146AB224AEB1500764BE4 /* libHeap.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 21E7F364224444E700270330 /* libHeap.a */; };
 		22589C8E227AF052007C71A3 /* RNHeapInit.m in Sources */ = {isa = PBXBuildFile; fileRef = 22589C8C227AF051007C71A3 /* RNHeapInit.m */; };
 		4DE526AA1ECD4A340059312E /* RNHeap.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DE526A91ECD4A340059312E /* RNHeap.m */; };
+		EBBEC90B2731C8C300CED306 /* Heap in Frameworks */ = {isa = PBXBuildFile; productRef = EBBEC90A2731C8C300CED306 /* Heap */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		112EE36D1CC0AB8A00BF6BB8 /* libRNHeap.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNHeap.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		21E7F364224444E700270330 /* libHeap.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libHeap.a; sourceTree = "<group>"; };
-		21E7F365224444EA00270330 /* Heap.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Heap.h; sourceTree = "<group>"; };
 		22589C8C227AF051007C71A3 /* RNHeapInit.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNHeapInit.m; sourceTree = "<group>"; };
 		22589C8D227AF051007C71A3 /* RNHeapInit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNHeapInit.h; sourceTree = "<group>"; };
 		22589C9D227AF332007C71A3 /* HeapSettings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = HeapSettings.bundle; sourceTree = "<group>"; };
@@ -28,7 +26,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				21C146AB224AEB1500764BE4 /* libHeap.a in Frameworks */,
+				EBBEC90B2731C8C300CED306 /* Heap in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,7 +42,6 @@
 				22589C8C227AF051007C71A3 /* RNHeapInit.m */,
 				22589C9D227AF332007C71A3 /* HeapSettings.bundle */,
 				21C146AA224AEB1500764BE4 /* Frameworks */,
-				21E7F5372249537B00270330 /* Vendor */,
 				112EE36E1CC0AB8A00BF6BB8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -64,15 +61,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		21E7F5372249537B00270330 /* Vendor */ = {
-			isa = PBXGroup;
-			children = (
-				21E7F365224444EA00270330 /* Heap.h */,
-				21E7F364224444E700270330 /* libHeap.a */,
-			);
-			path = Vendor;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -89,6 +77,9 @@
 			dependencies = (
 			);
 			name = RNHeap;
+			packageProductDependencies = (
+				EBBEC90A2731C8C300CED306 /* Heap */,
+			);
 			productName = RNUXCam;
 			productReference = 112EE36D1CC0AB8A00BF6BB8 /* libRNHeap.a */;
 			productType = "com.apple.product-type.library.static";
@@ -116,6 +107,9 @@
 				en,
 			);
 			mainGroup = 112EE3641CC0AB8A00BF6BB8;
+			packageReferences = (
+				EBBEC9092731C8C300CED306 /* XCRemoteSwiftPackageReference "heap-ios-sdk" */,
+			);
 			productRefGroup = 112EE36E1CC0AB8A00BF6BB8 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -141,7 +135,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "# pwd is <client_app>/node_modules/@heap/react-native-heap/ios\n\nHeapSettings.bundle/generate_settings_non_cocoapods.rb\n";
+			shellScript = "# pwd is <client_app>/node_modules/@heap/react-native-heap/ios\n\n# HeapSettings.bundle/generate_settings_non_cocoapods.rb\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -197,7 +191,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -237,7 +231,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -320,6 +314,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		EBBEC9092731C8C300CED306 /* XCRemoteSwiftPackageReference "heap-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/heap/heap-ios-sdk.git";
+			requirement = {
+				kind = exactVersion;
+				version = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		EBBEC90A2731C8C300CED306 /* Heap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = EBBEC9092731C8C300CED306 /* XCRemoteSwiftPackageReference "heap-ios-sdk" */;
+			productName = Heap;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 112EE3651CC0AB8A00BF6BB8 /* Project object */;
 }

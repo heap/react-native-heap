@@ -3,7 +3,7 @@
 //
 
 #import "RNHeap.h"
-#import "Heap.h"
+#import <Heap/Heap.h>
 
 
 @implementation RNHeap
@@ -24,7 +24,7 @@ RCT_EXPORT_METHOD(setAppId:(NSString *)appId) {
     // that's updated.
     // TODO: Remove this check when the iOS tracker allows setAppId to be called multiple times.
     if (!appIdSet) {
-        [Heap setAppId:appId];
+        [Heap initialize:appId];
         appIdSet = YES;
     } else {
         NSLog(@"The appId was already set - ignoring repeated call.");
