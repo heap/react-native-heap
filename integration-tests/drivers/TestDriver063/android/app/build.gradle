@@ -134,7 +134,14 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
+        multiDexEnabled true // https://stackoverflow.com/a/61059023/860000
         
+        buildConfigField "String", "heap_endpoint_track", "\"http://10.0.2.2:3000/api/integrations/android/track\""
+        buildConfigField "String", "heap_endpoint_identify", "\"http://10.0.2.2:3000/api/integrations/android/identify\""
+        buildConfigField "String", "heap_endpoint_adduserproperties", "\"http://10.0.2.2:3000/api/integrations/android/add_user_properties\""
+        buildConfigField "String", "heap_endpoint_eventdef", "\"http://10.0.2.2:5000/api/ev/android/message\""
+
         testBuildType System.getProperty('testBuildType', 'debug')  // This will later be used to control the test apk build type
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
@@ -157,10 +164,6 @@ android {
     buildTypes {
         debug {
             signingConfig signingConfigs.debug
-            buildConfigField "String", "heap_endpoint_track", "\"http://10.0.2.2:3000/api/integrations/android/track\""
-            buildConfigField "String", "heap_endpoint_identify", "\"http://10.0.2.2:3000/api/integrations/android/identify\""
-            buildConfigField "String", "heap_endpoint_adduserproperties", "\"http://10.0.2.2:3000/api/integrations/android/add_user_properties\""
-            buildConfigField "String", "heap_endpoint_eventdef", "\"http://10.0.2.2:5000/api/ev/android/message\""
         }
         release {
             // Caution! In production, you need to generate your own keystore file.
