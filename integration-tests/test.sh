@@ -10,15 +10,15 @@ set -o pipefail
 # Life is suffering.
 export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
 
-DRIVER=TestDriver063
+DRIVER_DIR="${1:-drivers/TestDriver066/}"
 
 # Rebuild the package
 rm heap-react-native-heap-*.tgz || true
 npm pack ..
 
 ## Install the test scripts in the driver app.
-rsync -r src tests "drivers/${DRIVER}/"
-cd "drivers/${DRIVER}"
+rsync -r src tests "$DRIVER_DIR"
+cd "$DRIVER_DIR"
 
 # Remove the existing installation of react-native-heap and install all.
 npm uninstall @heap/react-native-heap || true

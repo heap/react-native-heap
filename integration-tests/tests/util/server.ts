@@ -16,6 +16,8 @@ import {
 import {isAndroid} from './util';
 import assert from 'assert';
 
+const DefaultTimeout = 10;
+
 export class CaptureServer extends EventEmitter {
   app: express.Express;
   server: Server;
@@ -50,7 +52,7 @@ export class CaptureServer extends EventEmitter {
       express.raw({inflate: true, type: 'application/x-protobuf'}),
       this.onAndroidIdentifyRequest.bind(this),
     );
-    this.app.all('*', (r) => console.log(r.url));
+    this.app.all('*', r => console.log(r.url));
     this.reset();
 
     const jsonSchema = require('./root.proto.json');
@@ -67,7 +69,7 @@ export class CaptureServer extends EventEmitter {
     }
 
     return new Promise<void>((resolve, reject) => {
-      this.server.close((error) => {
+      this.server.close(error => {
         if (error) {
           reject(error);
         } else {
@@ -174,7 +176,7 @@ export class CaptureServer extends EventEmitter {
     eventName: string,
     matcher: (request: T) => boolean,
     errorMessage: () => string = () => 'timeout',
-    timeout: number = 10,
+    timeout: number = DefaultTimeout,
   ): Promise<T> {
     return new Promise((resolve, reject) => {
       for (const request of source()) {
@@ -203,7 +205,7 @@ export class CaptureServer extends EventEmitter {
   waitForMatchingMessage(
     matcher: (message: CaptureMessage<CaptureEvent>) => boolean,
     errorMessage: () => string = () => 'timeout',
-    timeout: number = 10,
+    timeout: number = DefaultTimeout,
   ): Promise<CaptureMessage<CaptureEvent>> {
     return this.waitForMatchingRequest(
       () => this.eventMessages,
@@ -217,7 +219,7 @@ export class CaptureServer extends EventEmitter {
   waitForMatchingPixelRequest(
     matcher: (url: URL) => boolean,
     errorMessage: () => string = () => 'timeout',
-    timeout: number = 10,
+    timeout: number = DefaultTimeout,
   ): Promise<URL> {
     return this.waitForMatchingRequest(
       () => this.pixelRequests,
@@ -231,7 +233,7 @@ export class CaptureServer extends EventEmitter {
   waitForMatchingAndroidUserPropertiesRequest(
     matcher: (userProperties: CaptureAndroidUserProperties) => boolean,
     errorMessage: () => string = () => 'timeout',
-    timeout: number = 10,
+    timeout: number = DefaultTimeout,
   ) {
     return this.waitForMatchingRequest(
       () => this.androidUserPropertiesRequests,
@@ -245,7 +247,7 @@ export class CaptureServer extends EventEmitter {
   waitForMatchingAndroidIdentifyRequest(
     matcher: (userProperties: CaptureAndroidUserMigration) => boolean,
     errorMessage: () => string = () => 'timeout',
-    timeout: number = 10,
+    timeout: number = DefaultTimeout,
   ) {
     return this.waitForMatchingRequest(
       () => this.androidIdentifyRequests,
@@ -258,7 +260,7 @@ export class CaptureServer extends EventEmitter {
 
   expectPixelRequest(path: string, expectedParams: {[key: string]: string}) {
     return this.waitForMatchingPixelRequest(
-      (url) => {
+      url => {
         if (path !== url.pathname) {
           return false;
         }
@@ -320,7 +322,7 @@ export class CaptureServer extends EventEmitter {
   }): Promise<void> {
     if (isAndroid()) {
       await this.waitForMatchingAndroidUserPropertiesRequest(
-        (request) => {
+        request => {
           for (const [key, value] of Object.entries(expectedParams)) {
             if (getPropertyValue(key, request.properties) !== value) {
               return false;
@@ -337,7 +339,7 @@ export class CaptureServer extends EventEmitter {
       );
     } else {
       const prefixed = Object.fromEntries(
-        Object.entries(expectedParams).map((arr) => ['_' + arr[0], arr[1]]),
+        Object.entries(expectedParams).map(arr => ['_' + arr[0], arr[1]]),
       );
 
       await this.expectPixelRequest('/api/add_user_properties_v3', prefixed);
@@ -347,7 +349,7 @@ export class CaptureServer extends EventEmitter {
   async expectIdentify(identity: string): Promise<string> {
     if (isAndroid()) {
       let matched = await this.waitForMatchingAndroidIdentifyRequest(
-        (request) => {
+        request => {
           return request.toIdentity === identity;
         },
         () => `timeout waiting for android identify request with ${identity}`,
