@@ -18,6 +18,28 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.17.0] - 2021-11-09
+
+### Changed
+
+- iOS now consumes the Heap sdk via CocoaPods, linking to versions 8.0.0 and above, but not 9.0.0.
+- Upgraded the Android library to use 1.9.+.
+
+### Fixed
+
+- Linked heap-ios-sdk now supports development on M1 Macs.
+- Fixed performance issue on iOS where Heap would scan the native view hierarchy despite native touch autocapture being disabled.
+- Improved TypeScript definitions.
+- Fixed a path issue in the podspec.
+
+### Removed
+- Support for manually linking Heap on iOS.
+- Support for versions below React Native v0.63.
+
+## [0.17.0-alpha1] - 2021-06-09
+### Fixed
+- Fixed sporadic Babel instrumentation (`Cannot read property 'end' of null`) issues
+
 ## [0.16.0] - 2021-06-01
 ### Added
 - Added support for React 17 (resolves #241).
