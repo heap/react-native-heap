@@ -38,7 +38,7 @@ def get_enable_autocapture(selectedConfig, defaultConfig)
 end
 
 def get_capture_base_url(selectedConfig, defaultConfig)
-  return get_property('captureBaseUrl', false, selectedConfig, defaultConfig)
+  return get_property('captureBaseUrl', '', selectedConfig, defaultConfig)
 end
 
 def get_property(name, valueIfNil, selectedConfig, defaultConfig)
