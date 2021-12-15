@@ -12,6 +12,7 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+- Fixed minSdkVersion build error on React Native 0.64+.
 ### Security
 __END_UNRELEASED__
 
