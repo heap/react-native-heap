@@ -16,6 +16,12 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.17.1] - 2021-12-01
+
+### Fixed
+
+- Hotfix for misconfigured iOS event uploads.
+
 ## [0.17.0] - 2021-11-09
 
 ### Changed
