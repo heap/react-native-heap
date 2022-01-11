@@ -123,32 +123,31 @@ export function getUserId(): Promise<string>;
  *
  * @param Component the component to autocapture for
  */
- export function withHeapAutocapture<
- P,
- C extends JSXElementConstructor<Partial<P>>
->(Component: C, propName: keyof P): C;
+export function withHeapAutocapture<
+  P,
+  C extends JSXElementConstructor<Partial<P>>
+>(Component: C, propName: keyof P, eventType?: 'touch' | 'change'): C;
 
 /**
  * Returns an HOC of a component that tracks touches, i.e. calls to `onPress` or
  * `onLongPress`
- * 
+ *
  * @param TouchableComponent the component to autocapture touches for
  */
- export function withHeapTouchableAutocapture<
+export function withHeapTouchableAutocapture<
   P extends {
     onPress?: (e: GestureResponderEvent) => void;
     onLongPress?: (e: GestureResponderEvent) => void;
   }
 >(TouchableComponent: React.ComponentType<P>): React.ComponentType<P>;
-export function getUserId(): Promise<string>;
 
 /**
  * Returns an HOC of a component that tracks presses, i.e. calls to `onPress` or
  * `onLongPress`
- * 
+ *
  * @param PressableComponent the component to autocapture presses for
  */
- export function withHeapPressableAutocapture<
+export function withHeapPressableAutocapture<
   P extends {
     onPress?: (e: GestureResponderEvent) => void;
     onLongPress?: (e: GestureResponderEvent) => void;

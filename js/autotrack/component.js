@@ -4,7 +4,11 @@ import { bailOnError } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 import { getBaseComponentProps } from './common';
 
-export const withHeapAutocapture = track => (CapturableComponent, propName) => {
+export const withHeapAutocapture = track => (
+  CapturableComponent,
+  propName,
+  eventType = 'touch'
+) => {
   class HeapAutocapture extends React.Component {
     trackEvent() {
       const autotrackProps = getBaseComponentProps(this);
@@ -14,7 +18,7 @@ export const withHeapAutocapture = track => (CapturableComponent, propName) => {
         return;
       }
 
-      track('touch', autotrackProps);
+      track(eventType, autotrackProps);
     }
 
     render() {
