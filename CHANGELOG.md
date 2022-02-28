@@ -15,7 +15,7 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
-## [0.18.0] - 2022-02-25
+## [0.18.0] - 2022-02-28
 
 ### Fixed
 
