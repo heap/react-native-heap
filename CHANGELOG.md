@@ -12,10 +12,15 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
-- Fixed iOS build in folders with spaces.
-- Fixed minSdkVersion build error on React Native 0.64+.
 ### Security
 __END_UNRELEASED__
+
+## [0.18.0] - 2022-02-28
+
+### Fixed
+
+- Fixed iOS build in folders with spaces.
+- Fixed minSdkVersion build error on React Native 0.64+.
 
 ## [0.17.1] - 2021-12-01
 
