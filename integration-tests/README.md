@@ -20,7 +20,10 @@ Other dependencies:
 
 ## Running the tests
 
-Run `test.sh`
+- Run `test.sh` to test Android and iOS against React Native 0.63.
+- Run `test.sh drivers/TestDriver066` to test Android and iOS against React Native 0.66.
+- Run `test.sh drivers/TestDriver066 android` to test just Android against React Native 0.66.
+- Run `test.sh drivers/TestDriver066 ios` to test just iOS against React Native 0.66.
 
 ## Developing new tests
 
