@@ -9,4 +9,5 @@
 #endif
 
 @interface RNHeap : NSObject <RCTBridgeModule>
+@property (nonatomic, weak, readonly) RCTBridge *bridge;
 @end

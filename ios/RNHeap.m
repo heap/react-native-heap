@@ -5,6 +5,18 @@
 #import "RNHeap.h"
 #import <Heap/Heap.h>
 
+#if __has_include("RCTBridge.h")
+#import "RCTBridge.h"
+#else
+#import <React/RCTBridge.h>
+#endif
+
+#if __has_include("RCTDevMenu.h")
+#import "RCTDevMenu.h"
+#else
+#import <React/RCTDevMenu.h>
+#endif
+
 
 @implementation RNHeap
 
@@ -88,6 +100,15 @@ RCT_EXPORT_METHOD(removeEventProperty:(NSString *)property) {
 
 RCT_EXPORT_METHOD(clearEventProperties) {
   [Heap clearEventProperties];
+}
+
+- (void)setBridge:(RCTBridge *)bridge
+{
+    _bridge = bridge;
+    
+    [bridge.devMenu addItem:[RCTDevMenuItem buttonItemWithTitle:@"Pair Event Visualizer" handler:^{
+        [Heap startEVPairing];
+    }]];
 }
 
 @end
