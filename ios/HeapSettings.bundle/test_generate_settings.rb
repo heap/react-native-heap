@@ -27,7 +27,7 @@ Dir.mktmpdir do |dir|
   puts "Testing default values"
 
   perform_substitution(dir, {})
-  assert_equal('false', ':HeapEnableDebugLoggingDev', dir)
+  assert_equal('true', ':HeapEnableDebugLoggingDev', dir)
   assert_equal('false', ':HeapEnableDebugLoggingProd', dir)
   assert_equal('false', ':HeapEnableAutocaptureDev', dir)
   assert_equal('false', ':HeapEnableAutocaptureProd', dir)
@@ -41,6 +41,10 @@ Dir.mktmpdir do |dir|
   perform_substitution(dir, { 'default' => { 'debug' => true }})
   assert_equal('true', ':HeapEnableDebugLoggingDev', dir)
   assert_equal('true', ':HeapEnableDebugLoggingProd', dir)
+
+  perform_substitution(dir, { 'default' => { 'debug' => false }})
+  assert_equal('false', ':HeapEnableDebugLoggingDev', dir)
+  assert_equal('false', ':HeapEnableDebugLoggingProd', dir)
 
   perform_substitution(dir, { 'default' => { 'debug' => true }, 'prod' => { 'debug' => false }})
   assert_equal('true', ':HeapEnableDebugLoggingDev', dir)
@@ -117,4 +121,3 @@ Dir.mktmpdir do |dir|
   puts "All the tests passed!"
 
 end
-
