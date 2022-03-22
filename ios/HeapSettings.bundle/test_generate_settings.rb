@@ -27,12 +27,28 @@ Dir.mktmpdir do |dir|
   puts "Testing default values"
 
   perform_substitution(dir, {})
+  assert_equal('false', ':HeapEnableDebugLoggingDev', dir)
+  assert_equal('false', ':HeapEnableDebugLoggingProd', dir)
   assert_equal('false', ':HeapEnableAutocaptureDev', dir)
   assert_equal('false', ':HeapEnableAutocaptureProd', dir)
   assert_equal('', ':HeapCaptureBaseUrlDev', dir)
   assert_equal('', ':HeapCaptureBaseUrlProd', dir)
   assert_equal('', ':HeapAppIdDev', dir)
   assert_equal('', ':HeapAppIdProd', dir)
+
+  puts "Testing 'debug'"
+
+  perform_substitution(dir, { 'default' => { 'debug' => true }})
+  assert_equal('true', ':HeapEnableDebugLoggingDev', dir)
+  assert_equal('true', ':HeapEnableDebugLoggingProd', dir)
+
+  perform_substitution(dir, { 'default' => { 'debug' => true }, 'prod' => { 'debug' => false }})
+  assert_equal('true', ':HeapEnableDebugLoggingDev', dir)
+  assert_equal('false', ':HeapEnableDebugLoggingProd', dir)
+
+  perform_substitution(dir, { 'default' => { 'debug' => true }, 'dev' => { 'debug' => false }})
+  assert_equal('false', ':HeapEnableDebugLoggingDev', dir)
+  assert_equal('true', ':HeapEnableDebugLoggingProd', dir)
 
   puts "Testing 'enableNativeTouchEventCapture'"
 

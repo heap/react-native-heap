@@ -18,7 +18,8 @@
     NSString *appId = heapPlistData[@"HeapAppId" SUFFIX];
     BOOL enableTouchAutocapture = [heapPlistData[@"HeapEnableAutocapture" SUFFIX] boolValue];
     NSString *captureBaseUrl = heapPlistData[@"HeapCaptureBaseUrl" SUFFIX];
-    
+    BOOL enableDebugLogging = [heapPlistData[@"HeapEnableDebugLogging" SUFFIX] boolValue];
+
     if (appId.length == 0) {
         NSLog(@"Not auto-initializing Heap library.");
         return;
@@ -36,6 +37,8 @@
     if (captureBaseUrl.length > 0) {
         options.captureBaseUrl = [NSURL URLWithString:captureBaseUrl];
     }
+
+    options.debug = enableDebugLogging;
     
     [Heap initialize:appId withOptions:options];
 }
