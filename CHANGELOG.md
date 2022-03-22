@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
+
+- Added iOS-only option to enable Heap SDK debug logging in the iOS console, enabled by default on dev builds.
+
 ### Changed
 ### Deprecated
 ### Removed
