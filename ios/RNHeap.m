@@ -15,7 +15,14 @@ RCT_EXPORT_MODULE();
 }
 
 RCT_EXPORT_METHOD(setAppId:(NSString *)appId) {
-    [RNHeapInit initializeWithAppId:appId enableTouchAutocapture:NO enableDebugLogging:NO captureBaseUrl:nil];
+
+#ifdef DEBUG
+    BOOL enableDebugLogging = YES;
+#else
+    BOOL enableDebugLogging = NO;
+#endif
+
+    [RNHeapInit initializeWithAppId:appId enableTouchAutocapture:NO enableDebugLogging:enableDebugLogging captureBaseUrl:nil];
 }
 
 RCT_EXPORT_METHOD(autocaptureEvent:(NSString *)event withProperties:(NSDictionary *)properties) {
