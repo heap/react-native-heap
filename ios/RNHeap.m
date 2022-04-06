@@ -20,16 +20,9 @@
 #endif
 
 @interface RNHeap ()
-@property (nonatomic, assign) BOOL delayPageviewsUntilViewDidAppear;
+@property (nonatomic, assign) BOOL delayPageviewsForScreenshots;
 + (void)consumeDelayedPageview;
 @end
-
-typedef void (*IMP_ViewDidAppear)(UIViewController *, SEL, BOOL);
-static IMP_ViewDidAppear __RNHEAP_ViewDidAppear_Orig;
-void __RNHEAP_ViewDidAppear(UIViewController *self, SEL _cmd, BOOL animated) {
-    __RNHEAP_ViewDidAppear_Orig(self, _cmd, animated);
-    [RNHeap consumeDelayedPageview];
-}
 
 @implementation RNHeap
 
@@ -46,7 +39,6 @@ static void(^delayedPageview)(void);
 
 /// This function delays a pageview until we think the animation has completed.
 /// Since the state change fires at the start of the animation, we wait half a second for the transiton to complete.
-/// If they're using native UIViewController transitions, we can detect the actual end of the animation with `viewDidAppear:`.
 + (void)scheduleDelayedPageview:(void(^)(void))block
 {
     [self consumeDelayedPageview];
@@ -66,18 +58,6 @@ static void(^delayedPageview)(void);
     }
 }
 
-+ (void)swizzleViewDidAppear
-{
-    // TODO: Is there a way to track the end of React Native animations?
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        Method method = class_getInstanceMethod([UIViewController class], @selector(viewDidAppear:));
-        if (method) {
-            __RNHEAP_ViewDidAppear_Orig = (IMP_ViewDidAppear)method_setImplementation(method, (IMP)__RNHEAP_ViewDidAppear);
-        }
-    });
-}
-
 RCT_EXPORT_METHOD(setAppId:(NSString *)appId) {
     // The Heap library stops sending events if setAppId is called twice, which
     // is often the case if you reload javascript during development.  We should
@@ -95,7 +75,7 @@ RCT_EXPORT_METHOD(setAppId:(NSString *)appId) {
 RCT_EXPORT_METHOD(autocaptureEvent:(NSString *)event withProperties:(NSDictionary *)properties) {
     [self checkForPageview];
     
-    if (self.delayPageviewsUntilViewDidAppear && [event isEqualToString:@"react_navigation_screenview"]) {
+    if (self.delayPageviewsForScreenshots && [event isEqualToString:@"react_navigation_screenview"]) {
         [RNHeap scheduleDelayedPageview:^{
             [Heap frameworkAutocaptureEvent:event withSource:@"react_native" withSourceProperties:properties];
         }];
@@ -161,8 +141,7 @@ RCT_EXPORT_METHOD(clearEventProperties) {
     
     [bridge.devMenu addItem:[RCTDevMenuItem buttonItemWithTitle:@"Pair Heap Event Visualizer" handler:^{
         [Heap startEVPairing];
-        self.delayPageviewsUntilViewDidAppear = YES;
-        [RNHeap swizzleViewDidAppear];
+        self.delayPageviewsForScreenshots = YES;
     }]];
 }
 
