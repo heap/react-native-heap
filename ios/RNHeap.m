@@ -6,18 +6,8 @@
 #import <Heap/Heap.h>
 #import <Foundation/Foundation.h>
 #import <objc/message.h>
-
-#if __has_include("RCTBridge.h")
-#import "RCTBridge.h"
-#else
 #import <React/RCTBridge.h>
-#endif
-
-#if __has_include("RCTDevMenu.h")
-#import "RCTDevMenu.h"
-#else
 #import <React/RCTDevMenu.h>
-#endif
 
 @interface RNHeap ()
 @property (nonatomic, assign) BOOL delayPageviewsForScreenshots;

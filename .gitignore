@@ -41,3 +41,6 @@ Pods/
 node_modules
 build
 dist
+
+# Project
+heap-react-native-*.tgz
