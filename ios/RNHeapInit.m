@@ -25,7 +25,7 @@
         return;
     }
 
-    NSURL captureBaseUrl = ? captureBaseUrlString.length > 0 ? [NSURL URLWithString:captureBaseUrlString] : nil;
+    NSURL *captureBaseUrl = captureBaseUrlString.length > 0 ? [NSURL URLWithString:captureBaseUrlString] : nil;
     
     NSLog(@"Auto-initializing the Heap library with app ID %@ with native autocapture enabled=%@.", appId, enableTouchAutocapture ? @"true": @"false");
 
@@ -49,10 +49,7 @@
         options.disableViewControllerAutocapture = YES;
     }
     
-    if (captureBaseUrl.length > 0) {
-        options.captureBaseUrl = [NSURL URLWithString:captureBaseUrl];
-    }
-
+    options.captureBaseUrl = captureBaseUrl;
     options.debug = enableDebugLogging;
     
     [Heap initialize:appId withOptions:options];
