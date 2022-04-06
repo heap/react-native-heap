@@ -3,7 +3,7 @@
 puts <<-end_explanation
 test_generate_settings.rb
 
-This this script tests the various JSON parameters that go into generating HeapSettings.plist.
+This script tests the various JSON parameters that go into generating HeapSettings.plist.
 When adding a new setting, it is prudent to write a test in case you royally mess things up. (Ask me how I know.)
 
 end_explanation
