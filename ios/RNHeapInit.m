@@ -17,36 +17,21 @@
     
     NSString *appId = heapPlistData[@"HeapAppId" SUFFIX];
     BOOL enableTouchAutocapture = [heapPlistData[@"HeapEnableAutocapture" SUFFIX] boolValue];
-    NSString *captureBaseUrlString = heapPlistData[@"HeapCaptureBaseUrl" SUFFIX];
+    NSString *captureBaseUrl = heapPlistData[@"HeapCaptureBaseUrl" SUFFIX];
     BOOL enableDebugLogging = [heapPlistData[@"HeapEnableDebugLogging" SUFFIX] boolValue];
 
     if (appId.length == 0) {
         NSLog(@"Not auto-initializing Heap library.");
         return;
     }
-
-    NSURL captureBaseUrl = ? captureBaseUrlString.length > 0 ? [NSURL URLWithString:captureBaseUrlString] : nil;
     
-    NSLog(@"Auto-initializing the Heap library with app ID %@ with native autocapture enabled=%@.", appId, enableTouchAutocapture ? @"true": @"false");
-
-    [self initializeWithAppId:appId enableTouchAutocapture:enableTouchAutocapture enableDebugLogging:enableDebugLogging captureBaseUrl:captureBaseUrl];
-}
-
-+ (void)initializeWithAppId:(NSString *)appId enableTouchAutocapture:(BOOL)enableTouchAutocapture enableDebugLogging:(BOOL)enableDebugLogging captureBaseUrl:(NSURL *)captureBaseUrl
-{
-    static BOOL alreadyInitialized = NO;
-
-    if (alreadyInitialized) {
-        NSLog(@"Heap was already initialized. Ignoring initialize request.");
-        return;
-    }
-
+    NSLog(@"Auto-initializing the Heap library with app ID %@ with native autocapture enabled=%@.", appId, @(enableTouchAutocapture));
+    
     HeapOptions *options = [[HeapOptions alloc] init];
     
     if (!enableTouchAutocapture) {
         options.disableTouchAutocapture = YES;
         options.hierarchyCaptureLimit = -1;
-        options.disableViewControllerAutocapture = YES;
     }
     
     if (captureBaseUrl.length > 0) {
