@@ -40,6 +40,8 @@
         NSLog(@"Heap was already initialized. Ignoring initialize request.");
         return;
     }
+    
+    alreadyInitialized = YES;
 
     HeapOptions *options = [[HeapOptions alloc] init];
     
