@@ -8,6 +8,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
+### Changed
+### Deprecated
+### Removed
+### Fixed
+### Security
+__END_UNRELEASED__
+
+## [0.19.0] - 2022-04-12
+
+### Added
 
 - Added iOS-only option to enable Heap SDK debug logging in the iOS console, enabled by default on dev builds.
 - Disabled tracking of view controllers on iOS when `enableNativeTouchEventCapture` is off.
@@ -16,12 +26,6 @@ __BEGIN_UNRELEASED__
 
 - Updated `Heap.setAppId` on iOS to turn off native touch capture on iOS.
 - Updated `Heap.setAppId` on iOS to enable logging on debug builds.
-
-### Deprecated
-### Removed
-### Fixed
-### Security
-__END_UNRELEASED__
 
 ## [0.18.0] - 2022-02-28
 
