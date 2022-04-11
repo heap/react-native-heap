@@ -19,6 +19,7 @@ __END_UNRELEASED__
 
 ### Added
 
+- Added support for Event Visualizer on iOS, with a pairing option in the React Native developer menu.
 - Added iOS-only option to enable Heap SDK debug logging in the iOS console, enabled by default on dev builds.
 - Disabled tracking of view controllers on iOS when `enableNativeTouchEventCapture` is off.
 
