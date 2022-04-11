@@ -11,7 +11,6 @@
 
 @interface RNHeap ()
 @property (nonatomic, assign) BOOL delayPageviewsForScreenshots;
-+ (void)consumeDelayedPageview;
 @end
 
 @implementation RNHeap
@@ -25,27 +24,13 @@ static BOOL appIdSet = NO;
     return dispatch_get_main_queue();
 }
 
-static void(^delayedPageview)(void);
-
 /// This function delays a pageview until we think the animation has completed.
 /// Since the state change fires at the start of the animation, we wait half a second for the transiton to complete.
 + (void)scheduleDelayedPageview:(void(^)(void))block
 {
-    [self consumeDelayedPageview];
-    delayedPageview = [block copy];
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self consumeDelayedPageview];
-    });
-}
-
-+ (void)consumeDelayedPageview
-{
-    if (delayedPageview) {
-        delayedPageview();
-        delayedPageview = nil;
-    }
+    dispatch_after(popTime, dispatch_get_main_queue(), block);
 }
 
 RCT_EXPORT_METHOD(setAppId:(NSString *)appId) {
