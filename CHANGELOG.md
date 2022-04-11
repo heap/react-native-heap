@@ -11,8 +11,13 @@ __BEGIN_UNRELEASED__
 
 - Added support for Event Visualizer on iOS.
 - Added iOS-only option to enable Heap SDK debug logging in the iOS console, enabled by default on dev builds.
+- Disabled tracking of view controllers on iOS when `enableNativeTouchEventCapture` is off.
 
 ### Changed
+
+- Updated `Heap.setAppId` on iOS to turn off native touch capture on iOS.
+- Updated `Heap.setAppId` on iOS to enable logging on debug builds.
+
 ### Deprecated
 ### Removed
 ### Fixed

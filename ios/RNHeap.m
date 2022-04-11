@@ -3,6 +3,7 @@
 //
 
 #import "RNHeap.h"
+#import "RNHeapInit.h"
 #import <Heap/Heap.h>
 #import <Foundation/Foundation.h>
 #import <objc/message.h>
@@ -16,9 +17,6 @@
 @implementation RNHeap
 
 RCT_EXPORT_MODULE();
-
-static BOOL pageViewSent = NO;
-static BOOL appIdSet = NO;
 
 - (dispatch_queue_t)methodQueue {
     return dispatch_get_main_queue();
@@ -34,22 +32,17 @@ static BOOL appIdSet = NO;
 }
 
 RCT_EXPORT_METHOD(setAppId:(NSString *)appId) {
-    // The Heap library stops sending events if setAppId is called twice, which
-    // is often the case if you reload javascript during development.  We should
-    // fix that behavior in the library, but this will prevent the issue until
-    // that's updated.
-    // TODO: Remove this check when the iOS tracker allows setAppId to be called multiple times.
-    if (!appIdSet) {
-        [Heap initialize:appId];
-        appIdSet = YES;
-    } else {
-        NSLog(@"The appId was already set - ignoring repeated call.");
-    }
+
+#ifdef DEBUG
+    BOOL enableDebugLogging = YES;
+#else
+    BOOL enableDebugLogging = NO;
+#endif
+
+    [RNHeapInit initializeWithAppId:appId enableTouchAutocapture:NO enableDebugLogging:enableDebugLogging captureBaseUrl:nil];
 }
 
 RCT_EXPORT_METHOD(autocaptureEvent:(NSString *)event withProperties:(NSDictionary *)properties) {
-    [self checkForPageview];
-    
     if (self.delayPageviewsForScreenshots && [event isEqualToString:@"react_navigation_screenview"]) {
         [RNHeap scheduleDelayedPageview:^{
             [Heap frameworkAutocaptureEvent:event withSource:@"react_native" withSourceProperties:properties];
@@ -60,26 +53,7 @@ RCT_EXPORT_METHOD(autocaptureEvent:(NSString *)event withProperties:(NSDictionar
 }
 
 RCT_EXPORT_METHOD(manuallyTrackEvent:(NSString *)event withProperties:(NSDictionary *)properties withContext:(NSDictionary *)contextProperties) {
-    [self checkForPageview];
     [Heap frameworkTrack:event withProperties:properties withSource:@"react_native" withSourceProperties:contextProperties];
-}
-
--(void) checkForPageview {
-    // The Heap library requires that a "page view" event be sent first, since properties
-    // will get copied down to manual events.  Unfortunately, the first page view happens
-    // before any JS code is run, and so the app doesn't yet have an ID.  This unfortunate
-    // snippet makes sure that a page view gets sent first.
-    #pragma clang diagnostic push
-    #pragma clang diagnostic ignored "-Wundeclared-selector"
-    #pragma clang diagnostic ignored "-Warc-performSelector-leaks"
-    if (!pageViewSent) {
-        SEL logPageviewSelector = @selector(logPageview:);
-        if ([[Heap class] respondsToSelector:logPageviewSelector]) {
-            [[Heap class] performSelector:logPageviewSelector withObject:@{@"type": @"react-native"}];
-        }
-        pageViewSent = YES;
-    }
-    #pragma clang diagnostic pop
 }
 
 RCT_REMAP_METHOD(getUserId, getUserIdWithResolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
