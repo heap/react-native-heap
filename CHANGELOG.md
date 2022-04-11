@@ -10,6 +10,7 @@ __BEGIN_UNRELEASED__
 ### Added
 
 - Added support for Event Visualizer on iOS.
+- Added iOS-only option to enable Heap SDK debug logging in the iOS console, enabled by default on dev builds.
 
 ### Changed
 ### Deprecated
