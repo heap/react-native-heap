@@ -78,7 +78,11 @@ fi
 if [ "$TEST_IOS" = true ]
 then
     echo "Installing pods for iOS"
-    cd ios && pod install && cd ..
+    cd ios
+    pod repo update
+    pod update Heap
+    pod install
+    cd ..
 fi
 
 if [ "$TEST_IOS" = true ]

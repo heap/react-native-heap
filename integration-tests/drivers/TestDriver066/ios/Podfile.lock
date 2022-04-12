@@ -72,7 +72,7 @@ PODS:
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
   - glog (0.3.5)
-  - Heap (8.0.0)
+  - Heap (8.2.0)
   - libevent (2.1.12)
   - OpenSSL-Universal (1.1.180)
   - RCT-Folly (2021.06.28.00-v2):
@@ -273,8 +273,8 @@ PODS:
   - React-jsinspector (0.66.1)
   - React-logger (0.66.1):
     - glog
-  - react-native-heap (0.18.0):
-    - Heap (~> 8.0)
+  - react-native-heap (0.19.0):
+    - Heap (~> 8.2)
     - React
   - react-native-safe-area-context (3.3.2):
     - React-Core
@@ -520,7 +520,7 @@ SPEC CHECKSUMS:
   FlipperKit: d8d346844eca5d9120c17d441a2f38596e8ed2b9
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
   glog: 5337263514dd6f09803962437687240c5dc39aa4
-  Heap: edb9da257f67f0a29bdbb580a495b05276a5a816
+  Heap: 27281edaa77d38d17a5feb028f61cbe9ecaee42f
   libevent: 4049cae6c81cdb3654a443be001fb9bdceff7913
   OpenSSL-Universal: 1aa4f6a6ee7256b83db99ec1ccdaa80d10f9af9b
   RCT-Folly: a21c126816d8025b547704b777a2ba552f3d9fa9
@@ -535,7 +535,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: db2f6e22a534d466fc0e34e622df47d9d20bab2f
   React-jsinspector: 8c0517dee5e8c70cd6c3066f20213ff7ce54f176
   React-logger: bfddd3418dc1d45b77b822958f3e31422e2c179b
-  react-native-heap: 579825b9705ec43fb701228fdc39510f9c6a03ff
+  react-native-heap: b7ba358700d885cae251d578ef08a9b5798643e9
   react-native-safe-area-context: 5cf05f49df9d17261e40e518481f2e334c6cd4b5
   React-perflogger: fcac6090a80e3d967791b4c7f1b1a017f9d4a398
   React-RCTActionSheet: caf5913d9f9e605f5467206cf9d1caa6d47d7ad6

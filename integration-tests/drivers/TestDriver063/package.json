@@ -10,12 +10,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@heap/react-native-heap": "file:../../heap-react-native-heap-0.18.0.tgz",
+    "@heap/react-native-heap": "file:../../heap-react-native-heap-0.19.0.tgz",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.7.3",
     "@react-navigation/native": "^5.7.2",
     "@react-navigation/stack": "^5.8.0",
-    "@types/react-native": "^0.66.2",
+    "@types/react-native": "^0.66.17",
     "native-base": "^2.12.1",
     "react": "16.13.1",
     "react-native": "0.63.4",
@@ -24,17 +24,17 @@
     "react-native-screens": "^2.9.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.10.5",
-    "@babel/runtime": "^7.10.5",
+    "@babel/core": "^7.17.8",
+    "@babel/runtime": "^7.17.8",
     "@react-native-community/eslint-config": "^2.0.0",
     "@types/detox": "^17.14.3",
     "@types/express": "^4.17.13",
     "assert": "^2.0.0",
     "babel-jest": "^26.1.0",
-    "detox": "^18.23.1",
+    "detox": "^19.5.7",
     "eslint": "^7.5.0",
-    "express": "^4.17.1",
-    "jest": "^27.3.1",
+    "express": "^4.17.3",
+    "jest": "^27.5.1",
     "metro-react-native-babel-preset": "^0.61.0",
     "protobufjs": "^6.11.2",
     "react-test-renderer": "16.13.1"
