@@ -12,6 +12,9 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Fixed type definition for `withReactNavigationAutotrack` on React Navigation 6.
+
 ### Security
 __END_UNRELEASED__
 
