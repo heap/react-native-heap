@@ -10,7 +10,6 @@ __BEGIN_UNRELEASED__
 ### Added
 ### Changed
 - Upgraded the Android library to use Heap version 1.10.+
-- Upgraded the Android library to use Gradle 7.2 and AGP 7.1.3
 ### Deprecated
 ### Removed
 ### Fixed
