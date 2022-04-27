@@ -121,7 +121,7 @@ export function getUserId(): Promise<string>;
  * 
  * @param NavigationContainer The navigation container to track.
  */
-export function withReactNavigationAutotrack<P>(NavigationContainer: React.ForwardRefExoticComponent<P>): React.ForwardRefExoticComponent<P>;
+export function withReactNavigationAutotrack<P, C = React.JSXElementConstructor<P>>(NavigationContainer: C): C;
 
 /**
  * Properties to allow or ignore in withHeapIgnore.  All options default to false.
