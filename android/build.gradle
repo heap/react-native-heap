@@ -74,12 +74,13 @@ android {
 }
 
 repositories {
+    mavenCentral()
     jcenter()
     google()
 }
 
 dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
-    api 'com.heapanalytics.android:heap-android-client:1.9.+'
+    api 'com.heapanalytics.android:heap-android-client:1.10.+'
 }
 
