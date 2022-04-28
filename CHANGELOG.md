@@ -15,6 +15,15 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.20.0] - 2022-04-28
+
+### Changed
+- Upgraded the Android library to use Heap version 1.10.+.
+
+### Fixed
+
+- Fixed type definition for `withReactNavigationAutotrack` on React Navigation 6.
+
 ## [0.19.0] - 2022-04-12
 
 ### Added
