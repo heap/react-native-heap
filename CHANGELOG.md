@@ -18,7 +18,7 @@ __END_UNRELEASED__
 ## [0.20.0] - 2022-04-28
 
 ### Changed
-- Upgraded the Android library to use Heap version 1.10.+
+- Upgraded the Android library to use Heap version 1.10.+.
 
 ### Fixed
 
