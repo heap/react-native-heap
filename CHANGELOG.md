@@ -9,6 +9,7 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 ### Changed
+- Upgraded the Android library to use Heap version 1.10.+
 ### Deprecated
 ### Removed
 ### Fixed
