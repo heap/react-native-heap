@@ -6,6 +6,7 @@ reactNative.NativeModules = {
     autocaptureEvent: jest.fn(),
     setAppId: jest.fn(),
     getUserId: jest.fn(),
+    getSessionId: jest.fn(),
     identify: jest.fn(),
     resetIdentity: jest.fn(),
     addUserProperties: jest.fn(),

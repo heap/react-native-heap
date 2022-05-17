@@ -47,6 +47,9 @@ public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
+  public void getSessionId(Promise promise) { promise.resolve(Heap.getSessionId()); }
+
+  @ReactMethod
   public void resetIdentity() {
     Heap.resetIdentity();
   }
