@@ -6,6 +6,10 @@ export interface CaptureSourceEvent extends CaptureEvent {
   sourceEvent: CaptureSourceEventPayload;
 }
 
+export interface CaptureSourceCustomEvent extends CaptureEvent {
+  sourceCustomEvent: CaptureSourceCustomEventPayload;
+}
+
 export interface BoolProperty {
   bool: boolean;
 }
@@ -19,6 +23,11 @@ export interface CaptureSourceEventPayload {
   name?: string;
   sourceProperties: {[key: string]: BoolProperty | StringProperty};
   source: string;
+}
+
+export interface CaptureSourceCustomEventPayload
+  extends CaptureSourceEventPayload {
+  customProperties: {[key: string]: BoolProperty | StringProperty};
 }
 
 export interface CaptureMessage<T extends CaptureEvent> {
@@ -51,6 +60,12 @@ export function isSourceEvent(
   event: CaptureEvent,
 ): event is CaptureSourceEvent {
   return has(event, 'sourceEvent');
+}
+
+export function isSourceCustomEvent(
+  event: CaptureEvent,
+): event is CaptureSourceCustomEvent {
+  return has(event, 'sourceCustomEvent');
 }
 
 // This keeps getting formatted away. :(
@@ -98,6 +113,49 @@ export function matcherForSourceEventWithProperties(
 
     for (const [key, value] of Object.entries(expectedProperties)) {
       if (getPropertyValue(key, event.sourceEvent.sourceProperties) !== value) {
+        return false;
+      }
+    }
+
+    return true;
+  };
+}
+
+export function matcherForSourceCustomEventWithProperties(
+  expectedType: string,
+  expectedSourceProperties: {[key: string]: string | boolean},
+  expectedCustomProperties: {[key: string]: string | boolean},
+): (
+  message: CaptureMessage<CaptureEvent>,
+) => message is CaptureMessage<CaptureSourceCustomEvent> {
+  return (message): message is CaptureMessage<CaptureSourceCustomEvent> => {
+    const event = message.event;
+
+    if (!isSourceCustomEvent(event)) {
+      return false;
+    }
+
+    if (
+      event.sourceCustomEvent.type !== expectedType &&
+      event.sourceCustomEvent.name !== expectedType
+    ) {
+      return false;
+    }
+
+    for (const [key, value] of Object.entries(expectedSourceProperties)) {
+      if (
+        getPropertyValue(key, event.sourceCustomEvent.sourceProperties) !==
+        value
+      ) {
+        return false;
+      }
+    }
+
+    for (const [key, value] of Object.entries(expectedCustomProperties)) {
+      if (
+        getPropertyValue(key, event.sourceCustomEvent.customProperties) !==
+        value
+      ) {
         return false;
       }
     }

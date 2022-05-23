@@ -28,6 +28,18 @@ export const PropertiesScreen = ({navigation}) => {
         title="Clear Event Properties"
         onPress={() => Heap.clearEventProperties()}
       />
+      <Button
+        title="Log getUserId"
+        onPress={async () =>
+          Heap.track('getUserId', {value: await Heap.getUserId()})
+        }
+      />
+      <Button
+        title="Log getSessionId"
+        onPress={async () =>
+          Heap.track('getSessionId', {value: await Heap.getSessionId()})
+        }
+      />
       <Button title="Back" onPress={() => navigation.goBack()} />
     </ScrollView>
   );

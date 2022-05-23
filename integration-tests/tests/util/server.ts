@@ -12,6 +12,8 @@ import {
   CaptureSourceEvent,
   getPropertyValue,
   matcherForSourceEventWithProperties,
+  matcherForSourceCustomEventWithProperties,
+  CaptureSourceCustomEvent,
 } from './types';
 import {isAndroid} from './util';
 import assert from 'assert';
@@ -294,6 +296,27 @@ export class CaptureServer extends EventEmitter {
         )}`,
     );
     return <CaptureMessage<CaptureSourceEvent>>result;
+  }
+
+  async expectSourceCustomEventWithProperties(
+    expectedType: string,
+    expectedSourceProperties: {[key: string]: string | boolean} = {},
+    expectedCustomProperties: {[key: string]: string | boolean} = {},
+  ): Promise<CaptureMessage<CaptureSourceCustomEvent>> {
+    const result = await this.waitForMatchingMessage(
+      matcherForSourceCustomEventWithProperties(
+        expectedType,
+        expectedSourceProperties,
+        expectedCustomProperties,
+      ),
+      () =>
+        `timeout waiting for ${expectedType} event with ${JSON.stringify(
+          expectedSourceProperties,
+          undefined,
+          2,
+        )} and ${JSON.stringify(expectedCustomProperties, undefined, 2)}`,
+    );
+    return <CaptureMessage<CaptureSourceCustomEvent>>result;
   }
 
   assertNoExistingSourceEventWithProperties(
