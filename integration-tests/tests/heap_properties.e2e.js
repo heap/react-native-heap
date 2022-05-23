@@ -5,7 +5,7 @@ import assert from 'assert';
 import {isAndroid, standardSetup, tapButton} from './util/util';
 import {getPropertyValue} from './util/types';
 
-describe('Properties', () => {
+describe('Heap Static Properties', () => {
   let tools = standardSetup(async () => {
     await tapButton('Properties');
   });
