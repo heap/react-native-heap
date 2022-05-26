@@ -15,6 +15,7 @@ describe('The Heap object', () => {
   let mockTrack,
     mockSetAppId,
     mockGetUserId,
+    mockGetSessionId,
     mockIdentify,
     mockResetIdentity,
     mockAddUserProperties,
@@ -41,6 +42,9 @@ describe('The Heap object', () => {
 
     NativeModules.RNHeap.getUserId.mockReset();
     mockGetUserId = NativeModules.RNHeap.getUserId;
+
+    NativeModules.RNHeap.getSessionId.mockReset();
+    mockGetSessionId = NativeModules.RNHeap.getSessionId;
 
     NativeModules.RNHeap.identify.mockReset();
     mockIdentify = NativeModules.RNHeap.identify;
@@ -144,6 +148,12 @@ describe('The Heap object', () => {
       expect(userId).toBe('1234');
     });
 
+    it('getSessionId - handles the common case', async () => {
+      mockGetSessionId.mockReturnValue(Promise.resolve('5678'));
+      const sessionId = await Heap.getSessionId();
+      expect(sessionId).toBe('5678');
+    });
+
     it('identify - handles the common case', () => {
       Heap.identify('foo');
       expect(mockIdentify.mock.calls.length).toBe(1);
@@ -190,6 +200,11 @@ describe('The Heap object', () => {
     it('getUserId - prevents errors from bubbling up', () => {
       mockGetUserId.mockImplementation(throwFn);
       expect(() => Heap.getUserId()).not.toThrow();
+    });
+
+    it('getSessionId - prevents errors from bubbling up', () => {
+      mockGetSessionId.mockImplementation(throwFn);
+      expect(() => Heap.getSessionId()).not.toThrow();
     });
 
     it('identify - prevents errors from bubbling up', () => {
