@@ -1,6 +1,6 @@
 {
   "name": "@heap/react-native-heap",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "description": "React Native event tracking with Heap.",
   "license": "MIT",
   "author": "Heap <http://www.heapanalytics.com>",
@@ -41,6 +41,8 @@
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
+    "@expo/config-plugins": "^4.1.5",
+    "@expo/config-types": "^45.0.0",
     "@types/jest": "^27.0.2",
     "@types/lodash": "^4.14.176",
     "@types/node": "^16.11.6",
@@ -49,6 +51,7 @@
     "detox": "18.23.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
+    "expo-module-scripts": "^2.0.0",
     "jest": "^27.3.1",
     "jest-enzyme": "^7.1.2",
     "jsdom": "^18.0.1",
