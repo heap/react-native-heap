@@ -9,7 +9,7 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 - Added `getSessionId()` method for fetching the current Heap Session ID from the underlying native SDK.
-
+- Added Expo config plugin for installing in managed expo project.
 ### Changed
 ### Deprecated
 ### Removed
