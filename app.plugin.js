@@ -1,1 +1,1 @@
-module.exports = require('./plugin/build/withHeap');
+module.exports = require('./dist/plugin/build/withHeap');

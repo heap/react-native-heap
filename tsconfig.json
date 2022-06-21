@@ -12,7 +12,6 @@
     "noUnusedParameters": true,
     "moduleResolution": "node",
     "skipLibCheck": true
-
   },
   "include": ["js/*", "plugin"]
 }
