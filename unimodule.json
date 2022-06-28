@@ -1,0 +1,4 @@
+{
+  "name": "@heap/react-native-heap",
+  "platforms": ["ios", "android"]
+}

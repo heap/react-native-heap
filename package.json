@@ -4,8 +4,14 @@
   "description": "React Native event tracking with Heap.",
   "license": "MIT",
   "author": "Heap <http://www.heapanalytics.com>",
-  "homepage": "https://github.com/heap/react-native-heap",
-  "repository": "heap/react-native-heap",
+  "homepage": "https://github.com/heap/react-native-heap#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/heap/react-native-heap"
+  },
+  "bugs": {
+    "url": "https://github.com/heap/react-native-heap/issues"
+  },
   "keywords": [
     "analytics",
     "heap",
@@ -13,14 +19,16 @@
     "android",
     "react-native"
   ],
-  "main": "dist/Heap",
+  "main": "dist/js/Heap.js",
   "files": [
     "android",
     "instrumentor",
     "ios",
     "dist",
     "react-native-heap.podspec",
-    "index.d.ts"
+    "index.d.ts",
+    "app.plugin.js",
+    "unimodule.json"
   ],
   "types": "index.d.ts",
   "publishConfig": {
@@ -33,7 +41,8 @@
     "babel-template": "^6.26.0",
     "babel-types": "^6.26.0",
     "flat": "^5.0.2",
-    "hoist-non-react-statics": "^3.3.2"
+    "hoist-non-react-statics": "^3.3.2",
+    "@expo/config-plugins": "^4.1.5"
   },
   "peerDependencies": {
     "react-native": "x.x"
@@ -41,6 +50,7 @@
   "devDependencies": {
     "@babel/cli": "^7.16.0",
     "@babel/preset-env": "^7.16.0",
+    "@expo/config-types": "^45.0.0",
     "@types/jest": "^27.0.2",
     "@types/lodash": "^4.14.176",
     "@types/node": "^16.11.6",
@@ -49,6 +59,7 @@
     "detox": "18.23.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",
+    "expo-module-scripts": "^2.0.0",
     "jest": "^27.3.1",
     "jest-enzyme": "^7.1.2",
     "jsdom": "^18.0.1",
@@ -68,7 +79,8 @@
     "test-instrumentor": "cd instrumentor && ../node_modules/mocha/bin/mocha -r @babel/register test/ && cd ..",
     "lint": "./node_modules/prettylint/bin/cli.js \"{js,e2e,instrumentor/src}/**/*.{js,ts}\"",
     "lint-example": "./node_modules/prettylint/bin/cli.js \"examples/**/*.{js,ts}\"",
+    "clean": "rm -rf ./dist",
     "compile": "./node_modules/typescript/bin/tsc",
-    "prepare": "npm run-script compile"
+    "prepare": "npm run-script compile && expo-module prepare"
   }
 }
