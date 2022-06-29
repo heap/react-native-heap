@@ -61,6 +61,11 @@ RCT_REMAP_METHOD(getUserId, getUserIdWithResolver:(RCTPromiseResolveBlock)resolv
     resolve(userId);
 }
 
+RCT_REMAP_METHOD(getSessionId, getSessionIdWithResolver:(RCTPromiseResolveBlock)resolve rejecter:(RCTPromiseRejectBlock)reject) {
+    NSString *sessionId = [Heap sessionId];
+    resolve(sessionId);
+}
+
 RCT_EXPORT_METHOD(identify:(NSString *)identity) {
     [Heap identify:identity];
 }

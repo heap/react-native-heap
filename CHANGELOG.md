@@ -15,6 +15,13 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.21.0] - 2022-06-29
+
+### Added
+
+- Added `getSessionId()` method for fetching the current Heap Session ID from the underlying native SDK.
+- Added Expo config plugin to support Android in managed workflows.
+
 ## [0.20.0] - 2022-04-28
 
 ### Changed

@@ -117,6 +117,12 @@ export function resetIdentity(): void;
 export function getUserId(): Promise<string>;
 
 /**
+ * Returns a promise that resolves to the stringified version of the numeric session ID associated with user's current session.
+ * If called before Heap is initialized it will return a promise that resolves to null.
+ */
+export function getSessionId(): Promise<string|null>;
+
+/**
  * Returns an HOC of a navigation container that autotracks pageviews on navigation change.
  * 
  * @param NavigationContainer The navigation container to track.
