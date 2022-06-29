@@ -10,7 +10,7 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@heap/react-native-heap": "file:../../heap-react-native-heap-0.20.0.tgz",
+    "@heap/react-native-heap": "file:../../heap-react-native-heap-0.21.0.tgz",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.7.3",
     "@react-navigation/native": "^5.7.2",
