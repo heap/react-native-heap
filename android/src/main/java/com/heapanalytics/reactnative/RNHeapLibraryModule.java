@@ -12,6 +12,8 @@ import com.heapanalytics.android.internal.HeapImpl;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.util.Log;
+
 public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
 
   private final ReactApplicationContext reactContext;
@@ -81,7 +83,7 @@ public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
         // The JS bridge will flatten maps and arrays in a uniform manner across both
         // platforms.
         // If we get them at this point, we shouldn't continue.
-        throw new RNHeapException("Property objects must be flattened before being sent across the JS bridge.");
+        Log.w("Property objects must be flattened before being sent across the JS bridge. If you get this warning please inspect for non-flattenable objects being sent to Heap");
       }
     }
     return stringMap;
