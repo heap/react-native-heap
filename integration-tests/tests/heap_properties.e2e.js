@@ -63,4 +63,17 @@ describe('Heap Static Properties', () => {
       );
     });
   });
+
+  describe('track', () => {
+    it('Should serialize properties without crashing', async () => {
+      await tapButton('Send Custom Event');
+
+      const message = await tools.server.expectSourceCustomEventWithProperties(
+        'custom-event',{
+        'a.c.0': '1',
+        'a.c.1': '2',
+        'a.c.1': '3'}
+      )
+    })
+  })
 });
