@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
+ - Added tests for sending bad data to the native bridge
 ### Changed
+ - Changed track bridge to warn instead of throw an exception when bad data is sent.
 ### Deprecated
 ### Removed
 ### Fixed
