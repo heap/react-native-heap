@@ -15,6 +15,13 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.22.0] - 2022-09-23
+### Added
+ - Added tests for sending bad data to the native bridge
+### Changed
+ - Changed track bridge to warn instead of throw an exception when bad data is sent.
+ - Upgraded iOS sdk from 8.2 to 9.0
+
 ## [0.21.0] - 2022-06-29
 
 ### Added

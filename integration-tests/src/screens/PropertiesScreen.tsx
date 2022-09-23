@@ -40,6 +40,12 @@ export const PropertiesScreen = ({navigation}) => {
           Heap.track('getSessionId', {value: await Heap.getSessionId()})
         }
       />
+      <Button
+        title="Send Custom Event"
+        onPress={async () =>
+          Heap.track('custom-event', { a: {b: null, c: [1,2,3], d: new (class Test {}) } })
+        }
+      />
       <Button title="Back" onPress={() => navigation.goBack()} />
     </ScrollView>
   );
