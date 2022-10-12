@@ -83,7 +83,7 @@ public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
         // The JS bridge will flatten maps and arrays in a uniform manner across both
         // platforms.
         // If we get them at this point, we shouldn't continue.
-        Log.w("Property objects must be flattened before being sent across the JS bridge. If you get this warning please inspect for non-flattenable objects being sent to Heap");
+        Log.w("RNHeapLibraryModule", "Property objects must be flattened before being sent across the JS bridge. If you get this warning please inspect for non-flattenable objects being sent to Heap");
       }
     }
     return stringMap;
