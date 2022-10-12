@@ -2,7 +2,7 @@ import NavigationUtil from './navigationUtil';
 
 const { Platform } = require('react-native');
 
-const { version } = require('../../../package.json');
+const { version } = require('../../package.json');
 
 let reactNativeVersionString: String | null = null;
 
