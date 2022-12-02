@@ -6,13 +6,12 @@ import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
+import com.facebook.react.util.RNLog;
 import com.heapanalytics.android.Heap;
 import com.heapanalytics.android.internal.HeapImpl;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import android.util.Log;
 
 public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
 
@@ -56,7 +55,7 @@ public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
     Heap.resetIdentity();
   }
 
-  private static Map<String, String> convertToStringMap(ReadableMap readableMap) {
+  private Map<String, String> convertToStringMap(ReadableMap readableMap) {
     if (readableMap == null) {
       return null;
     }
@@ -83,7 +82,7 @@ public class RNHeapLibraryModule extends ReactContextBaseJavaModule {
         // The JS bridge will flatten maps and arrays in a uniform manner across both
         // platforms.
         // If we get them at this point, we shouldn't continue.
-        Log.w("Property objects must be flattened before being sent across the JS bridge. If you get this warning please inspect for non-flattenable objects being sent to Heap");
+        RNLog.w(this.reactContext, "Property objects must be flattened before being sent across the JS bridge. If you get this warning please inspect for non-flattenable objects being sent to Heap");
       }
     }
     return stringMap;
