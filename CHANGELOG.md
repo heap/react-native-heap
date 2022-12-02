@@ -9,9 +9,11 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 ### Changed
+ - Switched repositories from jcenter to mavenCentral.
 ### Deprecated
 ### Removed
 ### Fixed
+ - Fixed Android compilation, moving log to `RNLog.w`.
 ### Security
 __END_UNRELEASED__
 

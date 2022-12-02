@@ -54,7 +54,7 @@ export class CaptureServer extends EventEmitter {
       express.raw({inflate: true, type: 'application/x-protobuf'}),
       this.onAndroidIdentifyRequest.bind(this),
     );
-    this.app.all('*', r => console.log(r.url));
+    this.app.all('*', (r) => console.log(r.url));
     this.reset();
 
     const jsonSchema = require('./root.proto.json');
@@ -71,7 +71,7 @@ export class CaptureServer extends EventEmitter {
     }
 
     return new Promise<void>((resolve, reject) => {
-      this.server.close(error => {
+      this.server.close((error) => {
         if (error) {
           reject(error);
         } else {
@@ -262,7 +262,7 @@ export class CaptureServer extends EventEmitter {
 
   expectPixelRequest(path: string, expectedParams: {[key: string]: string}) {
     return this.waitForMatchingPixelRequest(
-      url => {
+      (url) => {
         if (path !== url.pathname) {
           return false;
         }
@@ -274,11 +274,7 @@ export class CaptureServer extends EventEmitter {
         return true;
       },
       () =>
-        `timeout waiting for ${path} with ${JSON.stringify(
-          expectedParams,
-          undefined,
-          2,
-        )}`,
+        `timeout waiting for ${path} with ${formatProperties(expectedParams)}`,
     );
   }
 
@@ -289,10 +285,8 @@ export class CaptureServer extends EventEmitter {
     const result = await this.waitForMatchingMessage(
       matcherForSourceEventWithProperties(expectedType, expectedProperties),
       () =>
-        `timeout waiting for ${expectedType} event with ${JSON.stringify(
+        `timeout waiting for ${expectedType} event with ${formatProperties(
           expectedProperties,
-          undefined,
-          2,
         )}`,
     );
     return <CaptureMessage<CaptureSourceEvent>>result;
@@ -300,8 +294,8 @@ export class CaptureServer extends EventEmitter {
 
   async expectSourceCustomEventWithProperties(
     expectedType: string,
-    expectedSourceProperties: {[key: string]: string | boolean} = {},
-    expectedCustomProperties: {[key: string]: string | boolean} = {},
+    expectedSourceProperties: {[key: string]: string | boolean | RegExp} = {},
+    expectedCustomProperties: {[key: string]: string | boolean | RegExp} = {},
   ): Promise<CaptureMessage<CaptureSourceCustomEvent>> {
     const result = await this.waitForMatchingMessage(
       matcherForSourceCustomEventWithProperties(
@@ -310,10 +304,8 @@ export class CaptureServer extends EventEmitter {
         expectedCustomProperties,
       ),
       () =>
-        `timeout waiting for ${expectedType} event with ${JSON.stringify(
+        `timeout waiting for ${expectedType} event with ${formatProperties(
           expectedSourceProperties,
-          undefined,
-          2,
         )} and ${JSON.stringify(expectedCustomProperties, undefined, 2)}`,
     );
     return <CaptureMessage<CaptureSourceCustomEvent>>result;
@@ -321,7 +313,7 @@ export class CaptureServer extends EventEmitter {
 
   assertNoExistingSourceEventWithProperties(
     expectedType: 'touch' | 'react_navigation_screenview' | 'text_edit',
-    expectedProperties: {[key: string]: string | boolean},
+    expectedProperties: {[key: string]: string | boolean | RegExp},
   ) {
     const matcher = matcherForSourceEventWithProperties(
       expectedType,
@@ -330,10 +322,8 @@ export class CaptureServer extends EventEmitter {
     for (const message of this.eventMessages) {
       if (matcher(message)) {
         assert.fail(
-          `found unexpected ${expectedType} event with ${JSON.stringify(
+          `found unexpected ${expectedType} event with ${formatProperties(
             expectedProperties,
-            undefined,
-            2,
           )}:\n\n${JSON.stringify(message, undefined, 2)}`,
         );
       }
@@ -345,7 +335,7 @@ export class CaptureServer extends EventEmitter {
   }): Promise<void> {
     if (isAndroid()) {
       await this.waitForMatchingAndroidUserPropertiesRequest(
-        request => {
+        (request) => {
           for (const [key, value] of Object.entries(expectedParams)) {
             if (getPropertyValue(key, request.properties) !== value) {
               return false;
@@ -354,25 +344,23 @@ export class CaptureServer extends EventEmitter {
           return true;
         },
         () =>
-          `timeout waiting for android user properties with ${JSON.stringify(
+          `timeout waiting for android user properties with ${formatProperties(
             expectedParams,
-            undefined,
-            2,
           )}`,
       );
     } else {
       const prefixed = Object.fromEntries(
-        Object.entries(expectedParams).map(arr => ['_' + arr[0], arr[1]]),
+        Object.entries(expectedParams).map((arr) => ['_' + arr[0], arr[1]]),
       );
 
       await this.expectPixelRequest('/api/add_user_properties_v3', prefixed);
     }
   }
 
-  async expectIdentify(identity: string): Promise<string> {
+  async expectIdentify(identity: string): Promise<string | null> {
     if (isAndroid()) {
       let matched = await this.waitForMatchingAndroidIdentifyRequest(
-        request => {
+        (request) => {
           return request.toIdentity === identity;
         },
         () => `timeout waiting for android identify request with ${identity}`,
@@ -386,4 +374,18 @@ export class CaptureServer extends EventEmitter {
       return matched.searchParams.get('u');
     }
   }
+}
+
+function formatProperties(properties: {
+  [key: string]: string | boolean | RegExp;
+}): string {
+  const formattedProperties = {...properties};
+
+  for (const key of Object.keys(properties)) {
+    if (properties[key] instanceof RegExp) {
+      formattedProperties[key] = properties[key].toString();
+    }
+  }
+
+  return JSON.stringify(formattedProperties, undefined, 2);
 }
