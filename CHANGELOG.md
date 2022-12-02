@@ -9,6 +9,7 @@ __BEGIN_UNRELEASED__
 ## [Unreleased]
 ### Added
 ### Changed
+ - Switched repositories from jcenter to mavenCentral.
 ### Deprecated
 ### Removed
 ### Fixed
