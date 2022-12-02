@@ -12,6 +12,7 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+ - Fixed Android compilation, moving log to `RNLog.w`.
 ### Security
 __END_UNRELEASED__
 
