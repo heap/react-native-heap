@@ -11,6 +11,7 @@ import {
   autotrackPress,
   withHeapTouchableAutocapture,
 } from './autotrack/touchables';
+import { withHeapAutocapture } from './autotrack/component';
 import { withHeapPressableAutocapture } from './autotrack/pressable';
 import { autotrackSwitchChange } from './autotrack/switches';
 import { autotrackScrollView } from './autotrack/scrollViews';
@@ -91,6 +92,7 @@ export default {
   autotrackPress: bailOnError(autotrackPress(autocaptureTrack)),
   withHeapTouchableAutocapture: withHeapTouchableAutocapture(autocaptureTrack),
   withHeapPressableAutocapture: withHeapPressableAutocapture(autocaptureTrack),
+  withHeapAutocapture: withHeapAutocapture(autocaptureTrack),
   autotrackSwitchChange: bailOnError(autotrackSwitchChange(autocaptureTrack)),
   autocaptureScrollView: bailOnError(autotrackScrollView(autocaptureTrack)),
   autocaptureTextInput: bailOnError(

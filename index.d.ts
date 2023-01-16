@@ -1,4 +1,6 @@
 import * as React from 'react';
+import { JSXElementConstructor } from 'react';
+import { GestureResponderEvent } from 'react-native';
 
 /**
  * `setAppId` Initializes Heap tracking and sets the app ID where you'll be sending data. It can be used to switch
@@ -121,6 +123,42 @@ export function getUserId(): Promise<string>;
  * If called before Heap is initialized it will return a promise that resolves to null.
  */
 export function getSessionId(): Promise<string|null>;
+
+/**
+ * Returns an HOC of a component that tracks specific specified actions as touches
+ *
+ * @param Component the component to autocapture for
+ */
+export function withHeapAutocapture<
+  P,
+  C extends JSXElementConstructor<Partial<P>>
+>(Component: C, propName: keyof P, eventType?: 'touch' | 'change'): C;
+
+/**
+ * Returns an HOC of a component that tracks touches, i.e. calls to `onPress` or
+ * `onLongPress`
+ *
+ * @param TouchableComponent the component to autocapture touches for
+ */
+export function withHeapTouchableAutocapture<
+  P extends {
+    onPress?: (e: GestureResponderEvent) => void;
+    onLongPress?: (e: GestureResponderEvent) => void;
+  }
+>(TouchableComponent: React.ComponentType<P>): React.ComponentType<P>;
+
+/**
+ * Returns an HOC of a component that tracks presses, i.e. calls to `onPress` or
+ * `onLongPress`
+ *
+ * @param PressableComponent the component to autocapture presses for
+ */
+export function withHeapPressableAutocapture<
+  P extends {
+    onPress?: (e: GestureResponderEvent) => void;
+    onLongPress?: (e: GestureResponderEvent) => void;
+  }
+>(PressableComponent: React.ComponentType<P>): React.ComponentType<P>;
 
 /**
  * Returns an HOC of a navigation container that autotracks pageviews on navigation change.
