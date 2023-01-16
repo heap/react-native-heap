@@ -37,7 +37,7 @@ def heapAppId(buildType) {
 
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
         google()
     }
 
@@ -55,7 +55,7 @@ android {
         targetCompatibility 1.8
     }
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion safeExtGet('minSdkVersion', 16)
         targetSdkVersion safeExtGet('targetSdkVersion', 26)
         versionCode 1
         versionName "1.0"
@@ -74,12 +74,12 @@ android {
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     google()
 }
 
 dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
-    api 'com.heapanalytics.android:heap-android-client:1.9.+'
+    api 'com.heapanalytics.android:heap-android-client:1.10.+'
 }
 

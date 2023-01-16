@@ -18,6 +18,69 @@ __BEGIN_UNRELEASED__
 ### Security
 __END_UNRELEASED__
 
+## [0.22.1] - 2022-12-02
+
+### Changed
+
+ - Switched repositories from jcenter to mavenCentral.
+
+### Fixed
+
+ - Fixed Android compilation, moving log to `RNLog.w`.
+
+## [0.22.0] - 2022-09-23
+
+### Added
+
+ - Added tests for sending bad data to the native bridge
+
+### Changed
+
+ - Changed track bridge to warn instead of throw an exception when bad data is sent.
+ - Upgraded iOS sdk from 8.2 to 9.0
+
+## [0.21.0] - 2022-06-29
+
+### Added
+
+- Added `getSessionId()` method for fetching the current Heap Session ID from the underlying native SDK.
+- Added Expo config plugin to support Android in managed workflows.
+
+## [0.20.0] - 2022-04-28
+
+### Changed
+- Upgraded the Android library to use Heap version 1.10.+.
+
+### Fixed
+
+- Fixed type definition for `withReactNavigationAutotrack` on React Navigation 6.
+
+## [0.19.0] - 2022-04-12
+
+### Added
+
+- Added support for Event Visualizer on iOS, with a pairing option in the React Native developer menu.
+- Added iOS-only option to enable Heap SDK debug logging in the iOS console, enabled by default on dev builds.
+- Disabled tracking of view controllers on iOS when `enableNativeTouchEventCapture` is off.
+
+### Changed
+
+- Updated `Heap.setAppId` on iOS to turn off native touch capture on iOS.
+- Updated `Heap.setAppId` on iOS to enable logging on debug builds.
+
+## [0.18.0] - 2022-02-28
+
+### Fixed
+
+- Fixed iOS build in folders with spaces.
+- Fixed minSdkVersion build error on React Native 0.64+.
+
+## [0.17.1] - 2021-12-01
+
+### Fixed
+
+- Hotfix for misconfigured iOS event uploads.
+
 ## [0.17.0] - 2021-11-09
 
 ### Changed

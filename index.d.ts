@@ -119,6 +119,12 @@ export function resetIdentity(): void;
 export function getUserId(): Promise<string>;
 
 /**
+ * Returns a promise that resolves to the stringified version of the numeric session ID associated with user's current session.
+ * If called before Heap is initialized it will return a promise that resolves to null.
+ */
+export function getSessionId(): Promise<string|null>;
+
+/**
  * Returns an HOC of a component that tracks specific specified actions as touches
  *
  * @param Component the component to autocapture for
@@ -154,12 +160,12 @@ export function withHeapPressableAutocapture<
   }
 >(PressableComponent: React.ComponentType<P>): React.ComponentType<P>;
 
-/*
+/**
  * Returns an HOC of a navigation container that autotracks pageviews on navigation change.
  * 
  * @param NavigationContainer The navigation container to track.
  */
-export function withReactNavigationAutotrack<P>(NavigationContainer: React.ForwardRefExoticComponent<P>): React.ForwardRefExoticComponent<P>;
+export function withReactNavigationAutotrack<P, C = React.JSXElementConstructor<P>>(NavigationContainer: C): C;
 
 /**
  * Properties to allow or ignore in withHeapIgnore.  All options default to false.

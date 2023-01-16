@@ -4,41 +4,41 @@ require 'fileutils'
 require 'json'
 
 def perform_substitution(dir, json)
+
+  set_values_simple('EnableAutocapture', 'bool', dir, json, 'enableNativeTouchEventCapture', false)
+  set_values_simple('CaptureBaseUrl', 'string', dir, json, 'captureBaseUrl', '')
+
+  set_values('EnableDebugLogging', 'bool', dir, json) { |s, d, n|
+    get_property('debug', n == 'dev', s, d)
+  }
+  
+  set_values('AppId', 'string', dir, json) { |s, d, n|
+    get_property('heapAutoInit', true, s, d) ? get_property('heapAppId', '', s, d) : ''
+  }
+
+end
+
+def set_values_simple(key, type, dir, json, json_key, valueIfNil)
+  set_values(key, type, dir, json) { |s, d, n| get_property(json_key, valueIfNil, s, d) }
+end
+
+def set_values(key, type, dir, json, &block)
   dev = json.fetch('dev', {})
   prod = json.fetch('prod', {})
   default = json.fetch('default', {})
   output_path = File.join dir, 'HeapSettings.plist'
-  
-  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapAppIdDev' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapAppIdProd' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapEnableAutocaptureDev' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapEnableAutocaptureProd' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapCaptureBaseUrlDev' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Delete :HeapCaptureBaseUrlProd' '#{output_path}'}
 
-  %x{/usr/libexec/PlistBuddy -c 'Add :HeapAppIdDev string "#{get_app_id(dev, default)}"' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Add :HeapAppIdProd string "#{get_app_id(prod, default)}"' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Add :HeapEnableAutocaptureDev bool #{get_enable_autocapture(dev, default)}' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Add :HeapEnableAutocaptureProd bool #{get_enable_autocapture(prod, default)}' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Add :HeapCaptureBaseUrlDev string "#{get_capture_base_url(dev, default)}"' '#{output_path}'}
-  %x{/usr/libexec/PlistBuddy -c 'Add :HeapCaptureBaseUrlProd string "#{get_capture_base_url(prod, default)}"' '#{output_path}'}
+  set_value(":Heap#{key}Dev", type, block.call(dev, default, 'dev'), output_path)
+  set_value(":Heap#{key}Prod", type, block.call(prod, default, 'prod'), output_path)
+end
+
+def set_value(key, type, value, output_path)
+  %x{/usr/libexec/PlistBuddy -c 'Delete #{key}' '#{output_path}' 2> /dev/null}
+  %x{/usr/libexec/PlistBuddy -c 'Add #{key} #{type} "#{value}"' '#{output_path}'}
 end
 
 def perform_empty_substitution(dir)
   perform_substitution dir, JSON.parse("{}")
-end
-
-def get_app_id(selectedConfig, defaultConfig)
-  return '' unless get_property('heapAutoInit', true, selectedConfig, defaultConfig)
-  return get_property('heapAppId', '', selectedConfig, defaultConfig)
-end
-
-def get_enable_autocapture(selectedConfig, defaultConfig)
-  return get_property('enableNativeTouchEventCapture', false, selectedConfig, defaultConfig)
-end
-
-def get_capture_base_url(selectedConfig, defaultConfig)
-  return get_property('captureBaseUrl', false, selectedConfig, defaultConfig)
 end
 
 def get_property(name, valueIfNil, selectedConfig, defaultConfig)

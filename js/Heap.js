@@ -61,6 +61,7 @@ export default {
   // User Properties
   // Returns a promise that resolves to the Heap user ID.
   getUserId: bailOnError(() => RNHeap.getUserId()),
+  getSessionId: bailOnError(() => RNHeap.getSessionId()),
   identify: bailOnError(identity => RNHeap.identify(identity)),
   resetIdentity: bailOnError(() => RNHeap.resetIdentity()),
   addUserProperties: bailOnError(properties => {

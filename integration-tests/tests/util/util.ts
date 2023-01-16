@@ -48,7 +48,7 @@ export function standardSetup(
   beforeEach(async () => {
     server.reset();
     await device.reloadReactNative();
-    beforeEachBlock();
+    await beforeEachBlock();
   });
 
   afterAll(async () => {
