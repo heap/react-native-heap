@@ -12,6 +12,9 @@ __BEGIN_UNRELEASED__
 ### Deprecated
 ### Removed
 ### Fixed
+
+- Fixed pod install with ruby >= 3.1
+
 ### Security
 __END_UNRELEASED__
 
