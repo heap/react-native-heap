@@ -10,7 +10,7 @@ Pod::Spec.new do |s|
   s.license = { type: "MIT" }
   s.author = package[:author]
   s.homepage = package[:homepage]
-  s.source = { git: package[:repository] }
+  s.source = { git: package[:repository][:url] }
   s.source_files = "ios/**/*.{h,m}"
   s.platform = :ios, "10.0"
 
