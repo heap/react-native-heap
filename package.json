@@ -1,6 +1,6 @@
 {
   "name": "@heap/react-native-heap",
-  "version": "0.22.1",
+  "version": "0.22.2",
   "description": "React Native event tracking with Heap.",
   "license": "MIT",
   "author": "Heap <http://www.heapanalytics.com>",
