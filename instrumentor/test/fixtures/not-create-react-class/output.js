@@ -1,3 +1,5 @@
+"use strict";
+
 var TouchableOpacity = {
   displayName: 'TouchableOpacity',
   mixins: [TimerMixin, Touchable.Mixin, NativeMethodsMixin],
