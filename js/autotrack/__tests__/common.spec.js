@@ -4,7 +4,8 @@
 import React from 'React';
 import { Text, View } from 'react-native';
 const foo = require('react-native');
-import { shallow, mount, render } from 'enzyme';
+import '@testing-library/jest-native/extend-expect';
+import { render } from '@testing-library/react-native'
 
 import { getBaseComponentProps } from '../common';
 import {
@@ -45,21 +46,19 @@ const Foo = props => {
 describe('Common autotrack utils', () => {
   describe('Hierarchy capture', () => {
     it('Captures hierarchies normally', () => {
-      const wrapper = mount(
+      const { getByTestId } = render(
         <Foo>
           <Text testID="targetElement">{'foobar'}</Text>
         </Foo>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
-          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@Text;[testID=targetElement];|',
+          '@Foo;|@BarClass;|@BarFunction;|@Text;[testID=targetElement];|',
         source_version: SDK_VERSION,
       });
     });
@@ -71,21 +70,19 @@ describe('Common autotrack utils', () => {
 
       MySpecialComponent.displayName = '@My@Special;|[Component#=';
 
-      const wrapper = mount(
+      const { getByTestId } = render(
         <MySpecialComponent>
           <Text testID="targetElement">{'foobar'}</Text>
         </MySpecialComponent>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
-          '@WrapperComponent;|@MySpecialComponent;|@Text;[testID=targetElement];|',
+          '@MySpecialComponent;|@Text;[testID=targetElement];|',
         source_version: SDK_VERSION,
       });
     });
@@ -94,21 +91,19 @@ describe('Common autotrack utils', () => {
       const ListItem = props => {
         return <View>{props.children}</View>;
       };
-      const wrapper = mount(
+      const { getByTestId } = render(
         <ListItem rightTitle={<Text>Foo</Text>}>
           <Text testID="targetElement">{'foobar'}</Text>
         </ListItem>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
-          '@WrapperComponent;|@ListItem;[rightTitle=React.element];|@Text;[testID=targetElement];|',
+          '@ListItem;[rightTitle=React.element];|@Text;[testID=targetElement];|',
         source_version: SDK_VERSION,
       });
     });
@@ -116,44 +111,40 @@ describe('Common autotrack utils', () => {
 
   describe('HeapIgnore', () => {
     it('Ignores interaction', () => {
-      const wrapper = mount(
+      const { getByTestId } = render(
         <Foo>
           <HeapIgnore>
             <Text testID="targetElement">{'foobar'}</Text>
           </HeapIgnore>
         </Foo>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toBe(null);
     });
 
     it('Ignores inner hierarchy', () => {
-      const wrapper = mount(
+      const { getByTestId } = render(
         <Foo>
           <HeapIgnore allowInteraction={true} allowTargetText={true}>
             <Text testID="targetElement">{'foobar'}</Text>
           </HeapIgnore>
         </Foo>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
-          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|',
+          '@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|',
         source_version: SDK_VERSION,
       });
     });
 
     it('Ignores props', () => {
-      const wrapper = mount(
+      const { getByTestId } = render(
         <Foo>
           <HeapIgnore
             allowInteraction={true}
@@ -164,22 +155,20 @@ describe('Common autotrack utils', () => {
           </HeapIgnore>
         </Foo>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
-          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;|',
+          '@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;|',
         source_version: SDK_VERSION,
       });
     });
 
     it('Ignores target text', () => {
-      const wrapper = mount(
+      const { getByTestId } = render(
         <Foo>
           <HeapIgnore
             allowInteraction={true}
@@ -190,21 +179,19 @@ describe('Common autotrack utils', () => {
           </HeapIgnore>
         </Foo>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         rn_hierarchy:
-          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
+          '@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
         source_version: SDK_VERSION,
       });
     });
 
     it('Ignores nothing', () => {
-      const wrapper = mount(
+      const { getByTestId } = render(
         <Foo>
           <HeapIgnore
             allowInteraction={true}
@@ -218,22 +205,20 @@ describe('Common autotrack utils', () => {
           </HeapIgnore>
         </Foo>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         target_text: 'foobar',
         rn_hierarchy:
-          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
+          '@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@Text;[testID=targetElement];|',
         source_version: SDK_VERSION,
       });
     });
 
     it('Props stack correctly', () => {
-      const wrapper = mount(
+      const { getByTestId } = render(
         <Foo>
           <HeapIgnore allowInteraction={true} allowInnerHierarchy={true}>
             <BarFunction>
@@ -253,15 +238,13 @@ describe('Common autotrack utils', () => {
           </HeapIgnore>
         </Foo>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         rn_hierarchy:
-          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@BarFunction;|@HeapIgnore;|',
+          '@Foo;|@BarClass;|@BarFunction;|@HeapIgnore;|@BarFunction;|@HeapIgnore;|',
         source_version: SDK_VERSION,
       });
     });
@@ -271,41 +254,37 @@ describe('Common autotrack utils', () => {
         allowInteraction: true,
         allowInnerHierarchy: true,
       });
-      const wrapper = mount(
+      const { getByTestId } = render(
         <Foo>
           <IgnoredText testID="targetElement">{'foobar'}</IgnoredText>
         </Foo>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         rn_hierarchy:
-          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@withHeapIgnore(Text);[testID=targetElement];|@HeapIgnore;|@Text;|',
+          '@Foo;|@BarClass;|@BarFunction;|@withHeapIgnore(Text);[testID=targetElement];|@HeapIgnore;|@Text;|',
         source_version: SDK_VERSION,
       });
     });
 
     it('Ignores target text via convenience component', () => {
-      const wrapper = mount(
+      const { getByTestId } = render(
         <Foo>
           <HeapIgnoreTargetText>
             <Text testID="targetElement">{'foobar'}</Text>
           </HeapIgnoreTargetText>
         </Foo>
       );
-      const normalComponent = wrapper
-        .find({ testID: 'targetElement' })
-        .filter(Text);
-      const normalProps = getBaseComponentProps(normalComponent.instance());
+      const normalComponent = getByTestId('targetElement');
+      const normalProps = getBaseComponentProps(normalComponent);
       expect(normalProps).toEqual({
         is_using_react_navigation_hoc: false,
         react_native_version: null,
         rn_hierarchy:
-          '@WrapperComponent;|@Foo;|@BarClass;|@BarFunction;|@HeapIgnoreTargetText;|@HeapIgnore;|@Text;[testID=targetElement];|',
+          '@Foo;|@BarClass;|@BarFunction;|@HeapIgnoreTargetText;|@HeapIgnore;|@Text;[testID=targetElement];|',
         source_version: SDK_VERSION,
       });
     });
@@ -320,7 +299,7 @@ describe('Common autotrack utils', () => {
 
       const myRef = React.createRef();
 
-      const wrapper = mount(
+      render(
         <Foo>
           <NoOpIgnore ref={myRef} testID="targetElement">
             {'foobar'}
@@ -328,7 +307,7 @@ describe('Common autotrack utils', () => {
         </Foo>
       );
 
-      expect(myRef.current._reactInternalFiber.type.displayName).toEqual(
+      expect(myRef.current._reactInternals.type.displayName).toEqual(
         'Text'
       );
     });
