@@ -71,7 +71,8 @@
     "test": "jest",
     "test-instrumentor": "mocha -r @babel/register instrumentor/test/",
     "clean": "rm -rf ./dist",
-    "compile": "./node_modules/typescript/bin/tsc",
-    "prepare": "npm run-script compile && expo-module prepare"
+    "compile": "npm run-script sync-version && tsc",
+    "prepare": "npm run-script compile && expo-module prepare",
+    "sync-version": "echo \"export const version = `jq .version < package.json`;\" > js/version.ts"
   }
 }
