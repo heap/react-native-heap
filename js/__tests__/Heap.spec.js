@@ -11,6 +11,11 @@ expect(SDK_VERSION).toBeDefined();
 
 jest.mock('../util/navigationUtil');
 
+
+let suppressWarnings = false;
+const originalWarning = console.warn;
+console.warn = (message) => suppressWarnings || originalWarning(message);
+
 describe('The Heap object', () => {
   let mockTrack,
     mockSetAppId,
@@ -25,10 +30,15 @@ describe('The Heap object', () => {
     throwFn;
 
   beforeAll(() => {
+    suppressWarnings = true;
     jest.mock('react-native');
     throwFn = (...args) => {
       throw 'Error!';
     };
+  });
+  
+  afterAll(() => {
+    suppressWarnings = false;
   });
 
   beforeEach(() => {
