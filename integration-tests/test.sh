@@ -13,6 +13,12 @@
 #    ./test.sh                               # runs android and ios tests against RN 0.63
 #    ./test.sh drivers/TestDriver066         # runs android and ios tests against RN 0.66
 #    ./test.sh drivers/TestDriver066 android # runs android tests against RN 0.66
+#
+# Command will fail if:
+# - JDK 11 is not installed at the location below
+# - There are no iPhone 13 simulators
+# - Android Emulator named Pixel_5_API_30 is not installed
+# - Node version in a new terminal is not node 16
 
 trap "exit" INT TERM ERR
 trap "kill 0" EXIT
@@ -22,7 +28,7 @@ set -o nounset
 set -o pipefail
 
 # Life is suffering.
-export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
 
 DRIVER_DIR="${1:-drivers/TestDriver063/}"
 
