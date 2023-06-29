@@ -14,6 +14,8 @@ import { stripReservedCharacters } from '../util/reservedCharacters';
 interface Component extends ReactComponent {
   _reactInternals: FiberNode;
   _reactInternalFiber: FiberNode;
+  _fiber: FiberNode;
+  _internalFiberInstanceHandleDEV: FiberNode;
 }
 
 // Base properties for autotracked events.
@@ -101,7 +103,7 @@ const getComponentHierarchyTraversal: (
 };
 
 const getReactInternalFiber = (comp: Component) => {
-  return comp._reactInternals || comp._reactInternalFiber;
+  return comp._reactInternals || comp._reactInternalFiber || comp._fiber || comp._internalFiberInstanceHandleDEV;
 };
 
 // Traverse up the hierarchy from the current component up to the root, and return an array of
