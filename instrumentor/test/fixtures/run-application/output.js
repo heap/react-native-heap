@@ -1,3 +1,5 @@
+"use strict";
+
 var AppRegistry = {
   runApplication: function runApplication(appKey, appParameters) {
     infoLog('Heap: Touchables are instrumented for autocapture.');

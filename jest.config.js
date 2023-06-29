@@ -1,16 +1,15 @@
 module.exports = {
   preset: 'react-native',
-  setupFilesAfterEnv: ['<rootDir>setup-tests.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js'],
   transform: {
     '\\.(ts|tsx)$': 'ts-jest',
     '\\.(js|jsx)$': 'babel-jest',
   },
   testPathIgnorePatterns: [
-    '<rootDir>[/\\\\](android|dist|examples|ios|node_modules)[/\\\\]',
+    '<rootDir>[/\\\\](android|dist|examples|ios|node_modules|integration-tests)[/\\\\]',
   ],
   modulePathIgnorePatterns: [
-    '<rootDir>[/\\\\](android|dist|examples|ios)[/\\\\]',
+    '<rootDir>[/\\\\](android|dist|examples|ios|integration-tests)[/\\\\]',
   ],
 
   testRegex: '__tests__/.*\\.(ts|tsx|js|jsx)$',

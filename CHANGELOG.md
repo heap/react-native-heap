@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+ - Removed unnecessary expo dependency that had a critical vulnerability.
+
+
 ## [0.22.2] - 2023-04-04
 
 ### Fixed
