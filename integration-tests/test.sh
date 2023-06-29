@@ -13,6 +13,12 @@
 #    ./test.sh                               # runs android and ios tests against RN 0.63
 #    ./test.sh drivers/TestDriver066         # runs android and ios tests against RN 0.66
 #    ./test.sh drivers/TestDriver066 android # runs android tests against RN 0.66
+#
+# Command will fail if:
+# - JDK 11 is not installed at the location below
+# - There are no iPhone 13 simulators
+# - Android Emulator named Pixel_5_API_30 is not installed
+# - Node version in a new terminal is not node 16
 
 trap "exit" INT TERM ERR
 trap "kill 0" EXIT
@@ -22,7 +28,7 @@ set -o nounset
 set -o pipefail
 
 # Life is suffering.
-export JAVA_HOME=/Applications/Android\ Studio.app/Contents/jre/Contents/Home
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
 
 DRIVER_DIR="${1:-drivers/TestDriver063/}"
 
@@ -73,6 +79,7 @@ then
     echo "Reinstalling the framework"
     npm uninstall @heap/react-native-heap || true
     npm install ../../heap-react-native-heap-*.tgz
+    npm run postinstall
 fi
 
 if [ "$TEST_IOS" = true ]
@@ -80,7 +87,7 @@ then
     echo "Installing pods for iOS"
     cd ios
     pod repo update
-    pod update Heap
+    pod update Heap || true
     pod install
     cd ..
 fi
