@@ -80,7 +80,7 @@ then
     echo "Installing pods for iOS"
     cd ios
     pod repo update
-    pod update Heap
+    pod update Heap || true
     pod install
     cd ..
 fi
