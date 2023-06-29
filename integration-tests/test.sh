@@ -79,6 +79,7 @@ then
     echo "Reinstalling the framework"
     npm uninstall @heap/react-native-heap || true
     npm install ../../heap-react-native-heap-*.tgz
+    npm run postinstall
 fi
 
 if [ "$TEST_IOS" = true ]
