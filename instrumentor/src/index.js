@@ -26,6 +26,13 @@ const buildHeapImport = template(`(
   }
 )`);
 
+const buildDisplayNameAssignment = template(`(function (Component, displayName) {
+  if (Component && displayName) {
+    Component.displayName = displayName;
+  }
+  return Component;
+})(COMPONENT_DEFINITION, DISPLAY_NAME)`);
+
 const buildInstrumentationHoc = template(`
   const COMPONENT_ID = HOC_CALL_EXPRESSION;
 `);
@@ -411,9 +418,15 @@ const instrumentSwitchHoc = path => {
     HOC_IDENTIFIER: hocIdentifier,
   }).expression;
 
+  // Special to "Switch", the component doesn't have a display name.  Per a suggestion in another comment, I'm fixing this up in Switch.js.
+  const initWithDisplayName = buildDisplayNameAssignment({
+    COMPONENT_DEFINITION: path.node.init,
+    DISPLAY_NAME: t.stringLiteral('Switch'),
+  }).expression;
+
   const autotrackExpression = t.callExpression(
     t.memberExpression(heapImport, hocIdentifier),
-    [path.node.init]
+    [initWithDisplayName]
   );
 
   path.get('init').replaceWith(autotrackExpression);
