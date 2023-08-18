@@ -397,6 +397,28 @@ const instrumentPressableHoc = path => {
   path.get('init').replaceWith(autotrackExpression);
 };
 
+const instrumentSwitchHoc = path => {
+  // 'SwitchWithForwardedRef' is the component that gets exported from 'Switch.js' in the react-native library.  The whole component is
+  // defined inside a `React.forwardRef` call.
+  // See https://github.com/facebook/react-native/blob/4deb29ae1bf71d8da1a18b1a930883854b519949/packages/react-native/Libraries/Components/Switch/Switch.js#L134-L139.
+  if (!path.node.id || path.node.id.name !== 'SwitchWithForwardedRef') {
+    return;
+  }
+
+  const hocIdentifier = t.identifier('withHeapSwitchAutocapture');
+
+  const heapImport = buildHeapImport({
+    HOC_IDENTIFIER: hocIdentifier,
+  }).expression;
+
+  const autotrackExpression = t.callExpression(
+    t.memberExpression(heapImport, hocIdentifier),
+    [path.node.init]
+  );
+
+  path.get('init').replaceWith(autotrackExpression);
+};
+
 function transform(babel) {
   return {
     visitor: {
@@ -417,6 +439,7 @@ function transform(babel) {
       },
       VariableDeclarator(path) {
         instrumentPressableHoc(path);
+        instrumentSwitchHoc(path);
       },
     },
   };
