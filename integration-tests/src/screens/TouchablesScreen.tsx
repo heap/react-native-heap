@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React, {useState} from 'react';
+import React from 'react';
 import {
   Button,
   Pressable,
@@ -27,7 +27,7 @@ const MyTextInput = () => {
 };
 
 export const TouchablesScreen = () => {
-  const [isOn, setIsOn] = useState(false);
+  const [isOn, setIsOn] = React.useState(false);
 
   return (
     <ScrollView>
