@@ -82,4 +82,19 @@ describe('View hierarchies', () => {
       '@TextInput;[testID=myTextInput];',
     ]);
   });
+
+  it('should work for <Switch> change', async () => {
+    await element(by.id('my-switch')).tap();
+
+    let message = await tools.server.expectSourceEventWithProperties('change', {
+      screen_path: 'Touchables',
+      screen_name: 'Touchables',
+    });
+
+    assertHierarchy(message, [
+      '@TouchablesScreen;',
+      '@ScrollView;',
+      '@Switch;[testID=my-switch];',
+    ]);
+  });
 });

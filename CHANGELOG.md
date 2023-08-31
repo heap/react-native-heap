@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+ - Fixed `<Switch>` change event capture on React Native 0.66 and later.
+
 ## [0.22.3] - 2023-06-29
 
 ### Fixed

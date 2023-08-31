@@ -26,6 +26,13 @@ const buildHeapImport = template(`(
   }
 )`);
 
+const buildDisplayNameAssignment = template(`(function (Component, displayName) {
+  if (Component && displayName) {
+    Component.displayName = displayName;
+  }
+  return Component;
+})(COMPONENT_DEFINITION, DISPLAY_NAME)`);
+
 const buildInstrumentationHoc = template(`
   const COMPONENT_ID = HOC_CALL_EXPRESSION;
 `);
@@ -397,6 +404,34 @@ const instrumentPressableHoc = path => {
   path.get('init').replaceWith(autotrackExpression);
 };
 
+const instrumentSwitchHoc = path => {
+  // 'SwitchWithForwardedRef' is the component that gets exported from 'Switch.js' in the react-native library.  The whole component is
+  // defined inside a `React.forwardRef` call.
+  // See https://github.com/facebook/react-native/blob/4deb29ae1bf71d8da1a18b1a930883854b519949/packages/react-native/Libraries/Components/Switch/Switch.js#L134-L139.
+  if (!path.node.id || path.node.id.name !== 'SwitchWithForwardedRef') {
+    return;
+  }
+
+  const hocIdentifier = t.identifier('withHeapSwitchAutocapture');
+
+  const heapImport = buildHeapImport({
+    HOC_IDENTIFIER: hocIdentifier,
+  }).expression;
+
+  // Special to "Switch", the component doesn't have a display name.  Per a suggestion in another comment, I'm fixing this up in Switch.js.
+  const initWithDisplayName = buildDisplayNameAssignment({
+    COMPONENT_DEFINITION: path.node.init,
+    DISPLAY_NAME: t.stringLiteral('Switch'),
+  }).expression;
+
+  const autotrackExpression = t.callExpression(
+    t.memberExpression(heapImport, hocIdentifier),
+    [initWithDisplayName]
+  );
+
+  path.get('init').replaceWith(autotrackExpression);
+};
+
 function transform(babel) {
   return {
     visitor: {
@@ -417,6 +452,7 @@ function transform(babel) {
       },
       VariableDeclarator(path) {
         instrumentPressableHoc(path);
+        instrumentSwitchHoc(path);
       },
     },
   };
