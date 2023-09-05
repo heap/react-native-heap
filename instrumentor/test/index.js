@@ -36,6 +36,12 @@ describe('autotrack instrumentor plugin', () => {
     assert.equal(actual, expected);
   });
 
+  it('switch should be instrumented (pre-0.66)', () => {
+    var actual = getActualTransformedFile('is-switch-pre-0-66');
+    var expected = getExpectedTransformedFile('is-switch-pre-0-66');
+    assert.equal(actual, expected);
+  });
+
   it('switch should be instrumented', () => {
     var actual = getActualTransformedFile('is-switch');
     var expected = getExpectedTransformedFile('is-switch');

@@ -7,6 +7,7 @@ import {
   ScrollView,
   Text,
   TextInput,
+  Switch,
 } from 'react-native';
 
 const myRef = React.createRef<TextInput>();
@@ -26,13 +27,12 @@ const MyTextInput = () => {
 };
 
 export const TouchablesScreen = () => {
+  const [isOn, setIsOn] = React.useState(false);
+
   return (
     <ScrollView>
       <Button title="Press me" onPress={() => console.log('pressed button')} />
-      <Button
-        title="focus textinput"
-        onPress={() => myRef.current.focus && myRef.current.focus()}
-      />
+      <Button title="focus textinput" onPress={() => myRef?.current?.focus()} />
       <TouchableOpacity
         onPress={() => console.log('pressed touchable opacity')}>
         <Text>Touchable Opacity</Text>
@@ -43,6 +43,7 @@ export const TouchablesScreen = () => {
         <Text>Pressable</Text>
       </Pressable>
       <MyTextInput />
+      <Switch onValueChange={setIsOn} value={isOn} testID="my-switch" />
     </ScrollView>
   );
 };
