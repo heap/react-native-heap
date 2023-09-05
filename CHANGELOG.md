@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.22.4] - 2023-09-05
+
 ### Fixed
 
  - Fixed `<Switch>` change event capture on React Native 0.66 and later.
@@ -280,7 +282,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ability to use Heap's identity APIs from React Native code.
 - Instructions for install and use.
 
-[unreleased]: https://github.com/heap/react-native-heap/compare/0.22.3...HEAD
+[unreleased]: https://github.com/heap/react-native-heap/compare/0.22.4...HEAD
+[0.22.4]: https://github.com/heap/react-native-heap/compare/0.22.3...0.22.4
 [0.22.3]: https://github.com/heap/react-native-heap/compare/0.22.2...0.22.3
 [0.22.2]: https://github.com/heap/react-native-heap/compare/0.22.1...0.22.2
 [0.22.1]: https://github.com/heap/react-native-heap/compare/0.22.0...0.22.1

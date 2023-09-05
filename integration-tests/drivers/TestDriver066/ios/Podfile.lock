@@ -273,7 +273,7 @@ PODS:
   - React-jsinspector (0.66.5)
   - React-logger (0.66.5):
     - glog
-  - react-native-heap (0.22.3):
+  - react-native-heap (0.22.4):
     - Heap (~> 9.0)
     - React
   - react-native-safe-area-context (3.3.2):
@@ -535,7 +535,7 @@ SPEC CHECKSUMS:
   React-jsiexecutor: 50a73168582868421112609d2fb155e607e34ec8
   React-jsinspector: 953260b8580780a6e81f2a6d319a8d42fd5028d8
   React-logger: fa4ff1e9c7e115648f7c5dafb7c20822ab4f7a7e
-  react-native-heap: 09f2b37f1ef8dd0a5b9cad25b9f9fb323d994a7f
+  react-native-heap: ad93c14f7c9ef03d676e68abe6a2d1f358228e3e
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-perflogger: 169fb34f60c5fd793b370002ee9c916eba9bc4ae
   React-RCTActionSheet: 2355539e02ad5cd4b1328682ab046487e1e1e920
