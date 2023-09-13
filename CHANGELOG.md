@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `Heap.withHeapNavigationWrapper` returns the same object when called
+  multiple times, preventing app refreshes when used within a
+  re-evaluated function like `App` with `useEffect`.
+
 ## [0.22.4] - 2023-09-05
 
 ### Fixed
