@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.22.5] - 2023-09-26
+
+### Fixed
+
+- `Heap.withHeapNavigationWrapper` returns the same object when called
+  multiple times, preventing app refreshes when used within a
+  re-evaluated function like `App` with `useEffect`.
+
+- The typescript definition for `<HeapIgnore/>` has been updated to support
+  React 18.
+
+- Podspec now produces a stable checksum in Podfile.lock across machines.
+
 ## [0.22.4] - 2023-09-05
 
 ### Fixed
@@ -282,7 +295,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ability to use Heap's identity APIs from React Native code.
 - Instructions for install and use.
 
-[unreleased]: https://github.com/heap/react-native-heap/compare/0.22.4...HEAD
+[unreleased]: https://github.com/heap/react-native-heap/compare/0.22.5...HEAD
+[0.22.5]: https://github.com/heap/react-native-heap/compare/0.22.4...0.22.5
 [0.22.4]: https://github.com/heap/react-native-heap/compare/0.22.3...0.22.4
 [0.22.3]: https://github.com/heap/react-native-heap/compare/0.22.2...0.22.3
 [0.22.2]: https://github.com/heap/react-native-heap/compare/0.22.1...0.22.2

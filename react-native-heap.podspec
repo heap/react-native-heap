@@ -7,10 +7,13 @@ Pod::Spec.new do |s|
   s.name = "react-native-heap"
   s.version = package[:version]
   s.summary = package[:description]
-  s.license = { type: "MIT" }
+  s.license = { :type => "MIT" }
   s.author = package[:author]
   s.homepage = package[:homepage]
-  s.source = { path => '.' }
+  s.source = {
+    :git => "https://github.com/heap/react-native-heap.git",
+    :tag => "#{s.version}"
+  }
   s.source_files = "ios/**/*.{h,m}"
   s.platform = :ios, "10.0"
 
