@@ -247,4 +247,28 @@ describe('The Heap object', () => {
       expect(() => Heap.clearEventProperties()).not.toThrow();
     });
   });
+
+  describe('withReactNavigationAutotrack', () => {
+
+    it('returns a different HOC for each passed in AppContainer', () => {
+
+      function Component1() {}
+      function Component2() {}
+
+      const Wrapped1 = Heap.withReactNavigationAutotrack(Component1);
+      const Wrapped2 = Heap.withReactNavigationAutotrack(Component2);
+
+      expect(Wrapped1).not.toStrictEqual(Wrapped2);
+    });
+
+    it('returns the same HOC when given the same AppContainer', () => {
+
+      function Component1() {}
+
+      const Wrapped1 = Heap.withReactNavigationAutotrack(Component1);
+      const Wrapped2 = Heap.withReactNavigationAutotrack(Component1);
+
+      expect(Wrapped1).toStrictEqual(Wrapped2);
+    });
+  });
 });

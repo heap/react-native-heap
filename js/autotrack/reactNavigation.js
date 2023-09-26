@@ -12,6 +12,12 @@ const EVENT_TYPE = 'react_navigation_screenview';
 const INITIAL_ROUTE_TYPE = 'Heap_Navigation/INITIAL';
 
 export const withReactNavigationAutotrack = track => AppContainer => {
+
+  const existingWrapper = AppContainer.__heapWrapper;
+  if (existingWrapper) {
+    return existingWrapper;
+  }
+
   const captureOldNavigationStateChange = bailOnError((prev, next, action) => {
     const { screen_path: prevScreenRoute } = NavigationUtil.getActiveRouteProps(
       prev
@@ -153,7 +159,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     AppContainer
   )})`;
 
-  return React.forwardRef((props, ref) => {
+  return AppContainer.__heapWrapper = React.forwardRef((props, ref) => {
     return <HeapNavigationWrapper {...props} forwardedRef={ref} />;
   });
 };
