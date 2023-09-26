@@ -39,7 +39,7 @@
     "jest": "^27.5.1",
     "metro-react-native-babel-preset": "^0.66.2",
     "patch-package": "^7.0.0",
-    "protobufjs": "^6.11.2",
+    "protobufjs": "^6.11.4",
     "react-test-renderer": "17.0.2"
   },
   "jest": {
