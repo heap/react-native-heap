@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   multiple times, preventing app refreshes when used within a
   re-evaluated function like `App` with `useEffect`.
 
+- Podspec now produces a stable checksum in Podfile.lock across machines.
+
 ## [0.22.4] - 2023-09-05
 
 ### Fixed
