@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   multiple times, preventing app refreshes when used within a
   re-evaluated function like `App` with `useEffect`.
 
+- The typescript definition for `<HeapIgnore/>` has been updated to support
+  React 18.
+
 ## [0.22.4] - 2023-09-05
 
 ### Fixed

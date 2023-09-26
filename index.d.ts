@@ -148,14 +148,21 @@ export interface HeapIgnoreProps {
 export function withHeapIgnore<P>(IgnoredComponent: React.JSXElementConstructor<P>, heapIgnoreConfig?: HeapIgnoreProps): React.JSXElementConstructor<P>;
 
 /**
+ * Properties to allow or ignore in HeapIgnore.  All options default to false.
+ */
+interface HeapIgnorePropsWithChildren extends HeapIgnoreProps {
+    children?: React.ReactNode | undefined;
+}
+
+/**
  * Component for ignoring all or parts of interactions with children of this component.
  */
-export class HeapIgnore extends React.Component<HeapIgnoreProps> {}
+export class HeapIgnore extends React.Component<HeapIgnorePropsWithChildren> {}
 
 /**
  * An alias for HeapIgnore.
  */
-export class Ignore extends React.Component<HeapIgnoreProps> {}
+export class Ignore extends React.Component<HeapIgnorePropsWithChildren> {}
 
 /**
  * Convenience component for ignoring 'target_text' on interactions with children of this component.
