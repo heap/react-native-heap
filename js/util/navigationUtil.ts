@@ -15,7 +15,9 @@ export default class NavigationUtil {
       rootState = this.heapNavRef.state.nav;
     } else if (this.heapNavRef && this.heapNavRef.getRootState) {
       rootState = this.heapNavRef.getRootState();
-    } else {
+    }
+
+    if (rootState == null) {
       return null;
     }
 
