@@ -1,27 +1,30 @@
-export const logError = (message: string, error: any) => {
+export const logError = (message: string, error: any, lowPriority: boolean = false) => {
+  const logger = lowPriority ? console.log : console.warn;
+
   if (error instanceof Error) {
     // KLUDGE: These properties don't show up if you `console.warn` the error object directly.
-    console.warn(message, {
+    logger(message, {
       name: error.name,
       message: error.message,
       stack: error.stack,
     });
   } else {
-    console.warn(message, {
+    logger(message, {
       message: String(error),
     });
   }
 };
 
-export const swallowErrors = <T extends Array<any>, U>(fn: (...args: T) => U, name: string | null = null) => {
+export const swallowErrors = <T extends Array<any>, U>(fn: (...args: T) => U, name: string | null = null, lowPriority: boolean = false) => {
   return (...args: T): U | void => {
     try {
       return fn(...args);
     } catch (e) {
       logError(
         name ? `Heap: ${name} failed with an error.` : 'Heap: The Heap SDK encountered an error while tracking.',
-        e
+        e,
+        lowPriority
       );
     }
   }
-}
+};

@@ -27,17 +27,11 @@ const flatten = require('flat');
 const RNHeap = NativeModules.RNHeap;
 
 const autocaptureTrack = swallowErrors((event, payload) => {
-  try {
-    RNHeap.autocaptureEvent(event, payload);
+  RNHeap.autocaptureEvent(event, payload);
+  checkDisplayNamePlugin();
+}, 'Event autocapture', true);
 
-    checkDisplayNamePlugin();
-  } catch (e) {
-    console.log('Error autocapturing Heap event.\n', e);
-  }
-});
-
-const manualTrack = swallowErrors((event, payload) => {
-  try {
+const manualTrack = (event, payload) => {
     // This looks a little strange, but helps for testing, to be able to mock the flatten function and
     // simulate a failure.
     const flatten = require('flat');
@@ -46,10 +40,7 @@ const manualTrack = swallowErrors((event, payload) => {
 
     payload = payload || {};
     RNHeap.manuallyTrackEvent(event, flatten(payload), contextualProps);
-  } catch (e) {
-    console.log('Error calling Heap.track\n', e);
-  }
-});
+};
 
 export { HeapIgnore, HeapIgnoreTargetText };
 
@@ -101,7 +92,11 @@ export default {
   ),
 
   // Events
-  track: manualTrack,
+  track: swallowErrors(
+    manualTrack,
+    'Heap.track',
+    true
+  ),
 
   // Redux middleware
   reduxMiddleware: store => next =>
