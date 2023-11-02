@@ -9,11 +9,9 @@
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* TestDriver066Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TestDriver066Tests.m */; };
 		0E4F4AA2A3DC4CFDAD6AC3CF /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C7ED9DAFB3EB4B159C44CB3C /* Ionicons.ttf */; };
-		127E7A2F9B144D821E17576D /* libPods-TestDriver066.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C04CE856694441408DEA2BE9 /* libPods-TestDriver066.a */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		1CC85AFF7342D9C44E4D321B /* libPods-TestDriver066-TestDriver066Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F4142CDFAB1D119D4A2D5D24 /* libPods-TestDriver066-TestDriver066Tests.a */; };
 		36DBA73AE80D47DDA9D9ED4D /* FontAwesome5_Solid.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9A6F505BC83849DB8DF186AE /* FontAwesome5_Solid.ttf */; };
 		3BAFCA4FB9B742308DB7B9F4 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CC3ABF972177476589144FF1 /* FontAwesome.ttf */; };
 		4259582AB43645EEB5BF1EFC /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C169B275BA7243DAB2DFAF7A /* Roboto_medium.ttf */; };
@@ -23,6 +21,7 @@
 		7F6373F12FA14674B58DC2F7 /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 972B4F2938EA452B91011E99 /* Roboto.ttf */; };
 		816FC4DF66804668AAED7DDB /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F2CF4303F4FE4985BE93138B /* EvilIcons.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		945E68EF1197702F9560FA01 /* Pods_TestDriver066_TestDriver066Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13FE41B9FD4BF6780EF8ABFE /* Pods_TestDriver066_TestDriver066Tests.framework */; };
 		A1CD0BED52224A36A3F2BBD2 /* FontAwesome5_Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 76E90FA19DF24533AF44B757 /* FontAwesome5_Regular.ttf */; };
 		AA86BB9D91DB4B6CB6FFD038 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B159A99ABD574D4E9921A55D /* MaterialCommunityIcons.ttf */; };
 		B69ECE15BA324334A1C1A311 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0B37BDE89DB470EB0779E2A /* Entypo.ttf */; };
@@ -33,6 +32,7 @@
 		DD50CDC736CB48D0BEEA17CD /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4046D8F93082453ABECAF5B5 /* SimpleLineIcons.ttf */; };
 		E2E88E8005B44045B6B309AA /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B4223ABB39C4B17A3F7450F /* Foundation.ttf */; };
 		E2F074BFA239429D879DCC3A /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 997B2AD58AFD4363913234C3 /* Zocial.ttf */; };
+		F2B2F237E052E932D60A3824 /* Pods_TestDriver066.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB445C43A040BDB7D9CEEE10 /* Pods_TestDriver066.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +55,7 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = TestDriver066/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = TestDriver066/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = TestDriver066/main.m; sourceTree = "<group>"; };
+		13FE41B9FD4BF6780EF8ABFE /* Pods_TestDriver066_TestDriver066Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDriver066_TestDriver066Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4046D8F93082453ABECAF5B5 /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/native-base/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		4B4223ABB39C4B17A3F7450F /* Foundation.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Foundation.ttf; path = "../node_modules/native-base/Fonts/Foundation.ttf"; sourceTree = "<group>"; };
 		4FD6E62E5D1D49CD94368EA4 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
@@ -73,15 +74,14 @@
 		9FC4CC136EBE4273B99BB700 /* FontAwesome5_Brands.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome5_Brands.ttf; path = "../node_modules/native-base/Fonts/FontAwesome5_Brands.ttf"; sourceTree = "<group>"; };
 		A0B37BDE89DB470EB0779E2A /* Entypo.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Entypo.ttf; path = "../node_modules/native-base/Fonts/Entypo.ttf"; sourceTree = "<group>"; };
 		B159A99ABD574D4E9921A55D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/native-base/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
-		C04CE856694441408DEA2BE9 /* libPods-TestDriver066.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestDriver066.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C169B275BA7243DAB2DFAF7A /* Roboto_medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Roboto_medium.ttf; path = "../node_modules/native-base/Fonts/Roboto_medium.ttf"; sourceTree = "<group>"; };
 		C4615D64650849A1B93498FF /* Feather.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Feather.ttf; path = "../node_modules/native-base/Fonts/Feather.ttf"; sourceTree = "<group>"; };
 		C7ED9DAFB3EB4B159C44CB3C /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		CC3ABF972177476589144FF1 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/native-base/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
+		EB445C43A040BDB7D9CEEE10 /* Pods_TestDriver066.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TestDriver066.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		F2CF4303F4FE4985BE93138B /* EvilIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = EvilIcons.ttf; path = "../node_modules/native-base/Fonts/EvilIcons.ttf"; sourceTree = "<group>"; };
 		F3D323E4926A4D7B83FA7795 /* Fontisto.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = Fontisto.ttf; path = "../node_modules/native-base/Fonts/Fontisto.ttf"; sourceTree = "<group>"; };
-		F4142CDFAB1D119D4A2D5D24 /* libPods-TestDriver066-TestDriver066Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TestDriver066-TestDriver066Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1CC85AFF7342D9C44E4D321B /* libPods-TestDriver066-TestDriver066Tests.a in Frameworks */,
+				945E68EF1197702F9560FA01 /* Pods_TestDriver066_TestDriver066Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -97,7 +97,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				127E7A2F9B144D821E17576D /* libPods-TestDriver066.a in Frameworks */,
+				F2B2F237E052E932D60A3824 /* Pods_TestDriver066.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,8 +138,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				C04CE856694441408DEA2BE9 /* libPods-TestDriver066.a */,
-				F4142CDFAB1D119D4A2D5D24 /* libPods-TestDriver066-TestDriver066Tests.a */,
+				EB445C43A040BDB7D9CEEE10 /* Pods_TestDriver066.framework */,
+				13FE41B9FD4BF6780EF8ABFE /* Pods_TestDriver066_TestDriver066Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -227,7 +227,6 @@
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
 				3DA51A26E9B554B0E33CC3CF /* [CP] Embed Pods Frameworks */,
-				70EA39548BF47B588E7885CB /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -250,7 +249,6 @@
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
 				7298A8AAC44C46E6FE9A10B2 /* [CP] Embed Pods Frameworks */,
-				AE61EF1FE2F50CBCCE2FDACD /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -389,23 +387,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDriver066-TestDriver066Tests/Pods-TestDriver066-TestDriver066Tests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		70EA39548BF47B588E7885CB /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TestDriver066-TestDriver066Tests/Pods-TestDriver066-TestDriver066Tests-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TestDriver066-TestDriver066Tests/Pods-TestDriver066-TestDriver066Tests-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDriver066-TestDriver066Tests/Pods-TestDriver066-TestDriver066Tests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		7298A8AAC44C46E6FE9A10B2 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -421,23 +402,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDriver066/Pods-TestDriver066-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AE61EF1FE2F50CBCCE2FDACD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TestDriver066/Pods-TestDriver066-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-TestDriver066/Pods-TestDriver066-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TestDriver066/Pods-TestDriver066-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		EF9D985D3152BC849E251182 /* [CP] Check Pods Manifest.lock */ = {

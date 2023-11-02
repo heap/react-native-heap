@@ -1,0 +1,10 @@
+diff --git a/node_modules/@react-native-community/masked-view/RNCMaskedView.podspec b/node_modules/@react-native-community/masked-view/RNCMaskedView.podspec
+index 8c3849e..e04a435 100644
+--- a/node_modules/@react-native-community/masked-view/RNCMaskedView.podspec
++++ b/node_modules/@react-native-community/masked-view/RNCMaskedView.podspec
+@@ -16,4 +16,5 @@ Pod::Spec.new do |s|
+   s.source_files  = "ios/**/*.{h,m}"
+ 
+   s.dependency 'React'
++  s.dependency 'React-Core'
+ end
