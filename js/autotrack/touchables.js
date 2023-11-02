@@ -2,7 +2,7 @@ import * as React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { getBaseComponentProps } from './common';
-import { bailOnError } from '../util/bailer';
+import { swallowErrors } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 
 export const autotrackPress = track => (eventType, componentThis, event) => {
@@ -39,12 +39,12 @@ export const withHeapTouchableAutocapture = track => TouchableComponent => {
         <TouchableComponent
           ref={forwardedRef}
           onPress={e => {
-            bailOnError(autotrackPress(track))('touchableHandlePress', this, e);
+            swallowErrors(autotrackPress(track))('touchableHandlePress', this, e);
 
             onPress && onPress(e);
           }}
           onLongPress={e => {
-            bailOnError(autotrackPress(track))(
+            swallowErrors(autotrackPress(track))(
               'touchableHandleLongPress',
               this,
               e

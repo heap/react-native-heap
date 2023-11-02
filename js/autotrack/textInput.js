@@ -3,7 +3,7 @@ import hoistNonReactStatic from 'hoist-non-react-statics';
 import * as _ from 'lodash';
 
 import { getBaseComponentProps } from './common';
-import { bailOnError } from '../util/bailer';
+import { swallowErrors } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 
 const DEBOUNCE_PERIOD_MS = 1000;
@@ -57,7 +57,7 @@ NoopTextInput.displayName = 'TextInput';
 
 export const withHeapTextInputAutocapture = track => TextInputComponent => {
   class HeapTextInputAutocapture extends React.Component {
-    autocaptureTextInputChangeWithDebounce = bailOnError(
+    autocaptureTextInputChangeWithDebounce = swallowErrors(
       _.debounce(debouncedAutocaptureTextInputChange(track), DEBOUNCE_PERIOD_MS)
     );
 

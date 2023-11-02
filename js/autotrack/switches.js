@@ -2,7 +2,7 @@ import * as React from 'react';
 import hoistNonReactStatic from 'hoist-non-react-statics';
 
 import { getBaseComponentProps } from './common';
-import { bailOnError } from '../util/bailer';
+import { swallowErrors } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 
 export const autotrackSwitchChange = track => (
@@ -40,7 +40,7 @@ export const withHeapSwitchAutocapture = track => SwitchComponent => {
         <SwitchComponent
           ref={heapForwardedRef}
           onValueChange={value => {
-            bailOnError(() => this.trackEvent())();
+            swallowErrors(() => this.trackEvent())();
 
             onValueChange && onValueChange(value);
           }}

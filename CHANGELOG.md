@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed issue that prevents events from being sent when the navigator is not initialized.
 - Fixed linking and auto-initialization when using `use_frameworks!`.
 
+### Changed
+
+- Error logging has been refined to surface more timely and precise messages.
+
 ## [0.22.5] - 2023-09-26
 
 ### Fixed
