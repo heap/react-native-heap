@@ -26,8 +26,12 @@ import { getContextualProps } from './util/contextualProps';
 const flatten = require('flat');
 const RNHeap = NativeModules.RNHeap;
 
+if (!RNHeap) {
+  console.warn('Heap: The RNHeap native module is not installed. Events will not be captured.');
+}
+
 const autocaptureTrack = swallowErrors((event, payload) => {
-  RNHeap.autocaptureEvent(event, payload);
+  RNHeap?.autocaptureEvent(event, payload);
   checkDisplayNamePlugin();
 }, 'Event autocapture', true);
 
@@ -39,55 +43,55 @@ const manualTrack = (event, payload) => {
     const contextualProps = getContextualProps();
 
     payload = payload || {};
-    RNHeap.manuallyTrackEvent(event, flatten(payload), contextualProps);
+    RNHeap?.manuallyTrackEvent(event, flatten(payload), contextualProps);
 };
 
 export { HeapIgnore, HeapIgnoreTargetText };
 
 export default {
   // App Properties
-  setAppId: swallowErrors(appId => RNHeap.setAppId(appId), 'Heap.setAppId'),
+  setAppId: swallowErrors(appId => RNHeap?.setAppId(appId), 'Heap.setAppId'),
 
   // User Properties
   // Returns a promise that resolves to the Heap user ID.
   getUserId: swallowErrors(
-    () => RNHeap.getUserId(),
+    () => RNHeap?.getUserId(),
     'Heap.getUserId'
   ),
 
   getSessionId: swallowErrors(
-    () => RNHeap.getSessionId(),
+    () => RNHeap?.getSessionId(),
     'Heap.getSessionId'
   ),
 
   identify: swallowErrors(
-    identity => RNHeap.identify(identity),
+    identity => RNHeap?.identify(identity),
     'Heap.identify'
   ),
 
   resetIdentity: swallowErrors(
-    () => RNHeap.resetIdentity(),
+    () => RNHeap?.resetIdentity(),
     'Heap.resetIdentity'
   ),
 
   addUserProperties: swallowErrors(
-    properties => RNHeap.addUserProperties(flatten(properties || {})),
+    properties => RNHeap?.addUserProperties(flatten(properties || {})),
     'Heap.addUserProperties'
   ),
 
   // Event Properties
   addEventProperties: swallowErrors(
-    properties => RNHeap.addEventProperties(flatten(properties || {})),
+    properties => RNHeap?.addEventProperties(flatten(properties || {})),
     'Heap.addEventProperties'
   ),
 
   removeEventProperty: swallowErrors(
-    property => RNHeap.removeEventProperty(property),
+    property => RNHeap?.removeEventProperty(property),
     'Heap.removeEventProperty'
   ),
 
   clearEventProperties: swallowErrors(
-    () => RNHeap.clearEventProperties(),
+    () => RNHeap?.clearEventProperties(),
     'Heap.clearEventProperties'
   ),
 
@@ -101,7 +105,7 @@ export default {
   // Redux middleware
   reduxMiddleware: store => next =>
     swallowErrors(action => {
-      RNHeap.manualTrack('Redux Action', flatten(action));
+      RNHeap?.manualTrack('Redux Action', flatten(action));
       next(action);
     }, 'Heap.reduxMiddleware'),
 
