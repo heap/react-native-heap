@@ -1,5 +1,5 @@
 import React from 'react';
-import { bail, logError, swallowErrors } from '../util/bailer';
+import { logError, swallowErrors } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 import NavigationUtil from '../util/navigationUtil';
 import { getContextualProps } from '../util/contextualProps';
@@ -32,7 +32,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
         action: action.type,
       });
     }
-  });
+  }, 'Navigation event capture', true);
 
   class HeapNavigationWrapper extends React.Component {
     topLevelNavigator = null;
@@ -59,7 +59,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
       }
 
       this.currentPath = nextPath;
-    });
+    }, 'Navigation event capture', true);
 
     captureOnReady = swallowErrors(() => {
       if (this.topLevelNavigator.getRootState) {
@@ -70,7 +70,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
 
         this.currentPath = currentPath;
       }
-    });
+    }, 'Navigation event capture', true);
 
     trackInitialRouteForState(navigationState) {
       const {
@@ -123,7 +123,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
                 );
               }
             }
-          })}
+          }, 'Navigation event capture', true)}
           onReady={(...args) => {
             this.captureOnReady();
 
