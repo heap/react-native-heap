@@ -20,8 +20,13 @@ HEAP_CONFIG_FILENAME = 'heap.config.json'
 # are substituted, so the plist looks unchanged. This is fixed (hackily) for the second run onwards by
 # modifying the post-copy version of the `HeapSettings` bundle directly (APP_DIRECTORY), before
 # it's copied over to a device/simulator.
-BUNDLE_DIRECTORY = File.join ENV['CONFIGURATION_BUILD_DIR'], 'HeapSettings.bundle'
-APP_DIRECTORY = Dir.glob(File.join(ENV['PODS_CONFIGURATION_BUILD_DIR'], '*.app', 'HeapSettings.bundle'))[0]
+#
+# WRAPPER_NAME is set when `use_frameworks!` is used, putting the bundle in the framework directory.
+# If not using frameworks, '.' puts it in the app's directory.
+CONFIGURATION_BUILD_DIR = ENV['CONFIGURATION_BUILD_DIR']
+WRAPPER_NAME = ENV['WRAPPER_NAME'] || '.'
+BUNDLE_DIRECTORY = File.join CONFIGURATION_BUILD_DIR, WRAPPER_NAME, 'HeapSettings.bundle'
+APP_DIRECTORY = Dir.glob(File.join(ENV['PODS_CONFIGURATION_BUILD_DIR'], '*.app', WRAPPER_NAME, 'HeapSettings.bundle'))[0]
 
 def write_heap_settings
   # `pwd` is <client_app>/ios/Pods

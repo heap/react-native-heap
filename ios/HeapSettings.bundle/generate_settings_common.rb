@@ -5,6 +5,8 @@ require 'json'
 
 def perform_substitution(dir, json)
 
+  puts "Writing settings to ${dir}"
+
   set_values_simple('EnableAutocapture', 'bool', dir, json, 'enableNativeTouchEventCapture', false)
   set_values_simple('CaptureBaseUrl', 'string', dir, json, 'captureBaseUrl', '')
 

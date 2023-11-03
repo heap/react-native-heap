@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.22.6] - 2023-11-03
+
+### Fixed
+
+- Fixed issue that prevents events from being sent when the navigator is not initialized.
+
+- Fixed linking and auto-initialization when using `use_frameworks!`.
+
+### Changed
+
+- Error logging has been refined to surface more timely and precise messages.
+
 ## [0.22.5] - 2023-09-26
 
 ### Fixed
@@ -295,7 +307,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ability to use Heap's identity APIs from React Native code.
 - Instructions for install and use.
 
-[unreleased]: https://github.com/heap/react-native-heap/compare/0.22.5...HEAD
+[unreleased]: https://github.com/heap/react-native-heap/compare/0.22.6...HEAD
+[0.22.6]: https://github.com/heap/react-native-heap/compare/0.22.5...0.22.6
 [0.22.5]: https://github.com/heap/react-native-heap/compare/0.22.4...0.22.5
 [0.22.4]: https://github.com/heap/react-native-heap/compare/0.22.3...0.22.4
 [0.22.3]: https://github.com/heap/react-native-heap/compare/0.22.2...0.22.3

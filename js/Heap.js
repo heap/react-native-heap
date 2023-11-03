@@ -20,24 +20,22 @@ import {
 } from './autotrack/textInput';
 import { checkDisplayNamePlugin } from './util/checkDisplayNames';
 import { withReactNavigationAutotrack } from './autotrack/reactNavigation';
-import { bailOnError } from './util/bailer';
+import { swallowErrors } from './util/bailer';
 import { getContextualProps } from './util/contextualProps';
 
 const flatten = require('flat');
 const RNHeap = NativeModules.RNHeap;
 
-const autocaptureTrack = bailOnError((event, payload) => {
-  try {
-    RNHeap.autocaptureEvent(event, payload);
+if (!RNHeap) {
+  console.warn('Heap: The RNHeap native module is not installed. Events will not be captured.');
+}
 
-    checkDisplayNamePlugin();
-  } catch (e) {
-    console.log('Error autocapturing Heap event.\n', e);
-  }
-});
+const autocaptureTrack = swallowErrors((event, payload) => {
+  RNHeap?.autocaptureEvent(event, payload);
+  checkDisplayNamePlugin();
+}, 'Event autocapture', true);
 
-const manualTrack = bailOnError((event, payload) => {
-  try {
+const manualTrack = (event, payload) => {
     // This looks a little strange, but helps for testing, to be able to mock the flatten function and
     // simulate a failure.
     const flatten = require('flat');
@@ -45,58 +43,96 @@ const manualTrack = bailOnError((event, payload) => {
     const contextualProps = getContextualProps();
 
     payload = payload || {};
-    RNHeap.manuallyTrackEvent(event, flatten(payload), contextualProps);
-  } catch (e) {
-    console.log('Error calling Heap.track\n', e);
-  }
-});
+    RNHeap?.manuallyTrackEvent(event, flatten(payload), contextualProps);
+};
 
 export { HeapIgnore, HeapIgnoreTargetText };
 
 export default {
   // App Properties
-  setAppId: bailOnError(appId => RNHeap.setAppId(appId)),
+  setAppId: swallowErrors(appId => RNHeap?.setAppId(appId), 'Heap.setAppId'),
 
   // User Properties
   // Returns a promise that resolves to the Heap user ID.
-  getUserId: bailOnError(() => RNHeap.getUserId()),
-  getSessionId: bailOnError(() => RNHeap.getSessionId()),
-  identify: bailOnError(identity => RNHeap.identify(identity)),
-  resetIdentity: bailOnError(() => RNHeap.resetIdentity()),
-  addUserProperties: bailOnError(properties => {
-    const payload = properties || {};
-    RNHeap.addUserProperties(flatten(payload));
-  }),
+  getUserId: swallowErrors(
+    () => RNHeap?.getUserId(),
+    'Heap.getUserId'
+  ),
+
+  getSessionId: swallowErrors(
+    () => RNHeap?.getSessionId(),
+    'Heap.getSessionId'
+  ),
+
+  identify: swallowErrors(
+    identity => RNHeap?.identify(identity),
+    'Heap.identify'
+  ),
+
+  resetIdentity: swallowErrors(
+    () => RNHeap?.resetIdentity(),
+    'Heap.resetIdentity'
+  ),
+
+  addUserProperties: swallowErrors(
+    properties => RNHeap?.addUserProperties(flatten(properties || {})),
+    'Heap.addUserProperties'
+  ),
 
   // Event Properties
-  addEventProperties: bailOnError(properties => {
-    const payload = properties || {};
-    RNHeap.addEventProperties(flatten(payload));
-  }),
-  removeEventProperty: bailOnError(property =>
-    RNHeap.removeEventProperty(property)
+  addEventProperties: swallowErrors(
+    properties => RNHeap?.addEventProperties(flatten(properties || {})),
+    'Heap.addEventProperties'
   ),
-  clearEventProperties: bailOnError(() => RNHeap.clearEventProperties()),
+
+  removeEventProperty: swallowErrors(
+    property => RNHeap?.removeEventProperty(property),
+    'Heap.removeEventProperty'
+  ),
+
+  clearEventProperties: swallowErrors(
+    () => RNHeap?.clearEventProperties(),
+    'Heap.clearEventProperties'
+  ),
 
   // Events
-  track: manualTrack,
+  track: swallowErrors(
+    manualTrack,
+    'Heap.track',
+    true
+  ),
 
   // Redux middleware
   reduxMiddleware: store => next =>
-    bailOnError(action => {
-      RNHeap.manualTrack('Redux Action', flatten(action));
+    swallowErrors(action => {
+      RNHeap?.manualTrack('Redux Action', flatten(action));
       next(action);
-    }),
+    }, 'Heap.reduxMiddleware'),
 
-  autotrackPress: bailOnError(autotrackPress(autocaptureTrack)),
+  autotrackPress: swallowErrors(
+    autotrackPress(autocaptureTrack),
+    'Heap.autotrackPress'
+  ),
+
   withHeapTouchableAutocapture: withHeapTouchableAutocapture(autocaptureTrack),
   withHeapPressableAutocapture: withHeapPressableAutocapture(autocaptureTrack),
   withHeapSwitchAutocapture: withHeapSwitchAutocapture(autocaptureTrack),
-  autotrackSwitchChange: bailOnError(autotrackSwitchChange(autocaptureTrack)),
-  autocaptureScrollView: bailOnError(autotrackScrollView(autocaptureTrack)),
-  autocaptureTextInput: bailOnError(
-    autocaptureTextInputChange(autocaptureTrack)
+
+  autotrackSwitchChange: swallowErrors(
+    autotrackSwitchChange(autocaptureTrack),
+    'Heap.autotrackSwitchChange'
   ),
+
+  autocaptureScrollView: swallowErrors(
+    autotrackScrollView(autocaptureTrack),
+    'Heap.autocaptureScrollView'
+  ),
+
+  autocaptureTextInput: swallowErrors(
+    autocaptureTextInputChange(autocaptureTrack),
+    'Heap.autocaptureTextInput'
+  ),
+
   withHeapTextInputAutocapture: withHeapTextInputAutocapture(autocaptureTrack),
   withReactNavigationAutotrack: withReactNavigationAutotrack(autocaptureTrack),
   Ignore: HeapIgnore,

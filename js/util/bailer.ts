@@ -1,27 +1,30 @@
-const bail = (error: Error) => {
-  // Swallow all errors.
-  // TODO: Turn off Heap tracking for a while (short-circuit?)
+export const logError = (message: string, error: any, quiet: boolean = false) => {
+  const logger = quiet ? console.log : console.warn;
 
-  // KLUDGE: These properties don't show up if you `console.warn` the error object directly.
-  const errorData = {
-    name: error.name,
-    message: error.message,
-    stack: error.stack,
-  };
-
-  console.warn('The Heap library has crashed with an exception.', errorData);
-};
-
-const bailOnError = (f: Function) => (...args: any[]) => {
-  try {
-    return f(...args);
-  } catch (e) {
-    if (e instanceof Error) {
-      bail(e);
-    } else {
-      bail(new Error(String(e)));
-    }
+  if (error instanceof Error) {
+    // KLUDGE: These properties don't show up if you `console.warn` the error object directly.
+    logger(message, {
+      name: error.name,
+      message: error.message,
+      stack: error.stack,
+    });
+  } else {
+    logger(message, {
+      message: String(error),
+    });
   }
 };
 
-export { bail, bailOnError };
+export const swallowErrors = <T extends Array<any>, U>(fn: (...args: T) => U, name: string | null = null, quiet: boolean = false) => {
+  return (...args: T): U | void => {
+    try {
+      return fn(...args);
+    } catch (e) {
+      logError(
+        name ? `Heap: ${name} failed with an error.` : 'Heap: The Heap SDK encountered an error while tracking.',
+        e,
+        quiet
+      );
+    }
+  }
+};

@@ -1,5 +1,5 @@
 import React from 'react';
-import { bail, bailOnError } from '../util/bailer';
+import { logError, swallowErrors } from '../util/bailer';
 import { getComponentDisplayName } from '../util/hocUtil';
 import NavigationUtil from '../util/navigationUtil';
 import { getContextualProps } from '../util/contextualProps';
@@ -18,7 +18,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
     return existingWrapper;
   }
 
-  const captureOldNavigationStateChange = bailOnError((prev, next, action) => {
+  const captureOldNavigationStateChange = swallowErrors((prev, next, action) => {
     const { screen_path: prevScreenRoute } = NavigationUtil.getActiveRouteProps(
       prev
     );
@@ -32,7 +32,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
         action: action.type,
       });
     }
-  });
+  }, 'Navigation event capture', true);
 
   class HeapNavigationWrapper extends React.Component {
     topLevelNavigator = null;
@@ -46,7 +46,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
       }
     }
 
-    captureStateChange = bailOnError(state => {
+    captureStateChange = swallowErrors(state => {
       const { screen_path: nextPath } = NavigationUtil.getActiveRouteProps(
         state
       );
@@ -59,9 +59,9 @@ export const withReactNavigationAutotrack = track => AppContainer => {
       }
 
       this.currentPath = nextPath;
-    });
+    }, 'Navigation event capture', true);
 
-    captureOnReady = bailOnError(() => {
+    captureOnReady = swallowErrors(() => {
       if (this.topLevelNavigator.getRootState) {
         this.trackInitialRouteForState(this.topLevelNavigator.getRootState());
         const { screen_path: currentPath } = NavigationUtil.getActiveRouteProps(
@@ -70,7 +70,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
 
         this.currentPath = currentPath;
       }
-    });
+    }, 'Navigation event capture', true);
 
     trackInitialRouteForState(navigationState) {
       const {
@@ -88,7 +88,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
       try {
         return this._render();
       } catch (e) {
-        bail(e);
+        logError('Heap: Failed to render React Navigation wrapper.', e);
         const { forwardedRef, ...rest } = this.props;
         return <AppContainer ref={forwardedRef} {...rest} />;
       }
@@ -103,7 +103,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
       } = this.props;
       return (
         <AppContainer
-          ref={bailOnError(navigatorRef => {
+          ref={swallowErrors(navigatorRef => {
             this.setRef(forwardedRef, navigatorRef);
             // Update the NavigationUtil's nav reference to the updated ref.
             NavigationUtil.setNavigationRef(navigatorRef);
@@ -123,7 +123,7 @@ export const withReactNavigationAutotrack = track => AppContainer => {
                 );
               }
             }
-          })}
+          }, 'Navigation event capture', true)}
           onReady={(...args) => {
             this.captureOnReady();
 
