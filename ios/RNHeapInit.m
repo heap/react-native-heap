@@ -11,7 +11,8 @@
 @implementation RNHeapInit
 
 + (void)load {
-    NSBundle *heapBundle = [NSBundle bundleWithPath:[[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"HeapSettings.bundle"]];
+    NSBundle *frameworkBundle = [NSBundle bundleForClass:[RNHeapInit class]];
+    NSBundle *heapBundle = [NSBundle bundleWithPath:[[frameworkBundle resourcePath] stringByAppendingPathComponent:@"HeapSettings.bundle"]];
     NSString *heapPlistPath = [heapBundle pathForResource:@"HeapSettings" ofType:@"plist"];
     NSDictionary *heapPlistData = [NSDictionary dictionaryWithContentsOfFile:heapPlistPath];
     

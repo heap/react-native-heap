@@ -1,0 +1,11 @@
+diff --git a/node_modules/react-native-screens/RNScreens.podspec b/node_modules/react-native-screens/RNScreens.podspec
+index faf106b..acde6c9 100644
+--- a/node_modules/react-native-screens/RNScreens.podspec
++++ b/node_modules/react-native-screens/RNScreens.podspec
+@@ -20,5 +20,6 @@ Pod::Spec.new do |s|
+   s.requires_arc = true
+ 
+   s.dependency "React-Core"
++  s.dependency "React-RCTImage"
+ end
+ 
