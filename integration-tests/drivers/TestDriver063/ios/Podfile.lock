@@ -186,7 +186,7 @@ PODS:
     - React-cxxreact (= 0.63.5)
     - React-jsi (= 0.63.5)
   - React-jsinspector (0.63.5)
-  - react-native-heap (0.22.6):
+  - react-native-heap (0.22.7):
     - Heap (~> 9.0)
     - React-Core
     - React-CoreModules
@@ -382,7 +382,7 @@ SPEC CHECKSUMS:
   React-jsi: 7d908b17758178b076a05a254523f1a4227b53d2
   React-jsiexecutor: e06a32e42affb2bd89e4c8369349b5fcf787710c
   React-jsinspector: fdbc08866b34ae8e1b788ea1cbd9f9d1ca2aa3d6
-  react-native-heap: 1bf6b524e9c8809152e02053260eaa89ac213474
+  react-native-heap: 66d791c18731ea85ed363fae9b05d66c14d98d32
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   React-RCTActionSheet: e911b99f0d6fa7711ffc2f62d236b12a32771835
   React-RCTAnimation: ad8b853170a059faf31d6add34f67d22391bbe01
