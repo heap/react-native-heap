@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.22.7] - 2024-04-10
+
+### Fixed
+
+- Removed Babel dependencies that were causing audit warnings.
+
 ## [0.22.6] - 2023-11-03
 
 ### Fixed
@@ -307,7 +313,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ability to use Heap's identity APIs from React Native code.
 - Instructions for install and use.
 
-[unreleased]: https://github.com/heap/react-native-heap/compare/0.22.6...HEAD
+[unreleased]: https://github.com/heap/react-native-heap/compare/0.22.7...HEAD
+[0.22.7]: https://github.com/heap/react-native-heap/compare/0.22.6...0.22.7
 [0.22.6]: https://github.com/heap/react-native-heap/compare/0.22.5...0.22.6
 [0.22.5]: https://github.com/heap/react-native-heap/compare/0.22.4...0.22.5
 [0.22.4]: https://github.com/heap/react-native-heap/compare/0.22.3...0.22.4
