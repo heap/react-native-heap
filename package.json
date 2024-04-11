@@ -1,6 +1,6 @@
 {
   "name": "@heap/react-native-heap",
-  "version": "0.22.7",
+  "version": "0.22.8",
   "description": "React Native event tracking with Heap.",
   "license": "MIT",
   "author": "Heap <http://www.heapanalytics.com>",
@@ -53,8 +53,6 @@
     "@types/lodash": "^4.14.195",
     "@types/node": "^16.18.37",
     "@types/react-reconciler": "^0.28.2",
-    "babel-template": "^6.26.0",
-    "babel-types": "^6.26.0",
     "deep-freeze": "0.0.1",
     "expo-module-scripts": "^3.0.0",
     "jest": "^29.5.0",
