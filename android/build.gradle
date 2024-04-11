@@ -49,6 +49,10 @@ buildscript {
 apply plugin: 'com.android.library'
 
 android {
+    def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION
+    if (agpVersion.tokenize('.')[0].toInteger() >= 7) {
+        namespace "io.heap.reactnative"
+    }
     compileSdkVersion safeExtGet('compileSdkVersion', 26)
     compileOptions {
         sourceCompatibility 1.8
@@ -82,4 +86,3 @@ dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
     api 'com.heapanalytics.android:heap-android-client:1.10.+'
 }
-
