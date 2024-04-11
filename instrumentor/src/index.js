@@ -1,7 +1,7 @@
 // :TODO: (jmtaber129): Add file-level comment explaining what this plugin does and how it works.
 
-const t = require('babel-types');
-const template = require('babel-template');
+const t = require('@babel/types');
+const template = require('@babel/template').default;
 
 // Used to record whether certain methods/components have been instrumented.
 // :TODO: (jmtaber129): Determine whether we actually need this once we figure out the unexpected

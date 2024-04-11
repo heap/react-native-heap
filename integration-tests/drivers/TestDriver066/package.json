@@ -11,7 +11,7 @@
     "postinstall": "patch-package"
   },
   "dependencies": {
-    "@heap/react-native-heap": "file:../../heap-react-native-heap-0.22.7.tgz",
+    "@heap/react-native-heap": "file:../../heap-react-native-heap-0.22.8.tgz",
     "@react-native-community/masked-view": "^0.1.10",
     "@react-navigation/bottom-tabs": "^5.7.3",
     "@react-navigation/native": "^5.7.2",
