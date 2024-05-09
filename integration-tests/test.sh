@@ -28,7 +28,8 @@ set -o nounset
 set -o pipefail
 
 # Life is suffering.
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+# export JAVA_HOME=/Library/Java/JavaVirtualMachines/openjdk-11.jdk/Contents/Home
+export JAVA_HOME=/Users/andrewyousef/.sdkman/candidates/java/current
 
 DRIVER_DIR="${1:-drivers/TestDriver063/}"
 
